@@ -69,23 +69,26 @@
       DOMtop_priceClass[counter].innerHTML=currCryptoCurrObj[toCurr].PRICE+"&nbsp;"+"<span class='top-pct' style='color:"+pct_color+"'>"+pct_text+"%</span>";
       // document.getElementById("mainPriceCurrSymbol")=
       if(cryptoCurrMain == cryptoCurr){
-        document.getElementById("mainPrice").innerHTML=currCryptoCurrObj[toCurr].PRICE;
-        currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][toCurr].PRICE
-        //currTopPriceAmount=currTopPriceAmount[toCurr].PRICE;
-        document.getElementsByClassName("mainFactsValue")[0].innerHTML=currCryptoCurrObj[toCurr].CHANGE24HOUR;
-        document.getElementsByClassName("mainFactsValue")[0].style.color=pct_color;
-        document.getElementsByClassName("mainFactsValue")[1].innerHTML=currCryptoCurrObj[toCurr].CHANGEPCT24HOUR+"%";
-        document.getElementsByClassName("mainFactsValue")[1].style.color=pct_color;
-        
-        document.getElementsByClassName("mainFactsValue")[2].innerHTML=currCryptoCurrObj[toCurr].VOLUME24HOUR;
-        document.getElementsByClassName("mainFactsValue")[3].innerHTML=currCryptoCurrObj[toCurr].VOLUME24HOURTO;
-        
-        document.getElementsByClassName("mainFactsTitle")[2].innerHTML="24H Volume "+currCryptoCurrObj[toCurr].FROMSYMBOL;
-        document.getElementsByClassName("mainFactsTitle")[3].innerHTML="24H Volume "+currCryptoCurrObj[toCurr].TOSYMBOL;
-        
-        document.getElementsByClassName("mainFactsValue")[4].innerHTML=currCryptoCurrObj[toCurr].OPEN24HOUR;
-        document.getElementsByClassName("mainFactsValue")[5].innerHTML=currCryptoCurrObj[toCurr].HIGH24HOUR;
-        document.getElementsByClassName("mainFactsValue")[6].innerHTML=currCryptoCurrObj[toCurr].LOW24HOUR;
+        var exists=document.getElementById("mainPrice");
+        if(exists != null){
+          document.getElementById("mainPrice").innerHTML=currCryptoCurrObj[toCurr].PRICE;
+          currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][toCurr].PRICE
+          //currTopPriceAmount=currTopPriceAmount[toCurr].PRICE;
+          document.getElementsByClassName("mainFactsValue")[0].innerHTML=currCryptoCurrObj[toCurr].CHANGE24HOUR;
+          document.getElementsByClassName("mainFactsValue")[0].style.color=pct_color;
+          document.getElementsByClassName("mainFactsValue")[1].innerHTML=currCryptoCurrObj[toCurr].CHANGEPCT24HOUR+"%";
+          document.getElementsByClassName("mainFactsValue")[1].style.color=pct_color;
+          
+          document.getElementsByClassName("mainFactsValue")[2].innerHTML=currCryptoCurrObj[toCurr].VOLUME24HOUR;
+          document.getElementsByClassName("mainFactsValue")[3].innerHTML=currCryptoCurrObj[toCurr].VOLUME24HOURTO;
+          
+          document.getElementsByClassName("mainFactsTitle")[2].innerHTML="24H Volume "+currCryptoCurrObj[toCurr].FROMSYMBOL;
+          document.getElementsByClassName("mainFactsTitle")[3].innerHTML="24H Volume "+currCryptoCurrObj[toCurr].TOSYMBOL;
+          
+          document.getElementsByClassName("mainFactsValue")[4].innerHTML=currCryptoCurrObj[toCurr].OPEN24HOUR;
+          document.getElementsByClassName("mainFactsValue")[5].innerHTML=currCryptoCurrObj[toCurr].HIGH24HOUR;
+          document.getElementsByClassName("mainFactsValue")[6].innerHTML=currCryptoCurrObj[toCurr].LOW24HOUR;
+        }
       }
       
       DOMtop_imageClass[counter].src=directionImgBaseUrl+direction_img;
