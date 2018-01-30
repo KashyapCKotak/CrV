@@ -5,7 +5,11 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
-
+.portfolioTab {
+    width: 50%;
+    margin-right: 0 !important; 
+    text-align: center;
+}
 .loginBackground {
     background-image: url("../img/small_login_back.jpg");
 
@@ -2928,7 +2932,7 @@ a:focus {
 }
 .nav-tabs-custom>.tab-content {
     background: #fff;
-    padding: 10px;
+    /*padding: 10px;*/ 
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px
 }

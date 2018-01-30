@@ -185,7 +185,7 @@
               <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"><center>MENU</center></li>
                 <li class="active treeview">
-                  <a href="dashboard.php">
+                  <a href='dashboard.php'>
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     <!-- <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
