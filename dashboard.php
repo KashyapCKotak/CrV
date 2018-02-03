@@ -474,12 +474,12 @@
                 <label class="label-enable">Crypto Currency: </label>
                 <select id="cryptoSelectBox" class="form-control select2" style="width:auto" onchange="selectCrypto()">
                   <option id="default-crypto" selected="selected">Bitcoin (BTC)</option>
-                  <option>Ethereum (ETH)</option>
-                  <option>Ripple (XRP)</option>
-                  <option>Bitcoin Cash (BCH)</option>
-                  <option>Litecoin (LTC)</option>
-                  <option>Tron (TRX)</option>
-                  <option>Dash (DASH)</option>
+                  <option value="ETH">Ethereum (ETH)</option>
+                  <option value="XRP">Ripple (XRP)</option>
+                  <option value="BCH">Bitcoin Cash (BCH)</option>
+                  <option value="LTC">Litecoin (LTC)</option>
+                  <option value="TRX">Tron (TRX)</option>
+                  <option value="DASH">Dash (DASH)</option>
                 </select>
               </div>
               <div class="fiat-select">

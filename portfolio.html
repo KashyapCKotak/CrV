@@ -459,19 +459,112 @@
             </div>
             <script src="livedatatop.js"></script>
             <!-- Content Header (Page header) -->
+            <script type="text/javascript">
+              var buyPrtfRate=null;
+              var sellPrtfRate=null;
+              var updatePrtfRate=null;
+              var initialPrtfRate=null;
+
+              var xhttpFirst = new XMLHttpRequest();
+              xhttpFirst.onreadystatechange = function() {
+                if (xhttpFirst.readyState == 4 && xhttpFirst.status == 200) {
+                  initialPrtfRate = JSON.parse(xhttpFirst.responseText).INR;
+                  // console.log(initialPrtfRate);
+                  buyPrtfRate=initialPrtfRate;
+                  sellPrtfRate=initialPrtfRate;
+                  updatePrtfRate=initialPrtfRate;
+                }
+              };
+              xhttpFirst.open("GET", "https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=INR", true);
+              xhttpFirst.send();
+            </script>
             <script>
-              var globalCryptoValue="BTC";
-              var globalFiatValue="INR";
+              var buyCryptoValue="BTC";
+              var buyFiatValue="INR";
+              var sellCryptoValue="BTC";
+              var sellFiatValue="INR";
+              var updateCryptoValue="BTC";
+              var updateFiatValue="INR";
+              var currentCryptoValue="BTC";
+              var currentFiatValue="INR";
+
+
+
+              function selectFiat(which){
+                if(which==1){
+                  buyFiatValue=document.getElementById("fiatSelectBoxBuy").value;
+                  currentFiatValue=buyFiatValue;
+                  updateCurrentRate(which);
+                }
+                else if (which==2){
+                  sellFiatValue=document.getElementById("fiatSelectBoxSell").value;
+                  currentFiatValue=sellFiatValue;
+                  updateCurrentRate(which);
+                }
+                else if (which==3){
+                  updateFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
+                  currentCryptoValue=updateFiatValue;
+                  updateCurrentRate(which);
+                }
+              }
+
+              function selectCrypto(which){
+                if(which==1){
+                  var buyCryptoValue=document.getElementById("cryptoSelectBoxBuy").value;
+                  currentCryptoValue=buyCryptoValue;
+                  updateCurrentRate(which);
+                }
+                else if(which==2){
+                  var sellCryptoValue=document.getElementById("cryptoSelectBoxSell").value;
+                  currentCryptoValue=sellCryptoValue;
+                  updateCurrentRate(which);
+                }
+                else if(which==3){
+                  var updateCryptoValue=document.getElementById("cryptoSelectBoxUpdate").value;
+                  currentCryptoValue=updateCryptoValue;
+                  updateCurrentRate(which);
+                }
+              }
+
+              function updateCurrentRate(which){
+                console.log("updating data");
+                console.log(which);
+                var rateUrl="https://min-api.cryptocompare.com/data/price?fsym="+currentCryptoValue+"&tsyms="+currentFiatValue;
+                console.log(rateUrl);
+                var xhttpUpdate = new XMLHttpRequest();
+                xhttpUpdate.onreadystatechange = function() {
+                  if (xhttpUpdate.readyState == 4 && xhttpUpdate.status == 200) {
+                    if(which==1){
+                      buyPrtfRate = JSON.parse(xhttpUpdate.responseText)[currentFiatValue];
+                      convertToFiat(which);
+                    }
+                    else if(which==2){
+                      sellPrtfRate = JSON.parse(xhttpUpdate.responseText)[currentFiatValue];
+                      convertToFiat(which);
+                    }
+                    else if(which==3){
+                      updatePrtfRate = JSON.parse(xhttpUpdate.responseText)[currentFiatValue];
+                    }
+                  }
+                };
+                xhttpUpdate.open("GET", rateUrl, true);
+                xhttpUpdate.send();
+              }
 
               function convertToFiat(which){
+                console.log("in convert");
                 if(which == 1) {
+                  console.log("buy updating");
                   var cryptoInputToUse="cryptoInputBuy";
                   var fiatInputToUse="fiatInputBuy";
+                  var currentConversionRate=buyPrtfRate;
                 }
                 else if(which == 2) {
                   var cryptoInputToUse="cryptoInputSell";
                   var fiatInputToUse="fiatInputSell";
+                  var currentConversionRate=sellPrtfRate;
                 }
+                console.log("ahead 1");
 
                 if(isNaN(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, '')))) {
                   document.getElementById(fiatInputToUse).value="Enter Correct Number!";
@@ -479,16 +572,20 @@
                     document.getElementById(fiatInputToUse).value="";
                   return;
                 }
-                document.getElementById(fiatInputToUse).value=(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, ''))*currTopPriceAmount).toLocaleString();
+                console.log("ahead 2");
+                document.getElementById(fiatInputToUse).value=(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, ''))*currentConversionRate).toLocaleString();
               }
-              function convertToCrypto(){
+
+              function convertToCrypto(which){
                 if(which == 1) {
                   var cryptoInputToUse="cryptoInputBuy";
                   var fiatInputToUse="fiatInputBuy";
+                  var currentConversionRate=buyPrtfRate;
                 }
                 else if(which == 2) {
                   var cryptoInputToUse="cryptoInputSell";
                   var fiatInputToUse="fiatInputSell";
+                  var currentConversionRate=sellPrtfRate;
                 }
 
                 if(isNaN(parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, '')))){
@@ -497,7 +594,7 @@
                     document.getElementById(cryptoInputToUse).value="";
                   return;
                 }
-                document.getElementById(cryptoInputToUse).value=(parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, ''))/currTopPriceAmount).toLocaleString();
+                document.getElementById(cryptoInputToUse).value=(parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, ''))/currentConversionRate).toLocaleString();
               }
               //////////////////////////////////////////////////////////////////////////
               function openTab(evt, cityName) {
@@ -515,366 +612,366 @@
               }
               /////////////////////////////////////////////////////////////////////////
               
-      </script>           
-      <!-- Main content -->
+            </script>           
+            <!-- Main content -->
 
-      <section class="content" style="padding-left:5px;padding-right:5px;">
-        <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto">
-          <!-- <div class="col-md-6"> -->
-            <!-- Custom Tabs -->
-            <div class="nav-tabs-custom" style="margin:0">
-              <ul class="nav nav-tabs">
-                <li class="active portfolioTab"><a href="#tab_1" data-toggle="tab">Personal Portfolio</a></li>
-                <li class="portfolioTab"><a href="#tab_2" data-toggle="tab">Practice Portfolio</a></li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab_1">
+            <section class="content" style="padding-left:5px;padding-right:5px;">
+              <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto">
+                <!-- <div class="col-md-6"> -->
+                  <!-- Custom Tabs -->
+                  <div class="nav-tabs-custom" style="margin:0">
+                    <ul class="nav nav-tabs">
+                      <li class="active portfolioTab"><a href="#tab_1" data-toggle="tab">Personal Portfolio</a></li>
+                      <li class="portfolioTab"><a href="#tab_2" data-toggle="tab">Practice Portfolio</a></li>
+                    </ul>
+                    <div class="tab-content">
+                      <div class="tab-pane active" id="tab_1">
 
-                  <div class="row col-md-6" style="margin: 0; padding: 0">
-                    <div class="box-body no-padding" style="overflow-x: auto">
-                      <table class="table table-condensed table-striped">
-                        <tr>
-                          <th style="width: 10px">#</th>
-                          <th>Name</th>
-                          <th>Quantity</th>
-                          <th>Investment</th>
-                          <th>Value</th>
-                          <th style="width: 80px">%</th>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>58569689.56</td>
-                          <td>98569689.56</td>
-                          <td><span class="badge bg-green">55%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>98569689.56</td>
-                          <td>58569689.56</td>
-                          <td><span class="badge bg-red">55%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>58569689.56</td>
-                          <td>98569689.56</td>
-                          <td><span class="badge bg-green">55%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>58569689.56</td>
-                          <td>98569689.56</td>
-                          <td><span class="badge bg-green">500%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>98569689.56</td>
-                          <td>58569689.56</td>
-                          <td><span class="badge bg-red">55%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>58569689.56</td>
-                          <td>98569689.56</td>
-                          <td><span class="badge bg-green">1015654.56%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>58569689.56</td>
-                          <td>98569689.56</td>
-                          <td><span class="badge bg-green">55%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>58569689.56</td>
-                          <td>98569689.56</td>
-                          <td><span class="badge bg-green">55%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>58569689.56</td>
-                          <td>98569689.56</td>
-                          <td><span class="badge bg-green">55%</span></td>
-                        </tr>
-                        <tr>
-                          <td>1.</td>
-                          <td>Ethereum Classic</td>
-                          <td>9999999.6523</td>
-                          <td>58569689.56</td>
-                          <td>98569689.56</td>
-                          <td><span class="badge bg-green">55%</span></td>
-                        </tr>
-                      </table>
+                        <div class="row col-md-6" style="margin: 0; padding: 0">
+                          <div class="box-body no-padding" style="overflow-x: auto">
+                            <table class="table table-condensed table-striped">
+                              <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Investment</th>
+                                <th>Value</th>
+                                <th style="width: 80px">%</th>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>58569689.56</td>
+                                <td>98569689.56</td>
+                                <td><span class="badge bg-green">55%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>98569689.56</td>
+                                <td>58569689.56</td>
+                                <td><span class="badge bg-red">55%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>58569689.56</td>
+                                <td>98569689.56</td>
+                                <td><span class="badge bg-green">55%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>58569689.56</td>
+                                <td>98569689.56</td>
+                                <td><span class="badge bg-green">500%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>98569689.56</td>
+                                <td>58569689.56</td>
+                                <td><span class="badge bg-red">55%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>58569689.56</td>
+                                <td>98569689.56</td>
+                                <td><span class="badge bg-green">1015654.56%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>58569689.56</td>
+                                <td>98569689.56</td>
+                                <td><span class="badge bg-green">55%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>58569689.56</td>
+                                <td>98569689.56</td>
+                                <td><span class="badge bg-green">55%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>58569689.56</td>
+                                <td>98569689.56</td>
+                                <td><span class="badge bg-green">55%</span></td>
+                              </tr>
+                              <tr>
+                                <td>1.</td>
+                                <td>Ethereum Classic</td>
+                                <td>9999999.6523</td>
+                                <td>58569689.56</td>
+                                <td>98569689.56</td>
+                                <td><span class="badge bg-green">55%</span></td>
+                              </tr>
+                            </table>
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        <!-- //////////////////////////////////////////////////////// -->
+                        <div class="BuySellTabHolder col-md-6">
+                          <div class="BuySellTab">
+                            <button class="tablinks active" onclick="openTab(event, 'BuyTab')">Buy</button>
+                            <button class="tablinks" onclick="openTab(event, 'SellTab')">Sell</button>
+                            <button class="tablinks" onclick="openTab(event, 'UpdateTab')">Update</button>
+                          </div>
+                          <br>
+                          <div id="BuyTab" class="BuySellTabContent" style="display: inline-block;">
+                            <br>
+                            <div class="crypto-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                              <select id="cryptoSelectBoxBuy" class="form-control select2" style="width:157px" onchange="selectCrypto(1)">
+                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="XRP">Ripple (XRP)</option>
+                                <option value="BCH">Bitcoin Cash (BCH)</option>
+                                <option value="LTC">Litecoin (LTC)</option>
+                                <option value="TRX">Tron (TRX)</option>
+                                <option value="DASH">Dash (DASH)</option>
+                              </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="fiat-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                              <select id="fiatSelectBoxBuy" class="form-control select2" style="width:auto" onchange="selectFiat(1)">
+                                <option class="default-fiat" selected="selected">INR</option>
+                                <option>INR</option>
+                                <option>USD</option>
+                                <option>EUR</option>
+                                <option>JPY</option>
+                                <option>CNY</option>
+                              </select>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id="cryptoInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                              <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="fiatInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button onclick='buyPortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                          </div>
+                          <!-- /////////////////////////// -->
+
+                          <!-- ////////////////////////////// -->
+                          <div id="SellTab" class="BuySellTabContent">
+                            <br>
+                            <div class="crypto-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                              <select id="cryptoSelectBoxSell" class="form-control select2" style="width:157px" onchange="selectCrypto(2)">
+                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="XRP">Ripple (XRP)</option>
+                                <option value="BCH">Bitcoin Cash (BCH)</option>
+                                <option value="LTC">Litecoin (LTC)</option>
+                                <option value="TRX">Tron (TRX)</option>
+                                <option value="DASH">Dash (DASH)</option>
+                              </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="fiat-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                              <select id="fiatSelectBoxSell" class="form-control select2" style="width:auto" onchange="selectFiat(2)">
+                                <option class="default-fiat" selected="selected">INR</option>
+                                <option>INR</option>
+                                <option>USD</option>
+                                <option>EUR</option>
+                                <option>JPY</option>
+                                <option>CNY</option>
+                              </select>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id="cryptoInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                              <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="fiatInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button onclick='sellPortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                          </div>
+                          <!-- ////////////////////////////// -->
+                          <div id="UpdateTab" class="BuySellTabContent">
+                            <br>
+                            <div class="crypto-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                              <select id="cryptoSelectBoxUpdate" class="form-control select2" style="width:157px" onchange="selectCrypto(3)">
+                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="XRP">Ripple (XRP)</option>
+                                <option value="BCH">Bitcoin Cash (BCH)</option>
+                                <option value="LTC">Litecoin (LTC)</option>
+                                <option value="TRX">Tron (TRX)</option>
+                                <option value="DASH">Dash (DASH)</option>
+                              </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="fiat-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                              <select id="fiatSelectBoxUpdate" class="form-control select2" style="width:auto" onchange="selectFiat(3)">
+                                <option class="default-fiat" selected="selected">INR</option>
+                                <option>INR</option>
+                                <option>USD</option>
+                                <option>EUR</option>
+                                <option>JPY</option>
+                                <option>CNY</option>
+                              </select>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id="UpdateInputCryptoAmount" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
+                              <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="UpdateInputInvestCost" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Investement Cost</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button onclick='updatePortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                          </div>
+                          <!-- ////////////////////////////// -->
+                        </div>
+
+                        <!-- //////////////////////////////////////////////////////// -->
+                        <div class="row col-md-6">
+                          <b>How to use:</b>
+
+                          <p>Exactly like the original bootstrap tabs except you should use
+                            the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
+                            A wonderful serenity has taken possession of my entire soul,
+                            like these sweet mornings of spring which I enjoy with my whole heart.
+                            I am alone, and feel the charm of existence in this spot,
+                            which was created for the bliss of souls like mine. I am so happy,
+                            my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
+                            that I neglect my talents. I should be incapable of drawing a single stroke
+                            at the present moment; and yet I feel that I never was a greater artist than now.
+                          </div>
+                        </div>
+                        <!-- </div> -->
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="tab_2">
+                          The European languages are members of the same family. Their separate existence is a myth.
+                          For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                          in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                          new common language would be desirable: one could refuse to pay expensive translators. To
+                          achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                          words. If several languages coalesce, the grammar of the resulting language is more simple
+                          and regular than that of the individual languages.
+                        </div>
+                        <!-- /.tab-pane -->
+                        <!-- /.tab-pane -->
+                      </div>
+                      <!-- /.tab-content -->
+                      <!-- </div> -->
+                      <!-- nav-tabs-custom -->
                     </div>
                     <!-- /.col -->
                   </div>
-                  <!-- /.row -->
-                  <!-- //////////////////////////////////////////////////////// -->
-                  <div class="BuySellTabHolder col-md-6">
-                    <div class="BuySellTab">
-                      <button class="tablinks active" onclick="openTab(event, 'BuyTab')">Buy</button>
-                      <button class="tablinks" onclick="openTab(event, 'SellTab')">Sell</button>
-                      <button class="tablinks" onclick="openTab(event, 'UpdateTab')">Update</button>
-                    </div>
-                    <br>
-                    <div id="BuyTab" class="BuySellTabContent" style="display: inline-block;">
-                      <br>
-                      <div class="crypto-select" style="display: inline-block; float: left;">
-                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                        <select id="cryptoSelectBoxBuy" class="form-control select2" style="width:157px" >
-                          <option class="default-crypto" selected="selected">Bitcoin (BTC)</option>
-                          <option>Ethereum (ETH)</option>
-                          <option>Ripple (XRP)</option>
-                          <option>Bitcoin Cash (BCH)</option>
-                          <option>Litecoin (LTC)</option>
-                          <option>Tron (TRX)</option>
-                          <option>Dash (DASH)</option>
-                        </select>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="fiat-select" style="display: inline-block; float: left;">
-                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                        <select id="fiatSelectBoxBuy" class="form-control select2" style="width:auto" onchange="selectFiat()">
-                          <option class="default-fiat" selected="selected">INR</option>
-                          <option>INR</option>
-                          <option>USD</option>
-                          <option>EUR</option>
-                          <option>JPY</option>
-                          <option>CNY</option>
-                        </select>
-                      </div>
-                      <br>
-                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id="cryptoInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1)" required>
-                        <!-- <span class="highlight"></span> -->
-                        <span class="bar_convert" style="width: 100%"></span>
-                        <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                        <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
-                      </div>
-                      <br>
-                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id ="fiatInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1)" required>
-                        <!-- <span class="highlight"></span> -->
-                        <span class="bar_convert" style="width: 100%"></span>
-                        <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
-                      </div>
-                      <br>
-                      <br>
-                      <button onclick='buyPortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                    </div>
-                    <!-- /////////////////////////// -->
-
-                    <!-- ////////////////////////////// -->
-                    <div id="SellTab" class="BuySellTabContent">
-                      <br>
-                      <div class="crypto-select" style="display: inline-block; float: left;">
-                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                        <select id="cryptoSelectBoxSell" class="form-control select2" style="width:157px" >
-                          <option class="default-crypto" selected="selected">Bitcoin (BTC)</option>
-                          <option>Ethereum (ETH)</option>
-                          <option>Ripple (XRP)</option>
-                          <option>Bitcoin Cash (BCH)</option>
-                          <option>Litecoin (LTC)</option>
-                          <option>Tron (TRX)</option>
-                          <option>Dash (DASH)</option>
-                        </select>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="fiat-select" style="display: inline-block; float: left;">
-                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                        <select id="fiatSelectBoxSell" class="form-control select2" style="width:auto" onchange="selectFiat()">
-                          <option class="default-fiat" selected="selected">INR</option>
-                          <option>INR</option>
-                          <option>USD</option>
-                          <option>EUR</option>
-                          <option>JPY</option>
-                          <option>CNY</option>
-                        </select>
-                      </div>
-                      <br>
-                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id="cryptoInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2)" required>
-                        <!-- <span class="highlight"></span> -->
-                        <span class="bar_convert" style="width: 100%"></span>
-                        <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                        <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
-                      </div>
-                      <br>
-                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id ="fiatInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2)" required>
-                        <!-- <span class="highlight"></span> -->
-                        <span class="bar_convert" style="width: 100%"></span>
-                        <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
-                      </div>
-                      <br>
-                      <br>
-                      <button onclick='sellPortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                    </div>
-                    <!-- ////////////////////////////// -->
-                    <div id="UpdateTab" class="BuySellTabContent">
-                      <br>
-                      <div class="crypto-select" style="display: inline-block; float: left;">
-                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                        <select id="cryptoSelectBoxUpdate" class="form-control select2" style="width:157px" >
-                          <option class="default-crypto" selected="selected">Bitcoin (BTC)</option>
-                          <option>Ethereum (ETH)</option>
-                          <option>Ripple (XRP)</option>
-                          <option>Bitcoin Cash (BCH)</option>
-                          <option>Litecoin (LTC)</option>
-                          <option>Tron (TRX)</option>
-                          <option>Dash (DASH)</option>
-                        </select>
-                      </div>
-                      <br>
-                      <br>
-                      <div class="fiat-select" style="display: inline-block; float: left;">
-                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                        <select id="fiatSelectBoxUpdate" class="form-control select2" style="width:auto" onchange="selectFiat()">
-                          <option class="default-fiat" selected="selected">INR</option>
-                          <option>INR</option>
-                          <option>USD</option>
-                          <option>EUR</option>
-                          <option>JPY</option>
-                          <option>CNY</option>
-                        </select>
-                      </div>
-                      <br>
-                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id="UpdateInputCryptoAmount" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
-                        <!-- <span class="highlight"></span> -->
-                        <span class="bar_convert" style="width: 100%"></span>
-                        <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
-                        <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
-                      </div>
-                      <br>
-                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id ="UpdateInputInvestCost" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
-                        <!-- <span class="highlight"></span> -->
-                        <span class="bar_convert" style="width: 100%"></span>
-                        <label class="label_convert" style="font-size: 15px;left: 0">Investement Cost</label>
-                      </div>
-                      <br>
-                      <br>
-                      <button onclick='updatePortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                    </div>
-                    <!-- ////////////////////////////// -->
-                  </div>
-
-                  <!-- //////////////////////////////////////////////////////// -->
-                  <div class="row col-md-6">
-                    <b>How to use:</b>
-
-                    <p>Exactly like the original bootstrap tabs except you should use
-                      the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
-                      A wonderful serenity has taken possession of my entire soul,
-                      like these sweet mornings of spring which I enjoy with my whole heart.
-                      I am alone, and feel the charm of existence in this spot,
-                      which was created for the bliss of souls like mine. I am so happy,
-                      my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
-                      that I neglect my talents. I should be incapable of drawing a single stroke
-                      at the present moment; and yet I feel that I never was a greater artist than now.
-                    </div>
-                  </div>
-                  <!-- </div> -->
-                  <!-- /.tab-pane -->
-                  <div class="tab-pane" id="tab_2">
-                    The European languages are members of the same family. Their separate existence is a myth.
-                    For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                    in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                    new common language would be desirable: one could refuse to pay expensive translators. To
-                    achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                    words. If several languages coalesce, the grammar of the resulting language is more simple
-                    and regular than that of the individual languages.
-                  </div>
-                  <!-- /.tab-pane -->
-                  <!-- /.tab-pane -->
-                </div>
-                <!-- /.tab-content -->
-                <!-- </div> -->
-                <!-- nav-tabs-custom -->
+                  <!-- /.row (main row) -->
+                </section>
+                <!-- /.content -->
               </div>
-              <!-- /.col -->
-            </div>
-            <!-- /.row (main row) -->
-          </section>
-          <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
+              <!-- /.content-wrapper -->
 <!-- 
         <script>
           if( <?php echo $loggedIn ?> )
         </script>
-          -->
-        <script type="text/javascript">
-            function buyPortfolio(portType){
-                var selectedCryptoValue=document.getElementById("cryptoSelectBoxBuy").value;
-                var selectedFiatValue=document.getElementById("fiatSelectBoxBuy").value;
-                var inputCryptoAmount=document.getElementById("cryptoInputBuy").value;
-                var inputFiatAmount=document.getElementById("fiatInputBuy").value;
+      -->
+      <script type="text/javascript">
+        function buyPortfolio(portType){
+          var selectedCryptoValue=document.getElementById("cryptoSelectBoxBuy").value;
+          var selectedFiatValue=document.getElementById("fiatSelectBoxBuy").value;
+          var inputCryptoAmount=document.getElementById("cryptoInputBuy").value;
+          var inputFiatAmount=document.getElementById("fiatInputBuy").value;
 
-                if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
-                  alert( "Please Enter Correct Details" );
-                  return;
-              }
-
-              $.ajax({
-                type: "POST",
-                url: "BuyPort.php",
-                data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
-              }).done(function( msg ) {
-                alert( "Data Saved: " + msg );
-              });
-            }
-
-            function sellPortfolio(portType){
-              var selectedCryptoValue=document.getElementById("cryptoSelectBoxSell").value;
-              var selectedFiatValue=document.getElementById("fiatSelectBoxSell").value;
-              var inputCryptoAmount=document.getElementById("cryptoInputSell").value;
-              var inputFiatAmount=document.getElementById("fiatInputSell").value;
-
-              if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
-                  alert( "Please Enter Correct Details" );
-                  return;
-              }
-
-            $.ajax({
-              type: "POST",
-              url: "SellPort.php",
-              data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
-            }).done(function( msg ) {
-              alert( "Data Saved: " + msg );
-            });
+          if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
+            alert( "Please Enter Correct Details" );
+            return;
           }
 
-          function updatePortfolio(portType){
-            var selectedCryptoValue=document.getElementById("cryptoSelectBoxUpdate").value;
-            var selectedFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
-            var inputCryptoAmount=document.getElementById("UpdateInputCryptoAmount").value;
-            var inputInvestCost=document.getElementById("UpdateInputInvestCost").value;
+          $.ajax({
+            type: "POST",
+            url: "BuyPort.php",
+            data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
+          }).done(function( msg ) {
+            alert( "Data Saved: " + msg );
+          });
+        }
 
-            if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
-                  alert( "Please Enter Correct Details" );
-                  return;
-              }
+        function sellPortfolio(portType){
+          var selectedCryptoValue=document.getElementById("cryptoSelectBoxSell").value;
+          var selectedFiatValue=document.getElementById("fiatSelectBoxSell").value;
+          var inputCryptoAmount=document.getElementById("cryptoInputSell").value;
+          var inputFiatAmount=document.getElementById("fiatInputSell").value;
+
+          if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
+            alert( "Please Enter Correct Details" );
+            return;
+          }
+
+          $.ajax({
+            type: "POST",
+            url: "SellPort.php",
+            data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
+          }).done(function( msg ) {
+            alert( "Data Saved: " + msg );
+          });
+        }
+
+        function updatePortfolio(portType){
+          var selectedCryptoValue=document.getElementById("cryptoSelectBoxUpdate").value;
+          var selectedFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
+          var inputCryptoAmount=document.getElementById("UpdateInputCryptoAmount").value;
+          var inputInvestCost=document.getElementById("UpdateInputInvestCost").value;
+
+          if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
+            alert( "Please Enter Correct Details" );
+            return;
+          }
 
           $.ajax({
             type: "POST",
@@ -884,205 +981,205 @@
             alert( "Data Saved: " + msg );
           });
         }
-        </script>>
-        <footer class="main-footer">
-          <div class="pull-right hidden-xs">
-            <b>Version</b> 2.4.0
+      </script>>
+      <footer class="main-footer">
+        <div class="pull-right hidden-xs">
+          <b>Version</b> 2.4.0
+        </div>
+        <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+        reserved.
+      </footer>
+
+      <!-- Control Sidebar -->
+      <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+          <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+          <!-- Home tab content -->
+          <div class="tab-pane" id="control-sidebar-home-tab">
+            <h3 class="control-sidebar-heading">Recent Activity</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript:void(0)">
+                  <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                    <p>Will be 23 on April 24th</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">
+                  <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                    <p>New phone +1(800)555-1234</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">
+                  <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                    <p>nora@example.com</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">
+                  <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                  <div class="menu-info">
+                    <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                    <p>Execution time 5 seconds</p>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <!-- /.control-sidebar-menu -->
+
+            <h3 class="control-sidebar-heading">Tasks Progress</h3>
+            <ul class="control-sidebar-menu">
+              <li>
+                <a href="javascript:void(0)">
+                  <h4 class="control-sidebar-subheading">
+                    Custom Template Design
+                    <span class="label label-danger pull-right">70%</span>
+                  </h4>
+
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">
+                  <h4 class="control-sidebar-subheading">
+                    Update Resume
+                    <span class="label label-success pull-right">95%</span>
+                  </h4>
+
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">
+                  <h4 class="control-sidebar-subheading">
+                    Laravel Integration
+                    <span class="label label-warning pull-right">50%</span>
+                  </h4>
+
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0)">
+                  <h4 class="control-sidebar-subheading">
+                    Back End Framework
+                    <span class="label label-primary pull-right">68%</span>
+                  </h4>
+
+                  <div class="progress progress-xxs">
+                    <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <!-- /.control-sidebar-menu -->
+
           </div>
-          <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-          reserved.
-        </footer>
+          <!-- /.tab-pane -->
+          <!-- Stats tab content -->
+          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+          <!-- /.tab-pane -->
+          <!-- Settings tab content -->
+          <div class="tab-pane" id="control-sidebar-settings-tab">
+            <form method="post">
+              <h3 class="control-sidebar-heading">General Settings</h3>
 
-        <!-- Control Sidebar -->
-        <aside class="control-sidebar control-sidebar-dark">
-          <!-- Create the tabs -->
-          <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-          </ul>
-          <!-- Tab panes -->
-          <div class="tab-content">
-            <!-- Home tab content -->
-            <div class="tab-pane" id="control-sidebar-home-tab">
-              <h3 class="control-sidebar-heading">Recent Activity</h3>
-              <ul class="control-sidebar-menu">
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Report panel usage
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
 
-                    <div class="menu-info">
-                      <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                <p>
+                  Some information about this general settings option
+                </p>
+              </div>
+              <!-- /.form-group -->
 
-                      <p>Will be 23 on April 24th</p>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="menu-icon fa fa-user bg-yellow"></i>
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Allow mail redirect
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
 
-                    <div class="menu-info">
-                      <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                <p>
+                  Other sets of options are available
+                </p>
+              </div>
+              <!-- /.form-group -->
 
-                      <p>New phone +1(800)555-1234</p>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Expose author name in posts
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
 
-                    <div class="menu-info">
-                      <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                <p>
+                  Allow the user to show his name in blog posts
+                </p>
+              </div>
+              <!-- /.form-group -->
 
-                      <p>nora@example.com</p>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <i class="menu-icon fa fa-file-code-o bg-green"></i>
+              <h3 class="control-sidebar-heading">Chat Settings</h3>
 
-                    <div class="menu-info">
-                      <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Show me as online
+                  <input type="checkbox" class="pull-right" checked>
+                </label>
+              </div>
+              <!-- /.form-group -->
 
-                      <p>Execution time 5 seconds</p>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-              <!-- /.control-sidebar-menu -->
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Turn off notifications
+                  <input type="checkbox" class="pull-right">
+                </label>
+              </div>
+              <!-- /.form-group -->
 
-              <h3 class="control-sidebar-heading">Tasks Progress</h3>
-              <ul class="control-sidebar-menu">
-                <li>
-                  <a href="javascript:void(0)">
-                    <h4 class="control-sidebar-subheading">
-                      Custom Template Design
-                      <span class="label label-danger pull-right">70%</span>
-                    </h4>
-
-                    <div class="progress progress-xxs">
-                      <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <h4 class="control-sidebar-subheading">
-                      Update Resume
-                      <span class="label label-success pull-right">95%</span>
-                    </h4>
-
-                    <div class="progress progress-xxs">
-                      <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <h4 class="control-sidebar-subheading">
-                      Laravel Integration
-                      <span class="label label-warning pull-right">50%</span>
-                    </h4>
-
-                    <div class="progress progress-xxs">
-                      <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                    </div>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:void(0)">
-                    <h4 class="control-sidebar-subheading">
-                      Back End Framework
-                      <span class="label label-primary pull-right">68%</span>
-                    </h4>
-
-                    <div class="progress progress-xxs">
-                      <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                    </div>
-                  </a>
-                </li>
-              </ul>
-              <!-- /.control-sidebar-menu -->
-
-            </div>
-            <!-- /.tab-pane -->
-            <!-- Stats tab content -->
-            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-            <!-- /.tab-pane -->
-            <!-- Settings tab content -->
-            <div class="tab-pane" id="control-sidebar-settings-tab">
-              <form method="post">
-                <h3 class="control-sidebar-heading">General Settings</h3>
-
-                <div class="form-group">
-                  <label class="control-sidebar-subheading">
-                    Report panel usage
-                    <input type="checkbox" class="pull-right" checked>
-                  </label>
-
-                  <p>
-                    Some information about this general settings option
-                  </p>
-                </div>
-                <!-- /.form-group -->
-
-                <div class="form-group">
-                  <label class="control-sidebar-subheading">
-                    Allow mail redirect
-                    <input type="checkbox" class="pull-right" checked>
-                  </label>
-
-                  <p>
-                    Other sets of options are available
-                  </p>
-                </div>
-                <!-- /.form-group -->
-
-                <div class="form-group">
-                  <label class="control-sidebar-subheading">
-                    Expose author name in posts
-                    <input type="checkbox" class="pull-right" checked>
-                  </label>
-
-                  <p>
-                    Allow the user to show his name in blog posts
-                  </p>
-                </div>
-                <!-- /.form-group -->
-
-                <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                <div class="form-group">
-                  <label class="control-sidebar-subheading">
-                    Show me as online
-                    <input type="checkbox" class="pull-right" checked>
-                  </label>
-                </div>
-                <!-- /.form-group -->
-
-                <div class="form-group">
-                  <label class="control-sidebar-subheading">
-                    Turn off notifications
-                    <input type="checkbox" class="pull-right">
-                  </label>
-                </div>
-                <!-- /.form-group -->
-
-                <div class="form-group">
-                  <label class="control-sidebar-subheading">
-                    Delete chat history
-                    <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                  </label>
-                </div>
-                <!-- /.form-group -->
-              </form>
-            </div>
-            <!-- /.tab-pane -->
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Delete chat history
+                  <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                </label>
+              </div>
+              <!-- /.form-group -->
+            </form>
           </div>
-        </aside>
-        <!-- /.control-sidebar -->
+          <!-- /.tab-pane -->
+        </div>
+      </aside>
+      <!-- /.control-sidebar -->
                     <!-- Add the sidebar's background. This div must be placed
                       immediately after the control sidebar -->
                       <div class="control-sidebar-bg"></div>
