@@ -2,12 +2,11 @@
 <html>
 <head>
   <?php
-  include ($_SERVER['DOCUMENT_ROOT'].'/pages/loginCheck.php');
-  session_start();
+  include ($_SERVER['DOCUMENT_ROOT'].'/AdminLTE-2.4.2/pages/checkLogin.php');
   ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Dashboard</title>
+  <title>AdminLTE 2 | Portfolio</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -464,25 +463,43 @@
               var globalCryptoValue="BTC";
               var globalFiatValue="INR";
 
-              function convertToFiat(){
-                if(isNaN(parseFloat((document.getElementById("CryptoInput").value).replace(/,/g, '')))) {
-                  document.getElementById("FiatInput").value="Enter Correct Number!";
-                  if(document.getElementById("CryptoInput").value == "")
-                    document.getElementById("FiatInput").value="";
+              function convertToFiat(which){
+                if(which == 1) {
+                  var cryptoInputToUse="cryptoInputBuy";
+                  var fiatInputToUse="fiatInputBuy";
+                }
+                else if(which == 2) {
+                  var cryptoInputToUse="cryptoInputSell";
+                  var fiatInputToUse="fiatInputSell";
+                }
+
+                if(isNaN(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, '')))) {
+                  document.getElementById(fiatInputToUse).value="Enter Correct Number!";
+                  if(document.getElementById(cryptoInputToUse).value == "")
+                    document.getElementById(fiatInputToUse).value="";
                   return;
                 }
-                document.getElementById("FiatInput").value=(parseFloat((document.getElementById("CryptoInput").value).replace(/,/g, ''))*currTopPriceAmount).toLocaleString();
+                document.getElementById(fiatInputToUse).value=(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, ''))*currTopPriceAmount).toLocaleString();
               }
               function convertToCrypto(){
-                if(isNaN(parseFloat((document.getElementById("FiatInput").value).replace(/,/g, '')))){
-                  document.getElementById("CryptoInput").value="Enter Correct Number!";
-                  if(document.getElementById("FiatInput").value == "")
-                    document.getElementById("CryptoInput").value="";
+                if(which == 1) {
+                  var cryptoInputToUse="cryptoInputBuy";
+                  var fiatInputToUse="fiatInputBuy";
+                }
+                else if(which == 2) {
+                  var cryptoInputToUse="cryptoInputSell";
+                  var fiatInputToUse="fiatInputSell";
+                }
+
+                if(isNaN(parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, '')))){
+                  document.getElementById(cryptoInputToUse).value="Enter Correct Number!";
+                  if(document.getElementById(fiatInputToUse).value == "")
+                    document.getElementById(cryptoInputToUse).value="";
                   return;
                 }
-                document.getElementById("CryptoInput").value=(parseFloat((document.getElementById("FiatInput").value).replace(/,/g, ''))/currTopPriceAmount).toLocaleString();
+                document.getElementById(cryptoInputToUse).value=(parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, ''))/currTopPriceAmount).toLocaleString();
               }
-
+              //////////////////////////////////////////////////////////////////////////
               function openTab(evt, cityName) {
                 var i, tabcontent, tablinks;
                 tabcontent = document.getElementsByClassName("BuySellTabContent");
@@ -496,69 +513,8 @@
                 document.getElementById(cityName).style.display = "inline-block";
                 evt.currentTarget.className += " active";
               }
-
-              function buyPortfolio(portType){
-                var selectedCryptoValue=document.getElementById("cryptoSelectBoxBuy").value;
-                var selectedFiatValue=document.getElementById("fiatSelectBoxBuy").value;
-                var inputCryptoAmount=document.getElementById("cryptoInputBuy").value;
-                var inputFiatAmount=document.getElementById("fiatInputBuy").value;
-
-                if(isNaN(parseFloat((document.getElementById("inputCryptoAmount").value).replace(/,/g, ''))) || isNaN(parseFloat((document.getElementById("inputFiatAmount").value).replace(/,/g, ''))) || 
-                  document.getElementById("inputCryptoAmount").value == "" || document.getElementById("inputFiatAmount").value == "") {
-                  alert( "Please Enter Correct Details" );
-                  return;
-              }
-
-              $.ajax({
-                type: "POST",
-                url: "BuyPort.php",
-                data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
-              }).done(function( msg ) {
-                alert( "Data Saved: " + msg );
-              });
-            }
-
-            function sellPortfolio(portType){
-              var selectedCryptoValue=document.getElementById("cryptoSelectBoxSell").value;
-              var selectedFiatValue=document.getElementById("fiatSelectBoxSell").value;
-              var inputCryptoAmount=document.getElementById("cryptoInputSell").value;
-              var inputFiatAmount=document.getElementById("fiatInputSell").value;
-
-              if(isNaN(parseFloat((document.getElementById("inputCryptoAmount").value).replace(/,/g, ''))) || isNaN(parseFloat((document.getElementById("inputFiatAmount").value).replace(/,/g, ''))) || 
-                document.getElementById("inputCryptoAmount").value == "" || document.getElementById("inputFiatAmount").value == "") {
-                alert( "Please Enter Correct Details" );
-              return;
-            }
-
-            $.ajax({
-              type: "POST",
-              url: "SellPort.php",
-              data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
-            }).done(function( msg ) {
-              alert( "Data Saved: " + msg );
-            });
-          }
-
-          function updatePortfolio(portType){
-            var selectedCryptoValue=document.getElementById("cryptoSelectBoxUpdate").value;
-            var selectedFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
-            var inputCryptoAmount=document.getElementById("UpdateInputCryptoAmount").value;
-            var inputInvestCost=document.getElementById("UpdateInputInvestCost").value;
-
-            if(isNaN(parseFloat((document.getElementById("inputCryptoAmount").value).replace(/,/g, ''))) || isNaN(parseFloat((document.getElementById("inputInvestCost").value).replace(/,/g, ''))) || 
-              document.getElementById("inputCryptoAmount").value == "" || document.getElementById("inputInvestCost").value == "") {
-              alert( "Please Enter Correct Details" );
-            return;
-          }
-
-          $.ajax({
-            type: "POST",
-            url: "BuyPort.php",
-            data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, investCost : inputInvestCost, portfolioType : portType}
-          }).done(function( msg ) {
-            alert( "Data Saved: " + msg );
-          });
-        }
+              /////////////////////////////////////////////////////////////////////////
+              
       </script>           
       <!-- Main content -->
 
@@ -683,7 +639,7 @@
                       <div class="crypto-select" style="display: inline-block; float: left;">
                         <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
                         <select id="cryptoSelectBoxBuy" class="form-control select2" style="width:157px" >
-                          <option id="default-crypto" selected="selected">Bitcoin (BTC)</option>
+                          <option class="default-crypto" selected="selected">Bitcoin (BTC)</option>
                           <option>Ethereum (ETH)</option>
                           <option>Ripple (XRP)</option>
                           <option>Bitcoin Cash (BCH)</option>
@@ -697,7 +653,7 @@
                       <div class="fiat-select" style="display: inline-block; float: left;">
                         <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
                         <select id="fiatSelectBoxBuy" class="form-control select2" style="width:auto" onchange="selectFiat()">
-                          <option id="default-fiat" selected="selected">INR</option>
+                          <option class="default-fiat" selected="selected">INR</option>
                           <option>INR</option>
                           <option>USD</option>
                           <option>EUR</option>
@@ -707,7 +663,7 @@
                       </div>
                       <br>
                       <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id="CryptoInput cryptoInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat()" required>
+                        <input id="cryptoInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1)" required>
                         <!-- <span class="highlight"></span> -->
                         <span class="bar_convert" style="width: 100%"></span>
                         <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
@@ -715,14 +671,14 @@
                       </div>
                       <br>
                       <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id ="FiatInput fiatInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto()" required>
+                        <input id ="fiatInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1)" required>
                         <!-- <span class="highlight"></span> -->
                         <span class="bar_convert" style="width: 100%"></span>
                         <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
                       </div>
                       <br>
                       <br>
-                      <button onclick="buyPortfolio()" style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                      <button onclick='buyPortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                     </div>
                     <!-- /////////////////////////// -->
 
@@ -732,7 +688,7 @@
                       <div class="crypto-select" style="display: inline-block; float: left;">
                         <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
                         <select id="cryptoSelectBoxSell" class="form-control select2" style="width:157px" >
-                          <option id="default-crypto" selected="selected">Bitcoin (BTC)</option>
+                          <option class="default-crypto" selected="selected">Bitcoin (BTC)</option>
                           <option>Ethereum (ETH)</option>
                           <option>Ripple (XRP)</option>
                           <option>Bitcoin Cash (BCH)</option>
@@ -746,7 +702,7 @@
                       <div class="fiat-select" style="display: inline-block; float: left;">
                         <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
                         <select id="fiatSelectBoxSell" class="form-control select2" style="width:auto" onchange="selectFiat()">
-                          <option id="default-fiat" selected="selected">INR</option>
+                          <option class="default-fiat" selected="selected">INR</option>
                           <option>INR</option>
                           <option>USD</option>
                           <option>EUR</option>
@@ -756,7 +712,7 @@
                       </div>
                       <br>
                       <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id="CryptoInput cryptoInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat()" required>
+                        <input id="cryptoInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2)" required>
                         <!-- <span class="highlight"></span> -->
                         <span class="bar_convert" style="width: 100%"></span>
                         <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
@@ -764,14 +720,14 @@
                       </div>
                       <br>
                       <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id ="FiatInput fiatInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto()" required>
+                        <input id ="fiatInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2)" required>
                         <!-- <span class="highlight"></span> -->
                         <span class="bar_convert" style="width: 100%"></span>
                         <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
                       </div>
                       <br>
                       <br>
-                      <button onclick="sellPortfolio()" style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                      <button onclick='sellPortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                     </div>
                     <!-- ////////////////////////////// -->
                     <div id="UpdateTab" class="BuySellTabContent">
@@ -779,7 +735,7 @@
                       <div class="crypto-select" style="display: inline-block; float: left;">
                         <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
                         <select id="cryptoSelectBoxUpdate" class="form-control select2" style="width:157px" >
-                          <option id="default-crypto" selected="selected">Bitcoin (BTC)</option>
+                          <option class="default-crypto" selected="selected">Bitcoin (BTC)</option>
                           <option>Ethereum (ETH)</option>
                           <option>Ripple (XRP)</option>
                           <option>Bitcoin Cash (BCH)</option>
@@ -793,7 +749,7 @@
                       <div class="fiat-select" style="display: inline-block; float: left;">
                         <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
                         <select id="fiatSelectBoxUpdate" class="form-control select2" style="width:auto" onchange="selectFiat()">
-                          <option id="default-fiat" selected="selected">INR</option>
+                          <option class="default-fiat" selected="selected">INR</option>
                           <option>INR</option>
                           <option>USD</option>
                           <option>EUR</option>
@@ -803,7 +759,7 @@
                       </div>
                       <br>
                       <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id="CryptoInput UpdateInputCryptoAmount" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
+                        <input id="UpdateInputCryptoAmount" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
                         <!-- <span class="highlight"></span> -->
                         <span class="bar_convert" style="width: 100%"></span>
                         <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
@@ -811,14 +767,14 @@
                       </div>
                       <br>
                       <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                        <input id ="FiatInput UpdateInputInvestCost" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
+                        <input id ="UpdateInputInvestCost" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
                         <!-- <span class="highlight"></span> -->
                         <span class="bar_convert" style="width: 100%"></span>
                         <label class="label_convert" style="font-size: 15px;left: 0">Investement Cost</label>
                       </div>
                       <br>
                       <br>
-                      <button onclick="updatePortfolio()" style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                      <button onclick='updatePortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                     </div>
                     <!-- ////////////////////////////// -->
                   </div>
@@ -868,6 +824,67 @@
           if( <?php echo $loggedIn ?> )
         </script>
           -->
+        <script type="text/javascript">
+            function buyPortfolio(portType){
+                var selectedCryptoValue=document.getElementById("cryptoSelectBoxBuy").value;
+                var selectedFiatValue=document.getElementById("fiatSelectBoxBuy").value;
+                var inputCryptoAmount=document.getElementById("cryptoInputBuy").value;
+                var inputFiatAmount=document.getElementById("fiatInputBuy").value;
+
+                if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
+                  alert( "Please Enter Correct Details" );
+                  return;
+              }
+
+              $.ajax({
+                type: "POST",
+                url: "BuyPort.php",
+                data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
+              }).done(function( msg ) {
+                alert( "Data Saved: " + msg );
+              });
+            }
+
+            function sellPortfolio(portType){
+              var selectedCryptoValue=document.getElementById("cryptoSelectBoxSell").value;
+              var selectedFiatValue=document.getElementById("fiatSelectBoxSell").value;
+              var inputCryptoAmount=document.getElementById("cryptoInputSell").value;
+              var inputFiatAmount=document.getElementById("fiatInputSell").value;
+
+              if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
+                  alert( "Please Enter Correct Details" );
+                  return;
+              }
+
+            $.ajax({
+              type: "POST",
+              url: "SellPort.php",
+              data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
+            }).done(function( msg ) {
+              alert( "Data Saved: " + msg );
+            });
+          }
+
+          function updatePortfolio(portType){
+            var selectedCryptoValue=document.getElementById("cryptoSelectBoxUpdate").value;
+            var selectedFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
+            var inputCryptoAmount=document.getElementById("UpdateInputCryptoAmount").value;
+            var inputInvestCost=document.getElementById("UpdateInputInvestCost").value;
+
+            if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
+                  alert( "Please Enter Correct Details" );
+                  return;
+              }
+
+          $.ajax({
+            type: "POST",
+            url: "BuyPort.php",
+            data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, investCost : inputInvestCost, portfolioType : portType}
+          }).done(function( msg ) {
+            alert( "Data Saved: " + msg );
+          });
+        }
+        </script>>
         <footer class="main-footer">
           <div class="pull-right hidden-xs">
             <b>Version</b> 2.4.0

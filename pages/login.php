@@ -10,12 +10,14 @@ if(isset($_POST['signin'])){
   $password = $mysqli->real_escape_string($password);
 
   if($username!="" && $password!=""){
-    $sql = "SELECT `username`, `portfolio`  FROM `portfolio` WHERE `username` LIKE '$username' AND `password` LIKE '$password'";
+    $sql = "SELECT `userid`, `username`, `portfolio`  FROM `portfolio` WHERE `username` LIKE '$username' AND `password` LIKE '$password'";
     $result = $mysqli->query( $sql);
     $num_rows = $result->num_rows;
     $row = $result->fetch_assoc();
     if($num_rows==1){
       $_SESSION['cryptoview_user'] = $username;
+      $_SESSION['portfolio'] = $row["portfolio"];
+      $_SESSION['userid'] = $row["userid"];
       header("Location: ../dashboard.php");
     }else{
       echo "<script> alert('Username or password is incorrect'); </script>";
