@@ -2,6 +2,7 @@
 <html>
 <head>
   <?php
+  include ($_SERVER['DOCUMENT_ROOT'].'/pages/loginCheck.php');
   session_start();
   ?>
   <meta charset="utf-8">
@@ -25,7 +26,6 @@
     <!-- Data Tables -->
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- Morris chart -->
-    <link rel="stylesheet" href="bower_components/morris.js/morris.css">
     <!-- jvectormap -->
     <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
     <!-- Date Picker -->
@@ -463,891 +463,609 @@
             <script>
               var globalCryptoValue="BTC";
               var globalFiatValue="INR";
-            </script>            
-            <!-- Main content -->
-            <section class="content" style="padding-left:5px;padding-right:5px">
 
+              function convertToFiat(){
+                if(isNaN(parseFloat((document.getElementById("CryptoInput").value).replace(/,/g, '')))) {
+                  document.getElementById("FiatInput").value="Enter Correct Number!";
+                  if(document.getElementById("CryptoInput").value == "")
+                    document.getElementById("FiatInput").value="";
+                  return;
+                }
+                document.getElementById("FiatInput").value=(parseFloat((document.getElementById("CryptoInput").value).replace(/,/g, ''))*currTopPriceAmount).toLocaleString();
+              }
+              function convertToCrypto(){
+                if(isNaN(parseFloat((document.getElementById("FiatInput").value).replace(/,/g, '')))){
+                  document.getElementById("CryptoInput").value="Enter Correct Number!";
+                  if(document.getElementById("FiatInput").value == "")
+                    document.getElementById("CryptoInput").value="";
+                  return;
+                }
+                document.getElementById("CryptoInput").value=(parseFloat((document.getElementById("FiatInput").value).replace(/,/g, ''))/currTopPriceAmount).toLocaleString();
+              }
 
-              <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto">
-                <!-- <div class="col-md-6"> -->
-                  <!-- Custom Tabs -->
-                  <div class="nav-tabs-custom" style="margin:0">
-                    <ul class="nav nav-tabs">
-                      <li class="active portfolioTab"><a href="#tab_1" data-toggle="tab">Personal Portfolio</a></li>
-                      <li class="portfolioTab"><a href="#tab_2" data-toggle="tab">Practice Portfolio</a></li>
-                    </ul>
-                    <div class="tab-content">
-                      <div class="tab-pane active" id="tab_1">
+              function openTab(evt, cityName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("BuySellTabContent");
+                for (i = 0; i < tabcontent.length; i++) {
+                  tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                  tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(cityName).style.display = "inline-block";
+                evt.currentTarget.className += " active";
+              }
 
-                        <!-- <div class="col-md-6" > -->
-                          <div class="row col-md-6" style="margin: 0; padding: 0">
-                            <div class="box-body no-padding" style="overflow-x: auto">
-                              <table class="table table-condensed table-striped">
-                                <tr>
-                                  <th style="width: 10px">#</th>
-                                  <th>Name</th>
-                                  <th>Quantity</th>
-                                  <th>Investment</th>
-                                  <th>Value</th>
-                                  <th style="width: 80px">%</th>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>58569689.56</td>
-                                  <td>98569689.56</td>
-                                  <td><span class="badge bg-green">55%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>98569689.56</td>
-                                  <td>58569689.56</td>
-                                  <td><span class="badge bg-red">55%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>58569689.56</td>
-                                  <td>98569689.56</td>
-                                  <td><span class="badge bg-green">55%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>58569689.56</td>
-                                  <td>98569689.56</td>
-                                  <td><span class="badge bg-green">500%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>98569689.56</td>
-                                  <td>58569689.56</td>
-                                  <td><span class="badge bg-red">55%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>58569689.56</td>
-                                  <td>98569689.56</td>
-                                  <td><span class="badge bg-green">1015654.56%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>58569689.56</td>
-                                  <td>98569689.56</td>
-                                  <td><span class="badge bg-green">55%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>58569689.56</td>
-                                  <td>98569689.56</td>
-                                  <td><span class="badge bg-green">55%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>58569689.56</td>
-                                  <td>98569689.56</td>
-                                  <td><span class="badge bg-green">55%</span></td>
-                                </tr>
-                                <tr>
-                                  <td>1.</td>
-                                  <td>Ethereum Classic</td>
-                                  <td>9999999.6523</td>
-                                  <td>58569689.56</td>
-                                  <td>98569689.56</td>
-                                  <td><span class="badge bg-green">55%</span></td>
-                                </tr>
-                              </table>
-                            </div>
-                            <!-- /.col -->
-                          </div>
-                          <!-- /.row -->
-                          <!-- //////////////////////////////////////////////////////// -->
-                          <div class="BuySellTabHolder col-md-6">
-                            <div class="BuySellTab">
-                              <button class="tablinks" onclick="openTab(event, 'BuyTab')">Buy</button>
-                              <button class="tablinks" onclick="openTab(event, 'SellTab')">Sell</button>
-                            </div>
+              function buyPortfolio(portType){
+                var selectedCryptoValue=document.getElementById("cryptoSelectBoxBuy").value;
+                var selectedFiatValue=document.getElementById("fiatSelectBoxBuy").value;
+                var inputCryptoAmount=document.getElementById("cryptoInputBuy").value;
+                var inputFiatAmount=document.getElementById("fiatInputBuy").value;
 
-                            <div id="BuyTab" class="BuySellTabContent">
-                              <h3>London</h3>
-                              <p>London is the capital city of England.</p>
-                            </div>
+                if(isNaN(parseFloat((document.getElementById("inputCryptoAmount").value).replace(/,/g, ''))) || isNaN(parseFloat((document.getElementById("inputFiatAmount").value).replace(/,/g, ''))) || 
+                  document.getElementById("inputCryptoAmount").value == "" || document.getElementById("inputFiatAmount").value == "") {
+                  alert( "Please Enter Correct Details" );
+                  return;
+              }
 
-                            <div id="SellTab" class="BuySellTabContent">
-                              <h3>Paris</h3>
-                              <p>Paris is the capital of France.</p> 
-                            </div>
-                          </div>
+              $.ajax({
+                type: "POST",
+                url: "BuyPort.php",
+                data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
+              }).done(function( msg ) {
+                alert( "Data Saved: " + msg );
+              });
+            }
 
-                          <script>
-                            function openTab(evt, cityName) {
-                              var i, tabcontent, tablinks;
-                              tabcontent = document.getElementsByClassName("BuySellTabContent");
-                              for (i = 0; i < tabcontent.length; i++) {
-                                tabcontent[i].style.display = "none";
-                              }
-                              tablinks = document.getElementsByClassName("tablinks");
-                              for (i = 0; i < tablinks.length; i++) {
-                                tablinks[i].className = tablinks[i].className.replace(" active", "");
-                              }
-                              document.getElementById(cityName).style.display = "block";
-                              evt.currentTarget.className += " active";
-                            }
-                          </script>
+            function sellPortfolio(portType){
+              var selectedCryptoValue=document.getElementById("cryptoSelectBoxSell").value;
+              var selectedFiatValue=document.getElementById("fiatSelectBoxSell").value;
+              var inputCryptoAmount=document.getElementById("cryptoInputSell").value;
+              var inputFiatAmount=document.getElementById("fiatInputSell").value;
 
+              if(isNaN(parseFloat((document.getElementById("inputCryptoAmount").value).replace(/,/g, ''))) || isNaN(parseFloat((document.getElementById("inputFiatAmount").value).replace(/,/g, ''))) || 
+                document.getElementById("inputCryptoAmount").value == "" || document.getElementById("inputFiatAmount").value == "") {
+                alert( "Please Enter Correct Details" );
+              return;
+            }
 
-                          <!-- //////////////////////////////////////////////////////// -->
-                          <div class="row col-md-6">
-                            <b>How to use:</b>
+            $.ajax({
+              type: "POST",
+              url: "SellPort.php",
+              data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
+            }).done(function( msg ) {
+              alert( "Data Saved: " + msg );
+            });
+          }
 
-                            <p>Exactly like the original bootstrap tabs except you should use
-                              the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
-                              A wonderful serenity has taken possession of my entire soul,
-                              like these sweet mornings of spring which I enjoy with my whole heart.
-                              I am alone, and feel the charm of existence in this spot,
-                              which was created for the bliss of souls like mine. I am so happy,
-                              my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
-                              that I neglect my talents. I should be incapable of drawing a single stroke
-                              at the present moment; and yet I feel that I never was a greater artist than now.
-                            </div>
-                          </div>
-                          <!-- </div> -->
-                          <!-- /.tab-pane -->
-                          <div class="tab-pane" id="tab_2">
-                            The European languages are members of the same family. Their separate existence is a myth.
-                            For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                            in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                            new common language would be desirable: one could refuse to pay expensive translators. To
-                            achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                            words. If several languages coalesce, the grammar of the resulting language is more simple
-                            and regular than that of the individual languages.
-                          </div>
-                          <!-- /.tab-pane -->
-                          <!-- /.tab-pane -->
-                        </div>
-                        <!-- /.tab-content -->
-                        <!-- </div> -->
-                        <!-- nav-tabs-custom -->
-                      </div>
-                      <!-- /.col -->
+          function updatePortfolio(portType){
+            var selectedCryptoValue=document.getElementById("cryptoSelectBoxUpdate").value;
+            var selectedFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
+            var inputCryptoAmount=document.getElementById("UpdateInputCryptoAmount").value;
+            var inputInvestCost=document.getElementById("UpdateInputInvestCost").value;
+
+            if(isNaN(parseFloat((document.getElementById("inputCryptoAmount").value).replace(/,/g, ''))) || isNaN(parseFloat((document.getElementById("inputInvestCost").value).replace(/,/g, ''))) || 
+              document.getElementById("inputCryptoAmount").value == "" || document.getElementById("inputInvestCost").value == "") {
+              alert( "Please Enter Correct Details" );
+            return;
+          }
+
+          $.ajax({
+            type: "POST",
+            url: "BuyPort.php",
+            data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, investCost : inputInvestCost, portfolioType : portType}
+          }).done(function( msg ) {
+            alert( "Data Saved: " + msg );
+          });
+        }
+      </script>           
+      <!-- Main content -->
+
+      <section class="content" style="padding-left:5px;padding-right:5px;">
+        <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto">
+          <!-- <div class="col-md-6"> -->
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom" style="margin:0">
+              <ul class="nav nav-tabs">
+                <li class="active portfolioTab"><a href="#tab_1" data-toggle="tab">Personal Portfolio</a></li>
+                <li class="portfolioTab"><a href="#tab_2" data-toggle="tab">Practice Portfolio</a></li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+
+                  <div class="row col-md-6" style="margin: 0; padding: 0">
+                    <div class="box-body no-padding" style="overflow-x: auto">
+                      <table class="table table-condensed table-striped">
+                        <tr>
+                          <th style="width: 10px">#</th>
+                          <th>Name</th>
+                          <th>Quantity</th>
+                          <th>Investment</th>
+                          <th>Value</th>
+                          <th style="width: 80px">%</th>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>58569689.56</td>
+                          <td>98569689.56</td>
+                          <td><span class="badge bg-green">55%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>98569689.56</td>
+                          <td>58569689.56</td>
+                          <td><span class="badge bg-red">55%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>58569689.56</td>
+                          <td>98569689.56</td>
+                          <td><span class="badge bg-green">55%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>58569689.56</td>
+                          <td>98569689.56</td>
+                          <td><span class="badge bg-green">500%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>98569689.56</td>
+                          <td>58569689.56</td>
+                          <td><span class="badge bg-red">55%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>58569689.56</td>
+                          <td>98569689.56</td>
+                          <td><span class="badge bg-green">1015654.56%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>58569689.56</td>
+                          <td>98569689.56</td>
+                          <td><span class="badge bg-green">55%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>58569689.56</td>
+                          <td>98569689.56</td>
+                          <td><span class="badge bg-green">55%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>58569689.56</td>
+                          <td>98569689.56</td>
+                          <td><span class="badge bg-green">55%</span></td>
+                        </tr>
+                        <tr>
+                          <td>1.</td>
+                          <td>Ethereum Classic</td>
+                          <td>9999999.6523</td>
+                          <td>58569689.56</td>
+                          <td>98569689.56</td>
+                          <td><span class="badge bg-green">55%</span></td>
+                        </tr>
+                      </table>
                     </div>
-
-                    <!-- Small boxes (Stat box) -->
-                    <div class="row">
-                      <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-aqua">
-                          <div class="inner">
-                            <h3>150</h3>
-
-                            <p>New Orders</p>
-                          </div>
-                          <div class="icon">
-                            <i class="ion ion-bag"></i>
-                          </div>
-                          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <!-- ./col -->
-                      <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-green">
-                          <div class="inner">
-                            <h3>53<sup style="font-size: 20px">%</sup></h3>
-
-                            <p>Bounce Rate</p>
-                          </div>
-                          <div class="icon">
-                            <i class="ion ion-stats-bars"></i>
-                          </div>
-                          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <!-- ./col -->
-                      <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-yellow">
-                          <div class="inner">
-                            <h3>44</h3>
-
-                            <p>User Registrations</p>
-                          </div>
-                          <div class="icon">
-                            <i class="ion ion-person-add"></i>
-                          </div>
-                          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <!-- ./col -->
-                      <div class="col-lg-3 col-xs-6">
-                        <!-- small box -->
-                        <div class="small-box bg-red">
-                          <div class="inner">
-                            <h3>65</h3>
-
-                            <p>Unique Visitors</p>
-                          </div>
-                          <div class="icon">
-                            <i class="ion ion-pie-graph"></i>
-                          </div>
-                          <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
-                        </div>
-                      </div>
-                      <!-- ./col -->
+                    <!-- /.col -->
+                  </div>
+                  <!-- /.row -->
+                  <!-- //////////////////////////////////////////////////////// -->
+                  <div class="BuySellTabHolder col-md-6">
+                    <div class="BuySellTab">
+                      <button class="tablinks active" onclick="openTab(event, 'BuyTab')">Buy</button>
+                      <button class="tablinks" onclick="openTab(event, 'SellTab')">Sell</button>
+                      <button class="tablinks" onclick="openTab(event, 'UpdateTab')">Update</button>
                     </div>
-                    <!-- /.row -->
-                    <!-- Main row -->
-                    <div class="row">
-                      <!-- Left col -->
-                      <section class="col-lg-7 connectedSortable">
-                        <!-- Custom tabs (Charts with tabs)-->
-                        <div class="nav-tabs-custom">
-                          <!-- Tabs within a box -->
-                          <ul class="nav nav-tabs pull-right">
-                            <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-                            <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-                            <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
-                          </ul>
-                          <div class="tab-content no-padding">
-                            <!-- Morris chart - Sales -->
-                            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;"></div>
-                            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;"></div>
-                          </div>
-                        </div>
-                        <!-- /.nav-tabs-custom -->
-
-                        <!-- Chat box -->
-                        <div class="box box-success">
-                          <div class="box-header">
-                            <i class="fa fa-comments-o"></i>
-
-                            <h3 class="box-title">Chat</h3>
-
-                            <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
-                              <div class="btn-group" data-toggle="btn-toggle">
-                                <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i>
-                                </button>
-                                <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="box-body chat" id="chat-box">
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="dist/img/user4-128x128.jpg" alt="user image" class="online">
-
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                                  Mike Doe
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                              <div class="attachment">
-                                <h4>Attachments:</h4>
-
-                                <p class="filename">
-                                  Theme-thumbnail-image.jpg
-                                </p>
-
-                                <div class="pull-right">
-                                  <button type="button" class="btn btn-primary btn-sm btn-flat">Open</button>
-                                </div>
-                              </div>
-                              <!-- /.attachment -->
-                            </div>
-                            <!-- /.item -->
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="dist/img/user3-128x128.jpg" alt="user image" class="offline">
-
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                                  Alexander Pierce
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                            </div>
-                            <!-- /.item -->
-                            <!-- chat item -->
-                            <div class="item">
-                              <img src="dist/img/user2-160x160.jpg" alt="user image" class="offline">
-
-                              <p class="message">
-                                <a href="#" class="name">
-                                  <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                                  Susan Doe
-                                </a>
-                                I would like to meet you to discuss the latest news about
-                                the arrival of the new theme. They say it is going to be one the
-                                best themes on the market
-                              </p>
-                            </div>
-                            <!-- /.item -->
-                          </div>
-                          <!-- /.chat -->
-                          <div class="box-footer">
-                            <div class="input-group">
-                              <input class="form-control" placeholder="Type message...">
-
-                              <div class="input-group-btn">
-                                <button type="button" class="btn btn-success"><i class="fa fa-plus"></i></button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- /.box (chat box) -->
-
-                        <!-- TO DO List -->
-                        <div class="box box-primary">
-                          <div class="box-header">
-                            <i class="ion ion-clipboard"></i>
-
-                            <h3 class="box-title">To Do List</h3>
-
-                            <div class="box-tools pull-right">
-                              <ul class="pagination pagination-sm inline">
-                                <li><a href="#">&laquo;</a></li>
-                                <li><a href="#">1</a></li>
-                                <li><a href="#">2</a></li>
-                                <li><a href="#">3</a></li>
-                                <li><a href="#">&raquo;</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                          <!-- /.box-header -->
-                          <div class="box-body">
-                            <!-- See dist/js/pages/dashboard.js to activate the todoList plugin -->
-                            <ul class="todo-list">
-                              <li>
-                                <!-- drag handle -->
-                                <span class="handle">
-                                  <i class="fa fa-ellipsis-v"></i>
-                                  <i class="fa fa-ellipsis-v"></i>
-                                </span>
-                                <!-- checkbox -->
-                                <input type="checkbox" value="">
-                                <!-- todo text -->
-                                <span class="text">Design a nice theme</span>
-                                <!-- Emphasis label -->
-                                <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
-                                <!-- General tools such as edit or delete-->
-                                <div class="tools">
-                                  <i class="fa fa-edit"></i>
-                                  <i class="fa fa-trash-o"></i>
-                                </div>
-                              </li>
-                              <li>
-                                <span class="handle">
-                                  <i class="fa fa-ellipsis-v"></i>
-                                  <i class="fa fa-ellipsis-v"></i>
-                                </span>
-                                <input type="checkbox" value="">
-                                <span class="text">Make the theme responsive</span>
-                                <small class="label label-info"><i class="fa fa-clock-o"></i> 4 hours</small>
-                                <div class="tools">
-                                  <i class="fa fa-edit"></i>
-                                  <i class="fa fa-trash-o"></i>
-                                </div>
-                              </li>
-                              <li>
-                                <span class="handle">
-                                  <i class="fa fa-ellipsis-v"></i>
-                                  <i class="fa fa-ellipsis-v"></i>
-                                </span>
-                                <input type="checkbox" value="">
-                                <span class="text">Let theme shine like a star</span>
-                                <small class="label label-warning"><i class="fa fa-clock-o"></i> 1 day</small>
-                                <div class="tools">
-                                  <i class="fa fa-edit"></i>
-                                  <i class="fa fa-trash-o"></i>
-                                </div>
-                              </li>
-                              <li>
-                                <span class="handle">
-                                  <i class="fa fa-ellipsis-v"></i>
-                                  <i class="fa fa-ellipsis-v"></i>
-                                </span>
-                                <input type="checkbox" value="">
-                                <span class="text">Let theme shine like a star</span>
-                                <small class="label label-success"><i class="fa fa-clock-o"></i> 3 days</small>
-                                <div class="tools">
-                                  <i class="fa fa-edit"></i>
-                                  <i class="fa fa-trash-o"></i>
-                                </div>
-                              </li>
-                              <li>
-                                <span class="handle">
-                                  <i class="fa fa-ellipsis-v"></i>
-                                  <i class="fa fa-ellipsis-v"></i>
-                                </span>
-                                <input type="checkbox" value="">
-                                <span class="text">Check your messages and notifications</span>
-                                <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 week</small>
-                                <div class="tools">
-                                  <i class="fa fa-edit"></i>
-                                  <i class="fa fa-trash-o"></i>
-                                </div>
-                              </li>
-                              <li>
-                                <span class="handle">
-                                  <i class="fa fa-ellipsis-v"></i>
-                                  <i class="fa fa-ellipsis-v"></i>
-                                </span>
-                                <input type="checkbox" value="">
-                                <span class="text">Let theme shine like a star</span>
-                                <small class="label label-default"><i class="fa fa-clock-o"></i> 1 month</small>
-                                <div class="tools">
-                                  <i class="fa fa-edit"></i>
-                                  <i class="fa fa-trash-o"></i>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                          <!-- /.box-body -->
-                          <div class="box-footer clearfix no-border">
-                            <button type="button" class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
-                          </div>
-                        </div>
-                        <!-- /.box -->
-
-                        <!-- quick email widget -->
-                        <div class="box box-info">
-                          <div class="box-header">
-                            <i class="fa fa-envelope"></i>
-
-                            <h3 class="box-title">Quick Email</h3>
-                            <!-- tools box -->
-                            <div class="pull-right box-tools">
-                              <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
-                              title="Remove">
-                              <i class="fa fa-times"></i></button>
-                            </div>
-                            <!-- /. tools -->
-                          </div>
-                          <div class="box-body">
-                            <form action="#" method="post">
-                              <div class="form-group">
-                                <input type="email" class="form-control" name="emailto" placeholder="Email to:">
-                              </div>
-                              <div class="form-group">
-                                <input type="text" class="form-control" name="subject" placeholder="Subject">
-                              </div>
-                              <div>
-                                <textarea class="textarea" placeholder="Message"
-                                style="width: 100%; height: 125px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
-                              </div>
-                            </form>
-                          </div>
-                          <div class="box-footer clearfix">
-                            <button type="button" class="pull-right btn btn-default" id="sendEmail">Send
-                              <i class="fa fa-arrow-circle-right"></i></button>
-                            </div>
-                          </div>
-
-                        </section>
-                        <!-- /.Left col -->
-                        <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                        <section class="col-lg-5 connectedSortable">
-
-                          <!-- Map box -->
-                          <div class="box box-solid bg-light-blue-gradient">
-                            <div class="box-header">
-                              <!-- tools box -->
-                              <div class="pull-right box-tools">
-                                <button type="button" class="btn btn-primary btn-sm daterange pull-right" data-toggle="tooltip"
-                                title="Date range">
-                                <i class="fa fa-calendar"></i></button>
-                                <button type="button" class="btn btn-primary btn-sm pull-right" data-widget="collapse"
-                                data-toggle="tooltip" title="Collapse" style="margin-right: 5px;">
-                                <i class="fa fa-minus"></i></button>
-                              </div>
-                              <!-- /. tools -->
-
-                              <i class="fa fa-map-marker"></i>
-
-                              <h3 class="box-title">
-                                Visitors
-                              </h3>
-                            </div>
-                            <div class="box-body">
-                              <div id="world-map" style="height: 250px; width: 100%;"></div>
-                            </div>
-                            <!-- /.box-body-->
-                            <div class="box-footer no-border">
-                              <div class="row">
-                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                  <div id="sparkline-1"></div>
-                                  <div class="knob-label">Visitors</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                  <div id="sparkline-2"></div>
-                                  <div class="knob-label">Online</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-xs-4 text-center">
-                                  <div id="sparkline-3"></div>
-                                  <div class="knob-label">Exists</div>
-                                </div>
-                                <!-- ./col -->
-                              </div>
-                              <!-- /.row -->
-                            </div>
-                          </div>
-                          <!-- /.box -->
-
-                          <!-- solid sales graph -->
-                          <div class="box box-solid bg-teal-gradient">
-                            <div class="box-header">
-                              <i class="fa fa-th"></i>
-
-                              <h3 class="box-title">Sales Graph</h3>
-
-                              <div class="box-tools pull-right">
-                                <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-                                </button>
-                              </div>
-                            </div>
-                            <div class="box-body border-radius-none">
-                              <div class="chart" id="line-chart" style="height: 250px;"></div>
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer no-border">
-                              <div class="row">
-                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                  <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                                  data-fgColor="#39CCCC">
-
-                                  <div class="knob-label">Mail-Orders</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                                  <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                                  data-fgColor="#39CCCC">
-
-                                  <div class="knob-label">Online</div>
-                                </div>
-                                <!-- ./col -->
-                                <div class="col-xs-4 text-center">
-                                  <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                                  data-fgColor="#39CCCC">
-
-                                  <div class="knob-label">In-Store</div>
-                                </div>
-                                <!-- ./col -->
-                              </div>
-                              <!-- /.row -->
-                            </div>
-                            <!-- /.box-footer -->
-                          </div>
-                          <!-- /.box -->
-
-                          <!-- Calendar -->
-                          <div class="box box-solid bg-green-gradient">
-                            <div class="box-header">
-                              <i class="fa fa-calendar"></i>
-
-                              <h3 class="box-title">Calendar</h3>
-                              <!-- tools box -->
-                              <div class="pull-right box-tools">
-                                <!-- button with a dropdown -->
-                                <div class="btn-group">
-                                  <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fa fa-bars"></i></button>
-                                    <ul class="dropdown-menu pull-right" role="menu">
-                                      <li><a href="#">Add new event</a></li>
-                                      <li><a href="#">Clear events</a></li>
-                                      <li class="divider"></li>
-                                      <li><a href="#">View calendar</a></li>
-                                    </ul>
-                                  </div>
-                                  <button type="button" class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
-                                  </button>
-                                  <button type="button" class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i>
-                                  </button>
-                                </div>
-                                <!-- /. tools -->
-                              </div>
-                              <!-- /.box-header -->
-                              <div class="box-body no-padding">
-                                <!--The calendar -->
-                                <div id="calendar" style="width: 100%"></div>
-                              </div>
-                              <!-- /.box-body -->
-                              <div class="box-footer text-black">
-                                <div class="row">
-                                  <div class="col-sm-6">
-                                    <!-- Progress bars -->
-                                    <div class="clearfix">
-                                      <span class="pull-left">Task #1</span>
-                                      <small class="pull-right">90%</small>
-                                    </div>
-                                    <div class="progress xs">
-                                      <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
-                                    </div>
-
-                                    <div class="clearfix">
-                                      <span class="pull-left">Task #2</span>
-                                      <small class="pull-right">70%</small>
-                                    </div>
-                                    <div class="progress xs">
-                                      <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
-                                    </div>
-                                  </div>
-                                  <!-- /.col -->
-                                  <div class="col-sm-6">
-                                    <div class="clearfix">
-                                      <span class="pull-left">Task #3</span>
-                                      <small class="pull-right">60%</small>
-                                    </div>
-                                    <div class="progress xs">
-                                      <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
-                                    </div>
-
-                                    <div class="clearfix">
-                                      <span class="pull-left">Task #4</span>
-                                      <small class="pull-right">40%</small>
-                                    </div>
-                                    <div class="progress xs">
-                                      <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
-                                    </div>
-                                  </div>
-                                  <!-- /.col -->
-                                </div>
-                                <!-- /.row -->
-                              </div>
-                            </div>
-                            <!-- /.box -->
-
-                          </section>
-                          <!-- right col -->
-                        </div>
-                        <!-- /.row (main row) -->
-                      </section>
-                      <!-- /.content -->
+                    <br>
+                    <div id="BuyTab" class="BuySellTabContent" style="display: inline-block;">
+                      <br>
+                      <div class="crypto-select" style="display: inline-block; float: left;">
+                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                        <select id="cryptoSelectBoxBuy" class="form-control select2" style="width:157px" >
+                          <option id="default-crypto" selected="selected">Bitcoin (BTC)</option>
+                          <option>Ethereum (ETH)</option>
+                          <option>Ripple (XRP)</option>
+                          <option>Bitcoin Cash (BCH)</option>
+                          <option>Litecoin (LTC)</option>
+                          <option>Tron (TRX)</option>
+                          <option>Dash (DASH)</option>
+                        </select>
+                      </div>
+                      <br>
+                      <br>
+                      <div class="fiat-select" style="display: inline-block; float: left;">
+                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                        <select id="fiatSelectBoxBuy" class="form-control select2" style="width:auto" onchange="selectFiat()">
+                          <option id="default-fiat" selected="selected">INR</option>
+                          <option>INR</option>
+                          <option>USD</option>
+                          <option>EUR</option>
+                          <option>JPY</option>
+                          <option>CNY</option>
+                        </select>
+                      </div>
+                      <br>
+                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                        <input id="CryptoInput cryptoInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat()" required>
+                        <!-- <span class="highlight"></span> -->
+                        <span class="bar_convert" style="width: 100%"></span>
+                        <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                        <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                      </div>
+                      <br>
+                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                        <input id ="FiatInput fiatInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto()" required>
+                        <!-- <span class="highlight"></span> -->
+                        <span class="bar_convert" style="width: 100%"></span>
+                        <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
+                      </div>
+                      <br>
+                      <br>
+                      <button onclick="buyPortfolio()" style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                     </div>
-                    <!-- /.content-wrapper -->
-                    <footer class="main-footer">
-                      <div class="pull-right hidden-xs">
-                        <b>Version</b> 2.4.0
+                    <!-- /////////////////////////// -->
+
+                    <!-- ////////////////////////////// -->
+                    <div id="SellTab" class="BuySellTabContent">
+                      <br>
+                      <div class="crypto-select" style="display: inline-block; float: left;">
+                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                        <select id="cryptoSelectBoxSell" class="form-control select2" style="width:157px" >
+                          <option id="default-crypto" selected="selected">Bitcoin (BTC)</option>
+                          <option>Ethereum (ETH)</option>
+                          <option>Ripple (XRP)</option>
+                          <option>Bitcoin Cash (BCH)</option>
+                          <option>Litecoin (LTC)</option>
+                          <option>Tron (TRX)</option>
+                          <option>Dash (DASH)</option>
+                        </select>
                       </div>
-                      <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-                      reserved.
-                    </footer>
-
-                    <!-- Control Sidebar -->
-                    <aside class="control-sidebar control-sidebar-dark">
-                      <!-- Create the tabs -->
-                      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                        <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-                        <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-                      </ul>
-                      <!-- Tab panes -->
-                      <div class="tab-content">
-                        <!-- Home tab content -->
-                        <div class="tab-pane" id="control-sidebar-home-tab">
-                          <h3 class="control-sidebar-heading">Recent Activity</h3>
-                          <ul class="control-sidebar-menu">
-                            <li>
-                              <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                                <div class="menu-info">
-                                  <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                                  <p>Will be 23 on April 24th</p>
-                                </div>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                                <div class="menu-info">
-                                  <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                                  <p>New phone +1(800)555-1234</p>
-                                </div>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                                <div class="menu-info">
-                                  <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                                  <p>nora@example.com</p>
-                                </div>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="javascript:void(0)">
-                                <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                                <div class="menu-info">
-                                  <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                                  <p>Execution time 5 seconds</p>
-                                </div>
-                              </a>
-                            </li>
-                          </ul>
-                          <!-- /.control-sidebar-menu -->
-
-                          <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                          <ul class="control-sidebar-menu">
-                            <li>
-                              <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                  Custom Template Design
-                                  <span class="label label-danger pull-right">70%</span>
-                                </h4>
-
-                                <div class="progress progress-xxs">
-                                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                                </div>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                  Update Resume
-                                  <span class="label label-success pull-right">95%</span>
-                                </h4>
-
-                                <div class="progress progress-xxs">
-                                  <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                                </div>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                  Laravel Integration
-                                  <span class="label label-warning pull-right">50%</span>
-                                </h4>
-
-                                <div class="progress progress-xxs">
-                                  <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                                </div>
-                              </a>
-                            </li>
-                            <li>
-                              <a href="javascript:void(0)">
-                                <h4 class="control-sidebar-subheading">
-                                  Back End Framework
-                                  <span class="label label-primary pull-right">68%</span>
-                                </h4>
-
-                                <div class="progress progress-xxs">
-                                  <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                                </div>
-                              </a>
-                            </li>
-                          </ul>
-                          <!-- /.control-sidebar-menu -->
-
-                        </div>
-                        <!-- /.tab-pane -->
-                        <!-- Stats tab content -->
-                        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-                        <!-- /.tab-pane -->
-                        <!-- Settings tab content -->
-                        <div class="tab-pane" id="control-sidebar-settings-tab">
-                          <form method="post">
-                            <h3 class="control-sidebar-heading">General Settings</h3>
-
-                            <div class="form-group">
-                              <label class="control-sidebar-subheading">
-                                Report panel usage
-                                <input type="checkbox" class="pull-right" checked>
-                              </label>
-
-                              <p>
-                                Some information about this general settings option
-                              </p>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                              <label class="control-sidebar-subheading">
-                                Allow mail redirect
-                                <input type="checkbox" class="pull-right" checked>
-                              </label>
-
-                              <p>
-                                Other sets of options are available
-                              </p>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                              <label class="control-sidebar-subheading">
-                                Expose author name in posts
-                                <input type="checkbox" class="pull-right" checked>
-                              </label>
-
-                              <p>
-                                Allow the user to show his name in blog posts
-                              </p>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                            <div class="form-group">
-                              <label class="control-sidebar-subheading">
-                                Show me as online
-                                <input type="checkbox" class="pull-right" checked>
-                              </label>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                              <label class="control-sidebar-subheading">
-                                Turn off notifications
-                                <input type="checkbox" class="pull-right">
-                              </label>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                              <label class="control-sidebar-subheading">
-                                Delete chat history
-                                <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-                              </label>
-                            </div>
-                            <!-- /.form-group -->
-                          </form>
-                        </div>
-                        <!-- /.tab-pane -->
+                      <br>
+                      <br>
+                      <div class="fiat-select" style="display: inline-block; float: left;">
+                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                        <select id="fiatSelectBoxSell" class="form-control select2" style="width:auto" onchange="selectFiat()">
+                          <option id="default-fiat" selected="selected">INR</option>
+                          <option>INR</option>
+                          <option>USD</option>
+                          <option>EUR</option>
+                          <option>JPY</option>
+                          <option>CNY</option>
+                        </select>
                       </div>
-                    </aside>
-                    <!-- /.control-sidebar -->
+                      <br>
+                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                        <input id="CryptoInput cryptoInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat()" required>
+                        <!-- <span class="highlight"></span> -->
+                        <span class="bar_convert" style="width: 100%"></span>
+                        <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                        <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                      </div>
+                      <br>
+                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                        <input id ="FiatInput fiatInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto()" required>
+                        <!-- <span class="highlight"></span> -->
+                        <span class="bar_convert" style="width: 100%"></span>
+                        <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
+                      </div>
+                      <br>
+                      <br>
+                      <button onclick="sellPortfolio()" style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                    </div>
+                    <!-- ////////////////////////////// -->
+                    <div id="UpdateTab" class="BuySellTabContent">
+                      <br>
+                      <div class="crypto-select" style="display: inline-block; float: left;">
+                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                        <select id="cryptoSelectBoxUpdate" class="form-control select2" style="width:157px" >
+                          <option id="default-crypto" selected="selected">Bitcoin (BTC)</option>
+                          <option>Ethereum (ETH)</option>
+                          <option>Ripple (XRP)</option>
+                          <option>Bitcoin Cash (BCH)</option>
+                          <option>Litecoin (LTC)</option>
+                          <option>Tron (TRX)</option>
+                          <option>Dash (DASH)</option>
+                        </select>
+                      </div>
+                      <br>
+                      <br>
+                      <div class="fiat-select" style="display: inline-block; float: left;">
+                        <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                        <select id="fiatSelectBoxUpdate" class="form-control select2" style="width:auto" onchange="selectFiat()">
+                          <option id="default-fiat" selected="selected">INR</option>
+                          <option>INR</option>
+                          <option>USD</option>
+                          <option>EUR</option>
+                          <option>JPY</option>
+                          <option>CNY</option>
+                        </select>
+                      </div>
+                      <br>
+                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                        <input id="CryptoInput UpdateInputCryptoAmount" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
+                        <!-- <span class="highlight"></span> -->
+                        <span class="bar_convert" style="width: 100%"></span>
+                        <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
+                        <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                      </div>
+                      <br>
+                      <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                        <input id ="FiatInput UpdateInputInvestCost" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
+                        <!-- <span class="highlight"></span> -->
+                        <span class="bar_convert" style="width: 100%"></span>
+                        <label class="label_convert" style="font-size: 15px;left: 0">Investement Cost</label>
+                      </div>
+                      <br>
+                      <br>
+                      <button onclick="updatePortfolio()" style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                    </div>
+                    <!-- ////////////////////////////// -->
+                  </div>
+
+                  <!-- //////////////////////////////////////////////////////// -->
+                  <div class="row col-md-6">
+                    <b>How to use:</b>
+
+                    <p>Exactly like the original bootstrap tabs except you should use
+                      the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
+                      A wonderful serenity has taken possession of my entire soul,
+                      like these sweet mornings of spring which I enjoy with my whole heart.
+                      I am alone, and feel the charm of existence in this spot,
+                      which was created for the bliss of souls like mine. I am so happy,
+                      my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
+                      that I neglect my talents. I should be incapable of drawing a single stroke
+                      at the present moment; and yet I feel that I never was a greater artist than now.
+                    </div>
+                  </div>
+                  <!-- </div> -->
+                  <!-- /.tab-pane -->
+                  <div class="tab-pane" id="tab_2">
+                    The European languages are members of the same family. Their separate existence is a myth.
+                    For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
+                    in their grammar, their pronunciation and their most common words. Everyone realizes why a
+                    new common language would be desirable: one could refuse to pay expensive translators. To
+                    achieve this, it would be necessary to have uniform grammar, pronunciation and more common
+                    words. If several languages coalesce, the grammar of the resulting language is more simple
+                    and regular than that of the individual languages.
+                  </div>
+                  <!-- /.tab-pane -->
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+                <!-- </div> -->
+                <!-- nav-tabs-custom -->
+              </div>
+              <!-- /.col -->
+            </div>
+            <!-- /.row (main row) -->
+          </section>
+          <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+<!-- 
+        <script>
+          if( <?php echo $loggedIn ?> )
+        </script>
+          -->
+        <footer class="main-footer">
+          <div class="pull-right hidden-xs">
+            <b>Version</b> 2.4.0
+          </div>
+          <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+          reserved.
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+          <!-- Create the tabs -->
+          <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+          </ul>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+              <h3 class="control-sidebar-heading">Recent Activity</h3>
+              <ul class="control-sidebar-menu">
+                <li>
+                  <a href="javascript:void(0)">
+                    <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                    <div class="menu-info">
+                      <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                      <p>Will be 23 on April 24th</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                    <div class="menu-info">
+                      <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                      <p>New phone +1(800)555-1234</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                    <div class="menu-info">
+                      <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                      <p>nora@example.com</p>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                    <div class="menu-info">
+                      <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                      <p>Execution time 5 seconds</p>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+              <!-- /.control-sidebar-menu -->
+
+              <h3 class="control-sidebar-heading">Tasks Progress</h3>
+              <ul class="control-sidebar-menu">
+                <li>
+                  <a href="javascript:void(0)">
+                    <h4 class="control-sidebar-subheading">
+                      Custom Template Design
+                      <span class="label label-danger pull-right">70%</span>
+                    </h4>
+
+                    <div class="progress progress-xxs">
+                      <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    <h4 class="control-sidebar-subheading">
+                      Update Resume
+                      <span class="label label-success pull-right">95%</span>
+                    </h4>
+
+                    <div class="progress progress-xxs">
+                      <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    <h4 class="control-sidebar-subheading">
+                      Laravel Integration
+                      <span class="label label-warning pull-right">50%</span>
+                    </h4>
+
+                    <div class="progress progress-xxs">
+                      <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                    </div>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:void(0)">
+                    <h4 class="control-sidebar-subheading">
+                      Back End Framework
+                      <span class="label label-primary pull-right">68%</span>
+                    </h4>
+
+                    <div class="progress progress-xxs">
+                      <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+              <!-- /.control-sidebar-menu -->
+
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Stats tab content -->
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+              <form method="post">
+                <h3 class="control-sidebar-heading">General Settings</h3>
+
+                <div class="form-group">
+                  <label class="control-sidebar-subheading">
+                    Report panel usage
+                    <input type="checkbox" class="pull-right" checked>
+                  </label>
+
+                  <p>
+                    Some information about this general settings option
+                  </p>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                  <label class="control-sidebar-subheading">
+                    Allow mail redirect
+                    <input type="checkbox" class="pull-right" checked>
+                  </label>
+
+                  <p>
+                    Other sets of options are available
+                  </p>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                  <label class="control-sidebar-subheading">
+                    Expose author name in posts
+                    <input type="checkbox" class="pull-right" checked>
+                  </label>
+
+                  <p>
+                    Allow the user to show his name in blog posts
+                  </p>
+                </div>
+                <!-- /.form-group -->
+
+                <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                <div class="form-group">
+                  <label class="control-sidebar-subheading">
+                    Show me as online
+                    <input type="checkbox" class="pull-right" checked>
+                  </label>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                  <label class="control-sidebar-subheading">
+                    Turn off notifications
+                    <input type="checkbox" class="pull-right">
+                  </label>
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                  <label class="control-sidebar-subheading">
+                    Delete chat history
+                    <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                  </label>
+                </div>
+                <!-- /.form-group -->
+              </form>
+            </div>
+            <!-- /.tab-pane -->
+          </div>
+        </aside>
+        <!-- /.control-sidebar -->
                     <!-- Add the sidebar's background. This div must be placed
                       immediately after the control sidebar -->
                       <div class="control-sidebar-bg"></div>
@@ -1357,7 +1075,6 @@
                     
                     <!-- Morris.js charts -->
                     <script src="bower_components/raphael/raphael.min.js"></script>
-                    <script src="bower_components/morris.js/morris.min.js"></script>
                     <!-- Sparkline -->
                     <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
                     <!-- jvectormap -->
@@ -1380,7 +1097,7 @@
                     <!-- AdminLTE App -->
                     <script src="dist/js/adminlte.min.js"></script>
                     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-                    <script src="dist/js/pages/dashboard.js"></script>
+                    <!-- <script src="dist/js/pages/dashboard.js"></script> -->
                     <!-- AdminLTE for demo purposes -->
                     <script src="dist/js/demo.js"></script>
                     <!-- DataTables -->

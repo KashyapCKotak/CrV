@@ -29,17 +29,25 @@
 
 /* Change background color of buttons on hover */
 .BuySellTab button:hover {
-    background-color: #ddd;
+    background-color: #8bc3e4;
 }
 
 /* Create an active/current tablink class */
 .BuySellTab button.active {
-    background-color: #ccc;
+    background-color: #205a77;
+    color: #fff;
+}
+/*Main holder for buy sell tabs*/
+.BuySellTabHolder {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 /* Style the tab content */
 .BuySellTabContent {
     display: none;
+    width: 292px;
     padding: 6px 12px;
     -webkit-animation: fadeEffect 1s;
     animation: fadeEffect 1s;

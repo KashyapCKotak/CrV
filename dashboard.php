@@ -498,7 +498,7 @@
                   globalCryptoValue=document.getElementById("cryptoSelectBox").value.match(/\(([^)]+)\)/)[1];
                 }
                 function selectFiat(){
-                  globalFiatValue=document.getElementById("cryptoSelectBox").value;
+                  globalFiatValue=document.getElementById("fiatSelectBox").value;
                 }
               </script>
               <br class="break-enable">
@@ -620,7 +620,7 @@
                         <div class="box-body no-padding calculatorHolder">
                           <div class="group_convert claculatorComponents">      
                             <input id ="FiatInput" class="input_convert" type="text" oninput="convertToCrypto()" required>
-                            <span class="highlight"></span>
+                            <!-- <span class="highlight"></span> -->
                             <span class="bar_convert"></span>
                             <label class="label_convert">Fiat Currency</label>
                           </div>
@@ -629,7 +629,7 @@
                           </div>
                           <div class="group_convert claculatorComponents">      
                             <input id="CryptoInput" class="input_convert" type="text" oninput="convertToFiat()" required>
-                            <span class="highlight"></span>
+                            <!-- <span class="highlight"></span> -->
                             <span class="bar_convert"></span>
                             <label class="label_convert">Crypto Currency</label>
                           </div>
