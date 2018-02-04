@@ -12,12 +12,13 @@ function buyPortFunction() {
 	else if ($_POST["portfolioType"] == "practice") {
 		$portType = "prtc_portfolio";
 	}
+	$cryptoview_user=$_SESSION["cryptoview_user"];
 
-	$sql1 = "SELECT  '$portType'  FROM `portfolio` WHERE `username` LIKE '$_SESSION["cryptoview_user"]'";
-
+	$sql1 = "SELECT  '$portType'  FROM `portfolio` WHERE `username` LIKE '$cryptoview_user'";
 	$result1 = $mysqli->query( $sql);
 	$num_rows1 = $result->num_rows;
 	$row1 = $result->fetch_assoc();
+
 	if($num_rows1 == 1) {
 		$newArray = array ($crypto2 => array ($fiat1 => array ("invst" => $invst, "amt" => $amt)));
 		var_dump("----------NEW ARRAY---------");
@@ -42,14 +43,30 @@ function buyPortFunction() {
 		}
 		else {
 			var_dump("----------------FALSE");
-    //var_dump($newArray[$crypto2][$fiat1]["amt"]);
-			$tempArray["prsnprtf"][$crypto2]=$newArray[$crypto2]);
+			$tempArray["prsnprtf"][$crypto2]=$newArray[$crypto2];
 			var_dump($tempArray);
 			var_dump("----------------added crypto");
 		}
 		var_dump(json_encode($tempArray));
+		$sql1 = "UPDATE `portfolio` SET '$portType' = 'json_encode($tempArray)' WHERE `username` LIKE '$cryptoview_user'";
+		error_log(print_r($sql, TRUE)); 
+		if($result1 = $mysqli->query($sql)) {
+			if(($mysqli->affected_rows)==1) {
+				if(portType=="prsn_portfolio")
+					echo "Personal Portfolio Updated!";
+				if(portType=="prtc_portfolio")
+					echo "Practice Portfolio Updated!";
+			}
+			else {
+				echo "Updated, But something wrong while executing this operation. Please contact support immediately";
+			}
+		}
+		else {
+			echo "Update Unsuccessful";
+		}
 	}
 	else{
 		header("Location: /pages/login.php");
 	}
-	?>
+}
+?>

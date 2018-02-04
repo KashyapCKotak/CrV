@@ -473,7 +473,7 @@
               <div class="crypto-select">
                 <label class="label-enable">Crypto Currency: </label>
                 <select id="cryptoSelectBox" class="form-control select2" style="width:auto" onchange="selectCrypto()">
-                  <option id="default-crypto" selected="selected">Bitcoin (BTC)</option>
+                  <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
                   <option value="ETH">Ethereum (ETH)</option>
                   <option value="XRP">Ripple (XRP)</option>
                   <option value="BCH">Bitcoin Cash (BCH)</option>
@@ -495,7 +495,7 @@
               </div>
               <script>
                 function selectCrypto(){
-                  globalCryptoValue=document.getElementById("cryptoSelectBox").value.match(/\(([^)]+)\)/)[1];
+                  globalCryptoValue=document.getElementById("cryptoSelectBox").value;//.match(/\(([^)]+)\)/)[1];
                 }
                 function selectFiat(){
                   globalFiatValue=document.getElementById("fiatSelectBox").value;
