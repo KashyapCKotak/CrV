@@ -1,11 +1,19 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/AdminLTE-2.4.2/pages/dbconnect.php');
+session_start();
+//error_log("============================================================================================================================================================================================================================================");
+//don't display errors
+// ini_set('display_errors', 0);
+//write errors to log
+// ini_set('log_errors', 1);
+//error log file name
+// ini_set('log_errors', 'c:/wamp64/php_error.log');
+
+// error_reporting(E_ALL);
 
 // data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
 
 // '{"prsnprtf":{"ETH":{"invst":67900.5,"amt":"67950.0"},"BTC":{"invst":62800.0,"amt":"629999.0"},"LTC":{"invst":67900.5,"amt":"67950.0"},"XRP":{"invst":67900.5,"amt":"67950.0"}}}';
-
-function buyPortFunction() {
 	if($_POST["portfolioType"] == "personal") {
 		$portType = "prsn_portfolio";
 	}
@@ -14,47 +22,50 @@ function buyPortFunction() {
 	}
 	$cryptoview_user=$_SESSION["cryptoview_user"];
 
-	$sql1 = "SELECT  '$portType'  FROM `portfolio` WHERE `username` LIKE '$cryptoview_user'";
-	$result1 = $mysqli->query( $sql);
-	$num_rows1 = $result->num_rows;
-	$row1 = $result->fetch_assoc();
+	$sql1 = "SELECT  $portType  FROM `portfolio` WHERE `username` LIKE '$cryptoview_user'";
+	$result1 = $mysqli->query($sql1);
+	//error_log(json_encode($sql1));
+	$num_rows1 = $result1->num_rows;
+	$row1 = $result1->fetch_assoc();
 
 	if($num_rows1 == 1) {
-		$newArray = array ($crypto2 => array ($fiat1 => array ("invst" => $invst, "amt" => $amt)));
-		var_dump("----------NEW ARRAY---------");
-		var_dump($newArray);
-		var_dump("----------OLD ARRAY---------");
+		$newArray = array ($_POST['cryptoVal'] => array ($_POST['fiatVal'] => array ("invst" => $_POST['fiatAmt'], "amt" => $_POST['cryptoAmt'])));
+		//error_log("----------NEW ARRAY---------");
+		//error_log(json_encode($newArray));
+		//error_log("----------OLD ARRAY---------");
+		//error_log(json_encode($row1));
+		$tempArray = json_decode($row1[$portType], true);
+		//error_log(json_encode($tempArray));
 
-		$tempArray = json_decode($row[$portType], true);
-		var_dump($tempArray);
-
-		if(array_key_exists($crypto2, $tempArray["prsnprtf"])) {
-			var_dump("--------------crypto TRUE");
-			if(array_key_exists($fiat1, $tempArray["prsnprtf"][$crypto1])){
-				var_dump("-----------------fiat exists");
-				$tempArray["prsnprtf"][$crypto1][$fiat1]["invst"]=$tempArray["prsnprtf"][$crypto1][$fiat1]["invst"]+50;
-				var_dump($tempArray["prsnprtf"][$crypto1][$fiat1]["invst"]);
+		if(array_key_exists($_POST['cryptoVal'], $tempArray["prsnprtf"])) {
+			//error_log("--------------crypto TRUE");
+			if(array_key_exists($_POST['fiatVal'], $tempArray["prsnprtf"][$_POST['cryptoVal']])){
+				//error_log("-----------------fiat exists");
+				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]+$_POST['fiatAmt'];
+				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]+$_POST['cryptoAmt'];
+				// //error_log(print_r($tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]));
 			}
 			else{
-				var_dump("-----------------add fiat");
-				array_push($tempArray["prsnprtf"][$crypto1],$tempArray["prsnprtf"][$crypto1][$fiat1]=$newArray[$crypto1][$fiat1]);
-				var_dump($tempArray["prsnprtf"][$crypto1]);
+				//error_log("-----------------add fiat");
+				array_push($tempArray["prsnprtf"][$_POST['cryptoVal']],$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']]);
+				// //error_log(print_r($tempArray["prsnprtf"][$_POST['cryptoVal']]));
 			}
 		}
 		else {
-			var_dump("----------------FALSE");
-			$tempArray["prsnprtf"][$crypto2]=$newArray[$crypto2];
-			var_dump($tempArray);
-			var_dump("----------------added crypto");
+			//error_log("----------------FALSE");
+			$tempArray["prsnprtf"][$_POST['cryptoVal']]=$newArray[$_POST['cryptoVal']];
+			//error_log(json_encode($tempArray));
+			//error_log("----------------added crypto");
 		}
-		var_dump(json_encode($tempArray));
-		$sql1 = "UPDATE `portfolio` SET '$portType' = 'json_encode($tempArray)' WHERE `username` LIKE '$cryptoview_user'";
-		error_log(print_r($sql, TRUE)); 
-		if($result1 = $mysqli->query($sql)) {
+		$tempArrayString = json_encode($tempArray);
+		$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";
+		//error_log($sql2);
+		$mysqli->query($sql2);
+		if(($mysqli->affected_rows) > 0 ) {
 			if(($mysqli->affected_rows)==1) {
-				if(portType=="prsn_portfolio")
+				if($portType=="prsn_portfolio")
 					echo "Personal Portfolio Updated!";
-				if(portType=="prtc_portfolio")
+				if($portType=="prtc_portfolio")
 					echo "Practice Portfolio Updated!";
 			}
 			else {
@@ -68,5 +79,4 @@ function buyPortFunction() {
 	else{
 		header("Location: /pages/login.php");
 	}
-}
 ?>

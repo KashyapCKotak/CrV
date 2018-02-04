@@ -925,8 +925,8 @@
         function buyPortfolio(portType){
           var selectedCryptoValue=document.getElementById("cryptoSelectBoxBuy").value;
           var selectedFiatValue=document.getElementById("fiatSelectBoxBuy").value;
-          var inputCryptoAmount=document.getElementById("cryptoInputBuy").value;
-          var inputFiatAmount=document.getElementById("fiatInputBuy").value;
+          var inputCryptoAmount=document.getElementById("cryptoInputBuy").value.replace(/,/g, '');
+          var inputFiatAmount=document.getElementById("fiatInputBuy").value.replace(/,/g, '');
 
           if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
             alert( "Please Enter Correct Details" );
@@ -936,7 +936,7 @@
           $.ajax({
             type: "POST",
             url: "BuyPort.php",
-            data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
+            data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "fiatAmt" : inputFiatAmount, "portfolioType" : portType}
           }).done(function( msg ) {
             alert( "Data Saved: " + msg );
           });
@@ -945,8 +945,8 @@
         function sellPortfolio(portType){
           var selectedCryptoValue=document.getElementById("cryptoSelectBoxSell").value;
           var selectedFiatValue=document.getElementById("fiatSelectBoxSell").value;
-          var inputCryptoAmount=document.getElementById("cryptoInputSell").value;
-          var inputFiatAmount=document.getElementById("fiatInputSell").value;
+          var inputCryptoAmount=document.getElementById("cryptoInputSell").value.replace(/,/g, '');
+          var inputFiatAmount=document.getElementById("fiatInputSell").value.replace(/,/g, '');
 
           if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
             alert( "Please Enter Correct Details" );
@@ -956,7 +956,7 @@
           $.ajax({
             type: "POST",
             url: "SellPort.php",
-            data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
+            data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "fiatAmt" : inputFiatAmount, "portfolioType" : portType}
           }).done(function( msg ) {
             alert( "Data Saved: " + msg );
           });
@@ -965,8 +965,8 @@
         function updatePortfolio(portType){
           var selectedCryptoValue=document.getElementById("cryptoSelectBoxUpdate").value;
           var selectedFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
-          var inputCryptoAmount=document.getElementById("UpdateInputCryptoAmount").value;
-          var inputInvestCost=document.getElementById("UpdateInputInvestCost").value;
+          var inputCryptoAmount=document.getElementById("UpdateInputCryptoAmount").value.replace(/,/g, '');
+          var inputInvestCost=document.getElementById("UpdateInputInvestCost").value.replace(/,/g, '');
 
           if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
             alert( "Please Enter Correct Details" );
@@ -976,7 +976,7 @@
           $.ajax({
             type: "POST",
             url: "BuyPort.php",
-            data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, investCost : inputInvestCost, portfolioType : portType}
+            data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "investCost" : inputInvestCost, "portfolioType" : portType}
           }).done(function( msg ) {
             alert( "Data Saved: " + msg );
           });
