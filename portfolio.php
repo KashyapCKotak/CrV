@@ -503,7 +503,7 @@
                 }
                 else if (which==3){
                   updateFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
-                  currentCryptoValue=updateFiatValue;
+                  currentFiatValue=updateFiatValue;
                   updateCurrentRate(which);
                 }
               }
@@ -530,6 +530,7 @@
                 console.log("updating data");
                 console.log(which);
                 var rateUrl="https://min-api.cryptocompare.com/data/price?fsym="+currentCryptoValue+"&tsyms="+currentFiatValue;
+                console.log("URL: ===========================");
                 console.log(rateUrl);
                 var xhttpUpdate = new XMLHttpRequest();
                 xhttpUpdate.onreadystatechange = function() {
@@ -544,6 +545,7 @@
                     }
                     else if(which==3){
                       updatePrtfRate = JSON.parse(xhttpUpdate.responseText)[currentFiatValue];
+                      convertToFiat(which);
                     }
                   }
                 };
@@ -564,7 +566,11 @@
                   var fiatInputToUse="fiatInputSell";
                   var currentConversionRate=sellPrtfRate;
                 }
-                console.log("ahead 1");
+                else if(which == 3) {
+                  var cryptoInputToUse="cryptoInputUpdate";
+                  var fiatInputToUse="fiatInputUpdate";
+                  var currentConversionRate=updatePrtfRate;
+                }
 
                 if(isNaN(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, '')))) {
                   document.getElementById(fiatInputToUse).value="Enter Correct Number!";
@@ -586,6 +592,11 @@
                   var cryptoInputToUse="cryptoInputSell";
                   var fiatInputToUse="fiatInputSell";
                   var currentConversionRate=sellPrtfRate;
+                }
+                else if(which == 3) {
+                  var cryptoInputToUse="cryptoInputUpdate";
+                  var fiatInputToUse="fiatInputUpdate";
+                  var currentConversionRate=updatePrtfRate;
                 }
 
                 if(isNaN(parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, '')))){
@@ -856,7 +867,7 @@
                             </div>
                             <br>
                             <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id="UpdateInputCryptoAmount" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
+                              <input id="cryptoInputUpdate" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(3)" required>
                               <!-- <span class="highlight"></span> -->
                               <span class="bar_convert" style="width: 100%"></span>
                               <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
@@ -864,7 +875,7 @@
                             </div>
                             <br>
                             <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="UpdateInputInvestCost" class="input_convert" style="font-size: 15px; width: 100%" type="text" required>
+                              <input id ="fiatInputUpdate" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(3)" required>
                               <!-- <span class="highlight"></span> -->
                               <span class="bar_convert" style="width: 100%"></span>
                               <label class="label_convert" style="font-size: 15px;left: 0">Investement Cost</label>
@@ -965,22 +976,28 @@
         function updatePortfolio(portType){
           var selectedCryptoValue=document.getElementById("cryptoSelectBoxUpdate").value;
           var selectedFiatValue=document.getElementById("fiatSelectBoxUpdate").value;
-          var inputCryptoAmount=document.getElementById("UpdateInputCryptoAmount").value.replace(/,/g, '');
-          var inputInvestCost=document.getElementById("UpdateInputInvestCost").value.replace(/,/g, '');
+          var inputCryptoAmount=document.getElementById("cryptoInputUpdate").value.replace(/,/g, '');
+          var inputFiatAmount=document.getElementById("fiatInputUpdate").value.replace(/,/g, '');
 
           if(isNaN(parseFloat(inputCryptoAmount.replace(/,/g, ''))) || isNaN(parseFloat(inputFiatAmount.replace(/,/g, ''))) || inputCryptoAmount == "" || inputFiatAmount == "") {
             alert( "Please Enter Correct Details" );
             return;
           }
+          console.log(selectedCryptoValue);
+          console.log(selectedFiatValue);
+          console.log(inputCryptoAmount);
+          console.log(inputFiatAmount);
+          console.log(portType);
 
           $.ajax({
             type: "POST",
-            url: "BuyPort.php",
-            data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "investCost" : inputInvestCost, "portfolioType" : portType}
+            url: "UpdatePort.php",
+            data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "fiatAmt" : inputFiatAmount, "portfolioType" : portType}
           }).done(function( msg ) {
             alert( "Data Saved: " + msg );
           });
         }
+
       </script>>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">

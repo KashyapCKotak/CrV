@@ -42,12 +42,12 @@ session_start();
 			if(array_key_exists($_POST['fiatVal'], $tempArray["prsnprtf"][$_POST['cryptoVal']])){
 				//error_log("-----------------fiat exists");
 				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]+$_POST['fiatAmt'];
-				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]+$_POST['cryptoAmt'];
+				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]+$_POST['cryptoAmt'];
 				// //error_log(print_r($tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]));
 			}
 			else{
 				//error_log("-----------------add fiat");
-				array_push($tempArray["prsnprtf"][$_POST['cryptoVal']],$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']]);
+				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']];
 				// //error_log(print_r($tempArray["prsnprtf"][$_POST['cryptoVal']]));
 			}
 		}

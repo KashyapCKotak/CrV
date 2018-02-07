@@ -14,6 +14,7 @@ session_start();
 // data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
 
 // '{"prsnprtf":{"ETH":{"invst":67900.5,"amt":"67950.0"},"BTC":{"invst":62800.0,"amt":"629999.0"},"LTC":{"invst":67900.5,"amt":"67950.0"},"XRP":{"invst":67900.5,"amt":"67950.0"}}}';
+
 	if($_POST["portfolioType"] == "personal") {
 		$portType = "prsn_portfolio";
 	}
@@ -41,13 +42,13 @@ session_start();
 			//error_log("--------------crypto TRUE");
 			if(array_key_exists($_POST['fiatVal'], $tempArray["prsnprtf"][$_POST['cryptoVal']])){
 				//error_log("-----------------fiat exists");
-				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]+$_POST['fiatAmt'];
-				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]+$_POST['cryptoAmt'];
+				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=$_POST['fiatAmt'];
+				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$_POST['cryptoAmt'];
 				// //error_log(print_r($tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]));
 			}
 			else{
 				//error_log("-----------------add fiat");
-				array_push($tempArray["prsnprtf"][$_POST['cryptoVal']],$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']]);
+				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']];
 				// //error_log(print_r($tempArray["prsnprtf"][$_POST['cryptoVal']]));
 			}
 		}
