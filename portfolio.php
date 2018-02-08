@@ -649,7 +649,8 @@
                                 <th>Value</th>
                                 <th style="width: 80px">%</th>
                               </tr>
-                              <tr>
+                              <script src="PortfolioFill.php"></script>
+                              <!-- <tr>
                                 <td>1.</td>
                                 <td>Ethereum Classic</td>
                                 <td>9999999.6523</td>
@@ -728,7 +729,7 @@
                                 <td>58569689.56</td>
                                 <td>98569689.56</td>
                                 <td><span class="badge bg-green">55%</span></td>
-                              </tr>
+                              </tr> -->
                             </table>
                           </div>
                           <!-- /.col -->
