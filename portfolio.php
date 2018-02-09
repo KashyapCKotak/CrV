@@ -639,16 +639,8 @@
                       <div class="tab-pane active" id="tab_1">
 
                         <div class="row col-md-6" style="margin: 0; padding: 0">
-                          <div class="box-body no-padding" style="overflow-x: auto">
-                            <table class="table table-condensed table-striped">
-                              <tr>
-                                <th style="width: 10px">#</th>
-                                <th>Name</th>
-                                <th>Quantity</th>
-                                <th>Investment</th>
-                                <th>Value</th>
-                                <th style="width: 80px">%</th>
-                              </tr>
+                          <div id="portfolioTablePersonal" lass="box-body no-padding" style="overflow-x: auto">
+                            
                               <script src="PortfolioFill.php"></script>
                               <!-- <tr>
                                 <td>1.</td>
