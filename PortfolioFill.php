@@ -31,8 +31,22 @@ for(cryptoPort in myPortfolio.prsnprtf){
 	portTempObj.fiat=portCurrentFiatList;
 	portArr.push(portTempObj);
 }
+portTableString = portTableString + '</table>'
 document.getElementById("portfolioTablePersonal").innerHTML=portTableString;
 ////////////////////// AJAX here only //////////////////////////////
+var portValueUrl= TODO;
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		var valueJson=JSON.parse(this.responseText);
+		for(cryptoPort2 in portArr){
+			for(fiatPort2 in cryptoPort2.fiat){
+				var currentDom=cryptoPort2+'/'+fiatPort2;
+				document.getElementById(currentDom+"val").innerHTML=valueJson TODO;
+			}
+		}
+	}
+};
+xhttp.open("GET", TODO, true);
+xhttp.send();
 ////////////////////////////////////////////////////////////////////
-
-
