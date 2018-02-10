@@ -14,11 +14,13 @@ session_start();
 // data: { cryptoVal : selectedCryptoValue, fiatVal : selectedFiatValue, cryptoAmt : inputCryptoAmount, fiatAmt : inputFiatAmount, portfolioType : portType}
 
 // '{"prsnprtf":{"ETH":{"invst":67900.5,"amt":"67950.0"},"BTC":{"invst":62800.0,"amt":"629999.0"},"LTC":{"invst":67900.5,"amt":"67950.0"},"XRP":{"invst":67900.5,"amt":"67950.0"}}}';
-	if($_POST["portfolioType"] == "personal") {
+	if($_POST["portfolioType"] == "Personal") {
 		$portType = "prsn_portfolio";
+		$portJsonRoot="prsnprtf";
 	}
-	else if ($_POST["portfolioType"] == "practice") {
+	else if ($_POST["portfolioType"] == "Practice") {
 		$portType = "prtc_portfolio";
+		$portJsonRoot="prtcprtf";
 	}
 	$cryptoview_user=$_SESSION["cryptoview_user"];
 
@@ -37,23 +39,23 @@ session_start();
 		$tempArray = json_decode($row1[$portType], true);
 		//error_log(json_encode($tempArray));
 
-		if(array_key_exists($_POST['cryptoVal'], $tempArray["prsnprtf"])) {
+		if(array_key_exists($_POST['cryptoVal'], $tempArray[$portJsonRoot])) {
 			//error_log("--------------crypto TRUE");
-			if(array_key_exists($_POST['fiatVal'], $tempArray["prsnprtf"][$_POST['cryptoVal']])){
+			if(array_key_exists($_POST['fiatVal'], $tempArray[$portJsonRoot][$_POST['cryptoVal']])){
 				//error_log("-----------------fiat exists");
-				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]+$_POST['fiatAmt'];
-				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]+$_POST['cryptoAmt'];
-				// //error_log(print_r($tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]));
+				$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]+$_POST['fiatAmt'];
+				$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]+$_POST['cryptoAmt'];
+				// //error_log(print_r($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]));
 			}
 			else{
 				//error_log("-----------------add fiat");
-				$tempArray["prsnprtf"][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']];
-				// //error_log(print_r($tempArray["prsnprtf"][$_POST['cryptoVal']]));
+				$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']];
+				// //error_log(print_r($tempArray[$portJsonRoot][$_POST['cryptoVal']]));
 			}
 		}
 		else {
 			//error_log("----------------FALSE");
-			$tempArray["prsnprtf"][$_POST['cryptoVal']]=$newArray[$_POST['cryptoVal']];
+			$tempArray[$portJsonRoot][$_POST['cryptoVal']]=$newArray[$_POST['cryptoVal']];
 			//error_log(json_encode($tempArray));
 			//error_log("----------------added crypto");
 		}
@@ -65,29 +67,30 @@ session_start();
 			if(($mysqli->affected_rows)==1) {
 				if($portType=="prsn_portfolio"){
 					$_SESSION['prsn_portfolio'] = $tempArrayString;
-					echo "Personal Portfolio Updated!";
+					echo "1";//"Personal Portfolio Updated!";
 				}
 				if($portType=="prtc_portfolio"){
 					$_SESSION['prtc_portfolio'] = $tempArrayString;
-					echo "Practice Portfolio Updated!";
+					echo "1";//"Practice Portfolio Updated!";
 				}
 			}
 			else {
 				if($portType=="prsn_portfolio"){
 					$_SESSION['prsn_portfolio'] = $tempArrayString;
-					echo "Updated, But something wrong while executing this operation. Please contact support immediately";
+					echo "2";//"Updated, But something wrong while executing this operation. Please contact support immediately";
 				}
 				if($portType=="prtc_portfolio"){
 					$_SESSION['prtc_portfolio'] = $tempArrayString;
-					echo "Updated, But something wrong while executing this operation. Please contact support immediately";
+					echo "2";//"Updated, But something wrong while executing this operation. Please contact support immediately";
 				}
 			}
 		}
 		else {
-			echo "Update Unsuccessful";
+			echo "3";//"Update Unsuccessful";
 		}
 	}
 	else{
 		header("Location: /pages/login.php");
 	}
+header("portfolio.php");
 ?>

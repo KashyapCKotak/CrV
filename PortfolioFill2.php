@@ -1,19 +1,39 @@
 <?php
 session_start();?>
 var whichInit = 1;
-var myPortfolio=null;
+// var myPortfolio
+var myPortfolioPrsn=null;
+var myPortfolioPrtc=null;
+// var portTableString
+var portTableStringPrsn = "";
+var portTableStringPrtc = "";
+
+// var portArr = [];
+var portArrPrsn = [];
+var portArrPrtc = [];
+
+// var urlPort = [];
+var urlPortPrsn = [];
+var urlPortPrtc = [];
+
+var portIntrvlId;
+
 if(whichInit == 1){
 	var myPortfolioInit = <?php echo $_SESSION['prsn_portfolio'];?>;
-	myPortfolio=myPortfolioInit.prsnprtf;
+	myPortfolioPrsn=myPortfolioInit.prsnprtf;
+	portTableStringPrsn = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
+	loadTableAndUrl(myPortfolioPrsn, portTableStringPrsn, portArrPrsn, urlPortPrsn, "portfolioTablePersonal");
 }
 else if (whichInit == 2){
 	var myPortfolioInit = <?php echo $_SESSION['prtc_portfolio'];?>;	
-	myPortfolio=myPortfolioInit.prtcprtf;
+	myPortfolioPrtc=myPortfolioInit.prtcprtf;
+	portTableStringPrtc = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
+	loadTableAndUrl(myPortfolioPrtc, portTableStringPrtc, portArrPrtc, urlPortPrtc,  "portfolioTablePractice");
 }
 
-var portTableString = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
-var portArr = [];
-var portCurrentCrypto = null;
+
+
+function loadTableAndUrl(myPortfolio, portTableString, portArr, urlPort, domElement){
 var rowCounter = 1;
 // var myPortfolio1 = JSON.parse(myPortfolio);
 // console.log(JSON.stringify(myPortfolio));
@@ -33,11 +53,10 @@ for(cryptoPort in myPortfolio){
 	portArr.push(portTempObj);
 }
 portTableString = portTableString + '</table>';
-document.getElementById("portfolioTablePersonal").innerHTML=portTableString;
+document.getElementById(domElement).innerHTML=portTableString;
 
-////////////////////// AJAX here only //////////////////////////////
+//////////////////////// Build URL ////////////////////////////
 
-var urlPort = [];
 for(cryptoPort1 in portArr){
 	var tempUrl = "https://min-api.cryptocompare.com/data/price?fsym=";
 	tempUrl = tempUrl + portArr[cryptoPort1].crypto + "&tsyms=";
@@ -52,12 +71,29 @@ for(cryptoPort1 in portArr){
 	urlPort.push(tempUrl);
 }
 
+///////////////////////////////////////////////////////////////
+var doneUpdtFlg = false;
+var updtTimeout = 20000;
 
+triggerLoadCurrValuePort();
 
-
-for(urlPort1 in urlPort){
-	loadCurrValuePort(portArr[urlPort1].crypto);
+function triggerLoadCurrValuePort(){
+	doneUpdtFlg = false;
+	for(urlPort1 in urlPort){
+		loadCurrValuePort(portArr[urlPort1].crypto);
+	}
 }
+
+portIntrvlId = setInterval(function() {
+	if(doneUpdtFlg == false){
+		updtTimeout = updtTimeout + 10000;
+		console.log(updtTimeout);
+	}
+	console.log("updt");
+	triggerLoadCurrValuePort();
+},updtTimeout);
+
+////////////////////////// NEW FUNCTION ///////////////////////////////////////
 
 function loadCurrValuePort(currCrpto){
 	var xhttpPort = new XMLHttpRequest(); // TODO: IE support
@@ -68,7 +104,7 @@ function loadCurrValuePort(currCrpto){
 				var currVal=currvalPort[fiatPort2]*myPortfolio[currCrpto][fiatPort2].amt;
 				document.getElementById(currCrpto+'/'+fiatPort2+'val').innerHTML=parseFloat(currVal).toFixed(2);
 				var currPortDiff = (currVal-myPortfolio[currCrpto][fiatPort2].invst);
-				document.getElementById(currCrpto+'/'+fiatPort2+'prcnt').innerHTML=parseFloat((currPortDiff/myPortfolio[currCrpto][fiatPort2].invst)*100).toFixed(2);
+				document.getElementById(currCrpto+'/'+fiatPort2+'prcnt').innerHTML=parseFloat((currPortDiff/myPortfolio[currCrpto][fiatPort2].invst)*100).toFixed(2) + "%";
 				document.getElementById(currCrpto+'/'+fiatPort2+'diff').innerHTML=parseFloat(currPortDiff).toFixed(2);
 				if(myPortfolio[currCrpto][fiatPort2].invst<currVal){
 					document.getElementById(currCrpto+'/'+fiatPort2+'prcnt').className="badge bg-green";
@@ -84,17 +120,10 @@ function loadCurrValuePort(currCrpto){
 				}
 			}
 		}
+		doneUpdtFlg = true;
 	};
 	xhttpPort.open("GET", urlPort[urlPort1], true);
 	xhttpPort.send();
 }
-
-function updateLocalMyPortfolio(which){
-	if(which==1){
-		myPortfolioInit.prsnprtf
-	}
-	else if(which == 2){
-		myPortfolioInit.prtcprtf
-	}
 }
 ////////////////////////////////////////////////////////////////////

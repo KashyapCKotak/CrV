@@ -642,7 +642,7 @@
                           <div id="portfolioTablePersonal" lass="box-body no-padding" style="overflow-x: auto">
                             
                               <!-- <script src="PortfolioVariables.php"></script> -->
-                              <script src="PortfolioFill.php"></script>
+                              <script src="PortfolioFill2.php"></script>
                               <!-- <tr>
                                 <td>1.</td>
                                 <td>Ethereum Classic</td>
@@ -780,7 +780,7 @@
                             </div>
                             <br>
                             <br>
-                            <button onclick='buyPortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                            <button onclick='buyPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                           </div>
                           <!-- /////////////////////////// -->
 
@@ -829,7 +829,7 @@
                             </div>
                             <br>
                             <br>
-                            <button onclick='sellPortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                            <button onclick='sellPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                           </div>
                           <!-- ////////////////////////////// -->
                           <div id="UpdateTab" class="BuySellTabContent">
@@ -876,7 +876,7 @@
                             </div>
                             <br>
                             <br>
-                            <button onclick='updatePortfolio("personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                            <button onclick='updatePortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                           </div>
                           <!-- ////////////////////////////// -->
                         </div>
@@ -926,6 +926,7 @@
           if( <?php echo $loggedIn ?> )
         </script>
       -->
+
       <script type="text/javascript">
         function buyPortfolio(portType){
           var selectedCryptoValue=document.getElementById("cryptoSelectBoxBuy").value;
@@ -943,8 +944,17 @@
             url: "BuyPort.php",
             data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "fiatAmt" : inputFiatAmount, "portfolioType" : portType}
           }).done(function( msg ) {
-            alert( "Data Saved: " + msg );
-            
+            if(msg == 1){
+              alert( portType + " Portfolio Updated!" );
+              updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount, inputFiatAmount, portType, 1);
+            }
+            else if(msg == 2){
+              alert( portType+" Portfolio Updated, But something wrong while executing this operation. Please contact support immediately." );
+              updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount, inputFiatAmount, portType, 1);
+            }
+            else if(msg == 3){
+              alert( portType + " Portfolio Update Unsuccessful. Please contact support immediately" );
+            }
           });
         }
 
@@ -964,7 +974,17 @@
             url: "SellPort.php",
             data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "fiatAmt" : inputFiatAmount, "portfolioType" : portType}
           }).done(function( msg ) {
-            alert( "Data Saved: " + msg );
+            if(msg == 1){
+              alert( portType + " Portfolio Updated!" );
+              updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount, inputFiatAmount, portType, 2);
+            }
+            else if(msg == 2){
+              alert( portType+" Portfolio Updated, But something wrong while executing this operation. Please contact support immediately." );
+              updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount, inputFiatAmount, portType, 2);
+            }
+            else if(msg == 3){
+              alert( portType + " Portfolio Update Unsuccessful. Please contact support immediately" );
+            }
           });
         }
 
@@ -989,11 +1009,22 @@
             url: "UpdatePort.php",
             data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "fiatAmt" : inputFiatAmount, "portfolioType" : portType}
           }).done(function( msg ) {
-            alert( "Data Saved: " + msg );
+            if(msg == 1){
+              alert( portType + " Portfolio Updated!" );
+              updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount, inputFiatAmount, portType, 3);
+            }
+            else if(msg == 2){
+              alert( portType+" Portfolio Updated, But something wrong while executing this operation. Please contact support immediately." );
+              updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount, inputFiatAmount, portType, 3);
+            }
+            else if(msg == 3){
+              alert( portType + " Portfolio Update Unsuccessful. Please contact support immediately" );
+            }
           });
         }
 
-      </script>>
+      </script>
+      <script src="updtLocalPortObject"></script>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.4.0
