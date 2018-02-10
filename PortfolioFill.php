@@ -1,20 +1,20 @@
 <?php
 session_start();?>
-var which = 1;
-if(which == 1){
+var whichInit = 1;
+var myPortfolio=null;
+if(whichInit == 1){
 	var myPortfolioInit = <?php echo $_SESSION['prsn_portfolio'];?>;
 	myPortfolio=myPortfolioInit.prsnprtf;
 }
-else if (which == 2){
+else if (whichInit == 2){
 	var myPortfolioInit = <?php echo $_SESSION['prtc_portfolio'];?>;	
 	myPortfolio=myPortfolioInit.prtcprtf;
 }
+
 var portTableString = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
 var portArr = [];
 var portCurrentCrypto = null;
 var rowCounter = 1;
-
-
 // var myPortfolio1 = JSON.parse(myPortfolio);
 // console.log(JSON.stringify(myPortfolio));
 for(cryptoPort in myPortfolio){
@@ -81,5 +81,14 @@ function loadCurrValuePort(currCrpto){
 	};
 	xhttpPort.open("GET", urlPort[urlPort1], true);
 	xhttpPort.send();
+}
+
+function updateLocalMyPortfolio(which){
+	if(which==1){
+		myPortfolioInit.prsnprtf
+	}
+	else if(which == 2){
+		myPortfolioInit.prtcprtf
+	}
 }
 ////////////////////////////////////////////////////////////////////

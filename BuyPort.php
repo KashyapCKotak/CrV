@@ -63,13 +63,24 @@ session_start();
 		$mysqli->query($sql2);
 		if(($mysqli->affected_rows) > 0 ) {
 			if(($mysqli->affected_rows)==1) {
-				if($portType=="prsn_portfolio")
+				if($portType=="prsn_portfolio"){
+					$_SESSION['prsn_portfolio'] = $tempArrayString;
 					echo "Personal Portfolio Updated!";
-				if($portType=="prtc_portfolio")
+				}
+				if($portType=="prtc_portfolio"){
+					$_SESSION['prtc_portfolio'] = $tempArrayString;
 					echo "Practice Portfolio Updated!";
+				}
 			}
 			else {
-				echo "Updated, But something wrong while executing this operation. Please contact support immediately";
+				if($portType=="prsn_portfolio"){
+					$_SESSION['prsn_portfolio'] = $tempArrayString;
+					echo "Updated, But something wrong while executing this operation. Please contact support immediately";
+				}
+				if($portType=="prtc_portfolio"){
+					$_SESSION['prtc_portfolio'] = $tempArrayString;
+					echo "Updated, But something wrong while executing this operation. Please contact support immediately";
+				}
 			}
 		}
 		else {

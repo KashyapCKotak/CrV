@@ -641,6 +641,7 @@
                         <div class="row col-md-6" style="margin: 0; padding: 0">
                           <div id="portfolioTablePersonal" lass="box-body no-padding" style="overflow-x: auto">
                             
+                              <!-- <script src="PortfolioVariables.php"></script> -->
                               <script src="PortfolioFill.php"></script>
                               <!-- <tr>
                                 <td>1.</td>
@@ -943,6 +944,7 @@
             data: { "cryptoVal" : selectedCryptoValue, "fiatVal" : selectedFiatValue, "cryptoAmt" : inputCryptoAmount, "fiatAmt" : inputFiatAmount, "portfolioType" : portType}
           }).done(function( msg ) {
             alert( "Data Saved: " + msg );
+            
           });
         }
 
