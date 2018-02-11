@@ -527,11 +527,11 @@
               }
 
               function updateCurrentRate(which){
-                console.log("updating data");
-                console.log(which);
+                //console.log("updating data");
+                //console.log(which);
                 var rateUrl="https://min-api.cryptocompare.com/data/price?fsym="+currentCryptoValue+"&tsyms="+currentFiatValue;
-                console.log("URL: ===========================");
-                console.log(rateUrl);
+                //console.log("URL: ===========================");
+                //console.log(rateUrl);
                 var xhttpUpdate = new XMLHttpRequest();
                 xhttpUpdate.onreadystatechange = function() {
                   if (xhttpUpdate.readyState == 4 && xhttpUpdate.status == 200) {
@@ -554,22 +554,30 @@
               }
 
               function convertToFiat(which){
-                console.log("in convert");
+                //console.log("in convert");
                 if(which == 1) {
-                  console.log("buy updating");
+                  //console.log("buy updating");
                   var cryptoInputToUse="cryptoInputBuy";
                   var fiatInputToUse="fiatInputBuy";
                   var currentConversionRate=buyPrtfRate;
+                  var feesInputToUse="feesInputBuy";
+                  var feesApplySign=1;
                 }
                 else if(which == 2) {
                   var cryptoInputToUse="cryptoInputSell";
                   var fiatInputToUse="fiatInputSell";
                   var currentConversionRate=sellPrtfRate;
+                  var feesInputToUse="feesInputSell";
+                  var feesApplySign=-1;
                 }
                 else if(which == 3) {
                   var cryptoInputToUse="cryptoInputUpdate";
                   var fiatInputToUse="fiatInputUpdate";
                   var currentConversionRate=updatePrtfRate;
+                }
+
+                if(document.getElementById(feesInputToUse).value=="" && document.getElementById(cryptoInputToUse).value!=""){
+                  document.getElementById(feesInputToUse).value=0;
                 }
 
                 if(isNaN(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, '')))) {
@@ -578,8 +586,10 @@
                     document.getElementById(fiatInputToUse).value="";
                   return;
                 }
-                console.log("ahead 2");
-                document.getElementById(fiatInputToUse).value=(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, ''))*currentConversionRate).toLocaleString();
+                //console.log("ahead 2");
+                var fiatClaculatedValue=parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, ''))*currentConversionRate;
+                var fiatClaculatedValue=fiatClaculatedValue+((fiatClaculatedValue*(parseFloat(document.getElementById(feesInputToUse).value))/100)*feesApplySign);
+                document.getElementById(fiatInputToUse).value=fiatClaculatedValue.toLocaleString();
               }
 
               function convertToCrypto(which){
@@ -587,11 +597,15 @@
                   var cryptoInputToUse="cryptoInputBuy";
                   var fiatInputToUse="fiatInputBuy";
                   var currentConversionRate=buyPrtfRate;
+                  var feesInputToUse="feesInputBuy";
+                  var feesApplySign=-1;
                 }
                 else if(which == 2) {
                   var cryptoInputToUse="cryptoInputSell";
                   var fiatInputToUse="fiatInputSell";
                   var currentConversionRate=sellPrtfRate;
+                  var feesInputToUse="feesInputSell";
+                  var feesApplySign=1;
                 }
                 else if(which == 3) {
                   var cryptoInputToUse="cryptoInputUpdate";
@@ -605,7 +619,14 @@
                     document.getElementById(cryptoInputToUse).value="";
                   return;
                 }
-                document.getElementById(cryptoInputToUse).value=(parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, ''))/currentConversionRate).toLocaleString();
+
+                var fiatInputValueToClac=parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, ''));
+                var fiatInputValueToClac=fiatInputValueToClac+((fiatInputValueToClac*(parseFloat(document.getElementById(feesInputToUse).value))/100)*feesApplySign);
+                var cryptoCalculatedValue=fiatInputValueToClac/currentConversionRate;
+
+                if(which!=3){
+                  document.getElementById(cryptoInputToUse).value=cryptoCalculatedValue.toLocaleString();
+                }
               }
               //////////////////////////////////////////////////////////////////////////
               function openTab(evt, cityName) {
@@ -639,91 +660,192 @@
                       <div class="tab-pane active" id="tab_1">
 
                         <div class="row col-md-6" style="margin: 0; padding: 0">
-                          <div id="portfolioTablePersonal" lass="box-body no-padding" style="overflow-x: auto">
-                            
-                              <!-- <script src="PortfolioVariables.php"></script> -->
-                              <script src="PortfolioFill2.php"></script>
-                              <!-- <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>58569689.56</td>
-                                <td>98569689.56</td>
-                                <td><span class="badge bg-green">55%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>98569689.56</td>
-                                <td>58569689.56</td>
-                                <td><span class="badge bg-red">55%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>58569689.56</td>
-                                <td>98569689.56</td>
-                                <td><span class="badge bg-green">55%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>58569689.56</td>
-                                <td>98569689.56</td>
-                                <td><span class="badge bg-green">500%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>98569689.56</td>
-                                <td>58569689.56</td>
-                                <td><span class="badge bg-red">55%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>58569689.56</td>
-                                <td>98569689.56</td>
-                                <td><span class="badge bg-green">1015654.56%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>58569689.56</td>
-                                <td>98569689.56</td>
-                                <td><span class="badge bg-green">55%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>58569689.56</td>
-                                <td>98569689.56</td>
-                                <td><span class="badge bg-green">55%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>58569689.56</td>
-                                <td>98569689.56</td>
-                                <td><span class="badge bg-green">55%</span></td>
-                              </tr>
-                              <tr>
-                                <td>1.</td>
-                                <td>Ethereum Classic</td>
-                                <td>9999999.6523</td>
-                                <td>58569689.56</td>
-                                <td>98569689.56</td>
-                                <td><span class="badge bg-green">55%</span></td>
-                              </tr> -->
-                            </table>
+                          <div id="portfolioTablePersonal" lass="box-body no-padding">
+                            <script src="PortfolioFill2.php"></script>
+                            <script>
+                              triggerLoadTableAndUrl(1);
+                            </script>
+                          </div>
+                          <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                        <!-- //////////////////////////////////////////////////////// -->
+                        <div class="BuySellTabHolder col-md-6">
+                          <div class="BuySellTab">
+                            <button class="tablinks active" onclick="openTab(event, 'BuyTab')">Buy</button>
+                            <button class="tablinks" onclick="openTab(event, 'SellTab')">Sell</button>
+                            <button class="tablinks" onclick="openTab(event, 'UpdateTab')">Update</button>
+                          </div>
+                          <br>
+                          <div id="BuyTab" class="BuySellTabContent" style="display: inline-block;">
+                            <br>
+                            <div class="crypto-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                              <select id="cryptoSelectBoxBuy" class="form-control select2" style="width:157px" onchange="selectCrypto(1)">
+                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="XRP">Ripple (XRP)</option>
+                                <option value="BCH">Bitcoin Cash (BCH)</option>
+                                <option value="LTC">Litecoin (LTC)</option>
+                                <option value="TRX">Tron (TRX)</option>
+                                <option value="DASH">Dash (DASH)</option>
+                              </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="fiat-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                              <select id="fiatSelectBoxBuy" class="form-control select2" style="width:auto" onchange="selectFiat(1)">
+                                <option class="default-fiat" selected="selected">INR</option>
+                                <option>USD</option>
+                                <option>EUR</option>
+                                <option>JPY</option>
+                                <option>CNY</option>
+                              </select>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id="cryptoInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                              <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="feesInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="fiatInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Cost</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button onclick='buyPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                          </div>
+                          <!-- /////////////////////////// -->
+
+                          <!-- ////////////////////////////// -->
+                          <div id="SellTab" class="BuySellTabContent">
+                            <br>
+                            <div class="crypto-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                              <select id="cryptoSelectBoxSell" class="form-control select2" style="width:157px" onchange="selectCrypto(2)">
+                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="XRP">Ripple (XRP)</option>
+                                <option value="BCH">Bitcoin Cash (BCH)</option>
+                                <option value="LTC">Litecoin (LTC)</option>
+                                <option value="TRX">Tron (TRX)</option>
+                                <option value="DASH">Dash (DASH)</option>
+                              </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="fiat-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                              <select id="fiatSelectBoxSell" class="form-control select2" style="width:auto" onchange="selectFiat(2)">
+                                <option class="default-fiat" selected="selected">INR</option>
+                                <option>INR</option>
+                                <option>USD</option>
+                                <option>EUR</option>
+                                <option>JPY</option>
+                                <option>CNY</option>
+                              </select>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id="cryptoInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                              <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="feesInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="fiatInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Value</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button onclick='sellPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                          </div>
+                          <!-- ////////////////////////////// -->
+                          <div id="UpdateTab" class="BuySellTabContent">
+                            <br>
+                            <div class="crypto-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                              <select id="cryptoSelectBoxUpdate" class="form-control select2" style="width:157px" onchange="selectCrypto(3)">
+                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="XRP">Ripple (XRP)</option>
+                                <option value="BCH">Bitcoin Cash (BCH)</option>
+                                <option value="LTC">Litecoin (LTC)</option>
+                                <option value="TRX">Tron (TRX)</option>
+                                <option value="DASH">Dash (DASH)</option>
+                              </select>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="fiat-select" style="display: inline-block; float: left;">
+                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                              <select id="fiatSelectBoxUpdate" class="form-control select2" style="width:auto" onchange="selectFiat(3)">
+                                <option class="default-fiat" selected="selected">INR</option>
+                                <option>INR</option>
+                                <option>USD</option>
+                                <option>EUR</option>
+                                <option>JPY</option>
+                                <option>CNY</option>
+                              </select>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id="cryptoInputUpdate" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(3)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
+                              <!-- <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button> -->
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="fiatInputUpdate" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(3)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Investment Cost</label>
+                            </div>
+                            <br>
+                            <br>
+                            <button onclick='updatePortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                          </div>
+                          <!-- ////////////////////////////// -->
+                        </div>
+
+                        <!-- //////////////////////////////////////////////////////// -->
+                        </div>
+                        <!-- ////////////// TAB 1 End ///////////////.tab-pane -->
+                        <div class="tab-pane" id="tab_2">
+                          
+                        <div class="row col-md-6" style="margin: 0; padding: 0">
+                          <div id="portfolioTablePractice" lass="box-body no-padding">
+                            <script src="PortfolioFill2.php"></script>
+                            <script>
+                              triggerLoadTableAndUrl(2);
+                            </script>
                           </div>
                           <!-- /.col -->
                         </div>
@@ -773,14 +895,21 @@
                             </div>
                             <br>
                             <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="feesInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
                               <input id ="fiatInputBuy" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1)" required>
                               <!-- <span class="highlight"></span> -->
                               <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Cost</label>
                             </div>
                             <br>
                             <br>
-                            <button onclick='buyPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                            <button onclick='buyPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                           </div>
                           <!-- /////////////////////////// -->
 
@@ -822,14 +951,21 @@
                             </div>
                             <br>
                             <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                              <input id ="feesInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2)" required>
+                              <!-- <span class="highlight"></span> -->
+                              <span class="bar_convert" style="width: 100%"></span>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
+                            </div>
+                            <br>
+                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
                               <input id ="fiatInputSell" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2)" required>
                               <!-- <span class="highlight"></span> -->
                               <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Currency</label>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Value</label>
                             </div>
                             <br>
                             <br>
-                            <button onclick='sellPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                            <button onclick='sellPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                           </div>
                           <!-- ////////////////////////////// -->
                           <div id="UpdateTab" class="BuySellTabContent">
@@ -865,47 +1001,21 @@
                               <!-- <span class="highlight"></span> -->
                               <span class="bar_convert" style="width: 100%"></span>
                               <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
-                              <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                              <!-- <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button> -->
                             </div>
                             <br>
                             <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
                               <input id ="fiatInputUpdate" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(3)" required>
                               <!-- <span class="highlight"></span> -->
                               <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Investement Cost</label>
+                              <label class="label_convert" style="font-size: 15px;left: 0">Investment Cost</label>
                             </div>
                             <br>
                             <br>
-                            <button onclick='updatePortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                            <button onclick='updatePortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                           </div>
                           <!-- ////////////////////////////// -->
                         </div>
-
-                        <!-- //////////////////////////////////////////////////////// -->
-                        <div class="row col-md-6">
-                          <b>How to use:</b>
-
-                          <p>Exactly like the original bootstrap tabs except you should use
-                            the custom wrapper <code>.nav-tabs-custom</code> to achieve this style.</p>
-                            A wonderful serenity has taken possession of my entire soul,
-                            like these sweet mornings of spring which I enjoy with my whole heart.
-                            I am alone, and feel the charm of existence in this spot,
-                            which was created for the bliss of souls like mine. I am so happy,
-                            my dear friend, so absorbed in the exquisite sense of mere tranquil existence,
-                            that I neglect my talents. I should be incapable of drawing a single stroke
-                            at the present moment; and yet I feel that I never was a greater artist than now.
-                          </div>
-                        </div>
-                        <!-- </div> -->
-                        <!-- /.tab-pane -->
-                        <div class="tab-pane" id="tab_2">
-                          The European languages are members of the same family. Their separate existence is a myth.
-                          For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ
-                          in their grammar, their pronunciation and their most common words. Everyone realizes why a
-                          new common language would be desirable: one could refuse to pay expensive translators. To
-                          achieve this, it would be necessary to have uniform grammar, pronunciation and more common
-                          words. If several languages coalesce, the grammar of the resulting language is more simple
-                          and regular than that of the individual languages.
                         </div>
                         <!-- /.tab-pane -->
                         <!-- /.tab-pane -->
@@ -985,6 +1095,9 @@
             else if(msg == 3){
               alert( portType + " Portfolio Update Unsuccessful. Please contact support immediately" );
             }
+            else {
+              alert( msg);
+            }
           });
         }
 
@@ -998,11 +1111,11 @@
             alert( "Please Enter Correct Details" );
             return;
           }
-          console.log(selectedCryptoValue);
-          console.log(selectedFiatValue);
-          console.log(inputCryptoAmount);
-          console.log(inputFiatAmount);
-          console.log(portType);
+          //console.log(selectedCryptoValue);
+          //console.log(selectedFiatValue);
+          //console.log(inputCryptoAmount);
+          //console.log(inputFiatAmount);
+          //console.log(portType);
 
           $.ajax({
             type: "POST",

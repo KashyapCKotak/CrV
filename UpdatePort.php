@@ -33,32 +33,26 @@ $row1 = $result1->fetch_assoc();
 
 if($num_rows1 == 1) {
 	$newArray = array ($_POST['cryptoVal'] => array ($_POST['fiatVal'] => array ("invst" => $_POST['fiatAmt'], "amt" => $_POST['cryptoAmt'])));
-		//error_log("----------NEW ARRAY---------");
-		//error_log(json_encode($newArray));
-		//error_log("----------OLD ARRAY---------");
-		//error_log(json_encode($row1));
-	$tempArray = json_decode($row1[$portType], true);
-		//error_log(json_encode($tempArray));
 
+	$tempArray = json_decode($row1[$portType], true);
 	if(array_key_exists($_POST['cryptoVal'], $tempArray[$portJsonRoot])) {
-			//error_log("--------------crypto TRUE");
 		if(array_key_exists($_POST['fiatVal'], $tempArray[$portJsonRoot][$_POST['cryptoVal']])){
-				//error_log("-----------------fiat exists");
 			$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=$_POST['fiatAmt'];
 			$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$_POST['cryptoAmt'];
-				// //error_log(print_r($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]));
+			
+			if($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]==0){
+				unset($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]);
+			}
+			if(sizeof($tempArray[$portJsonRoot][$_POST['cryptoVal']],0)==0){
+				unset($tempArray[$portJsonRoot][$_POST['cryptoVal']]);
+			}
 		}
 		else{
-				//error_log("-----------------add fiat");
 			$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']];
-				// //error_log(print_r($tempArray[$portJsonRoot][$_POST['cryptoVal']]));
 		}
 	}
 	else {
-			//error_log("----------------FALSE");
 		$tempArray[$portJsonRoot][$_POST['cryptoVal']]=$newArray[$_POST['cryptoVal']];
-			//error_log(json_encode($tempArray));
-			//error_log("----------------added crypto");
 	}
 	$tempArrayString = json_encode($tempArray);
 	$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";

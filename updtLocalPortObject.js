@@ -1,12 +1,18 @@
 function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount, inputFiatAmount, portType, transType) {
 	var lclPrtObj;
-	console.log(myPortfolioPrsn);
+	// console.log(myPortfolioPrsn);
 	if(portType == "Personal"){
 		lclPrtObj = myPortfolioPrsn;
+		// console.log(myPortfolioPrsn);
 		lclPortTableString = portTableStringPrsn;
+		// console.log(portTableStringPrsn);
 		lclPortArr = portArrPrsn;
+		// console.log(portArrPrsn);
 		lclUrlPort = urlPortPrsn;
+		// console.log(urlPortPrsn);
 		domElement = "portfolioTablePersonal";
+		portIntrvlId = portIntrvlIdPrsn;
+		// console.log(portIntrvlIdPrsn);
 	}
 	else if(portType == "Practice"){
 		lclPrtObj = myPortfolioPrtc;
@@ -14,26 +20,27 @@ function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount
 		lclPortArr = portArrPrtc;
 		lclUrlPort = urlPortPrtc;
 		domElement = "portfolioTablePersonal";
+		portIntrvlId = portIntrvlIdPrtc;
 	}
 
 // var tempArray[$portJsonRoot] = lclPrtObj;
 // cryptoVal = selectedCryptoValue
 // fiatVal = selectedFiatValue
-console.log(myPortfolioPrsn);
+// console.log(myPortfolioPrsn);
 	/////////////////////////// BUY //////////////////////////////
 	if(transType == 1){
-		console.log("in buy");
+		// console.log("in buy");
 		if(lclPrtObj.hasOwnProperty(selectedCryptoValue)) {
 			if(lclPrtObj[selectedCryptoValue].hasOwnProperty(selectedFiatValue)) {
 				lclPrtObj[selectedCryptoValue][selectedFiatValue]["invst"]=parseFloat(parseFloat(lclPrtObj[selectedCryptoValue][selectedFiatValue]["invst"])+parseFloat(inputFiatAmount));
 				lclPrtObj[selectedCryptoValue][selectedFiatValue]["amt"]=parseFloat(parseFloat(lclPrtObj[selectedCryptoValue][selectedFiatValue]["amt"])+parseFloat(inputCryptoAmount));
 			}
 			else{
-				lclPrtObj[selectedCryptoValue][selectedFiatValue]=JSON.parse('{"'+ selectedFiatValue +'":{"invst":'+ inputFiatAmount +',"amt":'+ inputCryptoAmount +'}}');
+				lclPrtObj[selectedCryptoValue][selectedFiatValue]=JSON.parse('{"invst":'+ parseFloat(inputFiatAmount) +',"amt":'+ parseFloat(inputCryptoAmount) +'}');
 			}
 		}
 		else {
-			lclPrtObj[selectedCryptoValue]=JSON.parse('{"'+ selectedCryptoValue +'":{"'+ selectedFiatValue +'":{"invst":'+ inputFiatAmount +',"amt":'+ inputCryptoAmount +'}}}');
+			lclPrtObj[selectedCryptoValue]=JSON.parse('{"'+ selectedFiatValue +'":{"invst":'+ parseFloat(inputFiatAmount) +',"amt":'+ parseFloat(inputCryptoAmount) +'}}');
 		}
 	}
 	////////////////////////////// SELL //////////////////////////
@@ -56,7 +63,7 @@ console.log(myPortfolioPrsn);
 				if(lclPrtObj[selectedCryptoValue][selectedFiatValue]["amt"]==0){
 					delete lclPrtObj[selectedCryptoValue][selectedFiatValue];
 				}
-				if(lclPrtObj[selectedCryptoValue].length==0){
+				if($.isEmptyObject(lclPrtObj[selectedCryptoValue])){
 					delete lclPrtObj[selectedCryptoValue];
 				}
 					//error_log(print_r(lclPrtObj[selectedCryptoValue][selectedFiatValue]["invst"]));
@@ -82,15 +89,23 @@ console.log(myPortfolioPrsn);
 			if(lclPrtObj[selectedCryptoValue].hasOwnProperty(selectedFiatValue)) {
 				lclPrtObj[selectedCryptoValue][selectedFiatValue]["invst"]=parseFloat(inputFiatAmount);
 				lclPrtObj[selectedCryptoValue][selectedFiatValue]["amt"]=parseFloat(inputCryptoAmount);
+				if(lclPrtObj[selectedCryptoValue][selectedFiatValue]["amt"]==0){
+					delete lclPrtObj[selectedCryptoValue][selectedFiatValue];
+				}
+				if($.isEmptyObject(lclPrtObj[selectedCryptoValue])){
+					delete lclPrtObj[selectedCryptoValue];
+				}
 			}
 			else{
-				lclPrtObj[selectedCryptoValue][selectedFiatValue]=JSON.parse('{"'+ selectedFiatValue +'":{"invst":'+ inputFiatAmount +',"amt":'+ inputCryptoAmount +'}}');
+				lclPrtObj[selectedCryptoValue][selectedFiatValue]=JSON.parse('{"invst":'+ parseFloat(inputFiatAmount) +',"amt":'+ parseFloat(inputCryptoAmount) +'}');
 			}
 		}
 		else {
-			lclPrtObj[selectedCryptoValue]=JSON.parse('{"'+ selectedCryptoValue +'":{"'+ selectedFiatValue +'":{"invst":'+ inputFiatAmount +',"amt":'+ inputCryptoAmount +'}}}');
+			lclPrtObj[selectedCryptoValue]=JSON.parse('{"'+ selectedFiatValue +'":{"invst":'+ parseFloat(inputFiatAmount) +',"amt":'+ parseFloat(inputCryptoAmount) +'}}');
 		}
 	}
-	clearInterval(portIntrvlId);
-	loadTableAndUrl(lclPrtObj, lclPortTableString, lclPortArr, lclUrlPort, domElement);
+	// console.log(portIntrvlId);
+	clearInterval(portIntrvlId[0]);
+	console.log(lclPrtObj);
+	loadTableAndUrl(lclPrtObj, lclPortTableString, lclPortArr, lclUrlPort, domElement, portIntrvlId);
 }

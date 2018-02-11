@@ -5,6 +5,11 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+#portfolioTablePersonal{
+    overflow-x: auto;
+    padding: 10px;
+}
+
 .BuySellTab {
     overflow: hidden;
     border: 1px solid #ccc;
@@ -362,6 +367,10 @@
     }
 }
 @media (max-width: 500px) {
+    #portfolioTablePersonal{
+        overflow-x: auto;
+        padding: 0;
+    }
     .content-header>.crypto-select {
         /* position: relative;
         margin-top: 5px;
