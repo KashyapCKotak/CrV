@@ -2,7 +2,7 @@
   var cryptoCurrMain = "BTC";
   console.log(cryptoCurrMain);
   var currTopPriceUrl = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,XRP,BCH,LTC,TRX,DASH,BTG,ZEC,XMR,ETC,IOTA,NXT,EOS,NEO&tsyms="+toCurr;
-  var directionImgBaseUrl = "/AdminLTE-2.4.2/dist/img/";
+  var directionImgBaseUrl = "/dist/img/";
   var count=0;
   //console.log(currTopPriceUrl);
   var currTopPriceObj;
