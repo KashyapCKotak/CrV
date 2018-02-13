@@ -1137,7 +1137,7 @@
         }
 
       </script>
-      <script src="updtLocalPortObject"></script>
+      <script src="updtLocalPortObject.js"></script>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.4.0
