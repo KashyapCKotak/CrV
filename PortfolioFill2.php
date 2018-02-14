@@ -21,25 +21,31 @@ var portIntrvlIdPrtc = [];
 
 function triggerLoadTableAndUrl(whichInit){
 	if(whichInit == 1){
+		console.log("Which Init?????");
+		console.log(whichInit);
 		var myPortfolioInit = <?php echo $_SESSION['prsn_portfolio'];?>;
 		myPortfolioPrsn=myPortfolioInit.prsnprtf;
+		console.log(myPortfolioPrsn);
 		portTableStringPrsn = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
-		loadTableAndUrl(myPortfolioPrsn, portTableStringPrsn, portArrPrsn, urlPortPrsn, "portfolioTablePersonal", portIntrvlIdPrsn);
+		loadTableAndUrl(myPortfolioPrsn, portTableStringPrsn, portArrPrsn, urlPortPrsn, "portfolioTablePersonal", portIntrvlIdPrsn, whichInit);
 	}
 	else if (whichInit == 2){
+		console.log("Which Init?????");
+		console.log(whichInit);
+		console.log();
 		var myPortfolioInit = <?php echo $_SESSION['prtc_portfolio'];?>;	
 		myPortfolioPrtc=myPortfolioInit.prtcprtf;
+		console.log(myPortfolioPrtc);
 		portTableStringPrtc = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
-		loadTableAndUrl(myPortfolioPrtc, portTableStringPrtc, portArrPrtc, urlPortPrtc,  "portfolioTablePractice", portIntrvlIdPrtc);
+		loadTableAndUrl(myPortfolioPrtc, portTableStringPrtc, portArrPrtc, urlPortPrtc,  "portfolioTablePractice", portIntrvlIdPrtc, whichInit);
 	}
 }
 
 
 
-function loadTableAndUrl(myPortfolio, portTableString, portArr, urlPort, domElement, portIntrvlId){
+function loadTableAndUrl(myPortfolio, portTableString, portArr, urlPort, domElement, portIntrvlId, whichInit){
 urlPort = [];
 portArr = [];
-console.log(myPortfolioPrsn);
 // console.log(myPortfolio[cryptoPort][fiatPort].amt);
 // console.log(urlPort);
 var rowCounter = 1;
@@ -51,7 +57,7 @@ for(cryptoPort in myPortfolio){
 	for(fiatPort in myPortfolio[cryptoPort]){
 		console.log(fiatPort);
 		console.log(myPortfolio[cryptoPort][fiatPort].amt);
-		portTableString = portTableString + '<tr><td>'+rowCounter+'</td><td>'+cryptoPort+'/'+fiatPort+'</td><td>'+myPortfolio[cryptoPort][fiatPort].amt+'</td><td>'+myPortfolio[cryptoPort][fiatPort].invst+'</td><td id="'+cryptoPort+'/'+fiatPort+'val">loading</td><td><span id="'+cryptoPort+'/'+fiatPort+'diff" class="badge bg-green">--</span></td><td><span id="'+cryptoPort+'/'+fiatPort+'prcnt" class="badge bg-green">--</span></td></tr>';
+		portTableString = portTableString + '<tr><td>'+rowCounter+'</td><td>'+cryptoPort+'/'+fiatPort+'</td><td>'+myPortfolio[cryptoPort][fiatPort].amt+'</td><td>'+myPortfolio[cryptoPort][fiatPort].invst+'</td><td id="'+cryptoPort+'/'+fiatPort+whichInit+'val">loading</td><td><span id="'+cryptoPort+'/'+fiatPort+whichInit+'diff" class="badge bg-green">--</span></td><td><span id="'+cryptoPort+'/'+fiatPort+whichInit+'prcnt" class="badge bg-green">--</span></td></tr>';
 		// console.log(portTableString);
 		rowCounter++;
 		portCurrentFiatList.push(fiatPort);
@@ -113,21 +119,21 @@ function loadCurrValuePort(currCrpto){
 			var currvalPort = JSON.parse(this.responseText);
 			for(fiatPort2 in currvalPort){
 				var currVal=currvalPort[fiatPort2]*myPortfolio[currCrpto][fiatPort2].amt;
-				document.getElementById(currCrpto+'/'+fiatPort2+'val').innerHTML=parseFloat(currVal).toFixed(2);
+				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'val').innerHTML=parseFloat(currVal).toFixed(2);
 				var currPortDiff = (currVal-myPortfolio[currCrpto][fiatPort2].invst);
-				document.getElementById(currCrpto+'/'+fiatPort2+'prcnt').innerHTML=parseFloat((currPortDiff/myPortfolio[currCrpto][fiatPort2].invst)*100).toFixed(2) + "%";
-				document.getElementById(currCrpto+'/'+fiatPort2+'diff').innerHTML=parseFloat(currPortDiff).toFixed(2);
+				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'prcnt').innerHTML=parseFloat((currPortDiff/myPortfolio[currCrpto][fiatPort2].invst)*100).toFixed(2) + "%";
+				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'diff').innerHTML=parseFloat(currPortDiff).toFixed(2);
 				if(myPortfolio[currCrpto][fiatPort2].invst<currVal){
-					document.getElementById(currCrpto+'/'+fiatPort2+'prcnt').className="badge bg-green";
-					document.getElementById(currCrpto+'/'+fiatPort2+'diff').className="badge bg-green";
+					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'prcnt').className="badge bg-green";
+					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'diff').className="badge bg-green";
 				}
 				else if(myPortfolio[currCrpto][fiatPort2].invst>currVal){
-					document.getElementById(currCrpto+'/'+fiatPort2+'prcnt').className="badge bg-red";
-					document.getElementById(currCrpto+'/'+fiatPort2+'diff').className="badge bg-red";
+					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'prcnt').className="badge bg-red";
+					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'diff').className="badge bg-red";
 				}
 				else{
-					document.getElementById(currCrpto+'/'+fiatPort2+'prcnt').className="badge bg-yellow";
-					document.getElementById(currCrpto+'/'+fiatPort2+'diff').className="badge bg-yellow";
+					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'prcnt').className="badge bg-yellow";
+					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'diff').className="badge bg-yellow";
 				}
 			}
 		}

@@ -12,6 +12,7 @@ function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount
 		// console.log(urlPortPrsn);
 		domElement = "portfolioTablePersonal";
 		portIntrvlId = portIntrvlIdPrsn;
+		whichTypeNumber = 1;
 		// console.log(portIntrvlIdPrsn);
 	}
 	else if(portType == "Practice"){
@@ -21,8 +22,11 @@ function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount
 		lclUrlPort = urlPortPrtc;
 		domElement = "portfolioTablePersonal";
 		portIntrvlId = portIntrvlIdPrtc;
+		whichTypeNumber = 2;
 	}
 
+	console.log("LOOOOOOK");
+	console.log(lclPrtObj);
 // var tempArray[$portJsonRoot] = lclPrtObj;
 // cryptoVal = selectedCryptoValue
 // fiatVal = selectedFiatValue
@@ -106,6 +110,8 @@ function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount
 	}
 	// console.log(portIntrvlId);
 	clearInterval(portIntrvlId[0]);
-	console.log(lclPrtObj);
-	loadTableAndUrl(lclPrtObj, lclPortTableString, lclPortArr, lclUrlPort, domElement, portIntrvlId);
+	console.log("LOOOOOOK AGAIN");
+	console.log(myPortfolioPrsn);
+	console.log(myPortfolioPrtc);
+	loadTableAndUrl(lclPrtObj, lclPortTableString, lclPortArr, lclUrlPort, domElement, portIntrvlId, whichTypeNumber);
 }
