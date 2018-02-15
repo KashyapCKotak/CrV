@@ -21,20 +21,17 @@ var portIntrvlIdPrtc = [];
 
 function triggerLoadTableAndUrl(whichInit){
 	if(whichInit == 1){
-		console.log("Which Init?????");
-		console.log(whichInit);
 		var myPortfolioInit = <?php echo $_SESSION['prsn_portfolio'];?>;
 		myPortfolioPrsn=myPortfolioInit.prsnprtf;
+		console.log("Personal");
 		console.log(myPortfolioPrsn);
 		portTableStringPrsn = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
 		loadTableAndUrl(myPortfolioPrsn, portTableStringPrsn, portArrPrsn, urlPortPrsn, "portfolioTablePersonal", portIntrvlIdPrsn, whichInit);
 	}
 	else if (whichInit == 2){
-		console.log("Which Init?????");
-		console.log(whichInit);
-		console.log();
 		var myPortfolioInit = <?php echo $_SESSION['prtc_portfolio'];?>;	
 		myPortfolioPrtc=myPortfolioInit.prtcprtf;
+		console.log("Practice");
 		console.log(myPortfolioPrtc);
 		portTableStringPrtc = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
 		loadTableAndUrl(myPortfolioPrtc, portTableStringPrtc, portArrPrtc, urlPortPrtc,  "portfolioTablePractice", portIntrvlIdPrtc, whichInit);
@@ -46,19 +43,11 @@ function triggerLoadTableAndUrl(whichInit){
 function loadTableAndUrl(myPortfolio, portTableString, portArr, urlPort, domElement, portIntrvlId, whichInit){
 urlPort = [];
 portArr = [];
-// console.log(myPortfolio[cryptoPort][fiatPort].amt);
-// console.log(urlPort);
 var rowCounter = 1;
-// var myPortfolio1 = JSON.parse(myPortfolio);
-// console.log(JSON.stringify(myPortfolio));
 for(cryptoPort in myPortfolio){
-	console.log(cryptoPort);
 	var portCurrentFiatList = [];
 	for(fiatPort in myPortfolio[cryptoPort]){
-		console.log(fiatPort);
-		console.log(myPortfolio[cryptoPort][fiatPort].amt);
 		portTableString = portTableString + '<tr><td>'+rowCounter+'</td><td>'+cryptoPort+'/'+fiatPort+'</td><td>'+myPortfolio[cryptoPort][fiatPort].amt+'</td><td>'+myPortfolio[cryptoPort][fiatPort].invst+'</td><td id="'+cryptoPort+'/'+fiatPort+whichInit+'val">loading</td><td><span id="'+cryptoPort+'/'+fiatPort+whichInit+'diff" class="badge bg-green">--</span></td><td><span id="'+cryptoPort+'/'+fiatPort+whichInit+'prcnt" class="badge bg-green">--</span></td></tr>';
-		// console.log(portTableString);
 		rowCounter++;
 		portCurrentFiatList.push(fiatPort);
 	}
@@ -68,6 +57,7 @@ for(cryptoPort in myPortfolio){
 	portArr.push(portTempObj);
 }
 portTableString = portTableString + '</table>';
+console.log(domElement);;
 document.getElementById(domElement).innerHTML=portTableString;
 
 //////////////////////// Build URL ////////////////////////////
@@ -95,7 +85,6 @@ triggerLoadCurrValuePort();
 function triggerLoadCurrValuePort(){
 	doneUpdtFlg = false;
 	for(urlPort1 in urlPort){
-		// console.log(urlPort);
 		loadCurrValuePort(portArr[urlPort1].crypto);
 	}
 }

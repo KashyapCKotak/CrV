@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <script src="pieChartPortfolio.js"></script>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
@@ -713,389 +714,430 @@
                       <div class="tab-pane active" id="tab_1">
 
                         <div class="row col-md-6" style="margin: 0; padding: 0">
-                          <div id="portfolioTablePersonal" lass="box-body no-padding">
+                          <div id="portfolioTablePersonal" class="box-body">
                             <script src="PortfolioFill2.php"></script>
                             <script>
                               triggerLoadTableAndUrl(1);
                             </script>
                           </div>
-                          <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-                        <!-- //////////////////////////////////////////////////////// -->
-                        <div class="BuySellTabHolder col-md-6">
-                          <div class="BuySellTab">
-                            <button class="tablinksPrsn active" onclick="openTabPrsn(event, 'BuyTabPrsn')">Buy</button>
-                            <button class="tablinksPrsn" onclick="openTabPrsn(event, 'SellTabPrsn')">Sell</button>
-                            <button class="tablinksPrsn" onclick="openTabPrsn(event, 'UpdateTabPrsn')">Update</button>
-                          </div>
-                          <br>
-                          <div id="BuyTabPrsn" class="BuySellTabContentPrsn" style="display: inline-block;">
-                            <br>
-                            <div class="crypto-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                              <select id="cryptoSelectBoxBuyPrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(1,'Prsn')">
-                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="XRP">Ripple (XRP)</option>
-                                <option value="BCH">Bitcoin Cash (BCH)</option>
-                                <option value="LTC">Litecoin (LTC)</option>
-                                <option value="TRX">Tron (TRX)</option>
-                                <option value="DASH">Dash (DASH)</option>
-                              </select>
+                          <div class="box box-default">
+                            <div class="box-header with-border" style="text-align: center;">
+                              <h3 class="box-title">Distribution</h3>
                             </div>
-                            <br>
-                            <br>
-                            <div class="fiat-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                              <select id="fiatSelectBoxBuyPrsn" class="form-control select2" style="width:auto" onchange="selectFiat(1,'Prsn')">
-                                <option class="default-fiat" selected="selected">INR</option>
-                                <option>USD</option>
-                                <option>EUR</option>
-                                <option>JPY</option>
-                                <option>CNY</option>
-                              </select>
+                            <!-- /.box-header -->
+                            <div class="box-body">
+                              <div class="row">
+                                <div class="col-md-8">
+                                  <div class="chart-responsive">
+                                    <canvas id="pieChart1" height="150"></canvas>
+                                  </div>
+                                  <!-- ./chart-responsive -->
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-4">
+                                  <ul class="chart-legend clearfix">
+                                    <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
+                                    <li><i class="fa fa-circle-o text-green"></i> IE</li>
+                                    <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
+                                    <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
+                                    <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
+                                    <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
+                                  </ul>
+                                </div>
+                                <!-- /.col -->
+                              </div>
+                              <!-- /.row -->
                             </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id="cryptoInputBuyPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prsn')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                              <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                            <!-- /.box-body -->
+                            <div class="box-footer no-padding">
+                              <ul class="nav nav-pills nav-stacked">
+                                <li><a href="#">United States of America
+                                  <span class="pull-right text-red"><i class="fa fa-angle-down"></i> 12%</span></a></li>
+                                  <li><a href="#">India <span class="pull-right text-green"><i class="fa fa-angle-up"></i> 4%</span></a>
+                                  </li>
+                                  <li><a href="#">China
+                                    <span class="pull-right text-yellow"><i class="fa fa-angle-left"></i> 0%</span></a></li>
+                                  </ul>
+                                </div>
+                                <!-- /.footer -->
+                              </div>
+                              <!-- /.col -->
                             </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="feesInputBuyPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prsn')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="fiatInputBuyPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1,'Prsn')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Cost</label>
-                            </div>
-                            <br>
-                            <br>
-                            <button onclick='buyPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                          </div>
-                          <!-- /////////////////////////// -->
+                            <!-- /.row -->
+                            <!-- //////////////////////////////////////////////////////// -->
+                            <div class="BuySellTabHolder col-md-6">
+                              <div class="BuySellTab">
+                                <button class="tablinksPrsn active" onclick="openTabPrsn(event, 'BuyTabPrsn')">Buy</button>
+                                <button class="tablinksPrsn" onclick="openTabPrsn(event, 'SellTabPrsn')">Sell</button>
+                                <button class="tablinksPrsn" onclick="openTabPrsn(event, 'UpdateTabPrsn')">Update</button>
+                              </div>
+                              <br>
+                              <div id="BuyTabPrsn" class="BuySellTabContentPrsn" style="display: inline-block;">
+                                <br>
+                                <div class="crypto-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <select id="cryptoSelectBoxBuyPrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(1,'Prsn')">
+                                    <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="XRP">Ripple (XRP)</option>
+                                    <option value="BCH">Bitcoin Cash (BCH)</option>
+                                    <option value="LTC">Litecoin (LTC)</option>
+                                    <option value="TRX">Tron (TRX)</option>
+                                    <option value="DASH">Dash (DASH)</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="fiat-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <select id="fiatSelectBoxBuyPrsn" class="form-control select2" style="width:auto" onchange="selectFiat(1,'Prsn')">
+                                    <option class="default-fiat" selected="selected">INR</option>
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                                    <option>JPY</option>
+                                    <option>CNY</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id="cryptoInputBuyPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prsn')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                                  <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="feesInputBuyPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prsn')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="fiatInputBuyPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1,'Prsn')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Fiat Cost</label>
+                                </div>
+                                <br>
+                                <br>
+                                <button onclick='buyPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                              </div>
+                              <!-- /////////////////////////// -->
 
-                          <!-- ////////////////////////////// -->
-                          <div id="SellTabPrsn" class="BuySellTabContentPrsn" style="display: none;">
-                            <br>
-                            <div class="crypto-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                              <select id="cryptoSelectBoxSellPrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(2,'Prsn')">
-                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="XRP">Ripple (XRP)</option>
-                                <option value="BCH">Bitcoin Cash (BCH)</option>
-                                <option value="LTC">Litecoin (LTC)</option>
-                                <option value="TRX">Tron (TRX)</option>
-                                <option value="DASH">Dash (DASH)</option>
-                              </select>
+                              <!-- ////////////////////////////// -->
+                              <div id="SellTabPrsn" class="BuySellTabContentPrsn" style="display: none;">
+                                <br>
+                                <div class="crypto-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <select id="cryptoSelectBoxSellPrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(2,'Prsn')">
+                                    <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="XRP">Ripple (XRP)</option>
+                                    <option value="BCH">Bitcoin Cash (BCH)</option>
+                                    <option value="LTC">Litecoin (LTC)</option>
+                                    <option value="TRX">Tron (TRX)</option>
+                                    <option value="DASH">Dash (DASH)</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="fiat-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <select id="fiatSelectBoxSellPrsn" class="form-control select2" style="width:auto" onchange="selectFiat(2,'Prsn')">
+                                    <option class="default-fiat" selected="selected">INR</option>
+                                    <option>INR</option>
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                                    <option>JPY</option>
+                                    <option>CNY</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id="cryptoInputSellPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prsn')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                                  <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="feesInputSellPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prsn')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="fiatInputSellPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2,'Prsn')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Fiat Value</label>
+                                </div>
+                                <br>
+                                <br>
+                                <button onclick='sellPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                              </div>
+                              <!-- ////////////////////////////// -->
+                              <div id="UpdateTabPrsn" class="BuySellTabContentPrsn" style="display: none;">
+                                <br>
+                                <div class="crypto-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <select id="cryptoSelectBoxUpdatePrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(3,'Prsn')">
+                                    <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="XRP">Ripple (XRP)</option>
+                                    <option value="BCH">Bitcoin Cash (BCH)</option>
+                                    <option value="LTC">Litecoin (LTC)</option>
+                                    <option value="TRX">Tron (TRX)</option>
+                                    <option value="DASH">Dash (DASH)</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="fiat-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <select id="fiatSelectBoxUpdatePrsn" class="form-control select2" style="width:auto" onchange="selectFiat(3,'Prsn')">
+                                    <option class="default-fiat" selected="selected">INR</option>
+                                    <option>INR</option>
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                                    <option>JPY</option>
+                                    <option>CNY</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id="cryptoInputUpdatePrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(3,'Prsn')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
+                                  <!-- <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button> -->
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="fiatInputUpdatePrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(3,'Prsn')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Investment Cost</label>
+                                </div>
+                                <br>
+                                <br>
+                                <button onclick='updatePortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                              </div>
+                              <!-- ////////////////////////////// -->
                             </div>
-                            <br>
-                            <br>
-                            <div class="fiat-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                              <select id="fiatSelectBoxSellPrsn" class="form-control select2" style="width:auto" onchange="selectFiat(2,'Prsn')">
-                                <option class="default-fiat" selected="selected">INR</option>
-                                <option>INR</option>
-                                <option>USD</option>
-                                <option>EUR</option>
-                                <option>JPY</option>
-                                <option>CNY</option>
-                              </select>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id="cryptoInputSellPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prsn')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                              <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="feesInputSellPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prsn')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="fiatInputSellPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2,'Prsn')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Value</label>
-                            </div>
-                            <br>
-                            <br>
-                            <button onclick='sellPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                          </div>
-                          <!-- ////////////////////////////// -->
-                          <div id="UpdateTabPrsn" class="BuySellTabContentPrsn" style="display: none;">
-                            <br>
-                            <div class="crypto-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                              <select id="cryptoSelectBoxUpdatePrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(3,'Prsn')">
-                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="XRP">Ripple (XRP)</option>
-                                <option value="BCH">Bitcoin Cash (BCH)</option>
-                                <option value="LTC">Litecoin (LTC)</option>
-                                <option value="TRX">Tron (TRX)</option>
-                                <option value="DASH">Dash (DASH)</option>
-                              </select>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="fiat-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                              <select id="fiatSelectBoxUpdatePrsn" class="form-control select2" style="width:auto" onchange="selectFiat(3,'Prsn')">
-                                <option class="default-fiat" selected="selected">INR</option>
-                                <option>INR</option>
-                                <option>USD</option>
-                                <option>EUR</option>
-                                <option>JPY</option>
-                                <option>CNY</option>
-                              </select>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id="cryptoInputUpdatePrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(3,'Prsn')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
-                              <!-- <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button> -->
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="fiatInputUpdatePrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(3,'Prsn')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Investment Cost</label>
-                            </div>
-                            <br>
-                            <br>
-                            <button onclick='updatePortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                          </div>
-                          <!-- ////////////////////////////// -->
-                        </div>
 
-                        <!-- //////////////////////////////////////////////////////// -->
+                            <!-- //////////////////////////////////////////////////////// -->
+                          </div>
+                          <!-- ////////////// TAB 1 End ///////////////.tab-pane -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <!-- //////////////////////////////////////////////////////// -->
+                          <div class="tab-pane" id="tab_2">
+
+                            <div class="row col-md-6" style="margin: 0; padding: 0">
+                              <div id="portfolioTablePractice" class="box-body">
+                                <!-- <script src="PortfolioFill2.php"></script> -->
+                                <script>
+                                  triggerLoadTableAndUrl(2);
+                                </script>
+                              </div>
+                              <!-- /.col -->
+                            </div>
+                            <!-- /.row -->
+                            <!-- //////////////////////////////////////////////////////// -->
+                            <div class="BuySellTabHolder col-md-6">
+                              <div class="BuySellTab">
+                                <button class="tablinksPrtc active" onclick="openTabPrtc(event, 'BuyTabPrtc')">Buy</button>
+                                <button class="tablinksPrtc" onclick="openTabPrtc(event, 'SellTabPrtc')">Sell</button>
+                                <button class="tablinksPrtc" onclick="openTabPrtc(event, 'UpdateTabPrtc')">Update</button>
+                              </div>
+                              <br>
+                              <div id="BuyTabPrtc" class="BuySellTabContentPrtc" style="display: inline-block;">
+                                <br>
+                                <div class="crypto-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <select id="cryptoSelectBoxBuyPrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(1,'Prtc')">
+                                    <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="XRP">Ripple (XRP)</option>
+                                    <option value="BCH">Bitcoin Cash (BCH)</option>
+                                    <option value="LTC">Litecoin (LTC)</option>
+                                    <option value="TRX">Tron (TRX)</option>
+                                    <option value="DASH">Dash (DASH)</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="fiat-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <select id="fiatSelectBoxBuyPrtc" class="form-control select2" style="width:auto" onchange="selectFiat(1,'Prtc')">
+                                    <option class="default-fiat" selected="selected">INR</option>
+                                    <option>INR</option>
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                                    <option>JPY</option>
+                                    <option>CNY</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id="cryptoInputBuyPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prtc')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                                  <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="feesInputBuyPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prtc')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="fiatInputBuyPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1,'Prtc')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Fiat Cost</label>
+                                </div>
+                                <br>
+                                <br>
+                                <button onclick='buyPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                              </div>
+                              <!-- /////////////////////////// -->
+
+                              <!-- ////////////////////////////// -->
+                              <div id="SellTabPrtc" class="BuySellTabContentPrtc"  style="display: none;">
+                                <br>
+                                <div class="crypto-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <select id="cryptoSelectBoxSellPrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(2,'Prtc')">
+                                    <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="XRP">Ripple (XRP)</option>
+                                    <option value="BCH">Bitcoin Cash (BCH)</option>
+                                    <option value="LTC">Litecoin (LTC)</option>
+                                    <option value="TRX">Tron (TRX)</option>
+                                    <option value="DASH">Dash (DASH)</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="fiat-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <select id="fiatSelectBoxSellPrtc" class="form-control select2" style="width:auto" onchange="selectFiat(2,'Prtc')">
+                                    <option class="default-fiat" selected="selected">INR</option>
+                                    <option>INR</option>
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                                    <option>JPY</option>
+                                    <option>CNY</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id="cryptoInputSellPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prtc')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
+                                  <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="feesInputSellPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prtc')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="fiatInputSellPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2,'Prtc')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Fiat Value</label>
+                                </div>
+                                <br>
+                                <br>
+                                <button onclick='sellPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                              </div>
+                              <!-- ////////////////////////////// -->
+                              <div id="UpdateTabPrtc" class="BuySellTabContentPrtc"  style="display: none;">
+                                <br>
+                                <div class="crypto-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <select id="cryptoSelectBoxUpdatePrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(3,'Prtc')">
+                                    <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
+                                    <option value="ETH">Ethereum (ETH)</option>
+                                    <option value="XRP">Ripple (XRP)</option>
+                                    <option value="BCH">Bitcoin Cash (BCH)</option>
+                                    <option value="LTC">Litecoin (LTC)</option>
+                                    <option value="TRX">Tron (TRX)</option>
+                                    <option value="DASH">Dash (DASH)</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="fiat-select" style="display: inline-block; float: left;">
+                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <select id="fiatSelectBoxUpdatePrtc" class="form-control select2" style="width:auto" onchange="selectFiat(3,'Prtc')">
+                                    <option class="default-fiat" selected="selected">INR</option>
+                                    <option>INR</option>
+                                    <option>USD</option>
+                                    <option>EUR</option>
+                                    <option>JPY</option>
+                                    <option>CNY</option>
+                                  </select>
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id="cryptoInputUpdatePrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(3,'Prtc')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
+                                  <!-- <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button> -->
+                                </div>
+                                <br>
+                                <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
+                                  <input id ="fiatInputUpdatePrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(3,'Prtc')" required>
+                                  <!-- <span class="highlight"></span> -->
+                                  <span class="bar_convert" style="width: 100%"></span>
+                                  <label class="label_convert" style="font-size: 15px;left: 0">Investment Cost</label>
+                                </div>
+                                <br>
+                                <br>
+                                <button onclick='updatePortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                              </div>
+                              <!-- ////////////////////////////// -->
+                            </div>
+                          </div>
+                          <!-- /.tab-pane -->
+                          <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                        <!-- </div> -->
+                        <!-- nav-tabs-custom -->
                       </div>
-                      <!-- ////////////// TAB 1 End ///////////////.tab-pane -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <!-- //////////////////////////////////////////////////////// -->
-                      <div class="tab-pane" id="tab_2">
-
-                        <div class="row col-md-6" style="margin: 0; padding: 0">
-                          <div id="portfolioTablePractice" lass="box-body no-padding">
-                            <!-- <script src="PortfolioFill2.php"></script> -->
-                            <script>
-                              triggerLoadTableAndUrl(2);
-                            </script>
-                          </div>
-                          <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
-                        <!-- //////////////////////////////////////////////////////// -->
-                        <div class="BuySellTabHolder col-md-6">
-                          <div class="BuySellTab">
-                            <button class="tablinksPrtc active" onclick="openTabPrtc(event, 'BuyTabPrtc')">Buy</button>
-                            <button class="tablinksPrtc" onclick="openTabPrtc(event, 'SellTabPrtc')">Sell</button>
-                            <button class="tablinksPrtc" onclick="openTabPrtc(event, 'UpdateTabPrtc')">Update</button>
-                          </div>
-                          <br>
-                          <div id="BuyTabPrtc" class="BuySellTabContentPrtc" style="display: inline-block;">
-                            <br>
-                            <div class="crypto-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                              <select id="cryptoSelectBoxBuyPrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(1,'Prtc')">
-                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="XRP">Ripple (XRP)</option>
-                                <option value="BCH">Bitcoin Cash (BCH)</option>
-                                <option value="LTC">Litecoin (LTC)</option>
-                                <option value="TRX">Tron (TRX)</option>
-                                <option value="DASH">Dash (DASH)</option>
-                              </select>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="fiat-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                              <select id="fiatSelectBoxBuyPrtc" class="form-control select2" style="width:auto" onchange="selectFiat(1,'Prtc')">
-                                <option class="default-fiat" selected="selected">INR</option>
-                                <option>INR</option>
-                                <option>USD</option>
-                                <option>EUR</option>
-                                <option>JPY</option>
-                                <option>CNY</option>
-                              </select>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id="cryptoInputBuyPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prtc')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                              <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="feesInputBuyPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prtc')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="fiatInputBuyPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(1,'Prtc')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Cost</label>
-                            </div>
-                            <br>
-                            <br>
-                            <button onclick='buyPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                          </div>
-                          <!-- /////////////////////////// -->
-
-                          <!-- ////////////////////////////// -->
-                          <div id="SellTabPrtc" class="BuySellTabContentPrtc"  style="display: none;">
-                            <br>
-                            <div class="crypto-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                              <select id="cryptoSelectBoxSellPrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(2,'Prtc')">
-                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="XRP">Ripple (XRP)</option>
-                                <option value="BCH">Bitcoin Cash (BCH)</option>
-                                <option value="LTC">Litecoin (LTC)</option>
-                                <option value="TRX">Tron (TRX)</option>
-                                <option value="DASH">Dash (DASH)</option>
-                              </select>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="fiat-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                              <select id="fiatSelectBoxSellPrtc" class="form-control select2" style="width:auto" onchange="selectFiat(2,'Prtc')">
-                                <option class="default-fiat" selected="selected">INR</option>
-                                <option>INR</option>
-                                <option>USD</option>
-                                <option>EUR</option>
-                                <option>JPY</option>
-                                <option>CNY</option>
-                              </select>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id="cryptoInputSellPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prtc')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                              <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="feesInputSellPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prtc')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fees (%)</label>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="fiatInputSellPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(2,'Prtc')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Fiat Value</label>
-                            </div>
-                            <br>
-                            <br>
-                            <button onclick='sellPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                          </div>
-                          <!-- ////////////////////////////// -->
-                          <div id="UpdateTabPrtc" class="BuySellTabContentPrtc"  style="display: none;">
-                            <br>
-                            <div class="crypto-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
-                              <select id="cryptoSelectBoxUpdatePrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(3,'Prtc')">
-                                <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
-                                <option value="ETH">Ethereum (ETH)</option>
-                                <option value="XRP">Ripple (XRP)</option>
-                                <option value="BCH">Bitcoin Cash (BCH)</option>
-                                <option value="LTC">Litecoin (LTC)</option>
-                                <option value="TRX">Tron (TRX)</option>
-                                <option value="DASH">Dash (DASH)</option>
-                              </select>
-                            </div>
-                            <br>
-                            <br>
-                            <div class="fiat-select" style="display: inline-block; float: left;">
-                              <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
-                              <select id="fiatSelectBoxUpdatePrtc" class="form-control select2" style="width:auto" onchange="selectFiat(3,'Prtc')">
-                                <option class="default-fiat" selected="selected">INR</option>
-                                <option>INR</option>
-                                <option>USD</option>
-                                <option>EUR</option>
-                                <option>JPY</option>
-                                <option>CNY</option>
-                              </select>
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id="cryptoInputUpdatePrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(3,'Prtc')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px; left: 0">Crypto Amount</label>
-                              <!-- <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button> -->
-                            </div>
-                            <br>
-                            <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
-                              <input id ="fiatInputUpdatePrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToCrypto(3,'Prtc')" required>
-                              <!-- <span class="highlight"></span> -->
-                              <span class="bar_convert" style="width: 100%"></span>
-                              <label class="label_convert" style="font-size: 15px;left: 0">Investment Cost</label>
-                            </div>
-                            <br>
-                            <br>
-                            <button onclick='updatePortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
-                          </div>
-                          <!-- ////////////////////////////// -->
-                        </div>
-                      </div>
-                      <!-- /.tab-pane -->
-                      <!-- /.tab-pane -->
+                      <!-- /.col -->
                     </div>
-                    <!-- /.tab-content -->
-                    <!-- </div> -->
-                    <!-- nav-tabs-custom -->
-                  </div>
-                  <!-- /.col -->
+                    <!-- /.row (main row) -->
+                  </section>
+                  <!-- /.content -->
                 </div>
-                <!-- /.row (main row) -->
-              </section>
-              <!-- /.content -->
-            </div>
-            <!-- /.content-wrapper -->
+                <!-- /.content-wrapper -->
 <!-- 
         <script>
           if( <?php echo $loggedIn ?> )
@@ -1417,10 +1459,15 @@
                       immediately after the control sidebar -->
                       <div class="control-sidebar-bg"></div>
                     </div>
-                    <!-- ./wrapper -->
+
+            
+
+                    <!-- Pie Chart -->
+                    <script src="bower_components/Chart.js/Chart.js"></script>
+                    <!-- Pie Chart Data -->
                     
                     
-                    <!-- Morris.js charts -->
+
                     <script src="bower_components/raphael/raphael.min.js"></script>
                     <!-- Sparkline -->
                     <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
@@ -1463,7 +1510,10 @@
                         })
                       })
                     </script>
-                    
+                    <script type="text/javascript">
+                      drawPie(myPortfolioPrsn,1);
+                      // drawPie(myPortfolioPrtc,2);
+                    </script>
                     <!-- Select2 -->
                     <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
                     <script>

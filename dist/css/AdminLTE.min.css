@@ -8,6 +8,12 @@
 #portfolioTablePersonal{
     overflow-x: auto;
     padding: 10px;
+    height
+}
+
+#portfolioTablePractice{
+    overflow-x: auto;
+    padding: 10px;
 }
 
 .BuySellTab {
@@ -368,6 +374,10 @@
 }
 @media (max-width: 500px) {
     #portfolioTablePersonal{
+        overflow-x: auto;
+        padding: 0;
+    }
+    #portfolioTablePractice{
         overflow-x: auto;
         padding: 0;
     }

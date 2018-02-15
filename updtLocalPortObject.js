@@ -20,7 +20,7 @@ function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount
 		lclPortTableString = portTableStringPrtc;
 		lclPortArr = portArrPrtc;
 		lclUrlPort = urlPortPrtc;
-		domElement = "portfolioTablePersonal";
+		domElement = "portfolioTablePractice";
 		portIntrvlId = portIntrvlIdPrtc;
 		whichTypeNumber = 2;
 	}
