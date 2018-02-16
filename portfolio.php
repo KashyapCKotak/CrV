@@ -720,7 +720,7 @@
                               triggerLoadTableAndUrl(1);
                             </script>
                           </div>
-                          <div class="box box-default">
+                          <div class=">
                             <div class="box-header with-border" style="text-align: center;">
                               <h3 class="box-title">Distribution</h3>
                             </div>
@@ -734,16 +734,7 @@
                                   <!-- ./chart-responsive -->
                                 </div>
                                 <!-- /.col -->
-                                <div class="col-md-4">
-                                  <ul class="chart-legend clearfix">
-                                    <li><i class="fa fa-circle-o text-red"></i> Chrome</li>
-                                    <li><i class="fa fa-circle-o text-green"></i> IE</li>
-                                    <li><i class="fa fa-circle-o text-yellow"></i> FireFox</li>
-                                    <li><i class="fa fa-circle-o text-aqua"></i> Safari</li>
-                                    <li><i class="fa fa-circle-o text-light-blue"></i> Opera</li>
-                                    <li><i class="fa fa-circle-o text-gray"></i> Navigator</li>
-                                  </ul>
-                                </div>
+                                <div id="piePortfolioPrsn" class="col-md-4"></div>
                                 <!-- /.col -->
                               </div>
                               <!-- /.row -->

@@ -3,30 +3,37 @@
   // -------------
   // Get context with jQuery - using jQuery's .get() method.
   var dynamicColors = function() {
-            var r = Math.floor(Math.random() * 255);
-            var g = Math.floor(Math.random() * 255);
-            var b = Math.floor(Math.random() * 255);
-            return "rgb(" + r + "," + g + "," + b + ")";
+            var r = Math.ceil(Math.random() * 255);
+            var g = Math.ceil(Math.random() * 255);
+            var b = Math.ceil(Math.random() * 255);
+            return "(" + r + "," + g + "," + b;
          };
 
 function drawPie(myPortfolio, whichInit) {
-  console.log("LOOOOOK");
-  console.log(myPortfolio);
+  var bulletString='<ul class="chart-legend clearfix">';
   var pieChartCanvas = $('#pieChart'+whichInit).get(0).getContext('2d');
   var pieChart = new Chart(pieChartCanvas);
   var PieData = [];
 
-  for(crypto in myPortfolio){
+  for(var crypto in myPortfolio){
     var tempObj={};
     tempObj.value=0;
+    console.log(crypto);
     for(fiat in myPortfolio[crypto]){
-      tempObj.value=tempObj.value+myPortfolio[crypto][fiat].amt;
+      tempObj.value=tempObj.value+parseFloat(myPortfolio[crypto][fiat].amt);
     }
-    tempObj.color=dynamicColors();
-    tempObj.highlight=dynamicColors();
+    var color=dynamicColors();
+    tempObj.color="rgb"+color+")";
+    tempObj.highlight="rgba"+color+",0.7)";
+    console.log(tempObj.color);
+    console.log(tempObj.highlight);
     tempObj.label=crypto;
+    bulletString=bulletString+'<li><i class="fa fa-circle" style="color:'+tempObj.color+'"></i> '+ crypto +'</li>';
     PieData.push(tempObj);
   }
+  bulletString=bulletString+'</ul>';
+  document.getElementById("piePortfolioPrsn").innerHTML=bulletString;
+  console.log(PieData);
 
   // var PieData        = [
   //   {
@@ -90,7 +97,7 @@ function drawPie(myPortfolio, whichInit) {
     // String - A legend template
     legendTemplate       : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>',
     // String - A tooltip template
-    tooltipTemplate      : '<%=value %> <%=label%> users'
+    tooltipTemplate      : '<%=value %> in <%=label%>'
   };
   // Create pie or douhnut chart
   // You can switch between pie and douhnut using the method below.
