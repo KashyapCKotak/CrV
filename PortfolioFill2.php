@@ -19,19 +19,26 @@ var urlPortPrtc = [];
 var portIntrvlIdPrsn = [];
 var portIntrvlIdPrtc = [];
 
+var prsnRootFiat="";
+var prtcRootFiat="";
+
 function triggerLoadTableAndUrl(whichInit){
 	if(whichInit == 1){
 		var myPortfolioInit = <?php echo $_SESSION['prsn_portfolio'];?>;
-		myPortfolioPrsn=myPortfolioInit.prsnprtf;
+		prsnRootFiat=Object.keys(myPortfolioInit)[0];
+		myPortfolioPrsn=myPortfolioInit[prsnRootFiat];
 		console.log("Personal");
+		console.log(prsnRootFiat);
 		console.log(myPortfolioPrsn);
 		portTableStringPrsn = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
 		loadTableAndUrl(myPortfolioPrsn, portTableStringPrsn, portArrPrsn, urlPortPrsn, "portfolioTablePersonal", portIntrvlIdPrsn, whichInit);
 	}
 	else if (whichInit == 2){
 		var myPortfolioInit = <?php echo $_SESSION['prtc_portfolio'];?>;	
-		myPortfolioPrtc=myPortfolioInit.prtcprtf;
+		prtcRootFiat=Object.keys(myPortfolioInit)[0];
+		myPortfolioPrtc=myPortfolioInit[prtcRootFiat];
 		console.log("Practice");
+		console.log(prtcRootFiat);
 		console.log(myPortfolioPrtc);
 		portTableStringPrtc = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
 		loadTableAndUrl(myPortfolioPrtc, portTableStringPrtc, portArrPrtc, urlPortPrtc,  "portfolioTablePractice", portIntrvlIdPrtc, whichInit);
