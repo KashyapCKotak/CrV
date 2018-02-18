@@ -79,19 +79,19 @@ function drawPie(myPortfolio, whichInit) {
     // String - The colour of each segment stroke
     segmentStrokeColor   : '#fff',
     // Number - The width of each segment stroke
-    segmentStrokeWidth   : 1,
+    segmentStrokeWidth   : 2,
     // Number - The percentage of the chart that we cut out of the middle
     percentageInnerCutout: 50, // This is 0 for Pie charts
     // Number - Amount of animation steps
     animationSteps       : 100,
     // String - Animation easing effect
-    animationEasing      : 'easeOutBounce',
+    animationEasing      : 'easeOutQuart',
     // Boolean - Whether we animate the rotation of the Doughnut
     animateRotate        : true,
     // Boolean - Whether we animate scaling the Doughnut from the centre
     animateScale         : false,
     // Boolean - whether to make the chart responsive to window resizing
-    responsive           : true,
+    responsive           : false,
     // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
     maintainAspectRatio  : false,
     // String - A legend template
