@@ -5,6 +5,66 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+.NewsWidgetMainHeading {
+    font-family: Helvetica, Roboto, "Segoe UI", Calibri, sans-serif;
+    font-size: 27px;
+    font-weight: 300;
+    line-height: 36px;
+    font-stretch: 100%;
+    font-style: normal; 
+    height: 36px;
+    color: #292F33;
+    margin: 10px;
+}
+
+.NewsWidgetItemLeftImg {
+    float: left;
+    width: 25%;
+    height: 100%;
+    padding: 5px;
+}
+
+.NewsWidgetItemRightHeading{
+    width: 75%;
+    padding: 5px;
+    height: 50%;
+    font-size: 18px;
+    font-weight: 600;
+    float: right;
+}
+
+.NewsWidgetItemHolder > img {
+    float: left;
+    width: 25%;
+    height: 100%;
+    padding: 5px;
+} 
+
+.NewsWidgetItemRightHeading > div {
+    margin: 0;
+    /*padding: 5px;*/
+    height: 100%;
+    overflow: hidden;
+}
+
+.NewsWidgetItemRightSmallContent {
+    width: 75%;
+    padding: 5px;
+    height: 50%;
+    float: right;
+}
+
+.NewsWidgetItemRightSmallContent > div{
+    margin: 0;
+    /*padding: 5px;*/
+    height: 100%;
+    overflow: hidden;
+}
+
+.NewsWidgetItemHolder{
+    height: 120px;
+}
+
 #portfolioTablePersonal{
     overflow-x: auto;
     padding: 10px;

@@ -727,9 +727,29 @@
                       <script src="MarketsTableFill.js"></script>
                     </div>
                     
-                    <div class="row box" style="margin:0;width:auto">
-                      <div class="row col-md-6" style="margin-left:0;margin-right:0;margin-bottom:10px;height:70vh;padding:0;overflow:auto">
-                        <a class="twitter-timeline" href="https://twitter.com/Bitcoin?ref_src=twsrc%5Etfw">Tweets by Bitcoin</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    <div class="row box" style="margin:0;width:auto;margin-bottom: 20px">
+                      <div class="col-md-6" style="margin-left:0;margin-right:0;margin-bottom:10px;height:70vh;padding:10px">
+                        <div style="height:100%;overflow:auto">
+                          <a class="twitter-timeline" href="https://twitter.com/Bitcoin?ref_src=twsrc%5Etfw">Tweets by Bitcoin</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        </div>
+                      </div>
+                      <div class="col-md-6" style="margin-left:0;margin-right:0;margin-bottom:10px;height:70vh;padding:10px;">
+                        <div class="NewsWidgetHolder" style="height: 100%; overflow-y: auto">
+                          <div class="NewsWidgetMainHeading">
+                            <h1 style="margin:0">Cointelegraph.com News</h1>
+                          </div>
+                          <!-- <div class="NewsWidgetItemHolder"> -->
+                            <!-- 
+                            <img class="NewsWidgetItemLeftImg" src="https://cointelegraph.com/images/528_Ly9jb2ludGVsZWdyYXBoLmNvbS9zdG9yYWdlL3VwbG9hZHMvdmlldy83MjYzNGFmYmVhZWYwN2Y0MzdkOGYwYzdlOTFkMzQwNy5qcGc=.jpg"></img>
+                            <div class="NewsWidgetItemRightHeading">
+                              <div>Coinbase Joins Blockchain Common App Jobs Initiative, Calls For ‘Senior Engineers’</div>
+                            </div>
+                            <div class="NewsWidgetItemRightSmallContent">
+                              <div>Coinbase has joined the Blockchain Common App jobs initiative, seeking senior engineers for Bitcoin, Ethereum protocols.</div>
+                            </div> 
+                            -->
+                          <!-- </div> -->
+                        </div>
                       </div>
                     </div>
                     
@@ -1440,7 +1460,22 @@
                     </div>
                     <!-- ./wrapper -->
                     
-                    
+                    <script type="text/javascript">
+                      if (window.XMLHttpRequest) {
+                        // code for IE7+, Firefox, Chrome, Opera, Safari
+                        xmlhttp=new XMLHttpRequest();
+                      } else {  // code for IE6, IE5
+                        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+                      }
+                      xmlhttp.onreadystatechange=function() {
+                        if (this.readyState==4 && this.status==200) {
+                          console.log(this.responseText);
+                          document.getElementsByClassName("NewsWidgetHolder")[0].innerHTML=this.responseText;
+                        }
+                      }
+                      xmlhttp.open("GET","GetRss.php?q=Cointelegraph",true);
+                      xmlhttp.send();
+                    </script>
                     <!-- Morris.js charts -->
                     <script src="bower_components/raphael/raphael.min.js"></script>
                     <script src="bower_components/morris.js/morris.min.js"></script>
