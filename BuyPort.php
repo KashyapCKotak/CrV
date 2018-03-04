@@ -1,6 +1,7 @@
 <?php
 include ($_SERVER['DOCUMENT_ROOT'].'/AdminLTE-2.4.2/pages/dbconnect.php');
 session_start();
+error_log("********************* NEW ******************");
 //error_log("============================================================================================================================================================================================================================================");
 //don't display errors
 // ini_set('display_errors', 0);
@@ -23,21 +24,31 @@ session_start();
 		$portJsonRoot="prtcprtf";
 	}
 	$cryptoview_user=$_SESSION["cryptoview_user"];
-
 	$sql1 = "SELECT  $portType  FROM `portfolio` WHERE `username` LIKE '$cryptoview_user'";
+	error_log($sql1);
+	error_log($cryptoview_user);
 	$result1 = $mysqli->query($sql1);
 	//error_log(json_encode($sql1));
 	$num_rows1 = $result1->num_rows;
-	$row1 = $result1->fetch_assoc();
-
+	error_log($num_rows1);
+	$row1 = $result1->fetch_assoc();	
 	if($num_rows1 == 1) {
 		$newArray = array ($_POST['cryptoVal'] => array ($_POST['fiatVal'] => array ("invst" => $_POST['fiatAmt'], "amt" => $_POST['cryptoAmt'])));
 		//error_log("----------NEW ARRAY---------");
 		//error_log(json_encode($newArray));
 		//error_log("----------OLD ARRAY---------");
 		//error_log(json_encode($row1));
+		error_log($row1[$portType]);
+		// error_log(print_r(json_decode($row1[$portType], true)));
 		$tempArray = json_decode($row1[$portType], true);
-		//error_log(json_encode($tempArray));
+		error_log("This is temp Array");
+		error_log(json_encode($tempArray));
+		foreach ($items as $portJsonRoot => $value) {
+			error_log("========== Root Detected ================");
+			error_log($portJsonRoot);
+		}
+		// $portJsonRoot = key($tempArray);
+		
 
 		if(array_key_exists($_POST['cryptoVal'], $tempArray[$portJsonRoot])) {
 			//error_log("--------------crypto TRUE");
@@ -60,7 +71,8 @@ session_start();
 			//error_log("----------------added crypto");
 		}
 		$tempArrayString = json_encode($tempArray);
-		$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";
+		//$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";
+		$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE 'dhinchak'";
 		//error_log($sql2);
 		$mysqli->query($sql2);
 		if(($mysqli->affected_rows) > 0 ) {

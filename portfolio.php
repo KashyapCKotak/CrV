@@ -2,7 +2,7 @@
 <html>
 <head>
   <?php
-  include ($_SERVER['DOCUMENT_ROOT'].'/CrV/pages/checkLogin.php');
+  include ($_SERVER['DOCUMENT_ROOT'].'/AdminLTE-2.4.2/pages/checkLogin.php');
   ?>
   <script src="mobileConsole.js"></script>
   <meta charset="utf-8">
@@ -716,7 +716,7 @@
 
                         <div class="row col-md-6" style="margin: 0; padding: 0">
                           <div id="portfolioTablePersonal" class="box-body">
-                            <script src="PortfolioFill2.php"></script>
+                            <script src="PortfolioFill3.php"></script>
                             <script>
                               triggerLoadTableAndUrl(1);
                             </script>

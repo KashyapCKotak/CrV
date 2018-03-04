@@ -18,22 +18,22 @@ function drawPie(myPortfolio, whichInit) {
   for(var crypto in myPortfolio){
     var tempObj={};
     tempObj.value=0;
-    console.log(crypto);
+    //console.log(crypto);
     for(fiat in myPortfolio[crypto]){
       tempObj.value=tempObj.value+parseFloat(myPortfolio[crypto][fiat].amt);
     }
     var color=dynamicColors();
     tempObj.color="rgb"+color+")";
     tempObj.highlight="rgba"+color+",0.7)";
-    console.log(tempObj.color);
-    console.log(tempObj.highlight);
+    //console.log(tempObj.color);
+    //console.log(tempObj.highlight);
     tempObj.label=crypto;
     bulletString=bulletString+'<li><i class="fa fa-circle" style="color:'+tempObj.color+'"></i> '+ crypto +'</li>';
     PieData.push(tempObj);
   }
   bulletString=bulletString+'</ul>';
   document.getElementById("piePortfolioPrsn").innerHTML=bulletString;
-  console.log(PieData);
+  //console.log(PieData);
 
   // var PieData        = [
   //   {

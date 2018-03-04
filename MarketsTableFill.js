@@ -123,8 +123,8 @@ if( globalCryptoValue == "BTC" ){
             if (xhhtpMktblCoinome.readyState == 4 && xhhtpMktblCoinome.status == 200) {
                 var Coinomedata = JSON.parse(this.responseText);
                 this.responseType
-                document.getElementById("Coinomeb").innerHTML=parseFloat(Coinomedata.query.results.json['BTC-INR']['lowest_ask']).toFixed(2);
-                document.getElementById("Coinomes").innerHTML=parseFloat(Coinomedata.query.results.json['BTC-INR']['highest_bid']).toFixed(2);
+                document.getElementById("Coinomeb").innerHTML=parseFloat(Coinomedata.query.results.json['btc-inr']['lowest_ask']).toFixed(2);
+                document.getElementById("Coinomes").innerHTML=parseFloat(Coinomedata.query.results.json['btc-inr']['highest_bid']).toFixed(2);
             }
         };
         xhhtpMktblCoinome.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://www.coinome.com/api/v1/ticker.json' + '"') + '&format=json', true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
