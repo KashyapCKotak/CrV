@@ -578,6 +578,7 @@
               }
 
               function convertToFiat(which,typ){
+                var feesInputValue=0;
                 //console.log("in convert");
                 if(which == 1) {
                   //console.log("buy updating");
@@ -588,7 +589,7 @@
                   else if(typ=="Prtc")
                     var currentConversionRate=buyPrtfRatePrtc;
                   var feesInputToUse="feesInputBuy"+typ;
-                  var feesApplySign=1;
+                  var feesApplySign=1;   
                 }
                 else if(which == 2) {
                   var cryptoInputToUse="cryptoInputSell"+typ;
@@ -607,11 +608,17 @@
                     var currentConversionRate=updatePrtfRatePrsn;
                   else if(typ=="Prtc")
                     var currentConversionRate=updatePrtfRatePrtc;
+                  feesApplySign=1;
                 }
 
-                if(document.getElementById(feesInputToUse).value=="" && document.getElementById(cryptoInputToUse).value!=""){
+                if(which != 3 && document.getElementById(feesInputToUse).value=="" && document.getElementById(cryptoInputToUse).value!=""){
                   document.getElementById(feesInputToUse).value=0;
                 }
+
+                if(which != 3)
+                  feesInputValue=parseFloat(document.getElementById(feesInputToUse).value);
+                else
+                  feesInputValue=parseFloat(0);
 
                 if(isNaN(parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, '')))) {
                   document.getElementById(fiatInputToUse).value="Enter Correct Number!";
@@ -621,11 +628,15 @@
                 }
                 //console.log("ahead 2");
                 var fiatClaculatedValue=parseFloat((document.getElementById(cryptoInputToUse).value).replace(/,/g, ''))*currentConversionRate;
-                var fiatClaculatedValue=fiatClaculatedValue+((fiatClaculatedValue*(parseFloat(document.getElementById(feesInputToUse).value))/100)*feesApplySign);
-                document.getElementById(fiatInputToUse).value=fiatClaculatedValue.toLocaleString();
+                var fiatClaculatedValue=fiatClaculatedValue+((fiatClaculatedValue*(parseFloat(feesInputValue))/100)*feesApplySign);
+
+                if(which!=3){
+                  document.getElementById(fiatInputToUse).value=fiatClaculatedValue.toLocaleString();
+                }
               }
 
               function convertToCrypto(which,typ){
+                var feesInputValue=0;
                 if(which == 1) {
                   var cryptoInputToUse="cryptoInputBuy"+typ;
                   var fiatInputToUse="fiatInputBuy"+typ;
@@ -635,6 +646,8 @@
                     var currentConversionRate=buyPrtfRatePrtc;
                   var feesInputToUse="feesInputBuy"+typ;
                   var feesApplySign=-1;
+                  // feesInputValue=parseFloat(document.getElementById(feesInputToUse).value);
+
                 }
                 else if(which == 2) {
                   var cryptoInputToUse="cryptoInputSell"+typ;
@@ -645,6 +658,7 @@
                     var currentConversionRate=sellPrtfRatePrtc;
                   var feesInputToUse="feesInputSell"+typ;
                   var feesApplySign=1;
+                  // feesInputValue=parseFloat(document.getElementById(feesInputToUse).value);
                 }
                 else if(which == 3) {
                   var cryptoInputToUse="cryptoInputUpdate"+typ;
@@ -653,7 +667,19 @@
                     var currentConversionRate=updatePrtfRatePrsn;
                   else if(typ=="Prtc")
                     var currentConversionRate=updatePrtfRatePrtc;
+                  feesApplySign=1;
+                  // feesInputValue=0;
                 }
+
+                if(which != 3 && document.getElementById(feesInputToUse).value=="" && document.getElementById(fiatInputToUse).value!=""){
+                  document.getElementById(feesInputToUse).value=0;
+                  console.log("set 0?");
+                }
+
+                if(which != 3)
+                  feesInputValue=parseFloat(document.getElementById(feesInputToUse).value);
+                else
+                  feesInputValue=parseFloat(0);
 
                 if(isNaN(parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, '')))){
                   document.getElementById(cryptoInputToUse).value="Enter Correct Number!";
@@ -663,7 +689,7 @@
                 }
 
                 var fiatInputValueToClac=parseFloat((document.getElementById(fiatInputToUse).value).replace(/,/g, ''));
-                var fiatInputValueToClac=fiatInputValueToClac+((fiatInputValueToClac*(parseFloat(document.getElementById(feesInputToUse).value))/100)*feesApplySign);
+                var fiatInputValueToClac=fiatInputValueToClac+((fiatInputValueToClac*(parseFloat(feesInputValue))/100)*feesApplySign);
                 var cryptoCalculatedValue=fiatInputValueToClac/currentConversionRate;
 
                 if(which!=3){
@@ -723,7 +749,7 @@
                           </div>
                           <div>
                             <div class="box-header with-border" style="text-align: center;">
-                              <h3 class="box-title">Distribution</h3>
+                              <h3 class="box-title">Investment Distribution</h3>
                             </div>
                             <!-- /.box-header -->
                             <div class="box-body" style="height=50vh">

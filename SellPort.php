@@ -37,30 +37,36 @@ if($num_rows1 == 1) {
 		//error_log(json_encode($newArray));
 		//error_log("----------OLD ARRAY---------");
 		//error_log(json_encode($row1));
+	error_log(json_encode($newArray));
 	$tempArray = json_decode($row1[$portType], true);
-		//error_log(json_encode($tempArray));
+	$portJsonRoot=array_keys($tempArray);
+	error_log("This is temp Array");
+	error_log(json_encode($tempArray));
+	$portJsonRoot=$portJsonRoot[0];
+	error_log($portJsonRoot);
+	//error_log(json_encode($tempArray));
 
-	if(array_key_exists($_POST['cryptoVal'], $tempArray[$portJsonRoot])) {
+	if(array_key_exists($_POST['fiatVal'], $tempArray[$portJsonRoot])) {
 			//error_log("--------------crypto TRUE");
-		if(array_key_exists($_POST['fiatVal'], $tempArray[$portJsonRoot][$_POST['cryptoVal']])){
+		if(array_key_exists($_POST['cryptoVal'], $tempArray[$portJsonRoot][$_POST['fiatVal']])){
 				//error_log("-----------------fiat exists");
-			$tempCryptAmt=$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"];
-			$tempFiatInvst=$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"];
+			$tempCryptAmt=$tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]["amt"];
+			$tempFiatInvst=$tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]["invst"];
 
 			if(($tempCryptAmt-$_POST['cryptoAmt'])<0){
 				echo "Insuffecient Balance";
 				return;
 			}
 
-			$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=($tempFiatInvst/$tempCryptAmt)*($tempCryptAmt-$_POST['cryptoAmt']);
+			$tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]["invst"]=($tempFiatInvst/$tempCryptAmt)*($tempCryptAmt-$_POST['cryptoAmt']);
 
-			$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$tempCryptAmt-$_POST['cryptoAmt'];
+			$tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]["amt"]=$tempCryptAmt-$_POST['cryptoAmt'];
 
-			if($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]==0){
-				unset($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]);
+			if($tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]["amt"]==0){
+				unset($tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]);
 			}
-			if(sizeof($tempArray[$portJsonRoot][$_POST['cryptoVal']],0)==0){
-				unset($tempArray[$portJsonRoot][$_POST['cryptoVal']]);
+			if(sizeof($tempArray[$portJsonRoot][$_POST['fiatVal']],0)==0){
+				unset($tempArray[$portJsonRoot][$_POST['fiatVal']]);
 			}
 				//error_log(print_r($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]));
 		}
@@ -73,14 +79,17 @@ if($num_rows1 == 1) {
 	}
 	else {
 			//error_log("----------------FALSE");
-		echo "You do not have any portfolio for " . $_POST['cryptoVal'] . ".";
+		echo "You do not have portfolio for " . $_POST['cryptoVal'] . "/" . $_POST['fiatVal'] . " pair.";
 		return;
 			//error_log(json_encode($tempArray));
 			//error_log("----------------added crypto");
 	}
 
 	$tempArrayString = json_encode($tempArray);
-	$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";
+	error_log("!!!!!!!!!!!!!!!!!!!!");
+	error_log($tempArrayString);
+	// $sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";
+	$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE 'dhinchak'";
 		//error_log($sql2);
 	$mysqli->query($sql2);
 	if(($mysqli->affected_rows) > 0 ) {

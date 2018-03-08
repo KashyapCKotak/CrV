@@ -5,6 +5,11 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+.portfolioTotalRow {
+    font-size: 18px;
+    font-weight: 650;
+}
+
 .NewsWidgetMainHeading {
     font-family: Helvetica, Roboto, "Segoe UI", Calibri, sans-serif;
     font-size: 27px;

@@ -34,28 +34,39 @@ $row1 = $result1->fetch_assoc();
 if($num_rows1 == 1) {
 	$newArray = array ($_POST['cryptoVal'] => array ($_POST['fiatVal'] => array ("invst" => $_POST['fiatAmt'], "amt" => $_POST['cryptoAmt'])));
 
+	error_log(json_encode($newArray));
 	$tempArray = json_decode($row1[$portType], true);
-	if(array_key_exists($_POST['cryptoVal'], $tempArray[$portJsonRoot])) {
-		if(array_key_exists($_POST['fiatVal'], $tempArray[$portJsonRoot][$_POST['cryptoVal']])){
-			$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["invst"]=$_POST['fiatAmt'];
-			$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]=$_POST['cryptoAmt'];
+	$portJsonRoot=array_keys($tempArray);
+	error_log("This is temp Array");
+	error_log(json_encode($tempArray));
+	$portJsonRoot=$portJsonRoot[0];
+	error_log($portJsonRoot);
+
+
+	if(array_key_exists($_POST['fiatVal'], $tempArray[$portJsonRoot])) {
+		if(array_key_exists($_POST['cryptoVal'], $tempArray[$portJsonRoot][$_POST['fiatVal']])){
+			$tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]["invst"]=$_POST['fiatAmt'];
+			$tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]["amt"]=$_POST['cryptoAmt'];
 			
-			if($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]["amt"]==0){
-				unset($tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]);
+			if($tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]["amt"]==0){
+				unset($tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]);
 			}
-			if(sizeof($tempArray[$portJsonRoot][$_POST['cryptoVal']],0)==0){
-				unset($tempArray[$portJsonRoot][$_POST['cryptoVal']]);
+			if(sizeof($tempArray[$portJsonRoot][$_POST['fiatVal']],0)==0){
+				unset($tempArray[$portJsonRoot][$_POST['fiatVal']]);
 			}
 		}
 		else{
-			$tempArray[$portJsonRoot][$_POST['cryptoVal']][$_POST['fiatVal']]=$newArray[$_POST['cryptoVal']][$_POST['fiatVal']];
+			$tempArray[$portJsonRoot][$_POST['fiatVal']][$_POST['cryptoVal']]=$newArray[$_POST['fiatVal']][$_POST['cryptoVal']];
 		}
 	}
 	else {
-		$tempArray[$portJsonRoot][$_POST['cryptoVal']]=$newArray[$_POST['cryptoVal']];
+		$tempArray[$portJsonRoot][$_POST['fiatVal']]=$newArray[$_POST['fiatVal']];
 	}
 	$tempArrayString = json_encode($tempArray);
-	$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";
+	error_log("!!!!!!!!!!!!!!!!!!!!");
+	error_log($tempArrayString);
+	// $sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";
+	$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE 'dhinchak'";
 		//error_log($sql2);
 	$mysqli->query($sql2);
 	if(($mysqli->affected_rows) > 0 ) {
