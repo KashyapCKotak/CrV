@@ -742,10 +742,7 @@
 
                         <div class="row col-md-6" style="margin: 0; padding: 0">
                           <div id="portfolioTablePersonal" class="box-body">
-                            <script src="PortfolioFill3.php"></script>
-                            <script>
-                              triggerLoadTableAndUrl(1);
-                            </script>
+
                           </div>
                           <div>
                             <div class="box-header with-border" style="text-align: center;">
@@ -767,8 +764,12 @@
                               <!-- /.row -->
                             </div>
                             <!-- /.box-body -->
-                              </div>
-                              <!-- /.col -->
+                            </div>
+                            <!-- /.col -->
+                            <script src="PortfolioFill3.php"></script>
+                            <script>
+                              triggerLoadTableAndUrl(1);
+                            </script>
                             </div>
                             <!-- /.row -->
                             <!-- //////////////////////////////////////////////////////// -->
@@ -1518,7 +1519,7 @@
                       })
                     </script>
                     <script type="text/javascript">
-                      drawPie(myPortfolioPrsn,1);
+                      // drawPie(myPortfolioPrsn,1);
                       // drawPie(myPortfolioPrtc,2);
                     </script>
                     <!-- Select2 -->

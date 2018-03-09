@@ -9,26 +9,29 @@
             return "(" + r + "," + g + "," + b;
          };
 
-function drawPie(myPortfolio, whichInit) {
+function drawPie(myPortfolioChartIn, whichInit) {
+  var myPortfolioChart = JSON.parse(JSON.stringify(myPortfolioChartIn));
   var bulletString='<ul class="chart-legend clearfix">';
   var pieChartCanvas = $('#pieChart'+whichInit).get(0).getContext('2d');
   var pieChart = new Chart(pieChartCanvas);
   var PieData = [];
 
-  for(var crypto in myPortfolio){
+  for(var fiat in myPortfolioChart){
     var tempObj={};
     tempObj.value=0;
     //console.log(crypto);
-    for(fiat in myPortfolio[crypto]){
-      tempObj.value=tempObj.value+parseFloat(myPortfolio[crypto][fiat].amt);
+    for(crypto2 in myPortfolioChart[fiat]){
+      console.log(myPortfolioChart);
+      console.log(fiat + "/" + crypto2);
+      tempObj.value=tempObj.value+parseFloat(myPortfolioChart[fiat][crypto2].invst);
     }
     var color=dynamicColors();
     tempObj.color="rgb"+color+")";
     tempObj.highlight="rgba"+color+",0.7)";
     //console.log(tempObj.color);
     //console.log(tempObj.highlight);
-    tempObj.label=crypto;
-    bulletString=bulletString+'<li><i class="fa fa-circle" style="color:'+tempObj.color+'"></i> '+ crypto +'</li>';
+    tempObj.label=crypto2;
+    bulletString=bulletString+'<li><i class="fa fa-circle" style="color:'+tempObj.color+'"></i> '+ crypto2 +'</li>';
     PieData.push(tempObj);
   }
   bulletString=bulletString+'</ul>';
