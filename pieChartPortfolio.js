@@ -4,34 +4,35 @@
   // Get context with jQuery - using jQuery's .get() method.
   var dynamicColors = function() {
             var r = Math.ceil(Math.random() * 255);
-            var g = Math.ceil(Math.random() * 255);
+            var g = Math.ceil(Math.random() * 255+25);
             var b = Math.ceil(Math.random() * 255);
             return "(" + r + "," + g + "," + b;
          };
 
-function drawPie(myPortfolioChartIn, whichInit) {
-  var myPortfolioChart = JSON.parse(JSON.stringify(myPortfolioChartIn));
+function drawPie(myPortfolioInvstChart, whichInit) {
+  var canvasHolder = document.getElementsByClassName("chart-responsive")[0];
+  var canvas = document.getElementById("pieChart1");
+  canvasHolder.removeChild(canvas);
+  canvasHolder.innerHTML = "<canvas id='pieChart1' height='150'></canvas>";
   var bulletString='<ul class="chart-legend clearfix">';
   var pieChartCanvas = $('#pieChart'+whichInit).get(0).getContext('2d');
+  console.log("Pie Drawn !!!!!!!!!!!!!!!!!!!!!!!");
   var pieChart = new Chart(pieChartCanvas);
   var PieData = [];
 
-  for(var fiat in myPortfolioChart){
+  for(var crypto in myPortfolioInvstChart){
     var tempObj={};
     tempObj.value=0;
-    //console.log(crypto);
-    for(crypto2 in myPortfolioChart[fiat]){
-      console.log(myPortfolioChart);
-      console.log(fiat + "/" + crypto2);
-      tempObj.value=tempObj.value+parseFloat(myPortfolioChart[fiat][crypto2].invst);
-    }
+    console.log(myPortfolioInvstChart);
+    console.log(crypto);
+    tempObj.value=tempObj.value+parseFloat(myPortfolioInvstChart[crypto]);
     var color=dynamicColors();
     tempObj.color="rgb"+color+")";
     tempObj.highlight="rgba"+color+",0.7)";
     //console.log(tempObj.color);
     //console.log(tempObj.highlight);
-    tempObj.label=crypto2;
-    bulletString=bulletString+'<li><i class="fa fa-circle" style="color:'+tempObj.color+'"></i> '+ crypto2 +'</li>';
+    tempObj.label=crypto;
+    bulletString=bulletString+'<li><i class="fa fa-circle" style="color:'+tempObj.color+'"></i> '+ crypto +'</li>';
     PieData.push(tempObj);
   }
   bulletString=bulletString+'</ul>';
@@ -82,9 +83,9 @@ function drawPie(myPortfolioChartIn, whichInit) {
     // String - The colour of each segment stroke
     segmentStrokeColor   : '#fff',
     // Number - The width of each segment stroke
-    segmentStrokeWidth   : 2,
+    segmentStrokeWidth   : -1,
     // Number - The percentage of the chart that we cut out of the middle
-    percentageInnerCutout: 50, // This is 0 for Pie charts
+    percentageInnerCutout: 35, // This is 0 for Pie charts
     // Number - Amount of animation steps
     animationSteps       : 100,
     // String - Animation easing effect

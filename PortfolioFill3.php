@@ -158,6 +158,7 @@ function loadFiatConvObj(){
 }
 
 function updateTotalPort(){
+	var invstListForPie = [];
 	for(fiatPort in myPortfolioWithAmtAsValue){
 		for(cryptoPort in myPortfolioWithAmtAsValue[fiatPort]){
 			if(fiatPort == baseCurrency){
@@ -168,6 +169,12 @@ function updateTotalPort(){
 				totalValue = parseFloat(totalValue) + parseFloat(convertedVal);
 
 				myPortfolioWithAmtAsValue[fiatPort][cryptoPort].invst = parseFloat(convertedInvst);
+				if(invstListForPie.hasOwnProperty(cryptoPort)){
+					invstListForPie[cryptoPort] = parseFloat(invstListForPie[cryptoPort]) + parseFloat(convertedInvst);
+				}
+				else{
+					invstListForPie[cryptoPort] = parseFloat(convertedInvst);
+				}
 			}
 			else{
 				console.log("!!!!!!!!!!!!!!!!");
@@ -182,6 +189,12 @@ function updateTotalPort(){
 				totalInvst = parseFloat(totalInvst) + parseFloat(convertedInvst);
 				totalValue = parseFloat(totalValue) + parseFloat(convertedVal);
 				myPortfolioWithAmtAsValue[fiatPort][cryptoPort].invst = parseFloat(convertedInvst);
+				if(invstListForPie.hasOwnProperty(cryptoPort)){
+					invstListForPie[cryptoPort] = parseFloat(invstListForPie[cryptoPort]) + parseFloat(convertedInvst);
+				}
+				else{
+					invstListForPie[cryptoPort] = parseFloat(convertedInvst);
+				}
 			}
 		}
 	}
@@ -205,7 +218,8 @@ function updateTotalPort(){
 	}
 
 
-    drawPie(myPortfolioWithAmtAsValue,1);
+    drawPie(invstListForPie,1);
+    myPortfolioWithAmtAsValue = JSON.parse(JSON.stringify(myPortfolio));
 }
 
 function loadCurrValuePort(fiatPort2, isLastFiat, lastFiat){
