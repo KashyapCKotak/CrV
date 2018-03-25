@@ -486,7 +486,6 @@
                 <label class="label-enable">Fiat Currency: </label>
                 <select id="fiatSelectBox" class="form-control select2" style="width:auto" onchange="selectFiat()">
                   <option id="default-fiat" selected="selected">INR</option>
-                  <option>INR</option>
                   <option>USD</option>
                   <option>EUR</option>
                   <option>JPY</option>
@@ -717,7 +716,7 @@
                             <h3 class="box-title">Markets for INR</h3>
                           </div>
                           <div id="marketsDataTable" class="box-body" style="padding:0">
-                            
+                            Loading ⌛
                           </div>
                           <!-- /.box-body -->
                         </div>
@@ -1469,7 +1468,7 @@
                       }
                       xmlhttp.onreadystatechange=function() {
                         if (this.readyState==4 && this.status==200) {
-                          console.log(this.responseText);
+                          // console.log(this.responseText);
                           document.getElementsByClassName("NewsWidgetHolder")[0].innerHTML=this.responseText;
                         }
                       }

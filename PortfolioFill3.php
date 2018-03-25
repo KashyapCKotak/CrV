@@ -70,6 +70,9 @@ var fiatConvRates = null;
 var waitForRates = true;
 var waitForValues = true;
 
+var doneUpdtFlg = false;
+var updtTimeout = 20000;
+
 for(fiatPort in myPortfolio){
 	if(baseCurrency != fiatPort)
 		diffFiatList.push(fiatPort);
@@ -106,57 +109,9 @@ for(fiatPort1 in portArr){
 	}
 	urlPort.push(tempUrl);
 }
-
-///////////////////////////////////////////////////////////////
-var doneUpdtFlg = false;
-var updtTimeout = 20000;
-
-triggerLoadCurrValuePort();
-
-function triggerLoadCurrValuePort(){
-	doneUpdtFlg = false;
-	loadFiatConvObj();
-	for(urlPort1 in urlPort){
-		loadCurrValuePort(portArr[urlPort1].fiat,urlPort1,(urlPort.length-1));
-	}
-}
-
-portIntrvlId[0] = setInterval(function() {
-	if(doneUpdtFlg == false){
-		updtTimeout = updtTimeout + 10000;
-	}
-	triggerLoadCurrValuePort();
-},updtTimeout);
+////////////////////////////////////////////////////////////////////////
 
 ////////////////////////// NEW FUNCTION ///////////////////////////////////////
-function loadFiatConvObj(){
-	var fiatConvertUrl = "";
-	fiatConvertUrl = "https://min-api.cryptocompare.com/data/price?fsym="+baseCurrency+"&tsyms=";
-	for(diffFiats in diffFiatList){
-		if(diffFiats == 0){
-			fiatConvertUrl = fiatConvertUrl + diffFiatList[diffFiats];
-		}
-		else{
-			fiatConvertUrl = fiatConvertUrl + ',' + diffFiatList[diffFiats];
-		}
-	}
-	var xhttp = new XMLHttpRequest();
-  	xhttp.onreadystatechange = function() {
-    	if (this.readyState == 4 && this.status == 200) {
-     		fiatConvRates = JSON.parse(this.responseText);
-			waitForRates = false;
-			if(waitForValues == false){
-				waitForRates = true;
-				waitForValues = true;
-				console.log("Values Completed");
-				updateTotalPort();
-			}
-    	}
-  	};
-  	xhttp.open("GET", fiatConvertUrl, true);
-  	xhttp.send();
-}
-
 function updateTotalPort(){
 	var invstListForPie = [];
 	for(fiatPort in myPortfolioWithAmtAsValue){
@@ -263,5 +218,53 @@ function loadCurrValuePort(fiatPort2, isLastFiat, lastFiat){
 	xhttpPort.open("GET", urlPort[urlPort1], true);
 	xhttpPort.send();
 }
+
+
+function loadFiatConvObj(){
+	var fiatConvertUrl = "";
+	fiatConvertUrl = "https://min-api.cryptocompare.com/data/price?fsym="+baseCurrency+"&tsyms=";
+	for(diffFiats in diffFiatList){
+		if(diffFiats == 0){
+			fiatConvertUrl = fiatConvertUrl + diffFiatList[diffFiats];
+		}
+		else{
+			fiatConvertUrl = fiatConvertUrl + ',' + diffFiatList[diffFiats];
+		}
+	}
+	var xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+    	if (this.readyState == 4 && this.status == 200) {
+     		fiatConvRates = JSON.parse(this.responseText);
+			waitForRates = false;
+			if(waitForValues == false){
+				waitForRates = true;
+				waitForValues = true;
+				console.log("Values Completed");
+				updateTotalPort();
+			}
+    	}
+  	};
+  	xhttp.open("GET", fiatConvertUrl, true);
+  	xhttp.send();
 }
-////////////////////////////////////////////////////////////////////
+
+function triggerLoadCurrValuePort(){
+	doneUpdtFlg = false;
+	loadFiatConvObj();
+	for(urlPort1 in urlPort){
+		loadCurrValuePort(portArr[urlPort1].fiat,urlPort1,(urlPort.length-1));
+	}
+}
+//////////////////////////////////////////////////////////////////////////////
+
+triggerLoadCurrValuePort();
+
+portIntrvlId[0] = setInterval(function() {
+	if(doneUpdtFlg == false){
+		updtTimeout = updtTimeout + 10000;
+	}
+	triggerLoadCurrValuePort();
+},updtTimeout);
+
+}//full function end
+
