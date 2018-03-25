@@ -137,34 +137,9 @@ function updateMarketsDataTblINR(){
     xhhtpMktblLocalBitcoins.send();
 }
 
-
-if( globalCryptoValue == "BTC" && globalFiatValue == "INR"){
-// var marketsToLoad = [{"name":"Zebpay","site":"www.zebpay.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"},
-// {"name":"Unocoin","site":"www.unocoin.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"}];
-//////////////////////////////////////////////////////////////////////////
-var tableString='<table id="example1" class="table table-bordered table-striped">'+
-'<thead><tr><th>Name</th><th>Buy(lowest Ask)</th><th>Sell(highest Bid)</th></tr></thead><tbody id="MarketsDataTable">'+
-'<tr><td><a href="https://www.koinex.in">Koinex</a></td><td id="Koinexb">loading</td><td id="Koinexs">loading</td></tr>'+
-'<tr><td><a href="https://www.unocoin.com">Unocoin</a></td><td id="Unocoinb">loading</td><td id="Unocoins">loading</td></tr>'+
-'<tr><td><a href="https://www.coindelta.com">Coindelta</a></td><td id="Coindeltab">loading</td><td id="Coindeltas">loading</td></tr>'+
-'<tr><td><a href="https://www.coinsecure.in">Coinsecure</a></td><td id="Coinsecureb">loading</td><td id="Coinsecures">loading</td></tr>'+
-'<tr><td><a href="https://www.coinome.com">Coinome</a></td><td id="Coinomeb">loading</td><td id="Coinomes">loading</td></tr>'+
-'<tr><td><a href="https://www.buyucoin.com">Buyucoin</a></td><td id="Buyucoinb">loading</td><td id="Buyucoins">loading</td></tr>'+
-//'<tr><td><a href="https://www.paxful.com">Paxful</a></td><td id="Paxfulb">loading</td><td id="Paxfuls">loading</td></tr>'+
-'<tr><td><a href="https://www.pocketbits.in">PocketBits</a></td><td id="Pocketbitsb">loading</td><td id="Pocketbitss">loading</td></tr>'+
-'<tr><td><a href="https://www.localbitcoins.com">LocalBitcoins</a></td><td id="LocalBitcoinsb">loading</td><td id="LocalBitcoinss">loading</td></tr>'+
-'<tr><td><a href="https://www.zebpay.com">Zebpay</a></td><td id="Zebpayb">loading</td><td id="Zebpays">loading</td></tr></tbody></table>';
-document.getElementById("marketsDataTable").innerHTML=tableString;
-updateMarketsDataTblINR();
-}   
-
-if( globalFiatValue != "INR"){
-// var marketsToLoad = [{"name":"Zebpay","site":"www.zebpay.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"},
-// {"name":"Unocoin","site":"www.unocoin.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"}];
-//////////////////////////////////////////////////////////////////////////
-
-var xhttpOtherFiatMkts = new XMLHttpRequest();
-  xhttpOtherFiatMkts.onreadystatechange = function() {
+function updateMarketsDataTblNotINR () {
+    var xhttpOtherFiatMkts = new XMLHttpRequest();
+    xhttpOtherFiatMkts.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
      var otherFiatSnapshot = JSON.parse(this.responseText);
      console.log(otherFiatSnapshot.query.results.json.Data);
@@ -209,6 +184,7 @@ var xhttpOtherFiatMkts = new XMLHttpRequest();
             }
      }
      tableString = tableString + lclBtcString + '</tbody></table>';
+     console.log(tableString);
      document.getElementById("marketsDataTable").innerHTML=tableString;
      document.getElementById(lowestPrcElement).parentElement.style.backgroundColor = "#85FF9D";
      document.getElementById(highestPrcElement).parentElement.style.backgroundColor = "#ffbcbc";
@@ -216,4 +192,42 @@ var xhttpOtherFiatMkts = new XMLHttpRequest();
   };
   xhttpOtherFiatMkts.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://www.cryptocompare.com/api/data/coinsnapshot/?fsym='+globalCryptoValue+'&tsym='+globalFiatValue+'"') + '&format=json', true);
   xhttpOtherFiatMkts.send();
+}
+
+
+if( globalCryptoValue == "BTC" && globalFiatValue == "INR"){
+// var marketsToLoad = [{"name":"Zebpay","site":"www.zebpay.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"},
+// {"name":"Unocoin","site":"www.unocoin.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"}];
+//////////////////////////////////////////////////////////////////////////
+var tableString='<table id="example1" class="table table-bordered table-striped">'+
+'<thead><tr><th>Name</th><th>Buy(lowest Ask)</th><th>Sell(highest Bid)</th></tr></thead><tbody id="MarketsDataTable">'+
+'<tr><td><a href="https://www.koinex.in">Koinex</a></td><td id="Koinexb">loading</td><td id="Koinexs">loading</td></tr>'+
+'<tr><td><a href="https://www.unocoin.com">Unocoin</a></td><td id="Unocoinb">loading</td><td id="Unocoins">loading</td></tr>'+
+'<tr><td><a href="https://www.coindelta.com">Coindelta</a></td><td id="Coindeltab">loading</td><td id="Coindeltas">loading</td></tr>'+
+'<tr><td><a href="https://www.coinsecure.in">Coinsecure</a></td><td id="Coinsecureb">loading</td><td id="Coinsecures">loading</td></tr>'+
+'<tr><td><a href="https://www.coinome.com">Coinome</a></td><td id="Coinomeb">loading</td><td id="Coinomes">loading</td></tr>'+
+'<tr><td><a href="https://www.buyucoin.com">Buyucoin</a></td><td id="Buyucoinb">loading</td><td id="Buyucoins">loading</td></tr>'+
+//'<tr><td><a href="https://www.paxful.com">Paxful</a></td><td id="Paxfulb">loading</td><td id="Paxfuls">loading</td></tr>'+
+'<tr><td><a href="https://www.pocketbits.in">PocketBits</a></td><td id="Pocketbitsb">loading</td><td id="Pocketbitss">loading</td></tr>'+
+'<tr><td><a href="https://www.localbitcoins.com">LocalBitcoins</a></td><td id="LocalBitcoinsb">loading</td><td id="LocalBitcoinss">loading</td></tr>'+
+'<tr><td><a href="https://www.zebpay.com">Zebpay</a></td><td id="Zebpayb">loading</td><td id="Zebpays">loading</td></tr></tbody></table>';
+document.getElementById("marketsDataTable").innerHTML=tableString;
+updateMarketsDataTblINR();
 }   
+
+if( globalFiatValue != "INR" ){
+    updateMarketsDataTblNotINR();
+    setTimeout(function(){
+        document.getElementById("Gatecoinb").style.animationDuration="2s";
+        document.getElementById("Gatecoinb").style.animationName="pulseColorGreen";
+        document.getElementById("Lykkeb").style.animationDuration="2s";
+        document.getElementById("Lykkeb").style.animationName="pulseColorRed";
+        setTimeout(function(){
+        document.getElementById("Gatecoinb").style.animationDuration="2s";
+        document.getElementById("Gatecoinb").style.animationName="pulseColorRed";
+        document.getElementById("Lykkeb").style.animationDuration="2s";
+        document.getElementById("Lykkeb").style.animationName="pulseColorGreen";
+    }, 3000);
+    }, 13000);
+    
+}
