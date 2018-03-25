@@ -5,6 +5,32 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+
+
+@keyframes pulseColorGreen {
+  0% {
+    background-color: #fff;
+  }
+  50% {
+    background-color: #33ff33;
+  }
+  100 {
+    background-color: #fff;
+  }
+}
+
+@keyframes pulseColorRed {
+  0% {
+    background-color: #fff;
+  }
+  50% {
+    background-color: #ff3333;
+  }
+  100 {
+    background-color: #fff;
+  }
+}
+
 .portfolioTotalRow {
     font-size: 18px;
     font-weight: 650;
