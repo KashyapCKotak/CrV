@@ -67,20 +67,30 @@
         if(pct_text<0){
           pct_color="#FF5B5B";
           direction_img="down.png";
-          pulseColorStyle="pulseColorRed";
+          // pulseColorStyle="pulseColorRed";
         }
         else if(pct_text>0){
           pct_color="#00C605";
           direction_img="up.png";
-          pulseColorStyle="pulseColorGreen";
+          // pulseColorStyle="pulseColorGreen";
         }
         else if(pct_text==0){
           pct_color="#f2e500";
           direction_img="equal.png";
-          pulseColorStyle="pulseColorYellow";
+          // pulseColorStyle="pulseColorYellow";
         }
       }
       
+      if(parseFloat((DOMtop_priceClass[counter].childNodes[0].nodeValue).replace(/\D/g,''))<parseFloat((currCryptoCurrObj[toCurr].PRICE).replace(/\D/g,''))){
+        pulseColorStyle="pulseColorGreenTop";
+      }
+      else if(parseFloat((DOMtop_priceClass[counter].childNodes[0].nodeValue).replace(/\D/g,''))>parseFloat((currCryptoCurrObj[toCurr].PRICE).replace(/\D/g,''))){
+        pulseColorStyle="pulseColorRedTop";
+      }
+      else{
+        pulseColorStyle="noPulse";
+      }
+
       DOMtop_priceClass[counter].innerHTML=currCryptoCurrObj[toCurr].PRICE+"&nbsp;"+"<span class='top-pct' style='color:"+pct_color+"'>"+pct_text+"%</span>";
       DOMtop_priceClass[counter].style.animationDuration="2s";
       DOMtop_priceClass[counter].style.animationName=pulseColorStyle;
