@@ -27,12 +27,22 @@
       if (this.readyState == 4 && this.status == 200) {
         currTopPriceObj = JSON.parse(xhttpTopPrice.responseText);
         //console.log(currTopPriceObj);
+        discardAllPulseStyle();
         updateTopData();
         //}
       }
     };
     xhttpTopPrice.open("GET", currTopPriceUrl, true);
     xhttpTopPrice.send();
+  }
+
+  function discardAllPulseStyle(){
+    var topPriceDOMs=document.getElementsByClassName("top-price");
+    for(var i=0; i < topPriceDOMs.length; i++){
+      // topPriceDOMs[topPriceDOM].style.animationDuration="2s";//dummy animation, not in css
+      topPriceDOMs[i].style.animationName="noPulse";
+    }
+    // setTimeout(function(){updateTopData();},2000); 
   }
 
   function updateTopData(){
@@ -42,6 +52,7 @@
     var pct_text;
     var counter=-1;
     var direction_img="unavailable.png";
+    var pulseColorStyle="";
     var DOMtop_priceClass=document.getElementsByClassName("top-price");
     var DOMtop_imageClass=document.getElementsByClassName("top-image");
     for(cryptoCurr in currTopPriceObj.DISPLAY){
@@ -55,24 +66,31 @@
         //console.log(pct_text);
         if(pct_text<0){
           pct_color="#FF5B5B";
-          var direction_img="down.png";
+          direction_img="down.png";
+          pulseColorStyle="pulseColorRed";
         }
         else if(pct_text>0){
           pct_color="#00C605";
-          var direction_img="up.png";
+          direction_img="up.png";
+          pulseColorStyle="pulseColorGreen";
         }
         else if(pct_text==0){
           pct_color="#f2e500";
-          var direction_img="equal.png";
+          direction_img="equal.png";
+          pulseColorStyle="pulseColorYellow";
         }
       }
+      
       DOMtop_priceClass[counter].innerHTML=currCryptoCurrObj[toCurr].PRICE+"&nbsp;"+"<span class='top-pct' style='color:"+pct_color+"'>"+pct_text+"%</span>";
+      DOMtop_priceClass[counter].style.animationDuration="2s";
+      DOMtop_priceClass[counter].style.animationName=pulseColorStyle;
+      
       // document.getElementById("mainPriceCurrSymbol")=
       if(cryptoCurrMain == cryptoCurr){
         var exists=document.getElementById("mainPrice");
         if(exists != null){
           document.getElementById("mainPrice").innerHTML=currCryptoCurrObj[toCurr].PRICE;
-          currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][toCurr].PRICE
+          currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][toCurr].PRICE;
           //currTopPriceAmount=currTopPriceAmount[toCurr].PRICE;
           document.getElementsByClassName("mainFactsValue")[0].innerHTML=currCryptoCurrObj[toCurr].CHANGE24HOUR;
           document.getElementsByClassName("mainFactsValue")[0].style.color=pct_color;
@@ -93,4 +111,5 @@
       
       DOMtop_imageClass[counter].src=directionImgBaseUrl+direction_img;
     }
+    setTimeout(function(){discardAllPulseStyle();},3000);
   }

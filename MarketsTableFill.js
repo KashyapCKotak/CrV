@@ -155,9 +155,6 @@ function updateMarketsDataTblNotINR () {
         if(otherFiatMkts[i].VOLUME24HOURTO != 0)
             if(otherFiatMkts[i].MARKET == "LocalBitcoins"){
                 lclBtcString = '<tr><td>LocalBitcoin</td><td id="LocalBitcoinb">'+otherFiatMkts[i].PRICE+'</td><td id="LocalBitcoins">'+parseFloat(otherFiatMkts[i].VOLUME24HOURTO).toFixed(2)+'</td></tr>';
-                console.log(otherFiatMkts[i].MARKET);
-                console.log(otherFiatMkts[i].PRICE);
-                console.log(lowestPrc);
                 if(parseFloat(otherFiatMkts[i].PRICE) > highestPrc){
                     highestPrc = otherFiatMkts[i].PRICE;
                     highestPrcElement = "LocalBitcoinb";
@@ -169,9 +166,6 @@ function updateMarketsDataTblNotINR () {
             }
             else{
                 tableString = tableString + '<tr><td>'+otherFiatMkts[i].MARKET+'</td><td id="'+otherFiatMkts[i].MARKET+'b">'+otherFiatMkts[i].PRICE+'</td><td id="'+otherFiatMkts[i].MARKET+'s">'+parseFloat(otherFiatMkts[i].VOLUME24HOURTO).toFixed(2)+'</td></tr>';
-                console.log(otherFiatMkts[i].MARKET);
-                console.log(otherFiatMkts[i].PRICE);
-                console.log(lowestPrc);
                 if(parseFloat(otherFiatMkts[i].PRICE) > highestPrc){
                     highestPrc = otherFiatMkts[i].PRICE;
                     highestPrcElement = otherFiatMkts[i].MARKET+"b";
@@ -184,7 +178,6 @@ function updateMarketsDataTblNotINR () {
             }
      }
      tableString = tableString + lclBtcString + '</tbody></table>';
-     console.log(tableString);
      document.getElementById("marketsDataTable").innerHTML=tableString;
      document.getElementById(lowestPrcElement).parentElement.style.backgroundColor = "#85FF9D";
      document.getElementById(highestPrcElement).parentElement.style.backgroundColor = "#ffbcbc";
@@ -218,15 +211,13 @@ updateMarketsDataTblINR();
 if( globalFiatValue != "INR" ){
     updateMarketsDataTblNotINR();
     setTimeout(function(){
-        document.getElementById("Gatecoinb").style.animationDuration="2s";
-        document.getElementById("Gatecoinb").style.animationName="pulseColorGreen";
-        document.getElementById("Lykkeb").style.animationDuration="2s";
-        document.getElementById("Lykkeb").style.animationName="pulseColorRed";
+        console.log("changing pulse");
+        document.getElementById("Gatecoinb").className="pulseColorClassGreen";
+        document.getElementById("Lykkeb").className="pulseColorClassRed";
         setTimeout(function(){
-        document.getElementById("Gatecoinb").style.animationDuration="2s";
-        document.getElementById("Gatecoinb").style.animationName="pulseColorRed";
-        document.getElementById("Lykkeb").style.animationDuration="2s";
-        document.getElementById("Lykkeb").style.animationName="pulseColorGreen";
+            console.log("changing pulse");
+        document.getElementById("Gatecoinb").className="pulseColorClassRed";
+        document.getElementById("Lykkeb").className="pulseColorClassGreen";
     }, 3000);
     }, 13000);
     
