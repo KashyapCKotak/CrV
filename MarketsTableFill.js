@@ -1,6 +1,5 @@
-console.log(globalCryptoValue == "BTC");
-globalCryptoValue = "BTC";
-globalFiatValue = "USD";
+// globalCryptoValue = "BTC";
+// globalFiatValue = "USD";
 // Accepts a url and a callback function to run.
 function requestCrossDomain(site) {
  
@@ -187,6 +186,7 @@ function updateMarketsDataTblNotINR () {
   xhttpOtherFiatMkts.send();
 }
 
+function getMarketData(){
 
 if( globalCryptoValue == "BTC" && globalFiatValue == "INR"){
 // var marketsToLoad = [{"name":"Zebpay","site":"www.zebpay.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"},
@@ -210,15 +210,5 @@ updateMarketsDataTblINR();
 
 if( globalFiatValue != "INR" ){
     updateMarketsDataTblNotINR();
-    setTimeout(function(){
-        console.log("changing pulse");
-        document.getElementById("Gatecoinb").className="pulseColorClassGreen";
-        document.getElementById("Lykkeb").className="pulseColorClassRed";
-        setTimeout(function(){
-            console.log("changing pulse");
-        document.getElementById("Gatecoinb").className="pulseColorClassRed";
-        document.getElementById("Lykkeb").className="pulseColorClassGreen";
-    }, 3000);
-    }, 13000);
-    
+}
 }

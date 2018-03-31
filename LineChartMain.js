@@ -43,6 +43,7 @@ function drawMainChart(){
   var periodSelectorListener = [{"event":"changed","method":handleZoom}];
   var chartObjectOneWeek = {
     "type": "stock",
+    "pathToImages": "https://www.amcharts.com/lib/3/images/",
     //"listeners": [{
       //  "event": "rendered",
       //  "method": function() {
@@ -81,7 +82,7 @@ function drawMainChart(){
             "title": globalCryptoValue,
             "precision": 2,
             "valueField": "value",
-            "type": "line",
+            "type": "smoothedLine",
             "compareable": true,
             "lineThickness": 2,
             "balloonText": "close: [[value]]",

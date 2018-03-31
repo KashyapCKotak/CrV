@@ -370,7 +370,7 @@
     height: 600px;
     overflow:scroll;
 }
-.cryptoCurr-name-logo{
+#cryptoCurr-name-logo{
     font-weight:600;
     text-align: center;
 }
