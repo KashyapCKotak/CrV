@@ -5,6 +5,46 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+
+.chartTypeTab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    display: inline-block;
+    width: auto;
+    border-radius: 15px;
+}
+
+/* Style the buttons inside the tab */
+.chartTypeTab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    /*padding: 14px 16px;*/
+    width: 100px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.chartTypeTab button:hover {
+    background-color: #8bc3e4;
+}
+
+/* Create an active/current tablink class */
+.chartTypeTab button.active {
+    background-color: #205a77;
+    color: #fff;
+}
+/*Main holder for buy sell tabs*/
+.chartTypeTabHolder {
+    text-align: center;
+/*    margin-top: 50px;
+    margin-bottom: 50px;*/
+}
+
 @keyframes pulseColorGreen {
   0% {
     background-color: #fff;
@@ -517,6 +557,20 @@
         display: none;
     }
 }
+
+@media (max-width: 563px){
+    .amcharts-period-selector-div{
+        text-align: center !important;
+    }
+    .topChartDates{
+        display: block !important;
+    }
+    .chartZoomLevels{
+        float: none !important;
+    }
+}
+
+
 @media (max-width: 500px) {
     #portfolioTablePersonal{
         overflow-x: auto;

@@ -15,6 +15,12 @@
 
 //<!-- Chart code -->
 //<script>
+var chartHour;
+var chartMin;
+var chartDay;
+
+var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
+
 function drawMainChart(){
   var urlHour = "https://min-api.cryptocompare.com/data/histohour?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=744&e=CCCAGG";
   var urlMinute = "https://min-api.cryptocompare.com/data/histominute?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=1440&e=CCCAGG";
@@ -23,12 +29,6 @@ function drawMainChart(){
   var consChartDataHour;
   var consChartDataMin;
   var consChartDataDay;
-  
-  var chartHour;
-  var chartMin;
-  var chartDay;
-  
-  var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
 
   function handleRender(event){
     console.log("rendered");
@@ -61,10 +61,22 @@ function drawMainChart(){
           "color": "#00e673",
           "fieldMappings": [ {
             "fromField": "close",
-            "toField": "value"
+            "toField": "close"
+          }, {
+            "fromField": "open",
+            "toField": "open"
+          }, {
+            "fromField": "high",
+            "toField": "high"
+          }, {
+            "fromField": "low",
+            "toField": "low"
           }, {
             "fromField": "volumeto",
             "toField": "volume"
+          }, {
+            "fromField": "close",
+            "toField": "value"
           } ],
           //"dataProvider": consChartDataHour.Data,
           "categoryField": "time"
@@ -81,12 +93,20 @@ function drawMainChart(){
             "id": "g1",
             "title": globalCryptoValue,
             "precision": 2,
-            "valueField": "value",
-            "type": "smoothedLine",
+            "openField": "open",
+            "closeField": "close",
+            "highField": "high",
+            "lowField": "low",
+            "valueField": "close",
+            "lineColor": "#7f8da9",
+            "fillColors": "#7f8da9",
+            "negativeLineColor": "#db4c3c",
+            "negativeFillColors": "#db4c3c",
+            "type": "olhc",
             "compareable": true,
             "lineThickness": 2,
-            "balloonText": "close: [[value]]",
-            "fillAlphas": 0.6
+            "balloonText": "open: [[open]]\nclose: [[close]]\nhigh: [[high]]\nclose: [[close]]",
+            "fillAlphas": 1
           } ],
           
           
@@ -116,6 +136,7 @@ function drawMainChart(){
         
         "chartScrollbarSettings": {
           "graph": "g1",
+          "graphType": "line",
           "usePeriod": "10mm",
           "position": "bottom"
         },
@@ -135,7 +156,7 @@ function drawMainChart(){
           "dateFormat": "YYYY-MM-DD JJ:NN",
           //"periodContainer":{},
           "hideOutOfScopePeriods":false,
-          "inputFieldsEnabled": false,
+          "inputFieldsEnabled": true,
           "inputFieldWidth": 100,
           "periods": [ {
             "period": "mm", //histomin limit 60
@@ -414,3 +435,21 @@ function drawMainChart(){
       
       //<!-- HTML -->
       //  <div id="chartdiv"></div>	
+      function changeChartType(newChartType){
+        if(displayedChart == 1){
+          chartMin.panels[0].stockGraphs[0].type = newChartType;  
+          chartMin.validateNow();
+        }
+        else if(displayedChart == 2){
+          chartHour.panels[0].stockGraphs[0].type = newChartType;
+          chartHour.validateNow();
+        }
+        else if(displayedChart == 3){
+          chartDay.panels[0].stockGraphs[0].type = newChartType;
+          chartDay.validateNow();
+        }
+        else{
+          //nothing TODO: remove below console log
+          console.log("Chart type change error");
+        }
+      }

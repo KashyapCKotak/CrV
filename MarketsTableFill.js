@@ -1,6 +1,8 @@
 // globalCryptoValue = "BTC";
 // globalFiatValue = "USD";
 // Accepts a url and a callback function to run.
+var arbitrage = [];
+
 function requestCrossDomain(site) {
  
     // If no url was passed, exit.
@@ -26,15 +28,40 @@ function requestCrossDomain(site) {
         else throw new Error('Nothing returned from getJSON.');
     }
 }
+
+function arbINR(){
+
+}
+
 //requestCrossDomain("https://www.unocoin.com/trade?all");
 function updateMarketsDataTblINR(){
+    var highestS = 0;
+    var highestSElement = "";
+    var lowestB = 9999999.99;
+    var lowestBElement = "";
+    arbitrage = [];
     ////////////////////////// Zebpay ///////////////////////////////////////////
     var xhhtpMktblZebpay = new XMLHttpRequest(); //TODO: add support for IE
     xhhtpMktblZebpay.onreadystatechange = function() {
         if (xhhtpMktblZebpay.readyState == 4 && xhhtpMktblZebpay.status == 200) {
             var zebpaydata = JSON.parse(this.responseText);
-            document.getElementById("Zebpayb").innerHTML=parseFloat(zebpaydata.buy).toFixed(2);
-            document.getElementById("Zebpays").innerHTML=parseFloat(zebpaydata.sell).toFixed(2);
+            var Zebpayb=parseFloat(zebpaydata.buy).toFixed(2);
+            var Zebpays=parseFloat(zebpaydata.sell).toFixed(2);
+            document.getElementById("Zebpayb").innerHTML=Zebpayb;
+            document.getElementById("Zebpays").innerHTML=Zebpays;
+            if(Zebpayb < lowestB){
+                lowestB = Zebpayb;
+                lowestBElement = "Zebpayb";
+            }
+            if(Zebpays > highestS){
+                highestS = Zebpays;
+                highestSElement = "Zebpays";
+            }
+            arbitrage.push({
+                n: "Zebpay",
+                b: parseFloat(zebpaydata.buy).toFixed(2),
+                s: parseFloat(zebpaydata.sell).toFixed(2)
+            });
         }
     };
     xhhtpMktblZebpay.open("GET", "https://live.zebapi.com/api/v1/ticker?currencyCode=inr", true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
@@ -44,8 +71,23 @@ function updateMarketsDataTblINR(){
     xhhtpMktblKoinex.onreadystatechange = function() {
         if (xhhtpMktblKoinex.readyState == 4 && xhhtpMktblKoinex.status == 200) {
             var KoinexData = JSON.parse(this.responseText);
-            document.getElementById("Koinexb").innerHTML=parseFloat(KoinexData.stats.BTC.lowest_ask).toFixed(2);
-            document.getElementById("Koinexs").innerHTML=parseFloat(KoinexData.stats.BTC.highest_bid).toFixed(2);
+            var Koinexb=parseFloat(KoinexData.stats.BTC.lowest_ask).toFixed(2);
+            var Koinexs=parseFloat(KoinexData.stats.BTC.highest_bid).toFixed(2);
+            document.getElementById("Koinexb").innerHTML=Koinexb;
+            document.getElementById("Koinexs").innerHTML=Koinexs;
+            if(Koinexb < lowestB){
+                lowestB = Koinexb;
+                lowestBElement = "Koinexb";
+            }
+            if(Koinexs > highestS){
+                highestS = Koinexs;
+                highestSElement = "Koinexs";
+            }
+            arbitrage.push({
+                n: "Koinex",
+                b: parseFloat(KoinexData.stats.BTC.lowest_ask).toFixed(2),
+                s: parseFloat(KoinexData.stats.BTC.highest_bid).toFixed(2)
+            });
         }
     };
     xhhtpMktblKoinex.open("GET", "https://koinex.in/api/ticker", true);//https://koinex.in/api/ticker
@@ -55,8 +97,23 @@ function updateMarketsDataTblINR(){
     xhhtpMktblUnocoin.onreadystatechange = function() {
         if (xhhtpMktblUnocoin.readyState == 4 && xhhtpMktblUnocoin.status == 200) {
             var UnocoinData = JSON.parse(this.responseText);
-            document.getElementById("Unocoinb").innerHTML=parseFloat(UnocoinData.query.results.json.buy).toFixed(2);
-            document.getElementById("Unocoins").innerHTML=parseFloat(UnocoinData.query.results.json.sell).toFixed(2);
+            var Unocoinb=parseFloat(UnocoinData.query.results.json.buy).toFixed(2);
+            var Unocoins=parseFloat(UnocoinData.query.results.json.sell).toFixed(2);
+            document.getElementById("Unocoinb").innerHTML=Unocoinb;
+            document.getElementById("Unocoins").innerHTML=Unocoins;
+            if(Unocoinb < lowestB){
+                lowestB = Unocoinb;
+                lowestBElement = "Unocoinb";
+            }
+            if(Unocoins > highestS){
+                highestS = Unocoins;
+                highestSElement = "Unocoins";
+            }
+            arbitrage.push({
+                n: "Unocoin",
+                b: parseFloat(UnocoinData.query.results.json.buy).toFixed(2),
+                s: parseFloat(UnocoinData.query.results.json.sell).toFixed(2)
+            });
         }
     };
 
@@ -67,8 +124,23 @@ function updateMarketsDataTblINR(){
     xhhtpMktblPocketbits.onreadystatechange = function() {
         if (xhhtpMktblPocketbits.readyState == 4 && xhhtpMktblPocketbits.status == 200) {
             var PocketbitsData = JSON.parse(this.responseText);
-            document.getElementById("Pocketbitsb").innerHTML=parseFloat(PocketbitsData.query.results.json.buy).toFixed(2);
-            document.getElementById("Pocketbitss").innerHTML=parseFloat(PocketbitsData.query.results.json.sell).toFixed(2);
+            var Pocketbitsb=parseFloat(PocketbitsData.query.results.json.buy).toFixed(2);
+            var Pocketbitss=parseFloat(PocketbitsData.query.results.json.sell).toFixed(2);
+            document.getElementById("Pocketbitsb").innerHTML=Pocketbitsb;
+            document.getElementById("Pocketbitss").innerHTML=Pocketbitss;
+            if(Pocketbitsb < lowestB){
+                lowestB = Pocketbitsb;
+                lowestBElement = "Pocketbitsb";
+            }
+            if(Pocketbitss > highestS){
+                highestS = Pocketbitss;
+                highestSElement = "Pocketbitss";
+            }
+            arbitrage.push({
+                n: "Pocketbits",
+                b: parseFloat(PocketbitsData.query.results.json.buy).toFixed(2),
+                s: parseFloat(PocketbitsData.query.results.json.sell).toFixed(2)
+            });
         }
     };
 
@@ -79,9 +151,23 @@ function updateMarketsDataTblINR(){
     xhhtpMktblCoinsecure.onreadystatechange = function() {
         if (xhhtpMktblCoinsecure.readyState == 4 && xhhtpMktblCoinsecure.status == 200) {
             var CoinsecureData = JSON.parse(this.responseText);
-            document.getElementById("Coinsecureb").innerHTML=parseFloat(CoinsecureData.query.results.json.message.ask/100).toFixed(2);
-
-            document.getElementById("Coinsecures").innerHTML=parseFloat(CoinsecureData.query.results.json.message.bid/100).toFixed(2);
+            var Coinsecureb=parseFloat(CoinsecureData.query.results.json.message.ask/100).toFixed(2);
+            var Coinsecures=parseFloat(CoinsecureData.query.results.json.message.bid/100).toFixed(2);
+            document.getElementById("Coinsecureb").innerHTML=Coinsecureb;
+            document.getElementById("Coinsecures").innerHTML=Coinsecures;
+            if(Coinsecureb < lowestB){
+                lowestB = Coinsecureb;
+                lowestBElement = "Coinsecureb";
+            }
+            if(Coinsecures > highestS){
+                highestS = Coinsecures;
+                highestSElement = "Coinsecures";
+            }
+            arbitrage.push({
+                n: "Coinsecure",
+                b: parseFloat(CoinsecureData.query.results.json.message.ask/100).toFixed(2),
+                s: parseFloat(CoinsecureData.query.results.json.message.bid/100).toFixed(2)
+            });
         }
     };
     xhhtpMktblCoinsecure.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://api.coinsecure.in/v1/exchange/ticker' + '"') + '&format=json', true);
@@ -92,8 +178,23 @@ function updateMarketsDataTblINR(){
     xhhtpMktblCoindelta.onreadystatechange = function() {
         if (xhhtpMktblCoindelta.readyState == 4 && xhhtpMktblCoindelta.status == 200) {
             var Coindeltadata = JSON.parse(this.responseText);
-            document.getElementById("Coindeltab").innerHTML=parseFloat(Coindeltadata[0].Ask).toFixed(2);
-            document.getElementById("Coindeltas").innerHTML=parseFloat(Coindeltadata[0].Bid).toFixed(2);
+            var Coindeltab=parseFloat(Coindeltadata[0].Ask).toFixed(2);
+            var Coindeltas=parseFloat(Coindeltadata[0].Bid).toFixed(2);
+            document.getElementById("Coindeltab").innerHTML=Coindeltab;
+            document.getElementById("Coindeltas").innerHTML=Coindeltas;
+            if(Coindeltab < lowestB){
+                lowestB = Coindeltab;
+                lowestBElement = "Coindeltab";
+            }
+            if(Coindeltas > highestS){
+                highestS = Coindeltas;
+                highestSElement = "Coindeltas";
+            }
+            arbitrage.push({
+                n: "Coindelta",
+                b: parseFloat(Coindeltadata[0].Ask).toFixed(2),
+                s: parseFloat(Coindeltadata[0].Bid).toFixed(2)
+            });
         }
     };
     xhhtpMktblCoindelta.open("GET", "https://coindelta.com/api/v1/public/getticker/", true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
@@ -103,9 +204,23 @@ function updateMarketsDataTblINR(){
     xhhtpMktblCoinome.onreadystatechange = function() {
         if (xhhtpMktblCoinome.readyState == 4 && xhhtpMktblCoinome.status == 200) {
             var Coinomedata = JSON.parse(this.responseText);
-            this.responseType
-            document.getElementById("Coinomeb").innerHTML=parseFloat(Coinomedata.query.results.json['btc-inr']['lowest_ask']).toFixed(2);
-            document.getElementById("Coinomes").innerHTML=parseFloat(Coinomedata.query.results.json['btc-inr']['highest_bid']).toFixed(2);
+            var Coinomeb=parseFloat(Coinomedata.query.results.json['btc-inr']['lowest_ask']).toFixed(2);
+            var Coinomes=parseFloat(Coinomedata.query.results.json['btc-inr']['highest_bid']).toFixed(2);
+            document.getElementById("Coinomeb").innerHTML=Coinomeb;
+            document.getElementById("Coinomes").innerHTML=Coinomes;
+            if(Coinomeb < lowestB){
+                lowestB = Coinomeb;
+                lowestBElement = "Coinomeb";
+            }
+            if(Coinomes > highestS){
+                highestS = Coinomes;
+                highestSElement = "Coinomes";
+            }
+            arbitrage.push({
+                n: "Coinome",
+                b: parseFloat(Coinomedata.query.results.json['btc-inr']['lowest_ask']).toFixed(2),
+                s: parseFloat(Coinomedata.query.results.json['btc-inr']['highest_bid']).toFixed(2)
+            });
         }
     };
     xhhtpMktblCoinome.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://www.coinome.com/api/v1/ticker.json' + '"') + '&format=json', true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
@@ -115,9 +230,23 @@ function updateMarketsDataTblINR(){
     xhhtpMktblBuyucoin.onreadystatechange = function() {
         if (xhhtpMktblBuyucoin.readyState == 4 && xhhtpMktblBuyucoin.status == 200) {
             var Buyucoindata = JSON.parse(this.responseText);
-            this.responseType
-            document.getElementById("Buyucoinb").innerHTML=parseFloat(Buyucoindata.query.results.json.BuyUcoin_data.btc_buy_price).toFixed(2);
-            document.getElementById("Buyucoins").innerHTML=parseFloat(Buyucoindata.query.results.json.BuyUcoin_data.btc_sell_price).toFixed(2);
+            var Buyucoinb=parseFloat(Buyucoindata.query.results.json.BuyUcoin_data.btc_buy_price).toFixed(2);
+            var Buyucoins=parseFloat(Buyucoindata.query.results.json.BuyUcoin_data.btc_sell_price).toFixed(2);
+            document.getElementById("Buyucoinb").innerHTML=Buyucoinb;
+            document.getElementById("Buyucoins").innerHTML=Buyucoins;
+            if(Buyucoinb < lowestB){
+                lowestB = Buyucoinb;
+                lowestBElement = "Buyucoinb";
+            }
+            if(Buyucoins > highestS){
+                highestS = Buyucoins;
+                highestSElement = "Buyucoins";
+            }
+            arbitrage.push({
+                n: "Buyucoin",
+                b: parseFloat(Buyucoindata.query.results.json.BuyUcoin_data.btc_buy_price).toFixed(2),
+                s: parseFloat(Buyucoindata.query.results.json.BuyUcoin_data.btc_sell_price).toFixed(2)
+            });
         }
     };
     xhhtpMktblBuyucoin.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://www.buyucoin.com/api/v1/btc/' + '"') + '&format=json', true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
@@ -127,16 +256,31 @@ function updateMarketsDataTblINR(){
     xhhtpMktblLocalBitcoins.onreadystatechange = function() {
         if (xhhtpMktblLocalBitcoins.readyState == 4 && xhhtpMktblLocalBitcoins.status == 200) {
             var LocalBitcoinsData = JSON.parse(this.responseText);
-            document.getElementById("LocalBitcoinsb").innerHTML=parseFloat(LocalBitcoinsData.query.results.json.asks[0].json[0]).toFixed(2);
-            document.getElementById("LocalBitcoinss").innerHTML=parseFloat(LocalBitcoinsData.query.results.json.bids[0].json[0]).toFixed(2);
+            var LocalBitcoinsb=parseFloat(LocalBitcoinsData.query.results.json.asks[0].json[0]).toFixed(2);
+            var LocalBitcoinss=parseFloat(LocalBitcoinsData.query.results.json.bids[0].json[0]).toFixed(2);
+            document.getElementById("LocalBitcoinsb").innerHTML=LocalBitcoinsb;
+            document.getElementById("LocalBitcoinss").innerHTML=LocalBitcoinss;
+            if(LocalBitcoinsb < lowestB){
+                lowestB = LocalBitcoinsb;
+                lowestBElement = "LocalBitcoinsb";
+            }
+            if(LocalBitcoinss > highestS){
+                highestS = LocalBitcoinss;
+                highestSElement = "LocalBitcoinss";
+            }
+            arbitrage.push({
+                n: "LocalBitcoins",
+                b: parseFloat(LocalBitcoinsData.query.results.json.asks[0].json[0]).toFixed(2),
+                s: parseFloat(LocalBitcoinsData.query.results.json.bids[0].json[0]).toFixed(2)
+            });
         }
     };
-
     xhhtpMktblLocalBitcoins.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://localbitcoins.com/bitcoincharts/INR/orderbook.json' + '"') + '&format=json', true);
     xhhtpMktblLocalBitcoins.send();
 }
 
 function updateMarketsDataTblNotINR () {
+    arbitrage = [];
     var xhttpOtherFiatMkts = new XMLHttpRequest();
     xhttpOtherFiatMkts.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -162,6 +306,11 @@ function updateMarketsDataTblNotINR () {
                     lowestPrc = otherFiatMkts[i].PRICE;
                     lowestPrcElement = "LocalBitcoinb";
                 }
+                arbitrage.push({
+                    n: "Localbitcoins",
+                    p: parseFloat(otherFiatMkts[i].PRICE).toFixed(2),
+                    v: parseFloat(otherFiatMkts[i].VOLUME24HOURTO).toFixed(2)
+                });
             }
             else{
                 tableString = tableString + '<tr><td>'+otherFiatMkts[i].MARKET+'</td><td id="'+otherFiatMkts[i].MARKET+'b">'+otherFiatMkts[i].PRICE+'</td><td id="'+otherFiatMkts[i].MARKET+'s">'+parseFloat(otherFiatMkts[i].VOLUME24HOURTO).toFixed(2)+'</td></tr>';
@@ -170,10 +319,14 @@ function updateMarketsDataTblNotINR () {
                     highestPrcElement = otherFiatMkts[i].MARKET+"b";
                 }
                 if(parseFloat(otherFiatMkts[i].PRICE) < lowestPrc){
-                    console.log("in");
                     lowestPrc = otherFiatMkts[i].PRICE;
                     lowestPrcElement = otherFiatMkts[i].MARKET+"b";
                 }
+                arbitrage.push({
+                    n: otherFiatMkts[i].MARKET,
+                    p: parseFloat(otherFiatMkts[i].PRICE).toFixed(2),
+                    v: parseFloat(otherFiatMkts[i].VOLUME24HOURTO).toFixed(2)
+                });
             }
      }
      tableString = tableString + lclBtcString + '</tbody></table>';
