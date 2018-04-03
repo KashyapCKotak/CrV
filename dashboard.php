@@ -25,15 +25,15 @@
     <!-- Data Tables -->
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- Morris chart -->
-    <link rel="stylesheet" href="bower_components/morris.js/morris.css">
+    
     <!-- jvectormap -->
-    <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
+    
     <!-- Date Picker -->
-    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+    
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    
     
     <!-- jQuery 3 -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -42,6 +42,7 @@
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
+      $(document).ajaxStart(function() { Pace.restart(); });
     </script>
     <!-- Bootstrap 3.3.7 -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -56,7 +57,12 @@
       <!-- Google Font -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     </head>
-    <body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse">
+    <script type="text/javascript">
+      function myFunction(){
+        console.log("PAGE LOAD COMPLETE");
+      }
+    </script>
+    <body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="myFunction()">
       <div class="wrapper">
         
         <header class="main-header">
@@ -185,20 +191,15 @@
               <ul class="sidebar-menu" data-widget="tree">
                 <li class="header"><center>MENU</center></li>
                 <li class="active treeview">
-                  <a href='dashboard.php'>
-                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                    <!-- <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span> -->
+                  <a href="dashboard.php">
+                    <i class="fa fa-dashboard"></i> 
+                    <span>Dashboard</span>
                   </a>
-                  <!-- <ul class="treeview-menu">
-                    <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                    <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-                  </ul> -->
                 </li>
-                <li class="treeview">
+                <li>
                   <a href="portfolio.php">
-                    <i class="fa fa-line-chart"></i> <span>Portfolio</span>
+                    <i class="fa fa-line-chart"></i> 
+                    <span>Portfolio</span>
                   </a>
                 </li>
                 <li>
@@ -287,12 +288,9 @@
                   </ul>
                 </li>
                 <li>
-                  <a href="pages/calendar.html">
-                    <i class="fa fa-calendar"></i> <span>Calendar</span>
-                    <span class="pull-right-container">
-                      <small class="label pull-right bg-red">3</small>
-                      <small class="label pull-right bg-blue">17</small>
-                    </span>
+                  <a href="pages/calendar.php">
+                    <i class="fa fa-calendar"></i> 
+                    <span>Calendar</span>
                   </a>
                 </li>
                 <li>
@@ -465,9 +463,9 @@
             </div>
             <!-- <script src="livedatatop.js"></script> -->
             <!-- Content Header (Page header) -->
-            <script>
+            <script type="text/javascript">
               var globalCryptoValue="BTC";
-              var globalFiatValue="USD";
+              var globalFiatValue="INR";
             </script>
             <section class="content-header custom-content-header">
               <div class="crypto-select">
@@ -2875,7 +2873,7 @@
 <option>VEF</option>
                 </select>
               </div>
-              <script>
+              <script type="text/javascript">
                 function selectCrypto(){
                   globalCryptoValue=document.getElementById("cryptoSelectBox").value;//.match(/\(([^)]+)\)/)[1];
                   changeAllTop();
@@ -2967,7 +2965,7 @@
               
               <script src="livedatatop.js"></script>
               <script src="loadCoinLogo.js"></script>
-              <script>
+              <script type="text/javascript">
                 function initChartTypeChange(evt,chartType){
                   var i, tabcontent, tablinks;
                   changeChartType(chartType);
@@ -2985,7 +2983,7 @@
                   <div class="chartTypeTab">
                     <button class="tabChartTyp" onclick="initChartTypeChange(event,'candlestick')">CandleStick</button>
                     <button class="tabChartTyp active" onclick="initChartTypeChange(event,'smoothedLine')">Line</button>
-                    <button class="tabChartTyp" onclick="initChartTypeChange(event,'olhc')">OLHC</button>
+                    <button class="tabChartTyp" onclick="initChartTypeChange(event,'ohlc')">OHLC</button>
                   </div>
                 </div>
                 <div id="chartdiv" style="height:80vh;width:100%;overflow:visible">
@@ -3000,7 +2998,7 @@
                   <script src="amCharts/amstock.js"></script>
                   
                   <!--<div style='clear:both;'>clear</div>-->
-                  <script>
+                  <script type="text/javascript">
                     drawMainChart();
                     // alert("OK 1 ");
                     // var xhttpConsChart = new XMLHttpRequest();
@@ -3045,7 +3043,7 @@
                       </div>
                     </div>
                     
-                    <script>
+                    <script type="text/javascript">
                       function convertToFiat(){
                         if(isNaN(parseFloat((document.getElementById("CryptoInput").value).replace(/,/g, '')))){
                           document.getElementById("FiatInput").value="Enter Correct Number!";
@@ -3133,7 +3131,7 @@
                       </div>
                       <!-- /.col -->
                       <script src="MarketsTableFill.js"></script>
-                      <script>
+                      <script type="text/javascript">
                         getMarketData();
                       </script>
                     </div>
@@ -3388,54 +3386,25 @@
                       xmlhttp.open("GET","GetRss.php?q=Cointelegraph",true);
                       xmlhttp.send();
                     </script>
-                    <!-- Morris.js charts -->
-                    <script src="bower_components/raphael/raphael.min.js"></script>
-                    <script src="bower_components/morris.js/morris.min.js"></script>
-                    <!-- Sparkline -->
-                    <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-                    <!-- jvectormap -->
-                    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-                    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-                    <!-- jQuery Knob Chart -->
-                    <script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
                     
-                    <!-- daterangepicker -->
-                    <script src="bower_components/moment/min/moment.min.js"></script>
-                    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-                    <!-- datepicker -->
-                    <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-                    <!-- Bootstrap WYSIHTML5 -->
-                    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
                     <!-- Slimscroll -->
-                    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+                    <!-- <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script> -->
                     <!-- FastClick -->
-                    <script src="bower_components/fastclick/lib/fastclick.js"></script>
+                    <!-- <script src="bower_components/fastclick/lib/fastclick.js"></script> -->
                     <!-- AdminLTE App -->
                     <script src="dist/js/adminlte.min.js"></script>
                     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-                    <script src="dist/js/pages/dashboard.js"></script>
+                    <!-- <script src="dist/js/pages/dashboard.js"></script> -->
                     <!-- AdminLTE for demo purposes -->
-                    <script src="dist/js/demo.js"></script>
+                    <!-- <script src="dist/js/demo.js"></script> -->
                     <!-- DataTables -->
                     <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
                     <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-                    <script>
-                      $(function () {
-                        $('#example1').DataTable()
-                        $('#example2').DataTable({
-                          'paging'      : true,
-                          'lengthChange': false,
-                          'searching'   : false,
-                          'ordering'    : true,
-                          'info'        : true,
-                          'autoWidth'   : false
-                        })
-                      })
-                    </script>
+                    
                     
                     <!-- Select2 -->
                     <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
-                    <script>
+                    <script type="text/javascript">
                       $(function () {
                         //Initialize Select2 Elements
                         $('.select2').select2()

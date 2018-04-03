@@ -2,6 +2,7 @@
 // globalFiatValue = "USD";
 // Accepts a url and a callback function to run.
 var arbitrage = [];
+var openINRAjaxes=0;
 
 function requestCrossDomain(site) {
  
@@ -29,8 +30,8 @@ function requestCrossDomain(site) {
     }
 }
 
-function arbINR(){
-
+function afterINRAjax(){
+    console.log("All ajaxes Done");
 }
 
 //requestCrossDomain("https://www.unocoin.com/trade?all");
@@ -42,6 +43,7 @@ function updateMarketsDataTblINR(){
     arbitrage = [];
     ////////////////////////// Zebpay ///////////////////////////////////////////
     var xhhtpMktblZebpay = new XMLHttpRequest(); //TODO: add support for IE
+    openINRAjaxes++;
     xhhtpMktblZebpay.onreadystatechange = function() {
         if (xhhtpMktblZebpay.readyState == 4 && xhhtpMktblZebpay.status == 200) {
             var zebpaydata = JSON.parse(this.responseText);
@@ -62,6 +64,10 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(zebpaydata.buy).toFixed(2),
                 s: parseFloat(zebpaydata.sell).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
     xhhtpMktblZebpay.open("GET", "https://live.zebapi.com/api/v1/ticker?currencyCode=inr", true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
@@ -88,6 +94,10 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(KoinexData.stats.BTC.lowest_ask).toFixed(2),
                 s: parseFloat(KoinexData.stats.BTC.highest_bid).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
     xhhtpMktblKoinex.open("GET", "https://koinex.in/api/ticker", true);//https://koinex.in/api/ticker
@@ -114,6 +124,10 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(UnocoinData.query.results.json.buy).toFixed(2),
                 s: parseFloat(UnocoinData.query.results.json.sell).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
 
@@ -141,6 +155,10 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(PocketbitsData.query.results.json.buy).toFixed(2),
                 s: parseFloat(PocketbitsData.query.results.json.sell).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
 
@@ -168,6 +186,10 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(CoinsecureData.query.results.json.message.ask/100).toFixed(2),
                 s: parseFloat(CoinsecureData.query.results.json.message.bid/100).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
     xhhtpMktblCoinsecure.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://api.coinsecure.in/v1/exchange/ticker' + '"') + '&format=json', true);
@@ -195,6 +217,10 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(Coindeltadata[0].Ask).toFixed(2),
                 s: parseFloat(Coindeltadata[0].Bid).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
     xhhtpMktblCoindelta.open("GET", "https://coindelta.com/api/v1/public/getticker/", true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
@@ -221,6 +247,10 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(Coinomedata.query.results.json['btc-inr']['lowest_ask']).toFixed(2),
                 s: parseFloat(Coinomedata.query.results.json['btc-inr']['highest_bid']).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
     xhhtpMktblCoinome.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://www.coinome.com/api/v1/ticker.json' + '"') + '&format=json', true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
@@ -247,6 +277,10 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(Buyucoindata.query.results.json.BuyUcoin_data.btc_buy_price).toFixed(2),
                 s: parseFloat(Buyucoindata.query.results.json.BuyUcoin_data.btc_sell_price).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
     xhhtpMktblBuyucoin.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://www.buyucoin.com/api/v1/btc/' + '"') + '&format=json', true);//old link: https://www.zebapi.com/api/v1/market/ticker/btc/inrdsfgcsh
@@ -273,10 +307,17 @@ function updateMarketsDataTblINR(){
                 b: parseFloat(LocalBitcoinsData.query.results.json.asks[0].json[0]).toFixed(2),
                 s: parseFloat(LocalBitcoinsData.query.results.json.bids[0].json[0]).toFixed(2)
             });
+            openINRAjaxes--;
+            if(openINRAjaxes==0){
+                afterINRAjax();
+            }
         }
     };
     xhhtpMktblLocalBitcoins.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://localbitcoins.com/bitcoincharts/INR/orderbook.json' + '"') + '&format=json', true);
     xhhtpMktblLocalBitcoins.send();
+
+    console.log("lowestB: "+lowestB);
+    console.log("highestS: "+highestS);
 }
 
 function updateMarketsDataTblNotINR () {
@@ -294,7 +335,7 @@ function updateMarketsDataTblNotINR () {
     var highestPrcElement = "";
     var lowestPrc = 999999.99;
     var lowestPrcElement = "";
-     for(var i=0;i<otherFiatMkts.length;i++){
+    for(var i=0;i<otherFiatMkts.length;i++){
         if(otherFiatMkts[i].VOLUME24HOURTO != 0)
             if(otherFiatMkts[i].MARKET == "LocalBitcoins"){
                 lclBtcString = '<tr><td>LocalBitcoin</td><td id="LocalBitcoinb">'+otherFiatMkts[i].PRICE+'</td><td id="LocalBitcoins">'+parseFloat(otherFiatMkts[i].VOLUME24HOURTO).toFixed(2)+'</td></tr>';
@@ -328,11 +369,15 @@ function updateMarketsDataTblNotINR () {
                     v: parseFloat(otherFiatMkts[i].VOLUME24HOURTO).toFixed(2)
                 });
             }
-     }
-     tableString = tableString + lclBtcString + '</tbody></table>';
-     document.getElementById("marketsDataTable").innerHTML=tableString;
-     document.getElementById(lowestPrcElement).parentElement.style.backgroundColor = "#85FF9D";
-     document.getElementById(highestPrcElement).parentElement.style.backgroundColor = "#ffbcbc";
+          
+    }
+    tableString = tableString + lclBtcString + '</tbody></table>';
+    document.getElementById("marketsDataTable").innerHTML=tableString;
+    $(function () {
+        $('#example1').DataTable()
+    })
+    document.getElementById(lowestPrcElement).parentElement.style.backgroundColor = "#85FF9D";
+    document.getElementById(highestPrcElement).parentElement.style.backgroundColor = "#ffbcbc";
     }
   };
   xhttpOtherFiatMkts.open("GET", 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIComponent('select * from json where url="' + 'https://www.cryptocompare.com/api/data/coinsnapshot/?fsym='+globalCryptoValue+'&tsym='+globalFiatValue+'"') + '&format=json', true);
@@ -358,10 +403,14 @@ var tableString='<table id="example1" class="table table-bordered table-striped"
 '<tr><td><a href="https://www.localbitcoins.com">LocalBitcoins</a></td><td id="LocalBitcoinsb">loading</td><td id="LocalBitcoinss">loading</td></tr>'+
 '<tr><td><a href="https://www.zebpay.com">Zebpay</a></td><td id="Zebpayb">loading</td><td id="Zebpays">loading</td></tr></tbody></table>';
 document.getElementById("marketsDataTable").innerHTML=tableString;
+$(function () {
+    $('#example1').DataTable()
+})
 updateMarketsDataTblINR();
 }   
 
 if( globalFiatValue != "INR" ){
     updateMarketsDataTblNotINR();
 }
+
 }

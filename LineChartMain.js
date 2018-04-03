@@ -102,11 +102,11 @@ function drawMainChart(){
             "fillColors": "#7f8da9",
             "negativeLineColor": "#db4c3c",
             "negativeFillColors": "#db4c3c",
-            "type": "olhc",
+            "type": "smoothedLine",
             "compareable": true,
             "lineThickness": 2,
             "balloonText": "open: [[open]]\nclose: [[close]]\nhigh: [[high]]\nclose: [[close]]",
-            "fillAlphas": 1
+            "fillAlphas": 0.6
           } ],
           
           
