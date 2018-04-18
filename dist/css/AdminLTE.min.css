@@ -2795,18 +2795,20 @@ a:focus {
     margin-top: 0;
     background: #fff;
     color: #444;
-    margin-left: 60px;
-    margin-right: 15px;
+    margin-left: 0px;
+    margin-right: 10px;
     padding: 0;
-    position: relative
+    position: relative;
+    height: 200px;
 }
-.timeline>li>.timeline-item>.time {
+.timeline>li>.timeline-item>.title-and-time-holder>.time {
     color: #999;
     float: right;
     padding: 10px;
-    font-size: 12px
+    font-size: 12px;
+    display: inline-block;
 }
-.timeline>li>.timeline-item>.timeline-header {
+.timeline>li>.timeline-item>.title-and-time-holder>.timeline-header {
     margin: 0;
     color: #555;
     border-bottom: 1px solid #f4f4f4;
@@ -2814,13 +2816,37 @@ a:focus {
     font-size: 16px;
     line-height: 1.1
 }
-.timeline>li>.timeline-item>.timeline-header>a {
+
+.timeline>li>.timeline-item>img {
+    height: 160px;
+    width: 25%;
+    float: left;
+
+}
+
+.timeline>li>.timeline-item>.title-and-time-holder {
+    width: 75%;
+    float: right
+}
+
+.timeline>li>.timeline-item>.title-and-time-holder>.timeline-header>a {
     font-weight: 600
 }
+
 .timeline>li>.timeline-item>.timeline-body,
 .timeline>li>.timeline-item>.timeline-footer {
     padding: 10px
 }
+
+.timeline>li>.timeline-item>.timeline-footer>.label{
+    margin-top: 5px
+}
+
+.timeline>li>.timeline-item>.timeline-body {
+    width: 75%;
+    float: right
+}
+
 .timeline>li>.fa,
 .timeline>li>.glyphicon,
 .timeline>li>.ion {
@@ -2849,7 +2875,7 @@ a:focus {
     -webkit-box-shadow: none;
     box-shadow: none
 }
-.timeline-inverse>li>.timeline-item>.timeline-header {
+.timeline-inverse>li>.timeline-item>.title-and-time-holder>.timeline-header {
     border-bottom-color: #ddd
 }
 .btn {

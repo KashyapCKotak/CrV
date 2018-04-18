@@ -471,7 +471,7 @@
               <div class="crypto-select">
                 <label class="label-enable">Crypto Currency: </label>
                 <select id="cryptoSelectBox" class="form-control select2" style="width:157px" onchange="selectCrypto()">
-                  <option id="default-fiat" selected="selected">Bitcoin (BTC)</option>
+                  <option id="default-fiat" selected="selected" value="BTC">Bitcoin (BTC)</option>
 <option value="ETH">Ethereum (ETH)</option>
 <option value="XRP">Ripple (XRP)</option>
 <option value="BCH">Bitcoin Cash / BCC (BCH)</option>
