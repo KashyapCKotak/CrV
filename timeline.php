@@ -467,32 +467,21 @@
         <section class="content">
           <!-- row -->
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8" style="padding-right: 10px; padding-left: 10px">
               <!-- The time line -->
               <ul class="timeline">
-                <!-- timeline time label -->
-                <li class="time-label">
-                  <span class="bg-red">
-                  10 Feb. 2014
-                  </span>
-                </li>
-                <!-- /.timeline-label -->
                 <!-- timeline item -->
                 <li>
                   <div class="timeline-item">
+                    <img src="https://www.cryptocompare.com/media/30002133/elpetromoneda.png?center=0.52877697841726623,0.48&mode=crop&width=300&height=300&rnd=131685227150000000">
                     <div class="title-and-time-holder">
                     <span class="time"><i class="fa fa-clock-o"></i> 12:05</span>
-                    <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email kjagsjdgjkagdjkf adjksf gfjk ajksdgf jgdsjkfgklasdgf jkgasdf sadgfjk gjk jkasdvjfdjgjk sfjgjh</h3></div>
-                    <img src="https://www.cryptocompare.com/media/30002133/elpetromoneda.png?center=0.52877697841726623,0.48&mode=crop&width=300&height=300&rnd=131685227150000000">
+                    <h3 class="timeline-header"><a href="#">Support Team sent you an email kjagsjdgjkagdjkf adjksf gfjk ajksdgf jgdsjkfgklasdgf</a></h3></div>
                     <div class="timeline-body">
                       Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
                       weebly ning heekya handango imeem plugg dopplr jibjab, movity
                       jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                      quora plaxo ideeli hulu weebly balihoo...
-                    </div>
-                    <div class="timeline-footer">
-                      <a class="btn btn-primary btn-xs">Read more</a>
-                      <a class="btn btn-danger btn-xs">Delete</a>
+                      quora plaxo ideeli hulu weebly balihoo...<a href="crypto.com">&nbsp;CryptoGlobe.com</a>
                     </div>
                   </div>
                 </li>
@@ -541,6 +530,7 @@
                     </div>
                   </div>
                 </li>
+
                 <!-- END timeline item -->
                 <!-- timeline item -->
                 <li>
@@ -609,6 +599,7 @@
     ...
 
 &lt;/ul>
+<script src="loadNewsPage.js"></script>>
                   </pre>
                 </div>
                 <!-- /.box-body -->
