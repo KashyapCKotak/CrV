@@ -5,6 +5,28 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50% !important;
+  border-top: 16px solid blue;
+  border-right: 16px solid green;
+  border-bottom: 16px solid red;
+  border-left: 16px solid pink;
+  width: 120px;
+  height: 120px !important;
+  -webkit-animation: spin 2s linear infinite !important;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
 .chartTypeTab {
     overflow: hidden;
@@ -2828,7 +2850,34 @@ a:focus {
     height: 25vh;
     width: 25vh;
     float: left;
+}
 
+@media (max-width: 455px){
+    .timeline-header{
+        font-size: 15px !important;
+        padding-top: 5px !important;
+        padding-bottom: 5px !important       
+    }
+    .timeline>li>.timeline-item>.title-and-time-holder>.time{
+        display: none !important;
+    }
+    .timeline>li>.timeline-item>img{
+        height: 100%;
+        width: 26vw;
+        padding-top: 2vw;
+        padding-bottom: 2vw;
+        padding-left: 1vw;
+    }
+    .timeline>li>.timeline-item{
+        height: 29vw !important
+    }
+    .timeline>li>.timeline-item>.timeline-body{
+        display: none !important;
+    }
+    .timeline>li>.timeline-item>.title-and-time-holder{
+        padding-left: 28vw !important;
+        height: 100% !important
+    }
 }
 
 .timeline>li>.timeline-item>.title-and-time-holder {

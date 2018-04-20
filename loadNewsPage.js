@@ -44,7 +44,8 @@ xhttp.onreadystatechange = function() {
                   '</div>'+
                   '</li>';
 		}
-		document.getElementsByClassName("timeline")[0].innerHTML=newsContent;
+		setTimeout(function(){ document.getElementsByClassName("timeline")[0].innerHTML=newsContent; }, 100000);
+		
 	}
 };
 xhttp.open("GET", "https://min-api.cryptocompare.com/data/v2/news/?lang=EN", true);
