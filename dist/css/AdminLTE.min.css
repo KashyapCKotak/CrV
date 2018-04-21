@@ -5,17 +5,34 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+#newsLoaderHolder{
+    width: 100%;
+    padding-top: 5%;
+    height: 40vh;
+}
+
+.mobileOnly{
+    display: none !important;
+}
+
+@media (max-width: 991px){
+    .mobileOnly{
+        display: inline-block !important;
+    }
+}
+
 .loader {
   border: 16px solid #f3f3f3;
   border-radius: 50% !important;
-  border-top: 16px solid blue;
-  border-right: 16px solid green;
-  border-bottom: 16px solid red;
-  border-left: 16px solid pink;
-  width: 120px;
-  height: 120px !important;
+  border-top: 13px solid orange;
+  border-right: 13px solid green;
+  border-bottom: 13px solid orangered;
+  border-left: 13px solid blue;
+  width: 100px;
+  height: 100px !important;
   -webkit-animation: spin 2s linear infinite !important;
   animation: spin 2s linear infinite;
+  margin: auto;
 }
 
 @-webkit-keyframes spin {
@@ -2822,6 +2839,7 @@ a:focus {
     padding: 0;
     position: relative;
     height: 25vh;
+    overflow: hidden
 }
 .timeline>li>.timeline-item>.title-and-time-holder>.time {
     color: #999;
@@ -2883,7 +2901,7 @@ a:focus {
 .timeline>li>.timeline-item>.title-and-time-holder {
     width: 100%;
     padding-left: 26vh;
-    height: 30%
+    height: auto
 }
 
 .timeline>li>.timeline-item>.title-and-time-holder>.timeline-header>a {

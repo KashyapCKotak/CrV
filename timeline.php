@@ -458,22 +458,25 @@
         <script src="livedatatop.js"></script>
         <!-- Content Header (Page header) -->
         <section class="content-header">
-          <h1>
+          <h1 style="text-align:center">
             &nbsp;&nbsp;News & Analysis
-            <small>Combinig more than 19 news & analysis sources, worldwide</small>
+            <br><small>Combinig more than 19 news & analysis sources, worldwide</small>
           </h1>
         </section>
         <!-- Main content -->
         <section class="content">
           <!-- row -->
           <div class="row">
-            <div class="col-md-8" style="padding-right: 10px; padding-left: 10px">
+            <div id="newsLoaderHolder">
+              <div class="loader"></div>
+            </div>
+            <div id="newsAnchor"></div>
+            <div id="timelineNews" class="col-md-8" style="padding-right: 10px; padding-left: 10px">
               <!-- The time line -->
-              
-                  <div class="timeline-item loader">
-                    
-                  </div>
-            
+            </div>
+            <div id="analysisAnchor"></div>
+            <div id="analysisNews" class="col-md-4" style="padding-right: 10px; padding-left: 10px">
+              <!-- The time line -->
             </div>
             <!-- /.col -->
           </div>
@@ -482,6 +485,7 @@
         <!-- /.content -->
       </div>
       <!-- /.content-wrapper -->
+      <script src="loadNewsPage.js"></script>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.4.0
