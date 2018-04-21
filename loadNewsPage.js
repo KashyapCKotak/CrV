@@ -4,7 +4,7 @@ var analysisNewsContent = '<ul class="timeline AnalysisTimeline">';;
 const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
 ];
-var analysisString = ["analysis", "price", "market", "trading roundup"];
+var analysisString = ["analysis", "price", "market ", "trading roundup"];
 console.log("Enter");
 xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {

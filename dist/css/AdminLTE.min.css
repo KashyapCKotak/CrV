@@ -5,6 +5,30 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+@media (max-width: 520px){
+    .progressIco,.detailsIco,.imageIcoHolder{
+        width: 100% !important;
+        margin: 5px 5px 10px 5px !important;
+    }
+    .imageIcoHolder,.detailsIco{
+        text-align: center;
+    }
+}
+
+.timeIco{
+    width:200px
+}
+
+.progressIco{
+    padding: 0px !important;
+    /* margin: 0px -10px 0px -10px !important; */
+}
+
+.imageIco{
+    height: 41px;
+    width: 150px;
+}
+
 #newsLoaderHolder{
     width: 100%;
     padding-top: 5%;
@@ -92,7 +116,7 @@
     background-color: #33ff33;
     color:#000;
   }
-  100 {
+  100% {
     background-color: #fff;
   }
 }
@@ -105,7 +129,7 @@
     background-color: #ff4d4d;
     color:#000;
   }
-  100 {
+  100% {
     background-color: #fff;
   }
 }
@@ -118,7 +142,7 @@
     background-color: #fff533;
     color:#000;
   }
-  100 {
+  100% {
     background-color: #fff;
   }
 }
@@ -132,7 +156,7 @@
     background-color: #33ff33;
     color:#000;
   }
-  100 {
+  100% {
     background-color: #205a77;
   }
 }
@@ -145,7 +169,7 @@
     background-color: #ff4d4d;
     color:#000;
   }
-  100 {
+  100% {
     background-color: #205a77;
   }
 }
@@ -158,7 +182,7 @@
     background-color: #fff533;
     color:#000;
   }
-  100 {
+  100% {
     background-color: #205a77;
   }
 }
@@ -232,7 +256,6 @@
 #portfolioTablePersonal{
     overflow-x: auto;
     padding: 10px;
-    height
 }
 
 #portfolioTablePractice{
@@ -1253,7 +1276,8 @@ a:focus {
     .sidebar-mini.sidebar-collapse .sidebar-menu>li>a>.pull-right,
     .sidebar-mini.sidebar-collapse .sidebar-menu li.header {
         display: none !important;
-        -webkit-transform: translateZ(0)
+        -webkit-transform: translateZ(0);
+        transform: translateZ(0);
     }
     .sidebar-mini.sidebar-collapse .main-header .logo {
         width: 50px

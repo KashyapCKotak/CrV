@@ -459,7 +459,7 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1 style="text-align:center">
-            &nbsp;&nbsp;News & Analysis
+            News & Analysis
             <br><small>Combinig more than 19 news & analysis sources, worldwide</small>
           </h1>
         </section>
