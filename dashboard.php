@@ -85,70 +85,83 @@
         </a>
 
         <div class="navbar-custom-menu">
-          <ul class="nav navbar-nav">
-            <!-- Messages: style can be found in dropdown.less-->
-            <!-- User Account: style can be found in dropdown.less -->
-            <li class="dropdown user user-menu">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src=< ?php if (!isset($_SESSION[ 'cryptoview_user']) || $_SESSION[ 'cryptoview_user']=='' ){ echo
-                  '"dist/img/notSigned.jpg"'; } else { echo '"dist/img/signedIn.jpg"'; } ?> class="user-image" alt="User Image">
+        <ul class="nav navbar-nav">
+              <!-- Messages: style can be found in dropdown.less-->
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <img src=
+                  <?php
+                    if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                      echo '"dist/img/notSigned.jpg"';
+                    }
+                    else {
+                      echo '"dist/img/signedIn.jpg"';
+                    }
+                    ?>
+                  class="user-image" alt="User Image">
                 <span class="hidden-xs">
-                  <?php 
+                <?php 
+                  if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                    echo 'Sign In';
+                  }
+                  else {
+                    echo $_SESSION['cryptoview_user'];
+                  }
+                  ?>
+                </span>
+                </a>
+                <ul class="dropdown-menu">
+                  <!-- User image -->
+                  <li class="user-header">
+                    <img src=
+                      <?php
                         if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
-                          echo 'Sign In';
+                          echo '"dist/img/notSigned.jpg"';
+                        }
+                        else {
+                          echo '"dist/img/signedIn.jpg"';
+                        }
+                        ?>
+                      class="img-circle" alt="User Image">
+                    <p style="font-size: 25px">
+                      <strong>
+                      <?php
+                        if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                          echo 'Anonymous User';
                         }
                         else {
                           echo $_SESSION['cryptoview_user'];
                         }
-                      ?>
-                </span>
-              </a>
-              <ul class="dropdown-menu">
-                <!-- User image -->
-                <li class="user-header">
-                  <img src=< ?php if (!isset($_SESSION[ 'cryptoview_user']) || $_SESSION[ 'cryptoview_user']=='' ){ echo
-                    '"dist/img/notSigned.jpg"'; } else { echo '"dist/img/signedIn.jpg"'; } ?> class="img-circle" alt="User Image">
-
-                  <p style="font-size: 25px">
-                    <strong>
-                      <?php
-                            if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
-                              echo 'Anonymous User';
-                            }
-                            else {
-                              echo $_SESSION['cryptoview_user'];
-                            }
-                          ?>
-                    </strong>
-                  </p>
-                </li>
-                <!-- Menu Footer-->
-                <li class="user-footer">
-                  <?php
-                          if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
-                            echo '<div class="pull-left">
-                          <a href="pages/login.php" name="signin" class="btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
-                        </div>';
-                          }
-                          else {
-                            echo '<div class="pull-left">
-                          <a href="#" name="profile" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;border-color:#367fa9;color:#fff">My Profile</a>
-                        </div>
-                        <div class="pull-right">
-                          <a href="pages/logout.php" name="signout" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#d67070;border-color:#a93636;color:#fff">Sign out</a>
-                        </div>';
-                          }
                         ?>
-                </li>
-              </ul>
-            </li>
-            <!-- Control Sidebar Toggle Button -->
-            <li>
-              <a href="#" data-toggle="control-sidebar">
-                <i class="fa fa-gears"></i>
-              </a>
-            </li>
-          </ul>
+                      </strong>
+                    </p>
+                  </li>
+                  <!-- Menu Footer-->
+                  <li class="user-footer">
+                    <?php
+                      if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                        echo '<div class="pull-left">
+                      <a href="pages/login.php" name="signin" class="btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
+                      </div>';
+                      }
+                      else {
+                        echo '<div class="pull-left">
+                      <a href="#" name="profile" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;border-color:#367fa9;color:#fff">My Profile</a>
+                      </div>
+                      <div class="pull-right">
+                      <a href="pages/logout.php" name="signout" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#d67070;border-color:#a93636;color:#fff">Sign out</a>
+                      </div>';
+                      }
+                      ?>
+                  </li>
+                </ul>
+              </li>
+              <!-- Control Sidebar Toggle Button -->
+              <li>
+                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+              </li>
+            </ul>
         </div>
       </nav>
     </header>

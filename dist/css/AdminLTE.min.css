@@ -16,12 +16,20 @@
         width: 100%;
     }
     .ico-date-holder-small{
-        width: 100%;
+        width: 118px;
         margin: auto;
     }
     .time-unit-div{
         padding: 3px !important;
     }
+}
+
+.progress-percent{
+    text-align: center;
+    font-size: 18px;
+    margin: 0px;
+    /* color: #7f7979; */
+    font-weight: 550;
 }
 
 .time-unit-div {

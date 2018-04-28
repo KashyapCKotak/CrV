@@ -34,6 +34,8 @@
         <script src="bower_components/jquery/dist/jquery.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
         <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+        <!-- Moment js for dates -->
+        <script src="dist/js/moment.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
             $.widget.bridge('uibutton', $.ui.button);
@@ -690,11 +692,12 @@
                                         <div class="progress-bar progress-bar-primary" style="width: 90%"></div>
                                         <!-- <div style="width: 90%;text-align:center">90%<div> -->
                                     </div>
+                                    <p class="progress-percent">90%</p>
                                 </div>
                             <!-- </td>
                             <td> -->
                                 <div class="detailsIco col-xs-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                    <button type="button" class="btn btn-block btn-primary btn-sm">ICO Details</button>
+                                    <a href="#" class="btn btn-block btn-primary btn-sm">ICO Details</a>
                                 </div>
                             
                             </td>
@@ -718,6 +721,7 @@
                                 <!-- </td>
                                 <td> -->
                                     <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-2 show-in-small">
+                                        <div class="ico-date-holder-small">
                                         <p style="font-size:14px;margin:0px;padding-left:3px">STARTS IN:</p>			
                                         <div class="time-unit-div">
                                             <p class="project-time">27</p>
@@ -731,6 +735,7 @@
                                         <div class="time-unit-div seconds">
                                             <p class="project-time">24</p>
                                             <p class="small-time">Minutes</p>
+                                        </div>
                                         </div>
                                         <!-- <p style="float:left;width:90%;padding-left:5px;">2017-10-24&nbsp;&nbsp;&nbsp;12:00</p> -->
                                     </div>
@@ -782,6 +787,7 @@
             </section>
             <!-- /.content -->
         </div>
+        <script src="icoFill.js"></script>
         <!-- /.content-wrapper -->
         <!-- <script src="loadNewsPage.js"></script> -->
         <footer class="main-footer">
