@@ -651,7 +651,7 @@
                             <th><div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2">Timeline</div></th>
                             <th><div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2">Details</div></th>
                             </tr> -->
-                            <tr><th></th></tr>
+                            <!-- <tr><th></th></tr> -->
                             <tr>
                             <td>
                             
@@ -665,26 +665,43 @@
                                 </div>
                             <!-- </td>
                             <td> -->
-                                <div class="hidden-xs col-xs-4 col-sm-3 col-md-3 col-lg-2 col-xl-2 timeIco">
-                                    Ends in: kj ah
+                                <div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 col-xl-2 timeIco show-in-small">
+                                    <div class="ico-date-holder-small">
+                                    <p style="font-size:14px;margin:0px;padding-left:3px">Ends IN:</p>			
+                                        <div class="time-unit-div">
+                                            <p class="project-time">27</p>
+                                            <!-- 2018-04-28 06:35:04am||2018-05-25 13:00:00||2018-05-25 14:00:00||27||6 -->
+                                            <p class="small-time">Days</p>
+                                        </div>
+                                        <div class="time-unit-div">
+                                            <p class="project-time">06</p>
+                                            <p class="small-time">Hours</p>
+                                        </div>
+                                        <div class="time-unit-div seconds">
+                                            <p class="project-time">24</p>
+                                            <p class="small-time">Minutes</p>
+                                        </div>
+                                    </div>
                                 </div>
                             <!-- </td>
                             <td> -->
-                                <div class="progress progress-xs progress-striped active progressIco col-xs-4 col-sm-4 col-md-2 col-lg-3 col-xl-2">
-                                    <div class="progress-bar progress-bar-primary" style="width: 90%"></div>
+                                <div class="hidden-xs col-xs-4 col-sm-4 col-md-2 col-lg-3 col-xl-2">
+                                    <div class="progress progress-xs progress-striped active progressIco">
+                                        <div class="progress-bar progress-bar-primary" style="width: 90%"></div>
+                                        <!-- <div style="width: 90%;text-align:center">90%<div> -->
+                                    </div>
                                 </div>
                             <!-- </td>
                             <td> -->
                                 <div class="detailsIco col-xs-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                    More Details
+                                    <button type="button" class="btn btn-block btn-primary btn-sm">ICO Details</button>
                                 </div>
                             
                             </td>
                             
                     </tr>
-                    <tr>
+                        <tr>
                                 <td>
-                                
                                     <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 imageIcoHolder">
                                         <img class="imageIco" src="https:\/\/icowatchlist.com\/logos\/smrt.png">
                                     </div>
@@ -695,22 +712,63 @@
                                     </div>
                                 <!-- </td>
                                 <td> -->
-                                    <div class="hidden-xs col-xs-4 col-sm-3 col-md-3 col-lg-2 col-xl-2 timeIco">
-                                        Ends in: kj ah
+                                    <div class="hidden-xs col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+                                        From:<br><b>24-5-2018&nbsp;&nbsp;&nbsp;12:00</b><br>To:<br><b>24-5-2018&nbsp;&nbsp;&nbsp;12:00</b>
                                     </div>
                                 <!-- </td>
                                 <td> -->
-                                    <div class="progress progress-xs progress-striped active progressIco col-xs-4 col-sm-4 col-md-2 col-lg-3 col-xl-2">
-                                        <div class="progress-bar progress-bar-primary" style="width: 100%"></div>
+                                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-2 show-in-small">
+                                        <p style="font-size:14px;margin:0px;padding-left:3px">STARTS IN:</p>			
+                                        <div class="time-unit-div">
+                                            <p class="project-time">27</p>
+                                            <!-- 2018-04-28 06:35:04am||2018-05-25 13:00:00||2018-05-25 14:00:00||27||6 -->
+                                            <p class="small-time">Days</p>
+                                        </div>
+                                        <div class="time-unit-div">
+                                            <p class="project-time">06</p>
+                                            <p class="small-time">Hours</p>
+                                        </div>
+                                        <div class="time-unit-div seconds">
+                                            <p class="project-time">24</p>
+                                            <p class="small-time">Minutes</p>
+                                        </div>
+                                        <!-- <p style="float:left;width:90%;padding-left:5px;">2017-10-24&nbsp;&nbsp;&nbsp;12:00</p> -->
                                     </div>
                                 <!-- </td>
                                 <td> -->
                                     <div class="detailsIco col-xs-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
-                                        Kashyap
+                                        <button type="button" class="btn btn-block btn-primary btn-sm">ICO Details</button>
                                     </div>
-                                    
                                 </td>
-                            
+                        </tr>
+                        <tr>
+                                <td>
+                                    <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 imageIcoHolder">
+                                        <img class="imageIco" src="https:\/\/icowatchlist.com\/logos\/smrt.png">
+                                    </div>
+                                <!-- </td>
+                                <td> -->
+                                    <div class="hidden-sm hidden-xs col-xs-8 col-sm-3 col-md-3 col-lg-3 col-xl-2">
+                                        The Smart Startup Token project is Making Blockchain Accessible to Startups and Small Businesses
+                                    </div>
+                                <!-- </td>
+                                <td> -->
+                                    <div class="hidden-xs col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2">
+                                        From:<br><b>24-5-2018&nbsp;&nbsp;&nbsp;12:00</b><br>To:<br><b>24-5-2018&nbsp;&nbsp;&nbsp;12:00</b>
+                                    </div>
+                                <!-- </td>
+                                <td> -->
+                                    <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3 col-xl-2">
+                                        All Time ROI: <b>3,051.57%</b><br>
+                                        Ticker: <b>REP</b><br>
+                                        USD Price: <b>18.28</b>
+                                    </div>
+                                <!-- </td>
+                                <td> -->
+                                    <div class="detailsIco col-xs-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">
+                                        <button type="button" class="btn btn-block btn-primary btn-sm">ICO Details</button>
+                                    </div>
+                                </td>
                         </tr>
                         </table>
                         </div>

@@ -5,6 +5,45 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+@media (max-width: 771px) {
+    .show-in-small {
+        padding: 0px 5px 0px 5px;
+    }
+}
+
+@media (max-width: 520px) {
+    .show-in-small {
+        width: 100%;
+    }
+    .ico-date-holder-small{
+        width: 100%;
+        margin: auto;
+    }
+    .time-unit-div{
+        padding: 3px !important;
+    }
+}
+
+.time-unit-div {
+    float: left;
+    text-align: center;
+    padding: 3px 10px 3px 3px;
+}
+
+.project-time {
+    font-size: 24px;
+    color: #00c06d;
+    padding: 3px 3px 3px 3px;
+    margin: 0px;
+    line-height: 24px;
+}
+
+.small-time {
+    font-size: 10px;
+    padding: 3px;
+    margin: 0px;
+}
+
 @media (max-width: 520px){
     .progressIco,.detailsIco,.imageIcoHolder{
         width: 100% !important;
@@ -16,7 +55,7 @@
 }
 
 .timeIco{
-    width:200px
+    /* width:200px */
 }
 
 .progressIco{
