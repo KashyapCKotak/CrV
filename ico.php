@@ -645,7 +645,7 @@
                     <div class="col-xs-12">
                     <div class="box">
                         <div class="box-body table-responsive no-padding">
-                        <table class="table table-striped">
+                        <table class="table table-striped" id="icoLiveTable">
                             <!-- <tr>
                             <th><div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2">ICO Name</div></th>
                             <th><div class="hidden-sm hidden-xs col-xs-8 col-sm-3 col-md-3 col-lg-3 col-xl-2">Description</div></th>
