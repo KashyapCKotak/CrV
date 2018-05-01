@@ -35,8 +35,8 @@ xhttpIco.onreadystatechange = function() {
                 endDate.local();
                 //console.log(endDate.hour());
                 //console.log(endDate.toDate());
-                var currTimeDiff=moment.duration(endDate.diff(currentDate));
-                var totTimeDiff=moment.duration(endDate.diff(startDate));
+                var currTimeDiff=endDate.diff(currentDate, 'minutes');
+                var totTimeDiff=endDate.diff(startDate, 'minutes');
                 //console.log(currTimeDiff.hours());
             }
             else if(icoLiveList[liveIco].timezone.indexOf("+") !== -1){
@@ -54,8 +54,8 @@ xhttpIco.onreadystatechange = function() {
                 endDate.local();
                 //console.log(endDate.hour());
                 //console.log(endDate.toDate());
-                var currTimeDiff=moment.duration(endDate.diff(currentDate));
-                var totTimeDiff=moment.duration(endDate.diff(startDate));
+                var currTimeDiff=endDate.diff(currentDate, 'minutes');
+                var totTimeDiff=endDate.diff(startDate, 'minutes');
                 //console.log(currTimeDiff.hours());
             }
             liveIcoStr = liveIcoStr+'<tr>'+
@@ -68,32 +68,46 @@ xhttpIco.onreadystatechange = function() {
             '</div>'+
             '<div class="col-xs-4 col-sm-3 col-md-3 col-lg-2 col-xl-2 timeIco show-in-small">'+
             '<div class="ico-date-holder-small">'+
-            '<p style="font-size:14px;margin:0px;padding-left:3px">Ends IN:</p>'+
+            '<p style="font-size:14px;margin:0px;padding-left:3px"><b>Ends IN:</b></p>'+
             '<div class="time-unit-div">'+
-            '<p class="project-time">'+ currTimeDiff.days() +'</p>'+
+            '<p class="project-time">'+ Math.floor((currTimeDiff)/1440) +'</p>'+
             '<p class="small-time">Days</p>'+
             '</div>'+
             '<div class="time-unit-div">'+
-            '<p class="project-time">'+ currTimeDiff.hours() +'</p>'+
+            '<p class="project-time">'+ Math.floor(((currTimeDiff)/60)%24) +'</p>'+
             '<p class="small-time">Hours</p>'+
             '</div>'+
             '<div class="time-unit-div seconds">'+
-            '<p class="project-time">'+ currTimeDiff.minutes() +'</p>'+
+            '<p class="project-time">'+ (currTimeDiff % 60) +'</p>'+
             '<p class="small-time">Minutes</p>'+
             '</div>'+
             '</div>'+
             '</div>'+
             '<div class="hidden-xs col-xs-4 col-sm-4 col-md-2 col-lg-3 col-xl-2">'+
             '<div class="progress progress-xs progress-striped active progressIco">'+
-            '<div class="progress-bar progress-bar-primary" style="width: '+ parseFloat(((totTimeDiff.days()-currTimeDiff.days())/totTimeDiff.days())*100).toFixed(2) +'%"></div>'+
+            '<div class="progress-bar progress-bar-primary" style="width: '+ parseFloat(((totTimeDiff-currTimeDiff)/totTimeDiff) * 100).toFixed(2) +'%"></div>'+
             '</div>'+
-            '<p class="progress-percent">'+ parseFloat(((totTimeDiff.days()-currTimeDiff.days())/totTimeDiff.days())*100).toFixed(2) +'%</p>'+
+            '<p class="progress-percent">'+ parseFloat(((totTimeDiff-currTimeDiff)/totTimeDiff) * 100).toFixed(2) +'%</p>'+
             '</div>'+
             '<div class="detailsIco col-xs-4 col-sm-2 col-md-2 col-lg-2 col-xl-2">'+
             '<a href="'+ icoLiveList[liveIco].website_link +'" class="btn btn-block btn-primary btn-sm">ICO Details</a>'+
             '</div>'+                
             '</td>'+                
             '</tr>';
+            console.log("####################");
+            console.log(currTimeDiff);
+            console.log(icoLiveList[liveIco].name);
+            // console.log(endDate.diff(currentDate, 'minutes')%60);
+            // console.log(Math.floor(((currTimeDiff)/60)%24));
+            // console.log("hours: "+Math.floor((currTimeDiff)/1440));
+            // console.log("totalDiff"+parseFloat(totTimeDiff.minutes()).toFixed(2));
+            console.log(totTimeDiff);
+            console.log(totTimeDiff-currTimeDiff);
+            console.log(((totTimeDiff-currTimeDiff)/totTimeDiff)*100);
+            // console.log("currentDiff"+parseFloat(currTimeDiff.minutes()).toFixed(2));
+            // console.log(parseFloat(((totTimeDiff.minutes()-currTimeDiff.minutes())/totTimeDiff.minutes())*100).toFixed(2));
+            // console.log(((parseFloat(totTimeDiff.minutes()).toFixed(2)-parseFloat(currTimeDiff.minutes()).toFixed(2))/parseFloat(totTimeDiff.minutes()).toFixed(2))*100);
+            console.log("####################");
         }
         var icoUpcomingList = icoList.upcoming;
         for(upcomingIco in icoUpcomingList){
@@ -229,7 +243,11 @@ xhttpIco.onreadystatechange = function() {
             '</td>'+
             '</tr>';
         }
+        document.getElementById("newsLoaderHolder").style.display="none";
+        document.getElementById("icoHolder").style.display="";
         document.getElementById("icoLiveTable").innerHTML=liveIcoStr;
+        document.getElementById("icoFinishedTable").innerHTML=finishedIcoStr;
+        document.getElementById("icoUpcomingTable").innerHTML=upcomingIcoStr;
     }
 };
 xhttpIco.open("GET", "https://api.icowatchlist.com/public/v1/", true);

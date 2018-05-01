@@ -111,8 +111,6 @@ xhttp.onreadystatechange = function () {
             document.getElementById("newsLoaderHolder").style.display="none";
             document.getElementById("timelineNews").innerHTML = newsContent;
             document.getElementById("analysisNews").innerHTML = analysisNewsContent;
-           
-
       }
 };
 xhttp.open("GET", "https://min-api.cryptocompare.com/data/v2/news/?lang=EN", true);

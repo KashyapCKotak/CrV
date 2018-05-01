@@ -45,7 +45,7 @@ function triggerLoadTableAndUrl(whichInit){
 		console.log(prtcRootFiat);
 		console.log(myPortfolioPrtc);
 		portTableStringPrtc = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
-		// loadTableAndUrl(myPortfolioPrtc, portTableStringPrtc, portArrPrtc, urlPortPrtc,  "portfolioTablePractice", portIntrvlIdPrtc, whichInit, prtcPortfolioWithAmtAsValue);
+		loadTableAndUrl(myPortfolioPrtc, portTableStringPrtc, portArrPrtc, urlPortPrtc,  "portfolioTablePractice", portIntrvlIdPrtc, whichInit, prtcPortfolioWithAmtAsValue);
 	}
 }
 

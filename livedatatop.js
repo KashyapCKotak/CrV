@@ -1,6 +1,6 @@
-  // var globalFiatValue="USD";
-  // var globalCryptoValue = "BTC";
-  console.log(globalCryptoValue);
+  var globalFiatValue="USD";
+  var globalCryptoValue = "BTC";
+  //console.log(globalCryptoValue);
   console.log(globalFiatValue);
   var currTopPriceUrl = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,XRP,BCH,LTC,TRX,DASH,BTG,ZEC,XMR,ETC,IOTA,NXT,EOS,NEO&tsyms="+globalFiatValue;
   var mainPriceUrlIfNotInTop = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms="+globalCryptoValue+"&tsyms="+globalFiatValue;

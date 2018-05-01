@@ -628,23 +628,42 @@
                     <small>Most comprehensive ICO List</small>
                 </h1>
             </section>
+            <script type="text/javascript">
+                function initChartTypeChange(evt, icoType) {
+                    var i, tabcontent, tablinks;
+                    tablinks = document.getElementsByClassName("tabChartTyp");
+                    document.getElementById("icoUpcomingTable").style.display="none";
+                    document.getElementById("icoFinishedTable").style.display="none";
+                    document.getElementById("icoLiveTable").style.display="none";
+                    document.getElementById(icoType).style.display="";
+                    for (i = 0; i < tablinks.length; i++) {
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    evt.currentTarget.className += " active";
+                }
+            </script>
             <!-- Main content -->
             <section class="content">
                 <!-- row -->
                 <div class="row">
                     <div class="chartTypeTabHolder" style="margin-bottom:15px">
                         <div class="chartTypeTab">
-                            <button class="tabChartTyp" onclick="initChartTypeChange(event,'candlestick')">Missed</button>
-                            <button class="tabChartTyp active" onclick="initChartTypeChange(event,'smoothedLine')">Ongoing</button>
-                            <button class="tabChartTyp" onclick="initChartTypeChange(event,'ohlc')">Upcoming</button>
+                            <button class="tabChartTyp" onclick="initChartTypeChange(event,'icoFinishedTable')">Missed</button>
+                            <button class="tabChartTyp active" onclick="initChartTypeChange(event,'icoLiveTable')">Ongoing</button>
+                            <button class="tabChartTyp" onclick="initChartTypeChange(event,'icoUpcomingTable')">Upcoming</button>
                         </div>
                     </div>
                     <!-- <div id="newsLoaderHolder">
                         <div class="loader"></div>
                     </div> -->
+                    <div id="newsLoaderHolder">
+                        <div class="loader"></div>
+                    </div>
                     <div class="col-xs-12">
-                    <div class="box">
+                    <div id="icoHolder" class="box" style="display:none">
                         <div class="box-body table-responsive no-padding">
+                        <table class="table table-striped" id="icoUpcomingTable">
+                        <table class="table table-striped" id="icoFinishedTable">
                         <table class="table table-striped" id="icoLiveTable">
                             <!-- <tr>
                             <th><div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2">ICO Name</div></th>
