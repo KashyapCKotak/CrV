@@ -31,22 +31,26 @@ if(isset($_POST['signin'])){
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+  <script src="https://apis.google.com/js/api:client.js"></script>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="google-signin-client_id" content="136324385380-hr0pv6mj0vdjn853sri3qdskouoggulk.apps.googleusercontent.com">
   <title>CryptoView | Log in</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" name="viewport">
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <!-- <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css"> -->
+  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!-- iCheck -->
   <link rel="stylesheet" href="../plugins/iCheck/square/blue.css">
-
+  <!-- Google Login -->
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -56,6 +60,44 @@ if(isset($_POST['signin'])){
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script>
+      var googleUser = {};
+      var startApp = function() {
+        gapi.load('auth2', function(){
+          // Retrieve the singleton for the GoogleAuth library and set up the client.
+          auth2 = gapi.auth2.init({
+            client_id: '136324385380-2mfaqdpgj2e2a97rtis3jccrrbutcf8s.apps.googleusercontent.com',
+            cookiepolicy: 'single_host_origin',
+            // Request scopes in addition to 'profile' and 'email'
+            //scope: 'additional_scope'
+          });
+          attachSignin(document.getElementById('GPlusSignInButton'));
+        });
+      };
+
+      function attachSignin(element) {
+        console.log(element.id);
+        auth2.attachClickHandler(element, {},
+            function(googleUser) {
+              // document.getElementById('name').innerText = "Signed in: " +googleUser.getBasicProfile().getName();
+                  var id_token = googleUser.getAuthResponse().id_token;
+                  console.log(id_token);
+                  var xhr = new XMLHttpRequest();
+                  xhr.open('GET', 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='+id_token);
+                  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                  xhr.onload = function() {
+                    var googleUser=JSON.parse(xhr.responseText);
+                    console.log('Signed in as: ');
+                    console.log(googleUser);
+                    if(googleUser.aud=='136324385380-2mfaqdpgj2e2a97rtis3jccrrbutcf8s.apps.googleusercontent.com')
+                      console.log("Google Login Successfull");
+                  };
+                  xhr.send('idtoken=' + id_token);
+            }, function(error) {
+              alert(JSON.stringify(error, undefined, 2));
+            });
+      }
+    </script>
 </head>
 <body class="hold-transition login-page" style="height: 100vh">
   <div class="loginBackground" style="width:100%;height:100%"></div>
@@ -100,9 +142,10 @@ if(isset($_POST['signin'])){
         <p>- OR -</p>
         <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
         Facebook</a>
-        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
-        Google+</a>
+        <div id="GPlusSignInButton" class="btn btn-block btn-social btn-google btn-flat customGPlusSignIn"><i class="fa fa-google-plus"></i> Sign in using
+        Google+</div>
       </div>
+      <script>startApp();</script>
       <!-- /.social-auth-links -->
 
       <a href="#">I forgot my password</a><br>

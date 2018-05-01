@@ -5,6 +5,10 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+.customGPlusSignIn{
+    font-family: roboto;
+}
+
 @media (max-width: 771px) {
     .show-in-small {
         padding: 0px 5px 0px 5px;
