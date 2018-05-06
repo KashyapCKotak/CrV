@@ -1,29 +1,53 @@
 <?php
 include "dbconnect.php";
 session_start();
-if(isset($_POST['signin'])){
-  $username = $_POST["username"];
-  $password = $_POST["password"];
-  $username = stripslashes($username);
-  $password = stripslashes($password);
-  $username = $mysqli->real_escape_string($username);
-  $password = $mysqli->real_escape_string($password);
+// if(isset($_POST['signin'])){
+//   $username = $_POST["username"];
+//   $password = $_POST["password"];
+//   $username = stripslashes($username);
+//   $password = stripslashes($password);
+//   $username = $mysqli->real_escape_string($username);
+//   $password = $mysqli->real_escape_string($password);
 
-  if($username!="" && $password!=""){
-    $sql = "SELECT `userid`, `username`, `prsn_portfolio`, `prtc_portfolio`  FROM `portfolio` WHERE `username` LIKE '$username' AND `password` LIKE '$password'";
-    var_dump($sql);
+//   if($username!="" && $password!=""){
+//     $sql = "SELECT `userid`, `username`, `prsn_portfolio`, `prtc_portfolio`  FROM `portfolio` WHERE `username` LIKE '$username' AND `password` LIKE '$password'";
+//     var_dump($sql);
+//     $result = $mysqli->query( $sql);
+//     var_dump($result);
+//     $num_rows = $result->num_rows;
+//     $row = $result->fetch_assoc();
+//     if($num_rows==1){
+//       $_SESSION['cryptoview_user'] = $username;
+//       $_SESSION['prsn_portfolio'] = $row["prsn_portfolio"];
+//       $_SESSION['prtc_portfolio'] = $row["prtc_portfolio"];
+//       $_SESSION['userid'] = $row["userid"];
+//       header("Location: ../dashboard.php");
+//     }else{
+//       echo "<script> alert('Username or password is incorrect'); </script>";
+//     }
+//   }
+// }
+if(isset($_POST['userSub'])){
+  $userSub=$_POST["userSub"];
+  $userName=$_POST["userName"];
+  $userImg=$_POST["userImage"];
+  if($userSub!=""){
+    $sql = "SELECT `userid`, `prsn_portfolio`, `prtc_portfolio`  FROM `portfolio` WHERE `userid` LIKE '$userSub'";
+    // var_dump($sql);
     $result = $mysqli->query( $sql);
-    var_dump($result);
+    // var_dump($result);
     $num_rows = $result->num_rows;
     $row = $result->fetch_assoc();
     if($num_rows==1){
-      $_SESSION['cryptoview_user'] = $username;
+      $_SESSION['cryptoview_user'] = $userName;
       $_SESSION['prsn_portfolio'] = $row["prsn_portfolio"];
       $_SESSION['prtc_portfolio'] = $row["prtc_portfolio"];
-      $_SESSION['userid'] = $row["userid"];
+      $_SESSION['userid'] = $userSub;
+      $_SESSION['cryptoview_userImg'] = $userImg;
       header("Location: ../dashboard.php");
     }else{
       echo "<script> alert('Username or password is incorrect'); </script>";
+      // header("Location: login.php");
     }
   }
 }
@@ -81,7 +105,7 @@ if(isset($_POST['signin'])){
             function(googleUser) {
               // document.getElementById('name').innerText = "Signed in: " +googleUser.getBasicProfile().getName();
                   var id_token = googleUser.getAuthResponse().id_token;
-                  console.log(id_token);
+                  console.log(googleUser);
                   var xhr = new XMLHttpRequest();
                   xhr.open('GET', 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token='+id_token);
                   xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -89,8 +113,29 @@ if(isset($_POST['signin'])){
                     var googleUser=JSON.parse(xhr.responseText);
                     console.log('Signed in as: ');
                     console.log(googleUser);
-                    if(googleUser.aud=='136324385380-2mfaqdpgj2e2a97rtis3jccrrbutcf8s.apps.googleusercontent.com')
+                    if(googleUser.aud=='136324385380-2mfaqdpgj2e2a97rtis3jccrrbutcf8s.apps.googleusercontent.com'){
                       console.log("Google Login Successfull");
+                      var form = document.createElement("form");
+                      form.setAttribute("method", "post");
+                      form.setAttribute("action", "");
+                      var tokenField = document.createElement("input");
+                      tokenField.setAttribute("type", "hidden");
+                      tokenField.setAttribute("name", "userSub");
+                      tokenField.setAttribute("value", googleUser.sub);
+                      form.appendChild(tokenField);
+                      tokenField = document.createElement("input");
+                      tokenField.setAttribute("type", "hidden");
+                      tokenField.setAttribute("name", "userName");
+                      tokenField.setAttribute("value", googleUser.given_name+" "+googleUser.family_name);
+                      form.appendChild(tokenField);
+                      tokenField = document.createElement("input");
+                      tokenField.setAttribute("type", "hidden");
+                      tokenField.setAttribute("name", "userImage");
+                      tokenField.setAttribute("value", googleUser.picture);
+                      form.appendChild(tokenField);
+                      document.body.appendChild(form);
+                      form.submit();
+                    }
                   };
                   xhr.send('idtoken=' + id_token);
             }, function(error) {
@@ -130,7 +175,7 @@ if(isset($_POST['signin'])){
         </div>
         <div class="row" style="text-align: center">
           <div class="col-xs-4" style="float:left">
-            <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+            <button class="btn btn-primary btn-block btn-flat">Register</button>
           </div>
           <div class="col-xs-4" style="float:right">
             <button type="submit" name="signin" class="btn btn-primary btn-block btn-flat">Sign In</button>

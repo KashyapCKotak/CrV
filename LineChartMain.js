@@ -225,7 +225,7 @@ function drawMainChart(){
             //chartHour.write("chartdiv");
             //chartHour.validateNow(false,false);
             displayedChart = 2;
-            console.log(chartHour);
+            // console.log(chartHour);
             setTimeout(function(){chartHour.periodSelector.addListener("changed", handleZoom);console.log("chartHour Listener Added");},2000);
             // chartHour.periodSelector.addListener("changed", handleZoom);
             
