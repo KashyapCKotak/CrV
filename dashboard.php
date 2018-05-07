@@ -195,9 +195,9 @@
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-          <li class="header">
+          <!-- <li class="header">
             <center>MENU</center>
-          </li>
+          </li> -->
           <li class="active treeview">
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
@@ -2950,7 +2950,7 @@
                 <label class="label_convert">Fiat Currency</label>
               </div>
               <div class="claculatorComponents" style="width:100px">
-                <i class="fa fa-fw fa-exchange" style="font-size:20px"></i>
+                <i class="fas fa-exchange-alt" style="font-size:20px"></i>
               </div>
               <div class="group_convert claculatorComponents">
                 <input id="CryptoInput" class="input_convert" type="text" oninput="convertToFiat()" required>

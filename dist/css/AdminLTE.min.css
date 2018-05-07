@@ -4157,8 +4157,9 @@ table.text-center th {
     border: 3px solid #d2d6de
 }
 .profile-username {
-    font-size: 21px;
-    margin-top: 5px
+    font-size: 27px;
+    font-weight: 600;
+    margin-top: 15px
 }
 .post {
     border-bottom: 1px solid #d2d6de;
