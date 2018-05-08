@@ -225,30 +225,38 @@
               <p class="text-muted text-center">Golden User</p>
 
               <ul class="list-group list-group-unbordered">
+								<li class="list-group-item">
+                  <b>Rank</b> <a class="pull-right">13,287</a>
+                </li>
                 <li class="list-group-item">
-                  <b>Crypto Invested</b> <a class="pull-right">
+                  <b>Cryptocurrencies<br>Invested</b> <a class="pull-right" style="margin-top:-20px">
                   <?php
                     if(!isset($_SESSION['prsn_portfolio']) || $_SESSION['prsn_portfolio'] == ''){
                       echo "NA";
                     }
                     else {
-                      // if(count($_SESSION['prsn_portfolio'])>0)
-                      //   echo count($_SESSION['prsn_portfolio']);
-                      // else
-                      echo "None yet. Go Ahead!";
+											if(count($_SESSION['prsn_portfolio'])>0)
+												echo count($_SESSION['prsn_portfolio'])>0;
+											else
+                      	echo "None yet. Invest!<br>Start Something New!";
                     }
                   ?>
                   </a>
                 </li>
                 <li class="list-group-item">
-                  <b>Crypto Practicing</b> <a class="pull-right">
+                  <b>Cryptocurrencies<br>Practicing</b> <a class="pull-right">
                   <?php
-                    
+                    if(!isset($_SESSION['prtc_portfolio']) || $_SESSION['prtc_portfolio'] == ''){
+                      echo "NA";
+                    }
+                    else {
+											if(count($_SESSION['prtc_portfolio'])>0)
+												echo count($_SESSION['prtc_portfolio'])>0;
+											else
+                      	echo "None yet. Invest!<br>Start Something New!";
+                    }
                   ?>
                   </a>
-                </li>
-                <li class="list-group-item">
-                  <b>Friends</b> <a class="pull-right">13,287</a>
                 </li>
               </ul>
 
