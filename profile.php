@@ -1,9 +1,11 @@
+<?php
+include ($_SERVER['DOCUMENT_ROOT'].'/AdminLTE-2.4.2/pages/dbconnect.php');
+session_start();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-  <?php
-    session_start();
-  ?>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 2 | User Profile</title>
@@ -241,11 +243,11 @@
                     }
                     else {
                       $portfolioVar=json_decode($_SESSION['prsn_portfolio'],true);
-                      $root=array_keys($portfolioVar);
-                      $root=$root[0];
-                      $root=$portfolioVar[$root];
-											if(count($root)>0)
-												echo count($root);
+                      $prsnroot=array_keys($portfolioVar);
+                      $prsnroot=$prsnroot[0];
+                      $prsnroot=$portfolioVar[$prsnroot];
+											if(count($prsnroot)>0)
+												echo count($prsnroot);
 											else
                       	echo "None yet. Invest!<br>Start Something New!";
                     }
@@ -260,11 +262,11 @@
                     }
                     else {
                       $portfolioVar=json_decode($_SESSION['prsn_portfolio'],true);
-                      $root=array_keys($portfolioVar);
-                      $root=$root[0];
-                      $root=$portfolioVar[$root];
-											if(count($root)>0)
-												echo count($root);
+                      $prtcroot=array_keys($portfolioVar);
+                      $prtcroot=$prtcroot[0];
+                      $prtcroot=$portfolioVar[$prtcroot];
+											if(count($prtcroot)>0)
+												echo count($prtcroot);
 											else
                       	echo "None yet. Invest!<br>Start Something New!";
                     }
@@ -332,11 +334,11 @@
               
             
               <div class="active tab-pane" id="settings">
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="" method="get">
                   <div class="profile-form-entry">
                     <label for="inputName" class="col-sm-4 control-label">Base Currency :</label>
                     <div class="col-sm-8">
-                    <select id="fiatSelectBox" class="form-control select2" style="width:auto" onchange="selectFiat()">
+                    <select name="baseCurrency" id="fiatSelectBox" class="form-control select2" style="width:auto" onchange="selectFiat()">
                       <option id="default-fiat" selected="selected">INR</option>
                       <option>CNY</option>
                       <option>USD</option>
@@ -368,11 +370,18 @@
                     </div>
                   </div>
                   <div class="profile-form-entry">
-                    <label for="inputEmail" class="col-sm-4 control-label">Email :</label>
-
+                    <label for="inputEmail" class="col-sm-4 control-label">Receive Daily Updates on Mail :</label>
                     <div class="col-sm-8">
-                      <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                      <!-- Rounded switch -->
+                      <label class="switch">
+                        <input name="mail" type="checkbox">
+                        <span class="slider round"></span>
+                      </label>
                     </div>
+                  </div>
+                  <div class="profile-form-entry" style="margin-top:80px">
+                    <button type="button" class="col-sm-4 col-md-2 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
+                    <button name="save" type="submit" class="col-sm-4 col-md-2 btn btn-success" style="float:right;margin:0px 5px 0px 5px">Save</button>
                   </div>
                 </form>
               </div>
@@ -610,3 +619,37 @@
   </script>
 </body>
 </html>
+<?php
+if(isset($_GET['save'])){
+  $mail=$_GET['mail'];
+  $baseCurr=$_GET['baseCurrency'];
+  $prsnPort=json_decode($_SESSION['prsn_portfolio']);
+  $prtcPort=json_decode($_SESSION['prtc_portfolio']);
+  $userid=$_SESSION['userid'];
+  if(!$baseCurr==$prsnroot){
+    $prsnPort[$baseCurr]=$prsnPort[$prsnroot];
+    $prtcPort[$baseCurr]=$prtcPort[$prtcroot];
+    //$sql = "SELECT `userid`, `username`, `prsn_portfolio`, `prtc_portfolio`  FROM `portfolio` WHERE `username` LIKE '$username' AND `password` LIKE '$password'";
+    $sql = "UPDATE `portfolio` SET `prsn_portfolio`='$prsnPort' and `prtc_portfolio`='$prtcPort' WHERE `userid`='$userid'";
+    $mysqli->query($sql);
+    if(($mysqli->affected_rows) > 0 ) {
+			if(($mysqli->affected_rows)==1) {
+        $_SESSION['prsn_portfolio'] = $prsnPort;
+        $_SESSION['prtc_portfolio'] = $prtcPort;
+        echo "Personal Preferences Updated!";
+			}
+			else {
+        $_SESSION['prsn_portfolio'] = $prsnPort;
+        $_SESSION['prtc_portfolio'] = $prtcPort;
+				echo "Personal Preferences Updated, But something unusual happened while executing this operation. Please contact support immediately";
+			}
+		}
+		else {
+			echo "Update Unsuccessful";
+		}
+  }
+  else{
+
+  }
+}
+?>
