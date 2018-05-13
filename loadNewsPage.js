@@ -9,6 +9,7 @@ console.log("Enter");
 xhttp.onreadystatechange = function () {
       if (this.readyState == 4 && this.status == 200) {
             var analysisHeaderSet=false;
+            var analysisBookmarkSet=false;
             var allNewsObj = JSON.parse(this.responseText);
             console.log(allNewsObj);
             for (var promotedNews in allNewsObj.Promoted) {
@@ -49,6 +50,7 @@ xhttp.onreadystatechange = function () {
                         '<a href="#analysisAnchor" style="color:#FFF">Go to Analysis</a>' +
                         '</span>' +
                         '</li>';
+                  analysisBookmarkSet=true;
                   newsContent = newsContent + '<li>' +
                         '<div class="timeline-item">' +
                         '<img src="' + allNewsObj.Promoted[promotedNews].imageurl + '">' +
@@ -60,11 +62,23 @@ xhttp.onreadystatechange = function () {
                         '</div>' +
                         '</li>';
             }
-            newsContent = newsContent + '<li class="time-label">' +
-                  '<span class="bg-green" id="newsBegin">' +
-                  'Latest News' +
-                  '</span>' +
-                  '</li>';
+            if(analysisBookmarkSet){
+                  newsContent = newsContent + '<li class="time-label">' +
+                        '<span class="bg-green" id="newsBegin">' +
+                        'Latest News' +
+                        '</span>' +
+                        '</li>';
+            }
+            else{
+                  newsContent = newsContent + '<li class="time-label">' +
+                        '<span class="bg-green" id="newsBegin">' +
+                        'Latest News' +
+                        '</span>' +
+                        '<span class="bg-orange mobileOnly" style="float: right !important">' +
+                        '<a href="#analysisAnchor" style="color:#FFF">Go to Analysis</a>' +
+                        '</span>' +
+                        '</li>';
+            }
             for (var dataNews in allNewsObj.Data) {
                   var newsDate = new Date(allNewsObj.Data[dataNews].published_on * 1000);
                   var analysisNews = false;
@@ -88,7 +102,7 @@ xhttp.onreadystatechange = function () {
                               '<div class="timeline-item">' +
                               '<img src="' + allNewsObj.Data[dataNews].imageurl + '">' +
                               '<div class="title-and-time-holder">' +
-                              '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
+                              '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + newsDate.getHours() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
                               '<h3 class="timeline-header"><a href="' + allNewsObj.Data[dataNews].url + '">' + allNewsObj.Data[dataNews].title + '<small>&nbsp;-' + allNewsObj.Data[dataNews].source + '</small></a></h3></div>' +
                               '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Data[dataNews].body +
                               '</div></div>' +
