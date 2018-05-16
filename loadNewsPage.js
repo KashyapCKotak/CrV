@@ -19,6 +19,21 @@ xhttp.onreadystatechange = function () {
                         if (allNewsObj.Promoted[promotedNews].title.toLowerCase().indexOf(analysisString[i]) != -1)
                               analysisNews = true;
                   }
+                  var currSentiment="";
+                  var sentClass="";
+                  var sentArray=allNewsObj.Promoted[promotedNews].sentiment.split("&");
+                  if(parseFloat(sentArray[0])>parseFloat(sentArray[1])){
+                        sentClass='label-success';
+                        currSentiment='Positive';
+                  }
+                  else if(parseFloat(sentArray[0])<parseFloat(sentArray[1])){
+                        sentClass='label-danger';
+                        currSentiment='Negative';
+                  }
+                  else{
+                        sentClass='label-warning';
+                        currSentiment='Neutral';
+                  }
                   if (analysisNews) {
                         if(!analysisHeaderSet){
                               analysisNewsContent = analysisNewsContent + '<li class="time-label">' +
@@ -40,7 +55,10 @@ xhttp.onreadystatechange = function () {
                               '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Promoted[promotedNews].body +
                               '</div></div>' +
                               '</div>' +
-                              '</li>';
+                              '</li>'+
+                              '<li><div class="timeline-item-sentiment '+sentClass+'">'+
+                              currSentiment+'          '+'positive %='+sentArray[0]+'negative %='+sentArray[1]+
+                              '</div></li>';
                   }
                   newsContent = newsContent + '<li class="time-label">' +
                         '<span class="bg-red">' +
@@ -60,7 +78,10 @@ xhttp.onreadystatechange = function () {
                         '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Promoted[promotedNews].body +
                         '</div></div>' +
                         '</div>' +
-                        '</li>';
+                        '</li>'+
+                        '<li><div class="timeline-item-sentiment '+sentClass+'">'+
+                        currSentiment+'          '+'positive %='+sentArray[0]+'negative %='+sentArray[1]+
+                        '</div></li>';
             }
             if(analysisBookmarkSet){
                   newsContent = newsContent + '<li class="time-label">' +
@@ -85,6 +106,21 @@ xhttp.onreadystatechange = function () {
                   for (var i = 0; i < analysisString.length; i++) {
                         if (allNewsObj.Data[dataNews].title.toLowerCase().indexOf(analysisString[i]) != -1)
                               analysisNews = true;
+                  }
+                  var currSentiment="";
+                  var sentClass="";
+                  var sentArray=allNewsObj.Data[dataNews].sentiment.split("&");
+                  if(parseFloat(sentArray[0])>parseFloat(sentArray[1])){
+                        sentClass='label-success';
+                        currSentiment='Positive';
+                  }
+                  else if(parseFloat(sentArray[0])<parseFloat(sentArray[1])){
+                        sentClass='label-danger';
+                        currSentiment='Negative';
+                  }
+                  else{
+                        sentClass='label-warning';
+                        currSentiment='Neutral';
                   }
                   if (analysisNews) {
                         if(!analysisHeaderSet){
@@ -118,7 +154,10 @@ xhttp.onreadystatechange = function () {
                         '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Data[dataNews].body +
                         '</div></div>' +
                         '</div>' +
-                        '</li>';
+                        '</li>'+
+                        '<li><div class="timeline-item-sentiment '+sentClass+'">'+
+                        currSentiment+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'positive=&nbsp;'+sentArray[0]+'%&nbsp;&nbsp;&nbsp;negative=&nbsp;'+sentArray[1]+'%'+
+                        '</div></li>';
             }
             newsContent=newsContent+'</ul>';
             analysisNewsContent=analysisNewsContent+'</ul>';
@@ -127,5 +166,6 @@ xhttp.onreadystatechange = function () {
             document.getElementById("analysisNews").innerHTML = analysisNewsContent;
       }
 };
-xhttp.open("GET", "https://min-api.cryptocompare.com/data/v2/news/?lang=EN", true);
+//xhttp.open("GET", "https://min-api.cryptocompare.com/data/v2/news/?lang=EN", true);
+xhttp.open("GET", "currentNews.json", true);
 xhttp.send();
