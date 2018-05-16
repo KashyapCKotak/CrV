@@ -1,4 +1,5 @@
 var xhttp = new XMLHttpRequest();
+console.log("updateidnewnews.js");
 var latestNewsId=document.getElementById("latestNewsId").textContent;
 var oldLatestNewsId=latestNewsId;
 xhttp.onreadystatechange = function () {
@@ -15,12 +16,15 @@ xhttp.onreadystatechange = function () {
             }
         }
         if(oldLatestNewsId<latestNewsId){
+            console.log("found new news");
             var newNewsXmlHttp = new XMLHttpRequest();
             newNewsXmlHttp.open("GET", "http://localhost/adminlte-2.4.2/newNews.php?newNewsId="+latestNewsId, true); 
             newNewsXmlHttp.send(null);  
+            //alert("It seems that there are latest news articles which were not cached since you loaded the page. Please reload the page once to view latest news.");
         }
         else{
             //enjoy
+            console.log("no new news");
         }
     }
 };

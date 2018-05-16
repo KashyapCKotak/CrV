@@ -10,7 +10,7 @@ $allNewsObj=file_get_contents("currentNews.json");
 // $newsFile = fopen("currentNews.json", "r") or die("Unable to open file!");
 // $allNewsObj=fread($newsFile,filesize("currentNews.json"));
 // fclose($newsFile);
-// error_log($allNewsObj);
+error_log($allNewsObj);
 $latestNewsId=0;
 $analysisHeaderSet = false;
 $analysisBookmarkSet = false;
