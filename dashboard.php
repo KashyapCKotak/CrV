@@ -3086,6 +3086,14 @@
             </div>
           </div>
         </div>
+				<div class="row box" style="margin:0;width:auto;margin-bottom:20px">
+					<div class="col-md-6" style="height:371px;padding-top:15px">
+						<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1420_RC05/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"bitcoin","geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=bitcoin&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); </script> 
+					</div>
+					<div class="col-md-6" style="height:371px;padding-top:15px">
+						<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1420_RC05/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("GEO_MAP", {"comparisonItem":[{"keyword":"bitcoin","geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=bitcoin&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); </script> 
+					</div>
+				</div>
 
       </section>
       <!-- /.content -->
