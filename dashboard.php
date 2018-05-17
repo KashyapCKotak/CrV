@@ -384,7 +384,7 @@
             <option id="default-fiat" selected="selected" value="BTC">Bitcoin (BTC)</option>
             <option value="ETH">Ethereum (ETH)</option>
             <option value="XRP">Ripple (XRP)</option>
-            <option value="BCH">Bitcoin Cash / BCC (BCH)</option>
+            <option value="BCH">Bitcoin Cash (BCH)</option>
             <option value="LTC">Litecoin (LTC)</option>
             <option value="NXT">Nxt (NXT)</option>
             <option value="XMR">Monero (XMR)</option>
@@ -2754,13 +2754,13 @@
         <div class="fiat-select">
           <label class="label-enable">Fiat Currency: </label>
           <select id="fiatSelectBox" class="form-control select2" style="width:auto" onchange="selectFiat()">
-            <option id="default-fiat" selected="selected">INR</option>
-            <option>CNY</option>
-            <option>USD</option>
-            <option>EUR</option>
-            <option>GBP</option>
-            <option>JPY</option>
+            <option id="default-fiat" selected="selected">USD</option>
             <option>RUB</option>
+            <option>GBP</option>
+            <option>EUR</option>
+            <option>INR</option>
+            <option>JPY</option>
+            <option>CNY</option>
             <option>SGD</option>
             <option>KRW</option>
             <option>PLN</option>
@@ -2784,11 +2784,24 @@
           </select>
         </div>
         <script type="text/javascript">
+          function loadGTrenGraph(){
+            var currSelection=document.getElementById("cryptoSelectBox");
+            document.getElementById("gTrenGraph").innerHTML="";
+            trends.embed.renderExploreWidgetTo(document.getElementById("gTrenGraph"),"TIMESERIES", {"comparisonItem":[{"keyword":currSelection.options[currSelection.selectedIndex].text,"geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q="+currSelection.options[currSelection.selectedIndex].text+"&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); 
+          } 
+          function loadGTrenGeo(){
+            var currSelection1=document.getElementById("cryptoSelectBox");
+            document.getElementById("gTrenGeo").innerHTML="";
+            trends.embed.renderExploreWidgetTo(document.getElementById("gTrenGeo"),"GEO_MAP", {"comparisonItem":[{"keyword":currSelection1.options[currSelection1.selectedIndex].text,"geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q="+currSelection1.options[currSelection1.selectedIndex].text+"&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); 
+          }
           function selectCrypto() {
             globalCryptoValue = document.getElementById("cryptoSelectBox").value; //.match(/\(([^)]+)\)/)[1];
             changeAllTop();
             drawMainChart();
             getMarketData();
+            loadCoinLogo();
+            loadGTrenGraph();
+            loadGTrenGeo();
           }
 
           function selectFiat() {
@@ -2827,6 +2840,9 @@
         <h1 class="custom-h1-header">
           <div id="cryptoCurr-name-logo">
             <!-- <img src="https://www.cryptocompare.com/media/19633/btc.png" class="logo-img">   Bitcoin (BTC) -->
+            <!-- <img id="titleLogo" src="" class="logo-img"> -->
+            <img id="titleLogo" src="https://www.cryptocompare.com//media/19633/btc.png" class="logo-img">
+            <span id="titleCurr"> Bitcoin (BTC)</span>
           </div>
         </h1>
         <!-- <ol class="breadcrumb">
@@ -3042,7 +3058,7 @@
 
             <div class="box">
               <div class="box-header">
-                <h3 class="box-title">Markets for INR</h3>
+                <h3 class="box-title">Markets for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
               </div>
               <div id="marketsDataTable" class="box-body" style="padding:0">
                 Loading ⌛
@@ -3060,7 +3076,7 @@
           </script>
         </div>
 
-        <div class="row box" style="margin:0;width:auto;margin-bottom: 20px">
+        <div class="row box" style="margin:0;width:auto;margin-bottom:20px">
           <div class="col-md-6" style="margin-left:0;margin-right:0;margin-bottom:10px;height:70vh;padding:10px">
             <div style="height:100%;overflow:auto">
               <a class="twitter-timeline" href="https://twitter.com/Bitcoin?ref_src=twsrc%5Etfw">Tweets by Bitcoin</a>
@@ -3086,12 +3102,17 @@
             </div>
           </div>
         </div>
+        <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1420_RC05/embed_loader.js"></script>
 				<div class="row box" style="margin:0;width:auto;margin-bottom:20px">
-					<div class="col-md-6" style="height:371px;padding-top:15px">
-						<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1420_RC05/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("TIMESERIES", {"comparisonItem":[{"keyword":"bitcoin","geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=bitcoin&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); </script> 
+					<div class="col-md-6" id="gTrenGraph" style="margin-bottom:10px;padding-top:10px">
+            <script type="text/javascript"> 
+              loadGTrenGraph();
+            </script> 
 					</div>
-					<div class="col-md-6" style="height:371px;padding-top:15px">
-						<script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1420_RC05/embed_loader.js"></script> <script type="text/javascript"> trends.embed.renderExploreWidget("GEO_MAP", {"comparisonItem":[{"keyword":"bitcoin","geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q=bitcoin&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); </script> 
+					<div class="col-md-6" id="gTrenGeo" style="margin-bottom:10px;padding-top:10px">
+            <script type="text/javascript">
+              loadGTrenGeo();
+            </script> 
 					</div>
 				</div>
 

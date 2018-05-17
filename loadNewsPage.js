@@ -1,6 +1,6 @@
 var xhttp = new XMLHttpRequest();
 var newsContent = '<ul class="timeline">';
-var analysisNewsContent = '<ul class="timeline AnalysisTimeline">';;
+var analysisNewsContent = '<ul class="timeline AnalysisTimeline">';
 const monthNames = ["January", "February", "March", "April", "May", "June",
       "July", "August", "September", "October", "November", "December"
 ];
