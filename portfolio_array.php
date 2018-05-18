@@ -81,7 +81,7 @@
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src=
                     <?php
-                    if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                    if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                       echo '"dist/img/notSigned.jpg"';
                     }
                     else {
@@ -91,7 +91,7 @@
                     class="user-image" alt="User Image">
                     <span class="hidden-xs">
                       <?php 
-                      if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                      if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         echo 'Sign In';
                       }
                       else {
@@ -105,7 +105,7 @@
                     <li class="user-header">
                       <img src=
                       <?php
-                      if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                      if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         echo '"dist/img/notSigned.jpg"';
                       }
                       else {
@@ -117,7 +117,7 @@
                       <p style="font-size: 25px">
                         <strong>
                           <?php
-                          if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                          if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                             echo 'Anonymous User';
                           }
                           else {
@@ -130,7 +130,7 @@
                     <!-- Menu Footer-->
                     <li class="user-footer">
                       <?php
-                      if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                      if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         echo '<div class="pull-left">
                         <a href="pages/login.php" name="signin" class="btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
                         </div>';

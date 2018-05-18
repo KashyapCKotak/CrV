@@ -23,9 +23,9 @@ else if ($_POST["portfolioType"] == "Practice") {
 	$portType = "prtc_portfolio";
 	$portJsonRoot="prtcprtf";
 }
-$cryptoview_user=$_SESSION["cryptoview_user"];
+$userid=$_SESSION["userid"];
 
-$sql1 = "SELECT  $portType  FROM `portfolio` WHERE `username` LIKE '$cryptoview_user'";
+$sql1 = "SELECT  $portType  FROM `portfolio` WHERE `userid` = '$userid'";
 $result1 = $mysqli->query($sql1);
 	//error_log(json_encode($sql1));
 $num_rows1 = $result1->num_rows;
@@ -65,8 +65,8 @@ if($num_rows1 == 1) {
 	$tempArrayString = json_encode($tempArray);
 	error_log("!!!!!!!!!!!!!!!!!!!!");
 	error_log($tempArrayString);
-	// $sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE '$cryptoview_user'";
-	$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE 'dhinchak'";
+	$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `userid` = '$userid'";
+	//$sql2 = "UPDATE `portfolio` SET $portType = '$tempArrayString' WHERE `username` LIKE 'dhinchak'";
 		//error_log($sql2);
 	$mysqli->query($sql2);
 	if(($mysqli->affected_rows) > 0 ) {

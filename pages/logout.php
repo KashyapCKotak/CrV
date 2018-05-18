@@ -2,6 +2,7 @@
 session_start();
 session_destroy();
 unset($_SESSION['cryptoview_user']);
+unset($_SESSION['userid']);
 // header("Location: ../dashboard.php");
 ?>
 

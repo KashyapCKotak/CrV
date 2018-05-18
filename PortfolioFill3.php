@@ -186,14 +186,15 @@ function loadCurrValuePort(fiatPort2, isLastFiat, lastFiat){
 				var currVal1=parseFloat((1/currvalPort[currCrpto])*myPortfolio[fiatPort2][currCrpto].amt).toFixed(2);
 				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'val').innerHTML=currVal1;
 				myPortfolioWithAmtAsValue[fiatPort2][currCrpto].amt = currVal1;
-				var currPortDiff = (currVal1-myPortfolio[fiatPort2][currCrpto].invst);
+				var currPortDiff = (currVal1-parseFloat(myPortfolio[fiatPort2][currCrpto].invst));
 				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'prcnt').innerHTML=parseFloat((currPortDiff/myPortfolio[fiatPort2][currCrpto].invst)*100).toFixed(2) + "%";
 				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'diff').innerHTML=parseFloat(currPortDiff).toFixed(2);
-				if(myPortfolio[fiatPort2][currCrpto].invst<currVal1){
+				
+				if(parseFloat(myPortfolio[fiatPort2][currCrpto].invst)<currVal1){
 					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'prcnt').className="badge bg-green";
 					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'diff').className="badge bg-green";
 				}
-				else if(myPortfolio[fiatPort2][currCrpto].invst>currVal1){
+				else if(parseFloat(myPortfolio[fiatPort2][currCrpto].invst)>currVal1){
 					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'prcnt').className="badge bg-red";
 					document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'diff').className="badge bg-red";
 				}

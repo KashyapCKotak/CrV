@@ -1,7 +1,7 @@
 <?php
 	session_start();
         $loggedIn = false;
-	if(isset($_SESSION['cryptoview_user'])){
+	if(isset($_SESSION['userid'])){
                 $loggedIn = true;
         }
 ?>

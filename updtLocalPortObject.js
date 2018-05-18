@@ -1,6 +1,6 @@
 function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount, inputFiatAmount, portType, transType) {
 	var lclPrtObj;
-	// console.log(myPortfolioPrsn);
+	console.log(myPortfolioPrsn);
 	if(portType == "Personal"){
 		lclPrtObj = myPortfolioPrsn;
 		// console.log(myPortfolioPrsn);
@@ -89,7 +89,7 @@ function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount
 		}
 	}
 	//////////////////// UPDATE ///////////////////////
-	else if (transType == 1){
+	else if (transType == 3){
 		if(lclPrtObj.hasOwnProperty(selectedFiatValue)) {
 			if(lclPrtObj[selectedFiatValue].hasOwnProperty(selectedCryptoValue)) {
 				lclPrtObj[selectedFiatValue][selectedCryptoValue]["invst"]=parseFloat(inputFiatAmount);
@@ -113,7 +113,7 @@ function updtLclPrtObj(selectedCryptoValue, selectedFiatValue, inputCryptoAmount
 	// console.log(portIntrvlId);
 	clearInterval(portIntrvlId[0]);
 	console.log("LOOOOOOK AGAIN");
-	console.log(myPortfolioPrsn);
+	console.log(lclPrtObj);
 	console.log(myPortfolioPrtc);
 	loadTableAndUrl(lclPrtObj, lclPortTableString, lclPortArr, lclUrlPort, domElement, portIntrvlId, whichTypeNumber);
 }

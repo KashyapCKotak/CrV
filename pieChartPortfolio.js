@@ -16,15 +16,15 @@ function drawPie(myPortfolioInvstChart, whichInit) {
   canvasHolder.innerHTML = "<canvas id='pieChart1' height='150'></canvas>";
   var bulletString='<ul class="chart-legend clearfix">';
   var pieChartCanvas = $('#pieChart'+whichInit).get(0).getContext('2d');
-  console.log("Pie Drawn !!!!!!!!!!!!!!!!!!!!!!!");
+  //console.log("Pie Drawn !!!!!!!!!!!!!!!!!!!!!!!");
   var pieChart = new Chart(pieChartCanvas);
   var PieData = [];
 
   for(var crypto in myPortfolioInvstChart){
     var tempObj={};
     tempObj.value=0;
-    console.log(myPortfolioInvstChart);
-    console.log(crypto);
+    //console.log(myPortfolioInvstChart);
+    //console.log(crypto);
     tempObj.value=tempObj.value+parseFloat(myPortfolioInvstChart[crypto]);
     var color=dynamicColors();
     tempObj.color="rgb"+color+")";
