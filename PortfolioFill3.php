@@ -26,6 +26,9 @@ var prtcRootFiat="";
 var prsnPortfolioWithAmtAsValue=null;
 var prtcPortfolioWithAmtAsValue=null;
 
+var invstListForPiePrsn=[];
+var invstListForPiePrtc=[];
+
 function triggerLoadTableAndUrl(whichInit){
 	if(whichInit == 1){
 		var myPortfolioInit = <?php echo $_SESSION['prsn_portfolio'];?>;
@@ -176,9 +179,13 @@ function updateTotalPort(){
 		document.getElementById("total"+whichInit+"prcnt").className="badge bg-yellow";
 		document.getElementById("total"+whichInit+"diff").className="badge bg-yellow";
 	}
-	console.log("invstListForPie")
-	console.log(invstListForPie);
-	console.log(document.getElementById("piePortfolio"+whichInit));
+	// console.log("invstListForPie")
+	// console.log(invstListForPie);
+	// console.log(document.getElementById("piePortfolio"+whichInit));
+	if(whichInit==1)
+		invstListForPiePrsn=invstListForPie;
+	else
+		invstListForPiePrtc=invstListForPie;
     drawPie(invstListForPie,whichInit);
     myPortfolioWithAmtAsValue = JSON.parse(JSON.stringify(myPortfolio));
 }
@@ -192,7 +199,7 @@ function loadCurrValuePort(fiatPort2, isLastFiat, lastFiat){
 	xhttpPort.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var currvalPort = JSON.parse(this.responseText);
-			console.log(currvalPort);
+			// console.log(currvalPort);
 			for(currCrpto in currvalPort){
 				var currVal1=parseFloat((1/currvalPort[currCrpto])*myPortfolio[fiatPort2][currCrpto].amt);//.toFixed(5);
 				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'val').innerHTML=parseFloat(currVal1).toFixed(2);
@@ -272,12 +279,12 @@ function triggerLoadCurrValuePort(){
 
 triggerLoadCurrValuePort();
 
-//portIntrvlId[0] = setInterval(function() {
-//	if(doneUpdtFlg == false){
-//		updtTimeout = updtTimeout + 10000;
-//	}
-//	triggerLoadCurrValuePort();
-//},updtTimeout);
+portIntrvlId[0] = setInterval(function() {
+	if(doneUpdtFlg == false){
+		updtTimeout = updtTimeout + 10000;
+	}
+	triggerLoadCurrValuePort();
+},updtTimeout);
 
 }//full function end
 

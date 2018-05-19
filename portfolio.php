@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <script src="bower_components/Chart.js/Chart.js"></script>
   <script src="pieChartPortfolio.js"></script>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
@@ -724,6 +725,10 @@
               }
               /////////////////////////////////////////////////////////////////////////
               
+              function redrawPie(whichInit){
+                console.log("REEEEEDRWAAAAAN");
+              }
+
             </script>           
             <!-- Main content -->
 
@@ -733,9 +738,63 @@
                   <!-- Custom Tabs -->
                   <div class="nav-tabs-custom" style="margin:0">
                     <ul class="nav nav-tabs">
-                      <li class="active portfolioTab"><a href="#tab_1" data-toggle="tab">Personal Portfolio</a></li>
-                      <li class="portfolioTab"><a href="#tab_2" data-toggle="tab">Practice Portfolio</a></li>
+                      <li class="active portfolioTab"><a id="portTab1" tabindex="0" href="#tab_1" data-toggle="tab">Personal Portfolio</a></li>
+                      <li class="portfolioTab"><a id="portTab2" tabindex="0" href="#tab_2" data-toggle="tab">Practice Portfolio</a></li>
                     </ul>
+                    <script type="text/javascript">
+                    var maxTime = 2000; // 2 seconds
+                    var time = 0;
+                    function prsnPortVisible(){
+                      var interval = setInterval(function () {
+                        if($('#portfolioTablePersonal').is(':visible')) {
+                            console.log("visible now");
+                            drawPie(invstListForPiePrsn,1);
+                            clearInterval(interval);
+                          } else {
+                            if (time > maxTime) {
+                              // still hidden, after 2 seconds, stop checking
+                              clearInterval(interval);
+                              return;
+                            }
+                            // not visible yet, do something
+                            time += 100;
+                          }
+                        }, 200);
+                    }
+                    function prtcPortVisible(){
+                      var interval = setInterval(function () {
+                        if($('#portfolioTablePractice').is(':visible')) {
+                          console.log("visible now");
+                          drawPie(invstListForPiePrtc,2);
+                          clearInterval(interval);
+                        } else {
+                          if (time > maxTime) {
+                            // still hidden, after 2 seconds, stop checking
+                            clearInterval(interval);
+                            return;
+                          }
+                          // not visible yet, do something
+                          time += 100;
+                        }
+                      }, 200);
+                    }
+                    $("#portTab1").focusin(function() {
+                      console.log("REEEEEDRWAAAAAN");
+                      //drawPie(invstListForPiePrsn,1);
+                      prsnPortVisible();
+                    });
+                    $("#portTab2").focusin(function() {
+                      console.log("REEEEEDRWAAAAAN");
+                      //drawPie(invstListForPiePrtc,2);
+                      prtcPortVisible();
+                    });
+                    $("#portTab1").focusout(function() {
+                      //drawPie(invstListForPiePrtc,2);
+                    });
+                    $("#portTab2").focusout(function() {
+                      //drawPie(invstListForPiePrtc,2);
+                    });
+                    </script>
                     <div class="tab-content">
                       <div class="tab-pane active" id="tab_1">
 
@@ -983,10 +1042,7 @@
                                 <script>
                                   triggerLoadTableAndUrl(2);
                                 </script>
-                              </div>
-                              <!-- /.col -->
                             </div>
-                            <!-- /.row -->
                             <!-- //////////////////////////////////////////////////////// -->
                             <div class="BuySellTabHolder col-md-6">
                               <div class="BuySellTab">
@@ -1494,7 +1550,7 @@
             
 
                     <!-- Pie Chart -->
-                    <script src="bower_components/Chart.js/Chart.js"></script>
+                    
                     <!-- Pie Chart Data -->
                     
                     
