@@ -31,9 +31,9 @@ function triggerLoadTableAndUrl(whichInit){
 		var myPortfolioInit = <?php echo $_SESSION['prsn_portfolio'];?>;
 		prsnRootFiat=Object.keys(myPortfolioInit)[0];
 		myPortfolioPrsn=myPortfolioInit[prsnRootFiat];
-		console.log("Personal");
-		console.log(prsnRootFiat);
-		console.log(myPortfolioPrsn);
+		//console.log("Personal");
+		//console.log(prsnRootFiat);
+		//console.log(myPortfolioPrsn);
 		portTableStringPrsn = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
 		loadTableAndUrl(myPortfolioPrsn, portTableStringPrsn, portArrPrsn, urlPortPrsn, "portfolioTablePersonal", portIntrvlIdPrsn, whichInit, prsnPortfolioWithAmtAsValue);
 	}
@@ -41,9 +41,9 @@ function triggerLoadTableAndUrl(whichInit){
 		var myPortfolioInit = <?php echo $_SESSION['prtc_portfolio'];?>;	
 		prtcRootFiat=Object.keys(myPortfolioInit)[0];
 		myPortfolioPrtc=myPortfolioInit[prtcRootFiat];
-		console.log("Practice");
-		console.log(prtcRootFiat);
-		console.log(myPortfolioPrtc);
+		//console.log("Practice");
+		//console.log(prtcRootFiat);
+		//console.log(myPortfolioPrtc);
 		portTableStringPrtc = '<table class="table table-condensed table-striped"><tr><th style="width: 10px">#</th><th>Name</th><th>Quantity</th><th>Investment</th><th>Value</th><th>Diff</th><th style="width: 60px">%</th></tr>';
 		loadTableAndUrl(myPortfolioPrtc, portTableStringPrtc, portArrPrtc, urlPortPrtc,  "portfolioTablePractice", portIntrvlIdPrtc, whichInit, prtcPortfolioWithAmtAsValue);
 	}
@@ -51,7 +51,8 @@ function triggerLoadTableAndUrl(whichInit){
 
 
 
-function loadTableAndUrl(myPortfolio, portTableString, portArr, urlPort, domElement, portIntrvlId, whichInit, myPortfolioWithAmtAsValue){
+function loadTableAndUrl(myPortfolio, portTableString, portArr, urlPort, domElement, portIntrvlId, whichInit, myPortfolioWithAmtAsValue)
+{
 var baseCurrency = "";
 if (whichInit == 1)
 	baseCurrency = prsnRootFiat;
@@ -63,8 +64,8 @@ myPortfolioWithAmtAsValue = JSON.parse(JSON.stringify(myPortfolio));
 urlPort = [];
 portArr = [];
 var rowCounter = 1;
-var totalInvst = parseFloat(0.0).toFixed(2);
-var totalValue = parseFloat(0.0).toFixed(2);
+var totalInvst = parseFloat(0.00).toFixed(2);
+var totalValue = parseFloat(0.00).toFixed(2);
 var diffFiatList = [];
 var fiatConvRates = null;
 var waitForRates = true;
@@ -73,12 +74,14 @@ var waitForValues = true;
 var doneUpdtFlg = false;
 var updtTimeout = 20000;
 
+//console.log(myPortfolio);
+
 for(fiatPort in myPortfolio){
 	if(baseCurrency != fiatPort)
 		diffFiatList.push(fiatPort);
 	var portCurrentCryptoList = [];
 	for(cryptoPort in myPortfolio[fiatPort]){
-		portTableString = portTableString + '<tr><td>'+rowCounter+'</td><td>'+cryptoPort+'/'+fiatPort+'</td><td>'+myPortfolio[fiatPort][cryptoPort].amt+'</td><td>'+myPortfolio[fiatPort][cryptoPort].invst+'</td><td id="'+cryptoPort+'/'+fiatPort+whichInit+'val">⌛</td><td><span id="'+cryptoPort+'/'+fiatPort+whichInit+'diff" class="badge bg-green">--</span></td><td><span id="'+cryptoPort+'/'+fiatPort+whichInit+'prcnt" class="badge bg-green">--</span></td></tr>';
+		portTableString = portTableString + '<tr><td>'+rowCounter+'</td><td>'+cryptoPort+'/'+fiatPort+'</td><td>'+myPortfolio[fiatPort][cryptoPort].amt+'</td><td>'+parseFloat(myPortfolio[fiatPort][cryptoPort].invst).toFixed(2)+'</td><td id="'+cryptoPort+'/'+fiatPort+whichInit+'val">⌛</td><td><span id="'+cryptoPort+'/'+fiatPort+whichInit+'diff" class="badge bg-green">--</span></td><td><span id="'+cryptoPort+'/'+fiatPort+whichInit+'prcnt" class="badge bg-green">--</span></td></tr>';
 		rowCounter++;
 		portCurrentCryptoList.push(cryptoPort);
 	}
@@ -91,7 +94,9 @@ for(fiatPort in myPortfolio){
 portTableString = portTableString + '<tr class="portfolioTotalRow"><td> </td><td>Grand Total</td><td> </td><td id="total'+whichInit+'invst">⌛</td><td id="total'+whichInit+'val">⌛</td><td><span id="total'+whichInit+'diff" class="badge bg-green">--</span></td><td><span id="total'+whichInit+'prcnt" class="badge bg-green">--</span></td></tr>';
 portTableString = portTableString + '</table>';
 
-// console.log(domElement);
+//console.log("!!!!!!! 1 !!!!!!!!")
+//console.log(portArr);
+//console.log(diffFiatList);
 document.getElementById(domElement).innerHTML=portTableString;
 
 //////////////////////// Build URL ////////////////////////////
@@ -109,6 +114,7 @@ for(fiatPort1 in portArr){
 	}
 	urlPort.push(tempUrl);
 }
+
 ////////////////////////////////////////////////////////////////////////
 
 ////////////////////////// NEW FUNCTION ///////////////////////////////////////
@@ -117,8 +123,8 @@ function updateTotalPort(){
 	for(fiatPort in myPortfolioWithAmtAsValue){
 		for(cryptoPort in myPortfolioWithAmtAsValue[fiatPort]){
 			if(fiatPort == baseCurrency){
-				convertedInvst = parseFloat(myPortfolioWithAmtAsValue[fiatPort][cryptoPort].invst).toFixed(2);
-				convertedVal = parseFloat(myPortfolioWithAmtAsValue[fiatPort][cryptoPort].amt).toFixed(2);
+				convertedInvst = parseFloat(myPortfolioWithAmtAsValue[fiatPort][cryptoPort].invst);//.toFixed(5);
+				convertedVal = parseFloat(myPortfolioWithAmtAsValue[fiatPort][cryptoPort].amt);//.toFixed(5);
 
 				totalInvst = parseFloat(totalInvst) + parseFloat(convertedInvst);
 				totalValue = parseFloat(totalValue) + parseFloat(convertedVal);
@@ -132,15 +138,14 @@ function updateTotalPort(){
 				}
 			}
 			else{
-				console.log("!!!!!!!!!!!!!!!!");
-				convertedInvst = parseFloat(myPortfolioWithAmtAsValue[fiatPort][cryptoPort].invst).toFixed(2);
-				convertedVal = parseFloat(myPortfolioWithAmtAsValue[fiatPort][cryptoPort].amt).toFixed(2);
+				convertedInvst = parseFloat(myPortfolioWithAmtAsValue[fiatPort][cryptoPort].invst);//.toFixed(5);
+				convertedVal = parseFloat(myPortfolioWithAmtAsValue[fiatPort][cryptoPort].amt);//.toFixed(5);
 
 				convertedInvst = parseFloat(convertedInvst) * (1/parseFloat(fiatConvRates[fiatPort]));
 				convertedVal = parseFloat(convertedVal)*(1/parseFloat(fiatConvRates[fiatPort]));
 
-				convertedInvst = parseFloat(convertedInvst).toFixed(2);
-				convertedVal = parseFloat(convertedVal).toFixed(2);
+				convertedInvst = parseFloat(convertedInvst);//.toFixed(5);
+				convertedVal = parseFloat(convertedVal);//.toFixed(5);
 				totalInvst = parseFloat(totalInvst) + parseFloat(convertedInvst);
 				totalValue = parseFloat(totalValue) + parseFloat(convertedVal);
 				myPortfolioWithAmtAsValue[fiatPort][cryptoPort].invst = parseFloat(convertedInvst);
@@ -171,20 +176,26 @@ function updateTotalPort(){
 		document.getElementById("total"+whichInit+"prcnt").className="badge bg-yellow";
 		document.getElementById("total"+whichInit+"diff").className="badge bg-yellow";
 	}
-
-
-    drawPie(invstListForPie,1);
+	console.log("invstListForPie")
+	console.log(invstListForPie);
+	console.log(document.getElementById("piePortfolio"+whichInit));
+    drawPie(invstListForPie,whichInit);
     myPortfolioWithAmtAsValue = JSON.parse(JSON.stringify(myPortfolio));
 }
 
 function loadCurrValuePort(fiatPort2, isLastFiat, lastFiat){
+	//console.log("loadCurrValuePort");
+	//console.log(fiatPort2);
+	//console.log(isLastFiat);
+	//console.log(lastFiat);
 	var xhttpPort = new XMLHttpRequest(); // TODO: IE support
 	xhttpPort.onreadystatechange = function() {
 		if (this.readyState == 4 && this.status == 200) {
 			var currvalPort = JSON.parse(this.responseText);
+			console.log(currvalPort);
 			for(currCrpto in currvalPort){
-				var currVal1=parseFloat((1/currvalPort[currCrpto])*myPortfolio[fiatPort2][currCrpto].amt).toFixed(2);
-				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'val').innerHTML=currVal1;
+				var currVal1=parseFloat((1/currvalPort[currCrpto])*myPortfolio[fiatPort2][currCrpto].amt);//.toFixed(5);
+				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'val').innerHTML=parseFloat(currVal1).toFixed(2);
 				myPortfolioWithAmtAsValue[fiatPort2][currCrpto].amt = currVal1;
 				var currPortDiff = (currVal1-parseFloat(myPortfolio[fiatPort2][currCrpto].invst));
 				document.getElementById(currCrpto+'/'+fiatPort2+whichInit+'prcnt').innerHTML=parseFloat((currPortDiff/myPortfolio[fiatPort2][currCrpto].invst)*100).toFixed(2) + "%";
@@ -216,7 +227,7 @@ function loadCurrValuePort(fiatPort2, isLastFiat, lastFiat){
 			}
 		}
 	};
-	xhttpPort.open("GET", urlPort[urlPort1], true);
+	xhttpPort.open("GET", urlPort[isLastFiat], true);
 	xhttpPort.send();
 }
 
@@ -236,12 +247,13 @@ function loadFiatConvObj(){
   	xhttp.onreadystatechange = function() {
     	if (this.readyState == 4 && this.status == 200) {
      		fiatConvRates = JSON.parse(this.responseText);
+     		//console.log(fiatConvRates);
 			waitForRates = false;
 			if(waitForValues == false){
 				waitForRates = true;
 				waitForValues = true;
-				console.log("Values Completed");
-				updateTotalPort();
+				console.log("Values Loaded");
+				updateTotalPort(fiatConvRates);
 			}
     	}
   	};
@@ -260,12 +272,12 @@ function triggerLoadCurrValuePort(){
 
 triggerLoadCurrValuePort();
 
-portIntrvlId[0] = setInterval(function() {
-	if(doneUpdtFlg == false){
-		updtTimeout = updtTimeout + 10000;
-	}
-	triggerLoadCurrValuePort();
-},updtTimeout);
+//portIntrvlId[0] = setInterval(function() {
+//	if(doneUpdtFlg == false){
+//		updtTimeout = updtTimeout + 10000;
+//	}
+//	triggerLoadCurrValuePort();
+//},updtTimeout);
 
 }//full function end
 

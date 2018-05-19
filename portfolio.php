@@ -751,13 +751,13 @@
                             <div class="box-body" style="height=50vh">
                               <div class="row">
                                 <div class="col-md-8">
-                                  <div class="chart-responsive">
-                                    <canvas id="pieChart1" height="150"></canvas>
+                                  <div class="chart-responsive1">
+                                    <canvas id="1pieChart" height="150"></canvas>
                                   </div>
                                   <!-- ./chart-responsive -->
                                 </div>
                                 <!-- /.col -->
-                                <div id="piePortfolioPrsn" class="col-md-4"></div>
+                                <div id="piePortfolio1" class="col-md-4"></div>
                                 <!-- /.col -->
                               </div>
                               <!-- /.row -->
@@ -957,6 +957,29 @@
                             <div class="row col-md-6" style="margin: 0; padding: 0">
                               <div id="portfolioTablePractice" class="box-body">
                                 <!-- <script src="PortfolioFill2.php"></script> -->
+                              </div>
+                                <div>
+                                  <div class="box-header with-border" style="text-align: center;">
+                                    <h3 class="box-title">Investment Distribution</h3>
+                                  </div>
+                                  <!-- /.box-header -->
+                                  <div class="box-body" style="height=50vh">
+                                    <div class="row">
+                                      <div class="col-md-8">
+                                        <div class="chart-responsive2">
+                                          <canvas id="2pieChart" height="150"></canvas>
+                                        </div>
+                                        <!-- ./chart-responsive -->
+                                      </div>
+                                      <!-- /.col -->
+                                      <div id="piePortfolio2" class="col-md-4"></div>
+                                      <!-- /.col -->
+                                    </div>
+                                    <!-- /.row -->
+                                  </div>
+                                  <!-- /.box-body -->
+                                </div>
+                                <!-- /.col -->
                                 <script>
                                   triggerLoadTableAndUrl(2);
                                 </script>

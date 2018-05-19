@@ -10,12 +10,18 @@
          };
 
 function drawPie(myPortfolioInvstChart, whichInit) {
-  var canvasHolder = document.getElementsByClassName("chart-responsive")[0];
-  var canvas = document.getElementById("pieChart1");
+  console.log("whichInit"+whichInit);
+  var canvasHolder = document.getElementsByClassName("chart-responsive"+whichInit)[0];
+  console.log(canvasHolder);
+  var canvas = document.getElementById(String(whichInit+"pieChart"));
+  console.log(canvas);
   canvasHolder.removeChild(canvas);
-  canvasHolder.innerHTML = "<canvas id='pieChart1' height='150'></canvas>";
+  canvasHolder.innerHTML = "<canvas id='"+whichInit+"pieChart' height='150'></canvas>";
+  console.log(canvasHolder);
   var bulletString='<ul class="chart-legend clearfix">';
-  var pieChartCanvas = $('#pieChart'+whichInit).get(0).getContext('2d');
+  var pieChartCanvas = $(String('#'+whichInit+'pieChart')).get(0).getContext('2d');
+  console.log(pieChartCanvas);
+  var bulletDiv="piePortfolio"+whichInit;
   //console.log("Pie Drawn !!!!!!!!!!!!!!!!!!!!!!!");
   var pieChart = new Chart(pieChartCanvas);
   var PieData = [];
@@ -36,8 +42,8 @@ function drawPie(myPortfolioInvstChart, whichInit) {
     PieData.push(tempObj);
   }
   bulletString=bulletString+'</ul>';
-  document.getElementById("piePortfolioPrsn").innerHTML=bulletString;
-  //console.log(PieData);
+  document.getElementById(bulletDiv).innerHTML=bulletString;
+  console.log(PieData);
 
   // var PieData        = [
   //   {
