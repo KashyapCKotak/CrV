@@ -326,7 +326,7 @@ function updateMarketsDataTblNotINR () {
     var mktSubsTbl=[]; 
     var xhttpOtherFiatMkts = new XMLHttpRequest();
     var tableString='<table id="example1" class="table table-bordered table-striped">'+
-            '<thead><tr><th>Name</th><th>Price</th><th>24H Volume</th></tr></thead><tbody id="MarketsDataTable">';
+            '<thead><tr><th>Name</th><th>Price</th><th>Last Trade</th><th>24H Volume</th><th>24H Change</th></tr></thead><tbody id="MarketsDataTable">';
     xhttpOtherFiatMkts.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
             var subList = JSON.parse(this.responseText)[globalFiatValue];
@@ -335,14 +335,14 @@ function updateMarketsDataTblNotINR () {
             for(mktSub in currSubList){
                 // mktSubs.push(currSubList[mktSub]);
                 mktSubsTbl.push(currSubList[mktSub].substring(currSubList[mktSub].indexOf("~")+1, currSubList[mktSub].indexOf("~",2)));
-                tableString = tableString + '<tr><td>'+mktSubsTbl[mktSub]+'</td><td id="'+mktSubsTbl[mktSub]+'b">⌛</td><td id="'+mktSubsTbl[mktSub]+'s">⌛</td></tr>';
+                tableString = tableString + '<tr><td>'+mktSubsTbl[mktSub]+'</td><td id="'+mktSubsTbl[mktSub].toLowerCase()+'b">⌛</td><td id="'+mktSubsTbl[mktSub].toLowerCase()+'t"><span id="'+mktSubsTbl[mktSub].toLowerCase()+'tf">⌛</span><br><span id="'+mktSubsTbl[mktSub].toLowerCase()+'tc">⌛</span></td><td id="'+mktSubsTbl[mktSub].toLowerCase()+'v"><span id="'+mktSubsTbl[mktSub].toLowerCase()+'vf">⌛</span><br><span id="'+mktSubsTbl[mktSub].toLowerCase()+'vc">⌛</span></td><td id="'+mktSubsTbl[mktSub].toLowerCase()+'p">⌛</td></tr>';
             }
             // console.log(mktSubs);
             tableString = tableString + '</tbody></table>';
             document.getElementById("marketsDataTable").innerHTML=tableString;
-            $(function () {
-                $('#example1').DataTable()
-            });
+            // $(function () {
+            //     $('#example1').DataTable()
+            // });
             startStream(currSubList);
         }
     };

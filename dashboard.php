@@ -44,6 +44,8 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
       $(document).ajaxStart(function () {
@@ -65,7 +67,11 @@
 </head>
 <script type="text/javascript">
   function myFunction() {
+    console.log(document.getElementById("cryptsyb"));
+    console.log(($('#marketsDataTable').is(':visible')));
+    console.log(($('#cryptsyb').is(':visible')));
     console.log("PAGE LOAD COMPLETE");
+    // startStream(currSubList);
   }
 </script>
 
