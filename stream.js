@@ -48,7 +48,7 @@ function startStream(currSubList) {
 			displayVals[market+"vf"]=currFSymb+" "+valuesArray[11];
 			displayVals[market+"p"]=parseFloat(((valuesArray[5]-valuesArray[12])/valuesArray[12])*100).toFixed(2)+"%";
 		}
-		else if (messageType == CCC.STATIC.TYPE.FULLVOLUME) {
+		else if (messageType == 11) {
 			//decorateWithFullVolume(message);
 		}
 		else if (messageType == 3){
@@ -57,48 +57,48 @@ function startStream(currSubList) {
 		}
 	});
 
-	var dataUnpack = function(message) {
-		var data = CCC.CURRENT.unpack(message);
-		console.log(data);
-		var from = data['FROMSYMBOL'];
-		var to = data['TOSYMBOL'];
-		var fsym = CCC.STATIC.CURRENCY.getSymbol(from);
-		var tsym = CCC.STATIC.CURRENCY.getSymbol(to);
-		var pair = from + to;
+	// var dataUnpack = function(message) {
+	// 	var data = CCC.CURRENT.unpack(message);
+	// 	console.log(data);
+	// 	var from = data['FROMSYMBOL'];
+	// 	var to = data['TOSYMBOL'];
+	// 	var fsym = CCC.STATIC.CURRENCY.getSymbol(from);
+	// 	var tsym = CCC.STATIC.CURRENCY.getSymbol(to);
+	// 	var pair = from + to;
 
-		if (!currentPrice.hasOwnProperty(pair)) {
-			currentPrice[pair] = {};
-		}
+	// 	if (!currentPrice.hasOwnProperty(pair)) {
+	// 		currentPrice[pair] = {};
+	// 	}
 
-		for (var key in data) {
-			currentPrice[pair][key] = data[key];
-		}
+	// 	for (var key in data) {
+	// 		currentPrice[pair][key] = data[key];
+	// 	}
 
-		if (currentPrice[pair]['LASTTRADEID']) {
-			currentPrice[pair]['LASTTRADEID'] = parseInt(currentPrice[pair]['LASTTRADEID']).toFixed(0);
-		}
-		currentPrice[pair]['CHANGE24HOUR'] = CCC.convertValueToDisplay(tsym, (currentPrice[pair]['PRICE'] - currentPrice[pair]['OPEN24HOUR']));
-		currentPrice[pair]['CHANGE24HOURPCT'] = ((currentPrice[pair]['PRICE'] - currentPrice[pair]['OPEN24HOUR']) / currentPrice[pair]['OPEN24HOUR'] * 100).toFixed(2) + "%";
-		//displayData(currentPrice[pair], from, tsym, fsym);
-	};
+	// 	if (currentPrice[pair]['LASTTRADEID']) {
+	// 		currentPrice[pair]['LASTTRADEID'] = parseInt(currentPrice[pair]['LASTTRADEID']).toFixed(0);
+	// 	}
+	// 	currentPrice[pair]['CHANGE24HOUR'] = CCC.convertValueToDisplay(tsym, (currentPrice[pair]['PRICE'] - currentPrice[pair]['OPEN24HOUR']));
+	// 	currentPrice[pair]['CHANGE24HOURPCT'] = ((currentPrice[pair]['PRICE'] - currentPrice[pair]['OPEN24HOUR']) / currentPrice[pair]['OPEN24HOUR'] * 100).toFixed(2) + "%";
+	// 	//displayData(currentPrice[pair], from, tsym, fsym);
+	// };
 
-	var decorateWithFullVolume = function(message) {
-		var volData = CCC.FULLVOLUME.unpack(message);
-		console.log(volData);
-		var from = volData['SYMBOL'];
-		var to = 'USD';
-		var fsym = CCC.STATIC.CURRENCY.getSymbol(from);
-		var tsym = CCC.STATIC.CURRENCY.getSymbol(to);
-		var pair = from + to;
+	// var decorateWithFullVolume = function(message) {
+	// 	var volData = CCC.FULLVOLUME.unpack(message);
+	// 	console.log(volData);
+	// 	var from = volData['SYMBOL'];
+	// 	var to = 'USD';
+	// 	var fsym = CCC.STATIC.CURRENCY.getSymbol(from);
+	// 	var tsym = CCC.STATIC.CURRENCY.getSymbol(to);
+	// 	var pair = from + to;
 
-		if (!currentPrice.hasOwnProperty(pair)) {
-			currentPrice[pair] = {};
-		}
+	// 	if (!currentPrice.hasOwnProperty(pair)) {
+	// 		currentPrice[pair] = {};
+	// 	}
 
-		currentPrice[pair]['FULLVOLUMEFROM'] = parseFloat(volData['FULLVOLUME']);
-		currentPrice[pair]['FULLVOLUMETO'] = ((currentPrice[pair]['FULLVOLUMEFROM'] - currentPrice[pair]['VOLUME24HOUR']) * currentPrice[pair]['PRICE']) + currentPrice[pair]['VOLUME24HOURTO'];
-		//displayData(currentPrice[pair], from, tsym, fsym);
-	};
+	// 	currentPrice[pair]['FULLVOLUMEFROM'] = parseFloat(volData['FULLVOLUME']);
+	// 	currentPrice[pair]['FULLVOLUMETO'] = ((currentPrice[pair]['FULLVOLUMEFROM'] - currentPrice[pair]['VOLUME24HOUR']) * currentPrice[pair]['PRICE']) + currentPrice[pair]['VOLUME24HOURTO'];
+	// 	//displayData(currentPrice[pair], from, tsym, fsym);
+	// };
 
 	function displayData(){
 		// console.log(($('#abucoinsb').is(':visible')));
