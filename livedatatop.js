@@ -82,16 +82,19 @@
         //console.log(pct_text);
         if(pct_text<0){
           pct_color="#FF5B5B";
+          mainpctcolor="#FF5B5B";
           direction_img="down.png";
           pulseColorStyle="pulseColorRedTop";
         }
         else if(pct_text>0){
           pct_color="#00C605";
+          mainpctcolor="#228b22";
           direction_img="up.png";
           pulseColorStyle="pulseColorGreenTop";
         }
         else if(pct_text==0){
           pct_color="#f2e500";
+          mainpctcolor="#f2e500";
           direction_img="equal.png";
           pulseColorStyle="pulseColorYellowTop";
         }
@@ -121,9 +124,9 @@
           currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][globalFiatValue].PRICE;
           //currTopPriceAmount=currTopPriceAmount[globalFiatValue].PRICE;
           document.getElementsByClassName("mainFactsValue")[0].innerHTML=currCryptoCurrObj[globalFiatValue].CHANGE24HOUR;
-          document.getElementsByClassName("mainFactsValue")[0].style.color=pct_color;
+          document.getElementsByClassName("mainFactsValue")[0].style.color=mainpctcolor;
           document.getElementsByClassName("mainFactsValue")[1].innerHTML=currCryptoCurrObj[globalFiatValue].CHANGEPCT24HOUR+"%";
-          document.getElementsByClassName("mainFactsValue")[1].style.color=pct_color;
+          document.getElementsByClassName("mainFactsValue")[1].style.color=mainpctcolor;
           
           document.getElementsByClassName("mainFactsValue")[2].innerHTML=currCryptoCurrObj[globalFiatValue].VOLUME24HOUR;
           document.getElementsByClassName("mainFactsValue")[3].innerHTML=currCryptoCurrObj[globalFiatValue].VOLUME24HOURTO;

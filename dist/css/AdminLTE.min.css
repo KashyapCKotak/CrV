@@ -284,6 +284,45 @@
   }
 }
 
+@keyframes pulseColorGreenMkt {
+    0% {
+      background-color: #fff;
+    }
+    50% {
+      background-color: #33ff33;
+      color:#000;
+    }
+    100% {
+      background-color: #fff;
+    }
+  }
+  
+  @keyframes pulseColorRedMkt {
+    0% {
+      background-color: #fff;
+    }
+    50% {
+      background-color: #ff4d4d;
+      color:#000;
+    }
+    100% {
+      background-color: #fff;
+    }
+  }
+  
+  @keyframes pulseColorYellowMkt {
+    0% {
+      background-color: #fff;
+    }
+    50% {
+      background-color: #fff533;
+      color:#000;
+    }
+    100% {
+      background-color: #fff;
+    }
+  }
+
 
 @keyframes pulseColorGreenTop {
   0% {

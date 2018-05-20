@@ -352,15 +352,22 @@ CCC.CURRENT.unpack = function(value) {
   var valuesArray = value.split("~");
   var valuesArrayLenght = valuesArray.length;
   var mask = valuesArray[valuesArrayLenght - 1];
+  // console.log(mask);
   var maskInt = parseInt(mask, 16);
+  // console.log(maskInt);
   var unpackedCurrent = {};
   var currentField = 0;
+  // console.log(this.FIELDS);
   for (var property in this.FIELDS) {
+    // console.log(property);
     if (this.FIELDS[property] === 0) {
       unpackedCurrent[property] = valuesArray[currentField];
       currentField++;
     }
     else if (maskInt & this.FIELDS[property]) {
+      // console.log(maskInt);
+      // console.log(this.FIELDS[property]);
+      // console.log(maskInt & this.FIELDS[property]);
       //i know this is a hack, for cccagg, future code please don't hate me:(, i did this to avoid
       //subscribing to trades as well in order to show the last market
       if (property === 'LASTMARKET') {
