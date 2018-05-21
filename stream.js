@@ -1,7 +1,10 @@
 var displayVals=[];
 var FLAGS=["defunct","up","down","what","noChange",];
+$('.bitfinext').on('DOMSubtreeModified propertychange', function() {
+    console.log("YEEEEEESSSSSSSSS");
+});
 function displayData(){
-		for(marketElem in displayVals){
+		for(var marketElem in displayVals){
 			// console.log(marketElem);
 			if(marketElem[marketElem.length-1] == 'g'){
 				// document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="#f9f9f9";
@@ -9,10 +12,10 @@ function displayData(){
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.display="none";
 				}
 				else if(displayVals[marketElem] == 1){//#3D9400
-					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="#cbf5e0";//"#baf5d8";
+					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.animationName="pulseColorGreenMkt";//backgroundColor="#cbf5e0";//"#baf5d8";
 				}
 				else if(displayVals[marketElem] == 2){//#e84f4f;#A11B0A
-					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="#f5d9d9";//"#f3cccc";
+					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.animationName="pulseColorRedMkt";//backgroundColor="#f5d9d9";//"#f3cccc";
 				}
 				else{
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="#f9f9f9";

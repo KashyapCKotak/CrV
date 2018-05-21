@@ -286,40 +286,34 @@
 
 @keyframes pulseColorGreenMkt {
     0% {
-      background-color: #fff;
+			background-color: #cbf5e0;
     }
-    50% {
-      background-color: #33ff33;
-      color:#000;
-    }
+		97%{
+			background-color: #cbf5e0;
+		}
     100% {
-      background-color: #fff;
+      background-color: #f9f9f9;
     }
   }
   
   @keyframes pulseColorRedMkt {
     0% {
-      background-color: #fff;
+      background-color: #f5d9d9;
     }
-    50% {
-      background-color: #ff4d4d;
-      color:#000;
-    }
+		97%{
+			background-color: #f5d9d9;
+		}
     100% {
-      background-color: #fff;
+      background-color: #f9f9f9;
     }
   }
   
   @keyframes pulseColorYellowMkt {
     0% {
-      background-color: #fff;
-    }
-    50% {
-      background-color: #fff533;
-      color:#000;
+      background-color: #f9f9f9;
     }
     100% {
-      background-color: #fff;
+      background-color: #fff533;
     }
   }
 
