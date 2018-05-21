@@ -330,7 +330,7 @@ function updateMarketsDataTblNotINR () {
     xhttpOtherFiatMkts.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
             var subList = JSON.parse(this.responseText)[globalFiatValue];
-            var aggSub=subList.CURRENTAGG; 
+            currSubAgg=subList.CURRENTAGG; 
             currSubList=subList.CURRENT;
             for(mktSub in currSubList){
                 // mktSubs.push(currSubList[mktSub]);
@@ -343,6 +343,7 @@ function updateMarketsDataTblNotINR () {
             // $(function () {
             //     $('#example1').DataTable()
             // });
+            currSubList.push(currSubAgg);
             startStream(currSubList);
         }
     };

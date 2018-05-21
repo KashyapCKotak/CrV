@@ -5,6 +5,11 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+#mainPrice > span{
+    animation-duration:1s;
+    border-radius: 10px;
+}
+
 .timeline-item-sentiment{
     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -247,50 +252,58 @@
 
 @keyframes pulseColorGreen {
   0% {
-    background-color: #fff;
+    background-color: #ecf0f5;
   }
-  50% {
-    background-color: #33ff33;
+  15% {
+    background-color: #8bf7c1;
+    color:#000;
+  }
+  65% {
+    background-color: #8bf7c1;
     color:#000;
   }
   100% {
-    background-color: #fff;
+    background-color: #ecf0f5;
   }
 }
 
 @keyframes pulseColorRed {
   0% {
-    background-color: #fff;
+    background-color: #ecf0f5;
   }
-  50% {
-    background-color: #ff4d4d;
+  15% {
+    background-color: #f5d9d9;
+    color:#000;
+  }
+  65% {
+    background-color: #f5d9d9;
     color:#000;
   }
   100% {
-    background-color: #fff;
+    background-color: #ecf0f5;
   }
 }
 
 @keyframes pulseColorYellow {
   0% {
-    background-color: #fff;
+    background-color: #ecf0f5;
   }
   50% {
     background-color: #fff533;
     color:#000;
   }
   100% {
-    background-color: #fff;
+    background-color: #ecf0f5;
   }
 }
 
 @keyframes pulseColorGreenMkt {
     0% {
-			background-color: #cbf5e0;
+        background-color: #cbf5e0;
     }
-		97%{
-			background-color: #cbf5e0;
-		}
+    97%{
+        background-color: #cbf5e0;
+    }
     100% {
       background-color: #f9f9f9;
     }
@@ -300,9 +313,9 @@
     0% {
       background-color: #f5d9d9;
     }
-		97%{
-			background-color: #f5d9d9;
-		}
+    97%{
+        background-color: #f5d9d9;
+    }
     100% {
       background-color: #f9f9f9;
     }

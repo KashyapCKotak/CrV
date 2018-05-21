@@ -1,5 +1,5 @@
-  var globalFiatValue="USD";
-  var globalCryptoValue = "BTC";
+  // var globalFiatValue="USD";
+  // var globalCryptoValue = "BTC";
   //console.log(globalCryptoValue);
   console.log(globalFiatValue);
   var currTopPriceUrl = "https://min-api.cryptocompare.com/data/pricemultifull?fsyms=BTC,ETH,XRP,BCH,LTC,TRX,DASH,BTG,ZEC,XMR,ETC,IOTA,NXT,EOS,NEO&tsyms="+globalFiatValue;
@@ -116,62 +116,62 @@
       DOMtop_priceClass[counter].style.animationName=pulseColorStyle;
       
       // document.getElementById("mainPriceCurrSymbol")=
-      if(globalCryptoValue == cryptoCurr){
-        cryptoInTop = true;
-        var exists=document.getElementById("mainPrice");
-        if(exists != null){
-          document.getElementById("mainPrice").innerHTML=currCryptoCurrObj[globalFiatValue].PRICE;
-          currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][globalFiatValue].PRICE;
-          //currTopPriceAmount=currTopPriceAmount[globalFiatValue].PRICE;
-          document.getElementsByClassName("mainFactsValue")[0].innerHTML=currCryptoCurrObj[globalFiatValue].CHANGE24HOUR;
-          document.getElementsByClassName("mainFactsValue")[0].style.color=mainpctcolor;
-          document.getElementsByClassName("mainFactsValue")[1].innerHTML=currCryptoCurrObj[globalFiatValue].CHANGEPCT24HOUR+"%";
-          document.getElementsByClassName("mainFactsValue")[1].style.color=mainpctcolor;
+      // if(globalCryptoValue == cryptoCurr){
+      //   cryptoInTop = true;
+      //   var exists=document.getElementById("mainPrice");
+      //   if(exists != null){
+      //     document.getElementById("mainPrice").innerHTML=currCryptoCurrObj[globalFiatValue].PRICE;
+      //     currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][globalFiatValue].PRICE;
+      //     //currTopPriceAmount=currTopPriceAmount[globalFiatValue].PRICE;
+      //     document.getElementsByClassName("mainFactsValue")[0].innerHTML=currCryptoCurrObj[globalFiatValue].CHANGE24HOUR;
+      //     document.getElementsByClassName("mainFactsValue")[0].style.color=mainpctcolor;
+      //     document.getElementsByClassName("mainFactsValue")[1].innerHTML=currCryptoCurrObj[globalFiatValue].CHANGEPCT24HOUR+"%";
+      //     document.getElementsByClassName("mainFactsValue")[1].style.color=mainpctcolor;
           
-          document.getElementsByClassName("mainFactsValue")[2].innerHTML=currCryptoCurrObj[globalFiatValue].VOLUME24HOUR;
-          document.getElementsByClassName("mainFactsValue")[3].innerHTML=currCryptoCurrObj[globalFiatValue].VOLUME24HOURTO;
+      //     document.getElementsByClassName("mainFactsValue")[2].innerHTML=currCryptoCurrObj[globalFiatValue].VOLUME24HOUR;
+      //     document.getElementsByClassName("mainFactsValue")[3].innerHTML=currCryptoCurrObj[globalFiatValue].VOLUME24HOURTO;
           
-          document.getElementsByClassName("mainFactsTitle")[2].innerHTML="24H Volume "+currCryptoCurrObj[globalFiatValue].FROMSYMBOL;
-          document.getElementsByClassName("mainFactsTitle")[3].innerHTML="24H Volume "+currCryptoCurrObj[globalFiatValue].TOSYMBOL;
+      //     document.getElementsByClassName("mainFactsTitle")[2].innerHTML="24H Volume "+currCryptoCurrObj[globalFiatValue].FROMSYMBOL;
+      //     document.getElementsByClassName("mainFactsTitle")[3].innerHTML="24H Volume "+currCryptoCurrObj[globalFiatValue].TOSYMBOL;
           
-          document.getElementsByClassName("mainFactsValue")[4].innerHTML=currCryptoCurrObj[globalFiatValue].OPEN24HOUR;
-          document.getElementsByClassName("mainFactsValue")[5].innerHTML=currCryptoCurrObj[globalFiatValue].HIGH24HOUR;
-          document.getElementsByClassName("mainFactsValue")[6].innerHTML=currCryptoCurrObj[globalFiatValue].LOW24HOUR;
-        }
-      }
-      DOMtop_imageClass[counter].innerHTML=null;
+      //     document.getElementsByClassName("mainFactsValue")[4].innerHTML=currCryptoCurrObj[globalFiatValue].OPEN24HOUR;
+      //     document.getElementsByClassName("mainFactsValue")[5].innerHTML=currCryptoCurrObj[globalFiatValue].HIGH24HOUR;
+      //     document.getElementsByClassName("mainFactsValue")[6].innerHTML=currCryptoCurrObj[globalFiatValue].LOW24HOUR;
+      //   }
+      // }
+      // DOMtop_imageClass[counter].innerHTML=null;
       DOMtop_imageClass[counter].src=directionImgBaseUrl+direction_img;
     }
-    if(!cryptoInTop){
-      var xhttpOtherThanTop = new XMLHttpRequest();
-      xhttpOtherThanTop.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          var currTopPriceObj2 = JSON.parse(xhttpOtherThanTop.responseText);
-          var exists=document.getElementById("mainPrice");
-          if(exists != null){
-            document.getElementById("mainPrice").innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].PRICE;
-            currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][globalFiatValue].PRICE;
-            //currTopPriceAmount=currTopPriceAmount[globalFiatValue].PRICE;
-            document.getElementsByClassName("mainFactsValue")[0].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].CHANGE24HOUR;
-            document.getElementsByClassName("mainFactsValue")[0].style.color=pct_color;
-            document.getElementsByClassName("mainFactsValue")[1].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].CHANGEPCT24HOUR+"%";
-            document.getElementsByClassName("mainFactsValue")[1].style.color=pct_color;
+    // if(!cryptoInTop){
+    //   var xhttpOtherThanTop = new XMLHttpRequest();
+    //   xhttpOtherThanTop.onreadystatechange = function() {
+    //     if (this.readyState == 4 && this.status == 200) {
+    //       var currTopPriceObj2 = JSON.parse(xhttpOtherThanTop.responseText);
+    //       var exists=document.getElementById("mainPrice");
+    //       if(exists != null){
+    //         document.getElementById("mainPrice").innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].PRICE;
+    //         currTopPriceAmount=currTopPriceObj.RAW[cryptoCurr][globalFiatValue].PRICE;
+    //         //currTopPriceAmount=currTopPriceAmount[globalFiatValue].PRICE;
+    //         document.getElementsByClassName("mainFactsValue")[0].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].CHANGE24HOUR;
+    //         document.getElementsByClassName("mainFactsValue")[0].style.color=pct_color;
+    //         document.getElementsByClassName("mainFactsValue")[1].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].CHANGEPCT24HOUR+"%";
+    //         document.getElementsByClassName("mainFactsValue")[1].style.color=pct_color;
             
-            document.getElementsByClassName("mainFactsValue")[2].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].VOLUME24HOUR;
-            document.getElementsByClassName("mainFactsValue")[3].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].VOLUME24HOURTO;
+    //         document.getElementsByClassName("mainFactsValue")[2].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].VOLUME24HOUR;
+    //         document.getElementsByClassName("mainFactsValue")[3].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].VOLUME24HOURTO;
             
-            document.getElementsByClassName("mainFactsTitle")[2].innerHTML="24H Volume "+currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].FROMSYMBOL;
-            document.getElementsByClassName("mainFactsTitle")[3].innerHTML="24H Volume "+currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].TOSYMBOL;
+    //         document.getElementsByClassName("mainFactsTitle")[2].innerHTML="24H Volume "+currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].FROMSYMBOL;
+    //         document.getElementsByClassName("mainFactsTitle")[3].innerHTML="24H Volume "+currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].TOSYMBOL;
             
-            document.getElementsByClassName("mainFactsValue")[4].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].OPEN24HOUR;
-            document.getElementsByClassName("mainFactsValue")[5].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].HIGH24HOUR;
-            document.getElementsByClassName("mainFactsValue")[6].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].LOW24HOUR;
-          }
-        }
-      };
-      xhttpOtherThanTop.open("GET", mainPriceUrlIfNotInTop, true);
-      xhttpOtherThanTop.send();
-    }
+    //         document.getElementsByClassName("mainFactsValue")[4].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].OPEN24HOUR;
+    //         document.getElementsByClassName("mainFactsValue")[5].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].HIGH24HOUR;
+    //         document.getElementsByClassName("mainFactsValue")[6].innerHTML=currTopPriceObj2.DISPLAY[cryptoCurr][globalFiatValue].LOW24HOUR;
+    //       }
+    //     }
+    //   };
+    //   xhttpOtherThanTop.open("GET", mainPriceUrlIfNotInTop, true);
+    //   xhttpOtherThanTop.send();
+    // }
     firstLoad=false;
     setTimeout(function(){discardAllPulseStyle();},3000);
   }

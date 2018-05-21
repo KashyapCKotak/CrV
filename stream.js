@@ -1,11 +1,19 @@
 var displayVals=[];
+var displayValsAgg=[];
 var FLAGS=["defunct","up","down","what","noChange",];
 $('.bitfinext').on('DOMSubtreeModified propertychange', function() {
-    console.log("YEEEEEESSSSSSSSS");
+    console.log("YEEEEEESSSSSSSSS");//TODO
 });
+function resetStrm(){
+	clearInterval(streamUpdtIntvl);
+	displayVals=[];
+	socket.emit('SubRemove', { subs: subscription });
+	console.log("Stream Reset");
+}
 function displayData(){
 		for(var marketElem in displayVals){
 			// console.log(marketElem);
+			// console.log(marketElem[marketElem.length-1]);
 			if(marketElem[marketElem.length-1] == 'g'){
 				// document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="#f9f9f9";
 				if(displayVals[marketElem] == 0){
@@ -27,13 +35,18 @@ function displayData(){
 				document.getElementById(marketElem).innerHTML=displayVals[marketElem];
 			}
 		}
-		console.log("dataLoaded");
+		var mainFactsDOM=document.getElementsByClassName("mainFactsValue");
+		for(var i=0;i<7;i++){
+			mainFactsDOM[i].innerHTML=displayValsAgg[i];
+		}
+		document.getElementById("mainPrice").innerHTML=displayValsAgg[7];
+		// console.log("dataLoaded");
 	// }
 }
 function startStream(currSubList) {
 	console.log("STREAMING STARTS HERE!!!!!");
 	var currentPrice = {};
-	var socket = io.connect('https://streamer.cryptocompare.com/');
+	socket = io.connect('https://streamer.cryptocompare.com/');
 	//Format: {SubscriptionId}~{ExchangeName}~{FromSymbol}~{ToSymbol}
 	//Use SubscriptionId 0 for TRADE, 2 for CURRENT, 5 for CURRENTAGG eg use key '5~CCCAGG~BTC~USD' to get aggregated data from the CCCAGG exchange 
 	//Full Volume Format: 11~{FromSymbol} eg use '11~BTC' to get the full volume of BTC against all coin pairs
@@ -57,13 +70,14 @@ function startStream(currSubList) {
 	  };
 	currFSymb=SYMBOLS[globalFiatValue] || globalFiatValue;
 	currCSymb=SYMBOLS[globalCryptoValue] || globalCryptoValue;
+	console.log(currSubAgg);
 	console.log(currSubList);
-	var subscription = currSubList;
+	subscription = currSubList;
 	socket.emit('SubAdd', { subs: subscription });
 	// socket.emit('SubRemove', { subs: subscription });
 	socket.on("m", function(message) {
 		
-		console.log(message);
+		// console.log(message);
 		var messageType = message.substring(0, message.indexOf("~"));
 		//console.log("message Type: "+messageType);
 		if (messageType == 2) {
@@ -82,15 +96,22 @@ function startStream(currSubList) {
 			// 	console.log(valuesArray[5]+"-"+valuesArray[12]+"/"+valuesArray[12]);
 			// }
 		}
+
+		else if(messageType == 5){
+			// console.log(message);
+			dataUnpackAgg(message);
+		}
+
 		else if (messageType == 3){
 			displayData();
 			console.log("Done First");
-			setInterval(function(){ displayData(); }, 5000);
+			streamUpdtIntvl=setInterval(function(){ displayData(); }, 5000);
 		}
 	});
 
 	var dataUnpack = function(message) {
 		var data = CCC.CURRENT.unpack(message);
+		// console.log(data);
 		// var from = data['FROMSYMBOL'];
 		// var to = data['TOSYMBOL'];
 		// var fsym = CCC.STATIC.CURRENCY.getSymbol(from);
@@ -111,9 +132,9 @@ function startStream(currSubList) {
 		//currentPrice[pair]['CHANGE24HOUR'] = CCC.convertValueToDisplay(tsym, (currentPrice[pair]['PRICE'] - currentPrice[pair]['OPEN24HOUR']));
 		//currentPrice[pair]['CHANGE24HOURPCT'] = ((currentPrice[pair]['PRICE'] - currentPrice[pair]['OPEN24HOUR']) / currentPrice[pair]['OPEN24HOUR'] * 100).toFixed(2) + "%";
 		//displayData(currentPrice[pair], from, tsym, fsym);
-		console.log(data);
+		// console.log(data);
 		var market=data['MARKET'].toLowerCase();
-		for(dataElem in data){
+		for(var dataElem in data){
 			if(dataElem == "FLAGS")
 				displayVals[market+"flg"]=data[dataElem];
 			else if(dataElem == "PRICE"){
@@ -147,6 +168,50 @@ function startStream(currSubList) {
 			displayVals[market+"p"]=chgpct+"%";
 		}
 	};
+
+	var dataUnpackAgg=function(message){
+		var data = CCC.CURRENT.unpack(message);
+		// console.log(data);
+		for(var dataElem in data){
+			if(dataElem == "VOLUME24HOUR")
+				displayValsAgg[2]=currCSymb+" "+data[dataElem].toFixed(2);
+			else if(dataElem == "VOLUME24HOURTO")
+				displayValsAgg[3]=currFSymb+" "+data[dataElem].toFixed(2);
+			else if(dataElem == "OPEN24HOUR"){
+				displayValsAgg[4]=currFSymb+" "+data[dataElem].toFixed(2);
+				displayValsAgg[9]=data[dataElem].toFixed(2);
+			}
+			else if(dataElem == "HIGH24HOUR")
+				displayValsAgg[5]=currFSymb+" "+data[dataElem].toFixed(2);
+			else if(dataElem == "LOW24HOUR")
+				displayValsAgg[6]=currFSymb+" "+data[dataElem].toFixed(2);
+			else if(dataElem == "PRICE"){
+				displayValsAgg[7]=currFSymb+" "+data[dataElem].toFixed(2);
+				displayValsAgg[8]=data[dataElem].toFixed(2);
+			}
+		}
+		var chg=parseFloat(displayValsAgg[8]-displayValsAgg[9]).toFixed(2);
+		var chgpct=parseFloat((chg/displayValsAgg[9])*100).toFixed(2);
+		if(isNaN(chg)){
+			console.log(displayValsAgg[8]);
+			console.log(displayValsAgg[9]);
+			console.log(parseFloat(displayValsAgg[8]-displayValsAgg[9]).toFixed(2));
+		}
+		if(chgpct>0){
+			displayValsAgg[0]="<span style='color:#228b22'>"+currFSymb+" "+chg+"</span>";
+			displayValsAgg[1]="<span style='color:#228b22'>"+chgpct+"%</span>";
+			displayValsAgg[7]="<span style='animation-name:pulseColorGreen'>"+displayValsAgg[7]+"</span>";
+		}
+		else if(chgpct<0){
+			displayValsAgg[0]="<span style='color:#FF5B5B'>"+currFSymb+" "+chg+"</span>";
+			displayValsAgg[1]="<span style='color:#FF5B5B'>"+chgpct+"%</span>";
+			displayValsAgg[7]="<span style='animation-name:pulseColorRed'>"+displayValsAgg[7]+"</span>";
+		}
+		else{
+			displayValsAgg[0]=currFSymb+" "+chg;
+			displayValsAgg[1]=chgpct+"%";
+		}
+	}
 
 	// var decorateWithFullVolume = function(message) {
 	// 	var volData = CCC.FULLVOLUME.unpack(message);

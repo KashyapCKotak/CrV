@@ -67,9 +67,9 @@
 </head>
 <script type="text/javascript">
   function myFunction() {
-    console.log(document.getElementById("cryptsyb"));
-    console.log(($('#marketsDataTable').is(':visible')));
-    console.log(($('#cryptsyb').is(':visible')));
+    // console.log(document.getElementById("cryptsyb"));
+    // console.log(($('#marketsDataTable').is(':visible')));
+    // console.log(($('#cryptsyb').is(':visible')));
     console.log("PAGE LOAD COMPLETE");
     // startStream(currSubList);
   }
@@ -381,7 +381,7 @@
       <!-- Content Header (Page header) -->
       <script type="text/javascript">
         var globalCryptoValue = "BTC";
-        var globalFiatValue = "INR";
+        var globalFiatValue = "USD";
       </script>
       <section class="content-header custom-content-header">
         <div class="crypto-select">
@@ -2802,19 +2802,25 @@
           }
           function selectCrypto() {
             globalCryptoValue = document.getElementById("cryptoSelectBox").value; //.match(/\(([^)]+)\)/)[1];
+            resetStrm();
             changeAllTop();
             drawMainChart();
             getMarketData();
             loadCoinLogo();
             loadGTrenGraph();
             loadGTrenGeo();
+            console.log("CHANGE1");
+            document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
           }
 
           function selectFiat() {
             globalFiatValue = document.getElementById("fiatSelectBox").value;
+            resetStrm();
             changeAllTop();
             drawMainChart();
             getMarketData();
+            console.log("CHANGE2");
+            document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;;
           }
         </script>
         <br class="break-enable">
@@ -3064,7 +3070,7 @@
 
             <div class="box">
               <div class="box-header">
-                <h3 class="box-title">Markets for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
+                <h3 class="box-title" id="MarketBox">Markets for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
               </div>
               <div id="marketsDataTable" class="box-body" style="padding:0">
                 Loading ⌛
