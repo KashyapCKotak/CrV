@@ -18,10 +18,12 @@
 var chartHour;
 var chartMin;
 var chartDay;
+firstTimeZoom=true;
 
 var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
 
 function drawMainChart(){
+  console.log("Chart Drawing Started");
   var urlHour = "https://min-api.cryptocompare.com/data/histohour?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=744&e=CCCAGG";
   var urlMinute = "https://min-api.cryptocompare.com/data/histominute?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=1440&e=CCCAGG";
   var urlDay = "https://min-api.cryptocompare.com/data/histoday?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&allData=true&e=CCCAGG";
@@ -30,13 +32,15 @@ function drawMainChart(){
   var consChartDataMin;
   var consChartDataDay;
 
+  firstTimeZoom=true;
+
   function handleRender(event){
     console.log("rendered");
     var adjustChartdivHeight=(document.getElementsByClassName("amcharts-stock-div")[0].offsetHeight)-(document.getElementById("chartdiv").offsetHeight);
     adjustChartdivHeight=adjustChartdivHeight+10;
     document.getElementById("chartdiv").style.marginBottom=adjustChartdivHeight+"px";
     console.log("adjuts:" + adjustChartdivHeight);
-    // event.chart.periodSelector.addListener("changed", handleZoom);
+    event.chart.periodSelector.addListener("changed", handleZoom);
   }
 
   var newListener = [{"event":"rendered","method":handleRender}];
@@ -44,12 +48,13 @@ function drawMainChart(){
   var chartObjectOneWeek = {
     "type": "stock",
     "pathToImages": "https://www.amcharts.com/lib/3/images/",
-    //"listeners": [{
-      //  "event": "rendered",
-      //  "method": function() {
-        //    console.log("rendered");
-        //  }
-        //}],
+    // "listeners": [{
+    //    "event": "changed",
+    //    "method": function() {
+    //        console.log("changed in Listener");
+    //        handleZoom();
+    //      }
+    //     }],
         "theme": "light",
         "categoryAxesSettings": {
           "minPeriod": "mm",
@@ -188,7 +193,8 @@ function drawMainChart(){
           }, {
             "period": "MAX",//histoday all
             "label": "MAX"
-          } ]
+          } ]//,
+          //"listeners":[{"event":"changed","method":handleZoom(event)}]
         },
         
         "panelsSettings": {
@@ -208,7 +214,7 @@ function drawMainChart(){
         var xhttpHour = typeof XMLHttpRequest != 'undefined' ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         xhttpHour.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
-            
+            console.log("Chart Drawing Start in");
             consChartDataHour = JSON.parse(this.responseText);
             for(var i=0;i<consChartDataHour.Data.length;i++) {
               consChartDataHour.Data[i].time=consChartDataHour.Data[i].time*1000;
@@ -226,12 +232,12 @@ function drawMainChart(){
             //chartHour.validateNow(false,false);
             displayedChart = 2;
             // console.log(chartHour);
-            setTimeout(function(){chartHour.periodSelector.addListener("changed", handleZoom);console.log("chartHour Listener Added");},2000);
+            //setTimeout(function(){chartHour.periodSelector.addListener("changed", handleZoom);console.log("chartHour Listener Added");},2000);
             // chartHour.periodSelector.addListener("changed", handleZoom);
             
             //var adjustChartdivHeight=24;//(document.getElementsByClassName("amcharts-stock-div")[0].offsetHeight)-(document.getElementById("chartdiv").offsetHeight)
             //document.getElementById("chartdiv").style.marginBottom=adjustChartdivHeight+"px";
-            
+            console.log("Chart Drawing Ended");
           }
         };
         xhttpHour.open("GET", urlHour, true);
@@ -239,6 +245,10 @@ function drawMainChart(){
         console.log("0");
 
         function handleZoom(event) {
+          if(firstTimeZoom){
+            firstTimeZoom=false;
+            return;
+          }
           console.log("1");
           // check the first date and diff in mins
           var now = new Date().getTime();

@@ -329,6 +329,7 @@ function updateMarketsDataTblNotINR () {
             '<thead><tr><th>Name</th><th>Price</th><th>Last Trade</th><th>24H Volume</th><th>24H Change</th></tr></thead><tbody id="MarketsDataTable">';
     xhttpOtherFiatMkts.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
+            console.log("Streaming Started");
             var subList = JSON.parse(this.responseText)[globalFiatValue];
             currSubAgg=subList.CURRENTAGG; 
             currSubList=subList.CURRENT;
@@ -345,6 +346,7 @@ function updateMarketsDataTblNotINR () {
             // });
             currSubList.push(currSubAgg);
             startStream(currSubList);
+            console.log("Streaming Started");
         }
     };
     xhttpOtherFiatMkts.open("GET", "https://min-api.cryptocompare.com/data/subs?fsym="+globalCryptoValue+"&tsyms="+globalFiatValue, true);
