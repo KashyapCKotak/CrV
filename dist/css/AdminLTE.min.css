@@ -5,13 +5,29 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
+.chartType{
+    display:inline;
+}
+
+.chartType>select{
+    border-radius: 3px;
+}
+
+.chartIndicator{
+    float:right;
+}
+
+.chartIndicator>select{
+    border-radius: 3px;
+}
+
 #mainPrice > span{
     animation-duration:1s;
     border-radius: 10px;
 }
 
 .top-price {
-    border-radius: 7px;
+    border-radius: 5px;
 }
 
 .timeline-item-sentiment{
@@ -249,9 +265,9 @@
 }
 /*Main holder for buy sell tabs*/
 .chartTypeTabHolder {
-    text-align: center;
-/*    margin-top: 50px;
-    margin-bottom: 50px;*/
+    /* text-align: center; */
+    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 @keyframes pulseColorGreen {

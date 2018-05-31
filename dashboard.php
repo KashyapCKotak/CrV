@@ -2933,6 +2933,12 @@
             }
             evt.currentTarget.className += " active";
           }
+          function initChartTypeChangeNew(){console.log(document.getElementById("chartTypeSelect").value);
+            changeChartType(document.getElementById("chartTypeSelect").value);
+          }
+          function initChartIndiChangeNew(){
+            
+          }
         </script>
         
         <script type="text/javascript">
@@ -2944,11 +2950,29 @@
         </script>
         <script src="LineChartMain.js"></script>
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
-          <div class="chartTypeTabHolder">
+          <!-- <div class="chartTypeTabHolder">
             <div class="chartTypeTab">
               <button class="tabChartTyp" onclick="initChartTypeChange(event,'candlestick')">CandleStick</button>
               <button class="tabChartTyp active" onclick="initChartTypeChange(event,'smoothedLine')">Line</button>
               <button class="tabChartTyp" onclick="initChartTypeChange(event,'ohlc')">OHLC</button>
+            </div>
+          </div> -->
+          <div class="chartTypeTabHolder">
+            <div class="chartType">
+            <b>Chart Type:</b>
+              <select id="chartTypeSelect" onchange="initChartTypeChangeNew()">
+                <option value="smoothedLine">Line</option>
+                <option value="candlestick">CandleStick</option>
+                <option value="ohlc">OHLC</option>
+              </select>
+            </div>
+            <div class="chartIndicator">
+            <b>Indicator:</b>
+              <select id="chartIndiSelect" onchange="initChartIndiChangeNew()">
+                <option value="macd">MACD</option>
+                <option value="rsi">RSI</option>
+                <option value="sma">SMA</option>
+              </select>
             </div>
           </div>
           <div id="chartdiv" style="height:80vh;width:100%;overflow:visible">

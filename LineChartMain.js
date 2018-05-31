@@ -28,9 +28,9 @@ function drawMainChart(){
   var urlMinute = "https://min-api.cryptocompare.com/data/histominute?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=1440&e=CCCAGG";
   var urlDay = "https://min-api.cryptocompare.com/data/histoday?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&allData=true&e=CCCAGG";
   
-  var consChartDataHour;
-  var consChartDataMin;
-  var consChartDataDay;
+  consChartDataHour=null;
+  consChartDataMin=null;
+  consChartDataDay=null;
 
   firstTimeZoom=true;
 
@@ -82,7 +82,16 @@ function drawMainChart(){
           }, {
             "fromField": "close",
             "toField": "value"
-          } ],
+          }/*, {
+            "fromField": "MACD",
+            "toField": "MACD"
+          }, {
+            "fromField": "signal",
+            "toField": "signal"
+          }, {
+            "fromField": "histogram",
+            "toField": "histogram"
+          } */],
           //"dataProvider": consChartDataHour.Data,
           "categoryField": "time"
         }],
@@ -112,7 +121,25 @@ function drawMainChart(){
             "lineThickness": 2,
             "balloonText": "open: [[open]]\nclose: [[close]]\nhigh: [[high]]\nclose: [[close]]",
             "fillAlphas": 0.6
-          } ],
+          }/*,{
+            "id": "g5",
+            "title": globalCryptoValue,
+            "precision": 2,
+            "openField": "high",
+            "closeField": "low",
+            "highField": "high",
+            "lowField": "low",
+            "valueField": "close",
+            "lineColor": "#7f8da9",
+            "fillColors": "#7f8da9",
+            "negativeLineColor": "#db4c3c",
+            "negativeFillColors": "#db4c3c",
+            "type": "smoothedLine",
+            "compareable": true,
+            "lineThickness": 2,
+            "balloonText": "open: [[open]]\nclose: [[close]]\nhigh: [[high]]\nclose: [[close]]",
+            "fillAlphas": 0.6
+          } */],
           
           
           "stockLegend": {
