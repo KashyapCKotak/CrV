@@ -2937,7 +2937,7 @@
             changeChartType(document.getElementById("chartTypeSelect").value);
           }
           function initChartIndiChangeNew(){
-            
+            changeIndiType(document.getElementById("chartIndiSelect").value)
           }
         </script>
         
@@ -2969,6 +2969,7 @@
             <div class="chartIndicator">
             <b>Indicator:</b>
               <select id="chartIndiSelect" onchange="initChartIndiChangeNew()">
+                <option value="macd">Select</option>
                 <option value="macd">MACD</option>
                 <option value="rsi">RSI</option>
                 <option value="sma">SMA</option>

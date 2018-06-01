@@ -19,6 +19,7 @@ var chartHour;
 var chartMin;
 var chartDay;
 firstTimeZoom=true;
+firstTimeIndi=true;
 
 var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
 
@@ -488,5 +489,116 @@ function drawMainChart(){
         else{
           //nothing TODO: remove below console log
           console.log("Chart type change error");
+        }
+      }
+
+      async function changeIndiType(newIndiType){
+        var currChart;
+        if(displayedChart==1){
+          currData=consChartDataMin.Data;
+          currDispChart=chartMin;
+        }
+        else if(displayedChart==2){
+          currData=consChartDataHour.Data;
+          currDispChart=chartHour;
+        }
+        else if(displayedChart==3){
+          currData=consChartDataDay.Data;
+          currDispChart=chartDay;
+        }
+        if(firstTimeIndi){
+          var indiFiles = document.createElement('script');
+          indiFiles.src = 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js';
+          document.head.appendChild(indiFiles);
+          indiFiles = document.createElement('script');
+          indiFiles.src = 'https://unpkg.com/technicalindicators@1.1.11/dist/browser.js';
+          document.head.appendChild(indiFiles);
+          firstTimeIndi=false;
+        }
+        else{
+          if(newIndiType == "macd"){
+            if(!currChart[0].hasOwnProperty("MACD")){
+              var closes = [];
+              currData.forEach(function (d) {
+                closes.push(d.close);
+              });
+              var macdInput = {
+                values: closes,
+                fastPeriod:12,
+                slowPeriod:26,
+                signalPeriod:9,
+                SimpleMAOscillator: false,
+                SimpleMASignal: false
+              }
+              var macdData = await macd(macdInput);
+              var diff = currData.length - macdData.length;
+              var counter = 0;
+              currData.forEach(function (d) {
+                if (counter < diff) {
+                  d.MACD = undefined;
+                  d.signal = undefined;
+                  d.histogram = undefined;
+                }
+                else {
+                  d.MACD = macdData[counter-diff].MACD;
+                  d.signal = macdData[counter-diff].signal;
+                  d.histogram = macdData[counter - diff].histogram;
+                }
+                counter++;
+              });
+              currDispChart.dataSets.push({
+                "fromField": "MACD",
+                "toField": "MACD"
+              });
+              currDispChart.dataSets.push({
+                "fromField": "signal",
+                "toField": "signal"
+              });
+              currDispChart.dataSets.push({
+                "fromField": "histogram",
+                "toField": "histogram"
+              });
+
+              currDispChart.panels[2]=currDispChart.panels[1];
+              currDispChart.panels[1]={
+                "title": "macd",
+                "percentHeight": 30,
+                "stockGraphs": [ {
+                  "precision": 3,
+                  "valueField": "histogram",
+                  "type": "column",
+                  "cornerRadiusTop": 2,
+                  "fillAlphas": 1
+                },{
+                  "precision": 3,
+                  "valueField": "MACD",
+                  "type": "line",
+                  "cornerRadiusTop": 2,
+                  "fillAlphas": 1
+                },{
+                  "precision": 3,
+                  "valueField": "signal",
+                  "type": "line",
+                  "cornerRadiusTop": 2,
+                  "fillAlphas": 1
+                } ],
+                "stockLegend": {
+                  //"valueTextRegular": "Volume: [[value]]"
+                  //"markerType": "none"
+                }
+              };
+
+              currDispChart.validateNow();
+            }
+            else{
+
+            }
+          }
+          else if(newIndiType == "rsi"){
+
+          }
+          else if(newIndiType == "sma"){
+
+          }
         }
       }
