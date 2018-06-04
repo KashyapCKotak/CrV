@@ -27,9 +27,10 @@
     <!-- Data Tables -->
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- socket.io -->
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+    <script src="https://unpkg.com/technicalindicators@1.1.11/dist/browser.js"></script>
     <script type="text/javascript">
-        console.log("Start Scripts Start");
+        //console.log("Start Scripts Start");
       </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>
     <!-- Morris chart -->
@@ -81,7 +82,7 @@
 
 <body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="myFunction()">
   <div class="wrapper">
-
+  <div id="techIndiScripts"></div>
     <header class="main-header">
       <!-- Logo -->
       <!-- <a href="index2.html" class="logo"> -->
@@ -389,7 +390,7 @@
       </script>
       
       <script type="text/javascript">
-        console.log("Start Scripts End");
+        //console.log("Start Scripts End");
       </script>
       <section class="content-header custom-content-header">
         <div class="crypto-select">
@@ -2919,7 +2920,7 @@
           </div>
         </div>
         <script type="text/javascript">
-          console.log("Live Data Top Start");
+          //console.log("Live Data Top Start");
         </script>
         <script src="livedatatop.js"></script>
         <script src="loadCoinLogo.js"></script>
@@ -2942,11 +2943,11 @@
         </script>
         
         <script type="text/javascript">
-          console.log("Live Data Top End");
+          //console.log("Live Data Top End");
         </script>
         
         <script type="text/javascript">
-          console.log("Chart Load Start");
+          //console.log("Chart Load Start");
         </script>
         <script src="LineChartMain.js"></script>
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
@@ -2969,7 +2970,7 @@
             <div class="chartIndicator">
             <b>Indicator:</b>
               <select id="chartIndiSelect" onchange="initChartIndiChangeNew()">
-                <option value="macd">Select</option>
+                <option value="none">None</option>
                 <option value="macd">MACD</option>
                 <option value="rsi">RSI</option>
                 <option value="sma">SMA</option>
@@ -2990,26 +2991,26 @@
             <!--<div style='clear:both;'>clear</div>-->
             <script type="text/javascript">
               drawMainChart();
-              var web_worker;
-              function startWorker() {
-                  console.log("Worker Starts!!!!");
-                  if(typeof(Worker) !== "undefined") {
-                      if(typeof(web_worker) == "undefined") {
-                        console.log("worker undefined... defining");
-                        web_worker = new Worker("demo_worker.js");
-                        web_worker.postMessage([globalCryptoValue,globalFiatValue]);
-                      }
-                      web_worker.onmessage = function(event) {
-                          console.log(event.data);
-                      };
-                  } else {
-                      console.log("Sorry, your browser does not support Web Workers...");
-                  }
-              }
-              function stopWorker() { 
-                web_worker.terminate();
-                web_worker = undefined;
-              }
+              // var web_worker;
+              // function startWorker() {
+              //     console.log("Worker Starts!!!!");
+              //     if(typeof(Worker) !== "undefined") {
+              //         if(typeof(web_worker) == "undefined") {
+              //           console.log("worker undefined... defining");
+              //           web_worker = new Worker("demo_worker.js");
+              //           web_worker.postMessage([globalCryptoValue,globalFiatValue]);
+              //         }
+              //         web_worker.onmessage = function(event) {
+              //             console.log(event.data);
+              //         };
+              //     } else {
+              //         console.log("Sorry, your browser does not support Web Workers...");
+              //     }
+              // }
+              // function stopWorker() { 
+              //   web_worker.terminate();
+              //   web_worker = undefined;
+              // }
               // alert("OK 1 ");
               // var xhttpConsChart = new XMLHttpRequest();
               // xhttpConsChart.onreadystatechange = function() {
@@ -3023,7 +3024,7 @@
               //xhttpConsChart.send();
             </script>
             <script type="text/javascript">
-              console.log("Chart Load End");
+              //console.log("Chart Load End");
             </script>
           </div>
         </div>
@@ -3119,11 +3120,11 @@
         </div>
         <!-- /.row -->
         <script type="text/javascript">
-          console.log("Other Table Start");
+          //console.log("Other Table Start");
         </script>
         <script src="OthDetTbl.js"></script>
         <script type="text/javascript">
-          console.log("Other Table End");
+          //console.log("Other Table End");
         </script>
 
 
@@ -3145,14 +3146,14 @@
           </div>
           <!-- /.col -->
           <script type="text/javascript">
-            console.log("Streaming Start");
+            //console.log("Streaming Start");
           </script>
           <script src="ccc-streamer-utilities.js"></script>
           <script src="stream.js"></script>
           <script src="MarketsTableFill_2.js"></script>
           <script type="text/javascript">
             getMarketData();
-            console.log("Streaming End");
+            //console.log("Streaming End");
           </script>
         </div>
           
@@ -3160,7 +3161,7 @@
           <div class="col-md-6" style="margin-left:0;margin-right:0;margin-bottom:10px;height:70vh;padding:10px">
             <div style="height:100%;overflow:auto">
               <script type="text/javascript">
-                console.log("Twitter Start");
+                //console.log("Twitter Start");
               </script>
               <div id="twitter" style="height:100%">
               <div id="loaderHolder">
@@ -3172,14 +3173,14 @@
               <script type="text/javascript">
               twitterLoaded=false;
               gTrendLoaded=false;
-                console.log("Twitter End");
+                //console.log("Twitter End");
                 function loadTwitter(){
                   document.getElementById("twitter").innerHTML='<a class="twitter-timeline" href="https://twitter.com/Bitcoin?ref_src=twsrc%5Etfw">Tweets by Bitcoin</a>'+
                   '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">\<\/script>';
                   var twitterScript = document.createElement('script');
                   twitterScript.setAttribute('src','https://platform.twitter.com/widgets.js');
                   twitterScript.setAttribute('charset',"utf-8");
-                  console.log(document.getElementById("loaderHolder"));
+                  //console.log(document.getElementById("loaderHolder"));
                   // document.getElementById("loaderHolder").style.display="none";
                   document.getElementById("twitter").appendChild(twitterScript);
                 }
@@ -3193,14 +3194,14 @@
                   twitterLoaded=true;
                   loadTwitter();
                   loadDashNews();
-                  console.log("Loading Twitter");
+                  //console.log("Loading Twitter");
                 }
                 if(!gTrendLoaded)
                 if (wS > (hTG-wH)){
                   gTrendLoaded=true;
                   loadGTrenGraph();
                   loadGTrenGeo();
-                  console.log("Loading GTrends");
+                  //console.log("Loading GTrends");
                 }
               });
               </script>
@@ -3230,7 +3231,7 @@
           </div>
         </div>
         <script type="text/javascript">
-          console.log("Google Trends Start");
+          //console.log("Google Trends Start");
         </script>
         <script type="text/javascript" src="https://ssl.gstatic.com/trends_nrtr/1420_RC05/embed_loader.js"></script>
 				<div class="row box" style="margin:0;width:auto;margin-bottom:20px">
@@ -3252,7 +3253,7 @@
 					</div>
 				</div>
         <script type="text/javascript">
-          console.log("Google Trends End");
+          //console.log("Google Trends End");
         </script>
 
       </section>
@@ -3472,7 +3473,7 @@
   </div>
   <!-- ./wrapper -->
   <script type="text/javascript">
-    console.log("Cointelegraph News Start");
+    //console.log("Cointelegraph News Start");
   </script>
   <script type="text/javascript">
   function loadDashNews(){
@@ -3493,12 +3494,12 @@
   }
   </script>
   <script type="text/javascript">
-    console.log("Cointelegraph News End");
+    //console.log("Cointelegraph News End");
   </script>
 
 
   <script type="text/javascript">
-    console.log("Bottom Scripts Start");
+    //console.log("Bottom Scripts Start");
   </script>
   <!-- Slimscroll -->
   <!-- <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script> -->
@@ -3584,8 +3585,9 @@
     })
   </script>
   <script type="text/javascript">
-    console.log("Bottom Scripts End");
+    //console.log("Bottom Scripts End");
   </script>
+  
 </body>
 
 </html>

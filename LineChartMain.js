@@ -44,9 +44,9 @@ function drawMainChart(){
     event.chart.periodSelector.addListener("changed", handleZoom);
   }
 
-  var newListener = [{"event":"rendered","method":handleRender}];
+  newListener = [{"event":"rendered","method":handleRender}];
   var periodSelectorListener = [{"event":"changed","method":handleZoom}];
-  var chartObjectOneWeek = {
+  chartObjectOneWeek = {
     "type": "stock",
     "pathToImages": "https://www.amcharts.com/lib/3/images/",
     // "listeners": [{
@@ -252,6 +252,8 @@ function drawMainChart(){
             newChart.dataSets[0].dataProvider=consChartDataHour.Data;
             newChart.periodSelector.periods[2].selected=true;
             newChart.listeners=newListener;
+            whichZoomButton="DD";
+            whatZoomCount=7;
             //newChart.periodSelector.listeners=periodSelectorListener;
             chartHour = AmCharts.makeChart("chartdiv", newChart);
             //chartHour.periodSelector.periodContainer.innerHTML="Zoom: <input type='button' value='1H' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1D' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1W' class='amChartsButtonSelected amcharts-period-input-selected' style='background: rgb(0, 230, 115); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 1; outline: none;'><input type='button' value='1M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='3M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1Y' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='MAX' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'>";
@@ -283,8 +285,8 @@ function drawMainChart(){
           var minsDiff = (event.endDate.getTime() - event.startDate.getTime()) / 60000;
           minsDiff=Math.floor(minsDiff);
           console.log("minsDiff: "+minsDiff); 
-          var whichZoomButton = event.predefinedPeriod;
-          var whatZoomCount = event.count;
+          whichZoomButton = event.predefinedPeriod;
+          whatZoomCount = event.count;
           console.log(whichZoomButton + whatZoomCount);
           //1H=mm60 min;1D=mm1440 min;1W=DD7 hour;1M=MM1 hour;3M=MM3 day;1Y=YYYY1 day;MAX=MAXundefined day
           
@@ -491,114 +493,297 @@ function drawMainChart(){
           console.log("Chart type change error");
         }
       }
+//////////////////////////////INDICATOR CODE START////////////////////////////////////////
+function displayNewIndi(newIndiType){
+  currChart=null;
+  var indiProps={"macd":["bottom",["#3a5ef2","#ef490e","#00e673"],3,["MACD","signal","histogram"],["line","line","column"]],"sma":["top",["#3a5ef2"],1,["sma"],["line"]],"rsi":["bottom",["#3a5ef2"],1,["rsi"],["line"]]};//third is third
+  console.log(displayedChart);
+  currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
+  if(displayedChart==1){
+    currData=consChartDataMin.Data;
+  }
+  else if(displayedChart==2){
+    currData=consChartDataHour.Data;
+  }
+  else if(displayedChart==3){
+    currData=consChartDataDay.Data;
+  }
 
-      async function changeIndiType(newIndiType){
-        var currChart;
-        if(displayedChart==1){
-          currData=consChartDataMin.Data;
-          currDispChart=chartMin;
+  function displayIndiChart(indiType){
+    var diff = currData.length - indiData.length;
+    var counter = 0;
+    var feilds=indiProps[indiType][3];
+    currData.forEach(function (d) {
+      if (counter < diff) {
+        for(var i=0;i<feilds.length;i++){
+          d[feilds[i]]=undefined;
         }
-        else if(displayedChart==2){
-          currData=consChartDataHour.Data;
-          currDispChart=chartHour;
-        }
-        else if(displayedChart==3){
-          currData=consChartDataDay.Data;
-          currDispChart=chartDay;
-        }
-        if(firstTimeIndi){
-          var indiFiles = document.createElement('script');
-          indiFiles.src = 'https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js';
-          document.head.appendChild(indiFiles);
-          indiFiles = document.createElement('script');
-          indiFiles.src = 'https://unpkg.com/technicalindicators@1.1.11/dist/browser.js';
-          document.head.appendChild(indiFiles);
-          firstTimeIndi=false;
-        }
-        else{
-          if(newIndiType == "macd"){
-            if(!currChart[0].hasOwnProperty("MACD")){
-              var closes = [];
-              currData.forEach(function (d) {
-                closes.push(d.close);
-              });
-              var macdInput = {
-                values: closes,
-                fastPeriod:12,
-                slowPeriod:26,
-                signalPeriod:9,
-                SimpleMAOscillator: false,
-                SimpleMASignal: false
-              }
-              var macdData = await macd(macdInput);
-              var diff = currData.length - macdData.length;
-              var counter = 0;
-              currData.forEach(function (d) {
-                if (counter < diff) {
-                  d.MACD = undefined;
-                  d.signal = undefined;
-                  d.histogram = undefined;
-                }
-                else {
-                  d.MACD = macdData[counter-diff].MACD;
-                  d.signal = macdData[counter-diff].signal;
-                  d.histogram = macdData[counter - diff].histogram;
-                }
-                counter++;
-              });
-              currDispChart.dataSets.push({
-                "fromField": "MACD",
-                "toField": "MACD"
-              });
-              currDispChart.dataSets.push({
-                "fromField": "signal",
-                "toField": "signal"
-              });
-              currDispChart.dataSets.push({
-                "fromField": "histogram",
-                "toField": "histogram"
-              });
-
-              currDispChart.panels[2]=currDispChart.panels[1];
-              currDispChart.panels[1]={
-                "title": "macd",
-                "percentHeight": 30,
-                "stockGraphs": [ {
-                  "precision": 3,
-                  "valueField": "histogram",
-                  "type": "column",
-                  "cornerRadiusTop": 2,
-                  "fillAlphas": 1
-                },{
-                  "precision": 3,
-                  "valueField": "MACD",
-                  "type": "line",
-                  "cornerRadiusTop": 2,
-                  "fillAlphas": 1
-                },{
-                  "precision": 3,
-                  "valueField": "signal",
-                  "type": "line",
-                  "cornerRadiusTop": 2,
-                  "fillAlphas": 1
-                } ],
-                "stockLegend": {
-                  //"valueTextRegular": "Volume: [[value]]"
-                  //"markerType": "none"
-                }
-              };
-
-              currDispChart.validateNow();
-            }
-            else{
-
-            }
-          }
-          else if(newIndiType == "rsi"){
-
-          }
-          else if(newIndiType == "sma"){
-
-          }
-        }
+        // d.MACD = undefined;
+        // d.signal = undefined;
+        // d.histogram = undefined;
       }
+      else {
+        for(var i=0;i<feilds.length;i++){
+          d[feilds[i]]=indiData[counter-diff][feilds[i]];
+        }
+        // d.MACD = indiData[counter-diff].MACD;
+        // d.signal = indiData[counter-diff].signal;
+        // d.histogram = indiData[counter - diff].histogram;
+      }
+      counter++;
+    });
+    currDispChart.dataSets[0].dataProvider=currData;
+    if(whichZoomButton=="mm" && whatZoomCount == 60)
+      currDispChart.periodSelector.periods[0].selected=true;
+    else if(whichZoomButton=="mm")
+      currDispChart.periodSelector.periods[1].selected=true;
+    else if(whichZoomButton == "DD")
+      currDispChart.periodSelector.periods[2].selected=true;
+    else if((whichZoomButton == "MM" && whatZoomCount == 1))
+      currDispChart.periodSelector.periods[3].selected=true;
+    else if(whichZoomButton == "MM" && whatZoomCount == 3)
+      currDispChart.periodSelector.periods[4].selected=true;
+    else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY")
+      currDispChart.periodSelector.periods[5].selected=true;
+    else if(whichZoomButton == "MAX")
+      currDispChart.periodSelector.periods[6].selected=true;
+    //currDispChart.periodSelector.periods[2].selected=true;
+    for(var i=0;i<feilds.length;i++){
+      currDispChart.dataSets[0].fieldMappings.push({
+        "fromField": feilds[i],
+        "toField": feilds[i]
+      });
+    }
+    // }
+    // currDispChart.dataSets[0].fieldMappings.push({
+    //   "fromField": "MACD",
+    //   "toField": "MACD"
+    // });
+    // currDispChart.dataSets[0].fieldMappings.push({
+    //   "fromField": "signal",
+    //   "toField": "signal"
+    // });
+    // currDispChart.dataSets[0].fieldMappings.push({
+    //   "fromField": "histogram",
+    //   "toField": "histogram"
+    // });
+    var indiStockGraphs=[];
+    var fillAlphas=0;
+    for(var i=0;i<feilds.length;i++){
+      if(indiProps[indiType][4][i] == "column")
+        fillAlphas=1;
+      indiStockGraphs.push({
+        "title": feilds[i],
+        "useDataSetColors":false,
+        "precision": 3,
+        "valueField": feilds[i],
+        "type": indiProps[indiType][4][i],
+        "cornerRadiusTop": 2,
+        "fillAlphas": parseInt(fillAlphas),
+        "lineColor": indiProps[indiType][1][i]
+      });
+    }
+    // currDispChart.panels[2]=currDispChart.panels[1];
+    currDispChart.panels[1]={
+      "title": indiType,
+      "percentHeight": 30,
+      "stockGraphs": indiStockGraphs,
+      // [{
+      //   "title": "Histogram",
+      //   "useDataSetColors":false,
+      //   "precision": 3,
+      //   "valueField": "histogram",
+      //   "type": "column",
+      //   "cornerRadiusTop": 2,
+      //   "fillAlphas": 1,
+      //   "lineColor": "#00e673"
+      // },{
+      //   "title": "MACD",
+      //   "useDataSetColors":false,
+      //   "precision": 3,
+      //   "valueField": "MACD",
+      //   "type": "line",
+      //   "fillAlphas": 0,
+      //   "lineColor": "#3a5ef2"
+      // },{
+      //   "title": "Signal",
+      //   "useDataSetColors":false,
+      //   "precision": 3,
+      //   "valueField": "signal",
+      //   "type": "line",
+      //   "fillAlphas": 0,
+      //   "lineColor": "#ef490e"
+      // } ],
+      "stockLegend": {
+        //"valueTextRegular": "Volume: [[value]]"
+        //"markerType": "none"
+      }
+    };
+    currDispChart.listeners=newListener;
+    chartMacd = AmCharts.makeChart("chartdiv", currDispChart);
+  }
+
+  function mergeData(){
+    
+  }
+
+  function calcTopIndi(indiType){
+    if(indiType=="sma"){
+
+    }
+  }
+
+  function calcBottomIndi(indiType){
+    if(indiType=="macd"){
+      var macdInput = {
+        values: closes,
+        fastPeriod:12,
+        slowPeriod:26,
+        signalPeriod:9,
+        SimpleMAOscillator: false,
+        SimpleMASignal: false
+      }
+      indiData = MACD.calculate(macdInput);
+      mergeData();
+      displayIndiChart(indiType);
+    }
+    else if(indiType=="rsi"){
+      
+    }
+  }
+
+  function calcThreeChartIndi(indiType){
+    var IndiColors={};//none yet
+  }
+
+  function calcIndi(indiType){
+    closes = [];
+    currData.forEach(function (d) {
+      closes.push(d.close);
+    });
+    var indiPosition=indiProps[indiType][0];
+    if(indiPosition == "top"){
+      calcTopIndi(indiType);
+    }
+    else if(indiPosition == "bottom"){
+      calcBottomIndi(indiType);
+    }
+    else if(indiPosition === "third"){
+      calcThreeChartIndi(indiType);
+    }
+  }
+
+  console.log("new Indicator Displaying !!!");
+  calcIndi(newIndiType);
+  return;
+    if(newIndiType == "macd"){
+      if(!currData[0].hasOwnProperty("MACD")){
+        var closes = [];
+        currData.forEach(function (d) {
+          closes.push(d.close);
+        });
+        var macdInput = {
+          values: closes,
+          fastPeriod:12,
+          slowPeriod:26,
+          signalPeriod:9,
+          SimpleMAOscillator: false,
+          SimpleMASignal: false
+        }
+        var macdData = MACD.calculate(macdInput);
+        var diff = currData.length - macdData.length;
+        var counter = 0;
+        currData.forEach(function (d) {
+          if (counter < diff) {
+            d.MACD = undefined;
+            d.signal = undefined;
+            d.histogram = undefined;
+          }
+          else {
+            d.MACD = macdData[counter-diff].MACD;
+            d.signal = macdData[counter-diff].signal;
+            d.histogram = macdData[counter - diff].histogram;
+          }
+          counter++;
+        });
+        currDispChart.dataSets[0].dataProvider=consChartDataHour.Data;
+        currDispChart.periodSelector.periods[2].selected=true;
+        currDispChart.dataSets[0].fieldMappings.push({
+          "fromField": "MACD",
+          "toField": "MACD"
+        });
+        currDispChart.dataSets[0].fieldMappings.push({
+          "fromField": "signal",
+          "toField": "signal"
+        });
+        currDispChart.dataSets[0].fieldMappings.push({
+          "fromField": "histogram",
+          "toField": "histogram"
+        });
+
+        // currDispChart.panels[2]=currDispChart.panels[1];
+        currDispChart.panels[1]={
+          "title": "macd",
+          "percentHeight": 30,
+          "stockGraphs": [{
+            "title": "Histogram",
+            "useDataSetColors":false,
+            "precision": 3,
+            "valueField": "histogram",
+            "type": "column",
+            "cornerRadiusTop": 2,
+            "fillAlphas": 1,
+            "lineColor": "#00e673"
+          },{
+            "title": "MACD",
+            "useDataSetColors":false,
+            "precision": 3,
+            "valueField": "MACD",
+            "type": "line",
+            "fillAlphas": 0,
+            "lineColor": "#3a5ef2"
+          },{
+            "title": "Signal",
+            "useDataSetColors":false,
+            "precision": 3,
+            "valueField": "signal",
+            "type": "line",
+            "fillAlphas": 0,
+            "lineColor": "#ef490e"
+          } ],
+          "stockLegend": {
+            //"valueTextRegular": "Volume: [[value]]"
+            //"markerType": "none"
+          }
+        };
+        currDispChart.listeners=newListener;
+        chartMacd = AmCharts.makeChart("chartdiv", currDispChart);
+        //currDispChart.validateNow();
+      }
+      else{
+
+      }
+    }
+    else if(newIndiType == "rsi"){
+
+    }
+    else if(newIndiType == "sma"){
+
+    }
+}
+
+function changeIndiType(newIndiType){
+  if(firstTimeIndi){
+    // var indiFiles1 = document.createElement("script");
+    // indiFiles1.src = "https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js";
+    // document.body.appendChild(indiFiles1);
+    // var indiFiles2 = document.createElement("script");
+    // indiFiles2.src = "https://unpkg.com/technicalindicators@1.1.11/dist/browser.js";
+    // document.body.appendChild(indiFiles2);
+    firstTimeIndi=false;
+    displayNewIndi(newIndiType);
+  }
+  else{
+    
+  }
+}
