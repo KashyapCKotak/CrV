@@ -3137,7 +3137,7 @@
               <div class="box-header">
                 <h3 class="box-title" id="MarketBox">Markets for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
               </div>
-              <div id="marketsDataTable" class="box-body" style="padding:0">
+              <div id="marketsDataTable" class="box-body" style="padding:0;overflow-x:auto">
                 Loading ⌛
               </div>
               <!-- /.box-body -->
