@@ -254,6 +254,7 @@ function drawMainChart(){
             newChart.listeners=newListener;
             whichZoomButton="DD";
             whatZoomCount=7;
+            firstTimeZoom=true;
             //newChart.periodSelector.listeners=periodSelectorListener;
             chartHour = AmCharts.makeChart("chartdiv", newChart);
             //chartHour.periodSelector.periodContainer.innerHTML="Zoom: <input type='button' value='1H' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1D' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1W' class='amChartsButtonSelected amcharts-period-input-selected' style='background: rgb(0, 230, 115); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 1; outline: none;'><input type='button' value='1M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='3M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1Y' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='MAX' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'>";
@@ -275,6 +276,7 @@ function drawMainChart(){
         console.log("0");
 
         function handleZoom(event) {
+          console.log("FIRST TIME ZOOM:"+firstTimeZoom);
           if(firstTimeZoom){
             firstTimeZoom=false;
             return;
@@ -315,6 +317,8 @@ function drawMainChart(){
                     newChart.periodSelector.periods[0].selected=false;
                   }
                   newChart.listeners=newListener;
+                  console.log("Making new chart");
+                  firstTimeZoom=true;
                   chartMin = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 1;
                   chartMin.periodSelector.addListener("changed", handleZoom);
@@ -324,7 +328,7 @@ function drawMainChart(){
               xhttpNewMin.open("GET", urlMinute, true);
               xhttpNewMin.send();
             }
-            else{ 
+            else{
               // change the chart object to display
               console.log("else chartMin");
               if(displayedChart!=1){
@@ -369,6 +373,7 @@ function drawMainChart(){
                     newChart.periodSelector.periods[2].selected=false;
                   }
                   newChart.listeners=newListener;
+                  firstTimeZoom=true;
                   chartHour = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 2;
                   chartHour.periodSelector.addListener("changed", handleZoom);
@@ -430,6 +435,7 @@ function drawMainChart(){
                     newChart.periodSelector.periods[5].selected=false;
                   }
                   newChart.listeners=newListener;
+                  firstTimeZoom=true;
                   chartDay = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 3;
                   chartDay.periodSelector.addListener("changed", handleZoom);
@@ -499,6 +505,8 @@ function drawMainChart(){
 //////////////////////////////INDICATOR CODE START////////////////////////////////////////
 function displayNewIndi(newIndiType){
   currChart=null;
+  currIndiDisplayed=newIndiType;
+  indiDisplayed=true;
   var indiProps={"macd":["bottom",["#00e673","#3a5ef2","#ef490e"],["histogram","MACD","signal"],["column","line","line"]],"sma":["top",["#3a5ef2"],["sma"],["line"]],"rsi":["bottom",["#3a5ef2"],["rsi"],["line"]]};//third is third
   console.log(displayedChart);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
@@ -627,8 +635,9 @@ function displayNewIndi(newIndiType){
         }
       }
       else {
-        if(feilds.length==1)
-          d[feilds[i]]=indiData[counter-diff];
+        if(feilds.length==1){
+          d[feilds[0]]=indiData[counter-diff];
+        }
         else
           for(var i=0;i<feilds.length;i++){
             d[feilds[i]]=indiData[counter-diff][feilds[i]];
