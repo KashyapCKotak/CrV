@@ -477,15 +477,18 @@ function drawMainChart(){
       //  <div id="chartdiv"></div>	
       function changeChartType(newChartType){
         if(displayedChart == 1){
-          chartMin.panels[0].stockGraphs[0].type = newChartType;  
+          chartMin.panels[0].stockGraphs[0].type = newChartType;
+          document.getElementById("chartIndiSelect").selectedIndex = 0  
           chartMin.validateNow();
         }
         else if(displayedChart == 2){
           chartHour.panels[0].stockGraphs[0].type = newChartType;
+          document.getElementById("chartIndiSelect").selectedIndex = 0
           chartHour.validateNow();
         }
         else if(displayedChart == 3){
           chartDay.panels[0].stockGraphs[0].type = newChartType;
+          document.getElementById("chartIndiSelect").selectedIndex = 0
           chartDay.validateNow();
         }
         else{
@@ -496,7 +499,7 @@ function drawMainChart(){
 //////////////////////////////INDICATOR CODE START////////////////////////////////////////
 function displayNewIndi(newIndiType){
   currChart=null;
-  var indiProps={"macd":["bottom",["#3a5ef2","#ef490e","#00e673"],3,["MACD","signal","histogram"],["line","line","column"]],"sma":["top",["#3a5ef2"],1,["sma"],["line"]],"rsi":["bottom",["#3a5ef2"],1,["rsi"],["line"]]};//third is third
+  var indiProps={"macd":["bottom",["#00e673","#3a5ef2","#ef490e"],["histogram","MACD","signal"],["column","line","line"]],"sma":["top",["#3a5ef2"],["sma"],["line"]],"rsi":["bottom",["#3a5ef2"],["rsi"],["line"]]};//third is third
   console.log(displayedChart);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
   if(displayedChart==1){
@@ -509,29 +512,38 @@ function displayNewIndi(newIndiType){
     currData=consChartDataDay.Data;
   }
 
-  function displayIndiChart(indiType){
-    var diff = currData.length - indiData.length;
-    var counter = 0;
-    var feilds=indiProps[indiType][3];
-    currData.forEach(function (d) {
-      if (counter < diff) {
-        for(var i=0;i<feilds.length;i++){
-          d[feilds[i]]=undefined;
-        }
-        // d.MACD = undefined;
-        // d.signal = undefined;
-        // d.histogram = undefined;
-      }
-      else {
-        for(var i=0;i<feilds.length;i++){
-          d[feilds[i]]=indiData[counter-diff][feilds[i]];
-        }
-        // d.MACD = indiData[counter-diff].MACD;
-        // d.signal = indiData[counter-diff].signal;
-        // d.histogram = indiData[counter - diff].histogram;
-      }
-      counter++;
-    });
+  if(newIndiType=="none"){
+    if(whichZoomButton=="mm" && whatZoomCount == 60)
+      var oldZoom=0;
+    else if(whichZoomButton=="mm")
+      var oldZoom=1;
+    else if(whichZoomButton == "DD")
+      var oldZoom=2;
+    else if((whichZoomButton == "MM" && whatZoomCount == 1))
+      var oldZoom=3;
+    else if(whichZoomButton == "MM" && whatZoomCount == 3)
+      var oldZoom=4;
+    else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY")
+      var oldZoom=5;
+    else if(whichZoomButton == "MAX")
+      var oldZoom=6;
+    if(displayedChart==1){
+      currMin.periodSelector.periods[oldZoom].selected=true;
+      chartMin.validateNow();
+    }
+    else if(displayedChart==2){
+      currHour.periodSelector.periods[oldZoom].selected=true;
+      chartHour.validateNow();
+    }
+    else if(displayedChart==3){
+      currDay.periodSelector.periods[oldZoom].selected=true;
+      chartDay.validateNow();
+    }
+    return;
+  }
+
+  function displayIndiChart(indiType, indiPos){
+    var feilds=indiProps[indiType][2];
     currDispChart.dataSets[0].dataProvider=currData;
     if(whichZoomButton=="mm" && whatZoomCount == 60)
       currDispChart.periodSelector.periods[0].selected=true;
@@ -547,141 +559,100 @@ function displayNewIndi(newIndiType){
       currDispChart.periodSelector.periods[5].selected=true;
     else if(whichZoomButton == "MAX")
       currDispChart.periodSelector.periods[6].selected=true;
-    //currDispChart.periodSelector.periods[2].selected=true;
     for(var i=0;i<feilds.length;i++){
       currDispChart.dataSets[0].fieldMappings.push({
         "fromField": feilds[i],
         "toField": feilds[i]
       });
     }
-    // }
-    // currDispChart.dataSets[0].fieldMappings.push({
-    //   "fromField": "MACD",
-    //   "toField": "MACD"
-    // });
-    // currDispChart.dataSets[0].fieldMappings.push({
-    //   "fromField": "signal",
-    //   "toField": "signal"
-    // });
-    // currDispChart.dataSets[0].fieldMappings.push({
-    //   "fromField": "histogram",
-    //   "toField": "histogram"
-    // });
-    var indiStockGraphs=[];
-    var fillAlphas=0;
-    for(var i=0;i<feilds.length;i++){
-      if(indiProps[indiType][4][i] == "column")
-        fillAlphas=1;
-      indiStockGraphs.push({
-        "title": feilds[i],
-        "useDataSetColors":false,
-        "precision": 3,
-        "valueField": feilds[i],
-        "type": indiProps[indiType][4][i],
-        "cornerRadiusTop": 2,
-        "fillAlphas": parseInt(fillAlphas),
-        "lineColor": indiProps[indiType][1][i]
-      });
-    }
-    // currDispChart.panels[2]=currDispChart.panels[1];
-    currDispChart.panels[1]={
-      "title": indiType,
-      "percentHeight": 30,
-      "stockGraphs": indiStockGraphs,
-      // [{
-      //   "title": "Histogram",
-      //   "useDataSetColors":false,
-      //   "precision": 3,
-      //   "valueField": "histogram",
-      //   "type": "column",
-      //   "cornerRadiusTop": 2,
-      //   "fillAlphas": 1,
-      //   "lineColor": "#00e673"
-      // },{
-      //   "title": "MACD",
-      //   "useDataSetColors":false,
-      //   "precision": 3,
-      //   "valueField": "MACD",
-      //   "type": "line",
-      //   "fillAlphas": 0,
-      //   "lineColor": "#3a5ef2"
-      // },{
-      //   "title": "Signal",
-      //   "useDataSetColors":false,
-      //   "precision": 3,
-      //   "valueField": "signal",
-      //   "type": "line",
-      //   "fillAlphas": 0,
-      //   "lineColor": "#ef490e"
-      // } ],
-      "stockLegend": {
-        //"valueTextRegular": "Volume: [[value]]"
-        //"markerType": "none"
+
+    if(indiPos=="bottom"){
+      var indiStockGraphs=[];
+      for(var i=0;i<feilds.length;i++){
+        indiStockGraphs.push({
+          "title": feilds[i],
+          "useDataSetColors":false,
+          "precision": 3,
+          "valueField": feilds[i],
+          "type": indiProps[indiType][3][i],
+          "cornerRadiusTop": 2,
+          "fillAlphas": indiProps[indiType][3][i] == "column" ? 1 : 0,
+          "lineColor": indiProps[indiType][1][i]
+        });
       }
-    };
+      // currDispChart.panels[2]=currDispChart.panels[1];
+      currDispChart.panels[1]={
+        "title": indiType,
+        "percentHeight": 30,
+        "stockGraphs": indiStockGraphs,
+        "stockLegend": {
+        }
+      };
+    }
+    else if(indiPos=="top"){
+      var indiStockGraphs=[];
+      for(var i=0;i<feilds.length;i++){
+        currDispChart.panels[0].stockGraphs.push({
+          "title": feilds[i],
+          "useDataSetColors":false,
+          "precision": 3,
+          "valueField": feilds[i],
+          "type": indiProps[indiType][3][i],
+          "cornerRadiusTop": 2,
+          "fillAlphas": indiProps[indiType][3][i] == "column" ? 1 : 0,
+          "lineColor": indiProps[indiType][1][i]
+        });
+      }
+      // currDispChart.panels[2]=currDispChart.panels[1];
+      // currDispChart.panels[1]={
+      //   "title": indiType,
+      //   "percentHeight": 30,
+      //   "stockGraphs": indiStockGraphs,
+      //   "stockLegend": {
+      //   }
+      // };
+    }
     currDispChart.listeners=newListener;
     chartMacd = AmCharts.makeChart("chartdiv", currDispChart);
   }
 
-  function mergeData(){
-    
-  }
-
-  function calcTopIndi(indiType){
-    if(indiType=="sma"){
-
-    }
-  }
-
-  function calcBottomIndi(indiType){
-    if(indiType=="macd"){
-      var macdInput = {
-        values: closes,
-        fastPeriod:12,
-        slowPeriod:26,
-        signalPeriod:9,
-        SimpleMAOscillator: false,
-        SimpleMASignal: false
-      }
-      indiData = MACD.calculate(macdInput);
-      mergeData();
-      displayIndiChart(indiType);
-    }
-    else if(indiType=="rsi"){
-      
-    }
-  }
-
-  function calcThreeChartIndi(indiType){
-    var IndiColors={};//none yet
-  }
-
-  function calcIndi(indiType){
-    closes = [];
+  function mergeData(indiType){
+    var diff = currData.length - indiData.length;
+    var counter = 0;
+    var feilds=indiProps[indiType][2];
     currData.forEach(function (d) {
-      closes.push(d.close);
+      if (counter < diff) {
+        for(var i=0;i<feilds.length;i++){
+          d[feilds[i]]=undefined;
+        }
+      }
+      else {
+        if(feilds.length==1)
+          d[feilds[i]]=indiData[counter-diff];
+        else
+          for(var i=0;i<feilds.length;i++){
+            d[feilds[i]]=indiData[counter-diff][feilds[i]];
+          }
+      }
+      counter++;
     });
-    var indiPosition=indiProps[indiType][0];
-    if(indiPosition == "top"){
-      calcTopIndi(indiType);
-    }
-    else if(indiPosition == "bottom"){
-      calcBottomIndi(indiType);
-    }
-    else if(indiPosition === "third"){
-      calcThreeChartIndi(indiType);
+  }
+
+  function calcTopIndi(indiType, indiPos, indiNum){
+    if(indiType=="sma"){
+      indiData = SMA.calculate({period : indiNum, values : closes});
+      console.log(indiData);
+      mergeData(indiType);
+      displayIndiChart(indiType, indiPos);
     }
   }
 
-  console.log("new Indicator Displaying !!!");
-  calcIndi(newIndiType);
-  return;
-    if(newIndiType == "macd"){
-      if(!currData[0].hasOwnProperty("MACD")){
-        var closes = [];
-        currData.forEach(function (d) {
-          closes.push(d.close);
-        });
+  function calcBottomIndi(indiType, indiPos, indiNum){
+    if(indiType=="macd"){
+      if(currData.hasOwnProperty("MACD")){
+        displayIndiChart(indiType);
+      }
+      else{
         var macdInput = {
           values: closes,
           fastPeriod:12,
@@ -690,90 +661,45 @@ function displayNewIndi(newIndiType){
           SimpleMAOscillator: false,
           SimpleMASignal: false
         }
-        var macdData = MACD.calculate(macdInput);
-        var diff = currData.length - macdData.length;
-        var counter = 0;
-        currData.forEach(function (d) {
-          if (counter < diff) {
-            d.MACD = undefined;
-            d.signal = undefined;
-            d.histogram = undefined;
-          }
-          else {
-            d.MACD = macdData[counter-diff].MACD;
-            d.signal = macdData[counter-diff].signal;
-            d.histogram = macdData[counter - diff].histogram;
-          }
-          counter++;
-        });
-        currDispChart.dataSets[0].dataProvider=consChartDataHour.Data;
-        currDispChart.periodSelector.periods[2].selected=true;
-        currDispChart.dataSets[0].fieldMappings.push({
-          "fromField": "MACD",
-          "toField": "MACD"
-        });
-        currDispChart.dataSets[0].fieldMappings.push({
-          "fromField": "signal",
-          "toField": "signal"
-        });
-        currDispChart.dataSets[0].fieldMappings.push({
-          "fromField": "histogram",
-          "toField": "histogram"
-        });
-
-        // currDispChart.panels[2]=currDispChart.panels[1];
-        currDispChart.panels[1]={
-          "title": "macd",
-          "percentHeight": 30,
-          "stockGraphs": [{
-            "title": "Histogram",
-            "useDataSetColors":false,
-            "precision": 3,
-            "valueField": "histogram",
-            "type": "column",
-            "cornerRadiusTop": 2,
-            "fillAlphas": 1,
-            "lineColor": "#00e673"
-          },{
-            "title": "MACD",
-            "useDataSetColors":false,
-            "precision": 3,
-            "valueField": "MACD",
-            "type": "line",
-            "fillAlphas": 0,
-            "lineColor": "#3a5ef2"
-          },{
-            "title": "Signal",
-            "useDataSetColors":false,
-            "precision": 3,
-            "valueField": "signal",
-            "type": "line",
-            "fillAlphas": 0,
-            "lineColor": "#ef490e"
-          } ],
-          "stockLegend": {
-            //"valueTextRegular": "Volume: [[value]]"
-            //"markerType": "none"
-          }
-        };
-        currDispChart.listeners=newListener;
-        chartMacd = AmCharts.makeChart("chartdiv", currDispChart);
-        //currDispChart.validateNow();
-      }
-      else{
-
+        indiData = MACD.calculate(macdInput);
+        mergeData(indiType);
+        displayIndiChart(indiType, indiPos);
       }
     }
-    else if(newIndiType == "rsi"){
-
+    else if(indiType=="rsi"){
+      
     }
-    else if(newIndiType == "sma"){
+  }
 
+  function calcThreeChartIndi(indiType, indiPos, indiNum){
+    var IndiColors={};//none yet
+  }
+
+  function calcIndi(indiType){
+    closes = [];
+    currData.forEach(function (d) {
+      closes.push(d.close);
+    });
+    var pureIndiType=indiType.replace(/[0-9]/g, '');
+    var indiNum = indiType.replace( /^\D+/g, '');
+    var indiPosition=indiProps[pureIndiType][0];
+    if(indiPosition == "top"){
+      calcTopIndi(pureIndiType,"top",indiNum);
     }
+    else if(indiPosition == "bottom"){
+      calcBottomIndi(pureIndiType,"bottom",indiNum);
+    }
+    else if(indiPosition === "third"){
+      calcThreeChartIndi(pureIndiType,"third",indiNum);
+    }
+  }
+
+  console.log("new Indicator Displaying !!!");
+  calcIndi(newIndiType);
 }
 
 function changeIndiType(newIndiType){
-  if(firstTimeIndi){
+  if(firstTimeIndi){//TODO Load only when called for page performance
     // var indiFiles1 = document.createElement("script");
     // indiFiles1.src = "https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js";
     // document.body.appendChild(indiFiles1);
@@ -784,6 +710,6 @@ function changeIndiType(newIndiType){
     displayNewIndi(newIndiType);
   }
   else{
-    
+    displayNewIndi(newIndiType);
   }
 }

@@ -2973,7 +2973,10 @@
                 <option value="none">None</option>
                 <option value="macd">MACD</option>
                 <option value="rsi">RSI</option>
-                <option value="sma">SMA</option>
+                <option value="sma5">SMA 5</option>
+                <option value="sma20">SMA 20</option>
+                <option value="sma50">SMA 50</option>
+                <option value="sma150">SMA 150</option>
               </select>
             </div>
           </div>
