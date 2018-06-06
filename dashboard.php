@@ -2951,6 +2951,11 @@
         </script>
         <script src="LineChartMain.js"></script>
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
+        <div id="chartLoadOverlay">
+          <div id="loaderHolder" style="height:100%">
+            <div class="loader" style="width: 60px;height: 60px !important;border-radius: 0 !important;top: 40%;position: relative;"></div>
+          </div>
+        </div>
           <!-- <div class="chartTypeTabHolder">
             <div class="chartTypeTab">
               <button class="tabChartTyp" onclick="initChartTypeChange(event,'candlestick')">CandleStick</button>

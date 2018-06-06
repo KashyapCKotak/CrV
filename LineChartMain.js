@@ -20,6 +20,8 @@ var chartMin;
 var chartDay;
 firstTimeZoom=true;
 firstTimeIndi=true;
+indiDisplayed=false;
+currChartType="smoothedLine";
 
 var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
 
@@ -42,6 +44,7 @@ function drawMainChart(){
     document.getElementById("chartdiv").style.marginBottom=adjustChartdivHeight+"px";
     console.log("adjuts:" + adjustChartdivHeight);
     event.chart.periodSelector.addListener("changed", handleZoom);
+    document.getElementById("chartLoadOverlay").style.display = "none";
   }
 
   newListener = [{"event":"rendered","method":handleRender}];
@@ -276,11 +279,11 @@ function drawMainChart(){
         console.log("0");
 
         function handleZoom(event) {
-          console.log("FIRST TIME ZOOM:"+firstTimeZoom);
           if(firstTimeZoom){
             firstTimeZoom=false;
             return;
           }
+          document.getElementById("chartLoadOverlay").style.display = "block";
           console.log("1");
           // check the first date and diff in mins
           var now = new Date().getTime();
@@ -319,10 +322,16 @@ function drawMainChart(){
                   newChart.listeners=newListener;
                   console.log("Making new chart");
                   firstTimeZoom=true;
-                  chartMin = AmCharts.makeChart("chartdiv", newChart);
+                  //chartMin = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 1;
-                  chartMin.periodSelector.addListener("changed", handleZoom);
+                  //chartMin.periodSelector.addListener("changed", handleZoom);
                   console.log("listener added chartMin");
+                  if(indiDisplayed){
+                    firstTimeZoom=true;
+                    displayNewIndi(currIndiDisplayed);
+                  }
+                  else
+                    chartMin = AmCharts.makeChart("chartdiv", newChart);
                 }
               };
               xhttpNewMin.open("GET", urlMinute, true);
@@ -343,8 +352,14 @@ function drawMainChart(){
                   chartMin.periodSelector.periods[1].selected=true;
                   chartMin.periodSelector.periods[0].selected=false;
                 }
-                chartMin.write("chartdiv");
-                chartMin.periodSelector.addListener("changed",handleZoom);
+                if(indiDisplayed){
+                  firstTimeZoom=true;
+                  displayNewIndi(currIndiDisplayed);
+                }
+                else{
+                  chartMin.write("chartdiv");
+                  chartMin.periodSelector.addListener("changed",handleZoom);
+                }
               }
             }
           }
@@ -374,10 +389,16 @@ function drawMainChart(){
                   }
                   newChart.listeners=newListener;
                   firstTimeZoom=true;
-                  chartHour = AmCharts.makeChart("chartdiv", newChart);
+                  //chartHour = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 2;
-                  chartHour.periodSelector.addListener("changed", handleZoom);
+                  //chartHour.periodSelector.addListener("changed", handleZoom);
                   console.log("listener added chartHour");
+                  if(indiDisplayed){
+                    firstTimeZoom=true;
+                    displayNewIndi(currIndiDisplayed);
+                  }
+                  else
+                    chartHour = AmCharts.makeChart("chartdiv", newChart);
                 }
               };
               xhttpNewHour.open("GET", urlHour, true);
@@ -398,8 +419,14 @@ function drawMainChart(){
                   chartHour.periodSelector.periods[3].selected=true;
                   chartHour.periodSelector.periods[2].selected=false;
                 }
-                chartHour.write("chartdiv");
+                if(indiDisplayed){
+                  firstTimeZoom=true;
+                  displayNewIndi(currIndiDisplayed);
+                }
+                else{
+                  chartHour.write("chartdiv");
                 chartHour.periodSelector.addListener("changed",handleZoom);
+                }
               }
             }
           }
@@ -436,10 +463,16 @@ function drawMainChart(){
                   }
                   newChart.listeners=newListener;
                   firstTimeZoom=true;
-                  chartDay = AmCharts.makeChart("chartdiv", newChart);
+                  // chartDay = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 3;
-                  chartDay.periodSelector.addListener("changed", handleZoom);
+                  //chartDay.periodSelector.addListener("changed", handleZoom);
                   console.log("listener added chartDay");
+                  if(indiDisplayed){
+                    firstTimeZoom=true;
+                    displayNewIndi(currIndiDisplayed);
+                  }
+                  else
+                    chartDay = AmCharts.makeChart("chartdiv", newChart);
                 }
               };
               xhttpNewDay.open("GET", urlDay, true);
@@ -467,21 +500,25 @@ function drawMainChart(){
                   chartDay.periodSelector.periods[4].selected=false;
                   chartDay.periodSelector.periods[5].selected=false;
                 }
-                chartDay.write("chartdiv");
-                chartDay.periodSelector.addListener("changed",handleZoom);
-                console.log("listener added chartDAY");
+                if(indiDisplayed){
+                  firstTimeZoom=true;
+                  displayNewIndi(currIndiDisplayed);
+                }
+                else{
+                  chartDay.write("chartdiv");
+                  chartDay.periodSelector.addListener("changed",handleZoom);
+                }
               }
             }
           }
           ////////////////////////////////////End Of All Zoom Levels//////////////////////////////
+          document.getElementById("chartLoadOverlay").style.display = "none";
           console.log("exit handleZoom");
         }
       }
-      //</script>
-      
-      //<!-- HTML -->
-      //  <div id="chartdiv"></div>	
       function changeChartType(newChartType){
+        document.getElementById("chartLoadOverlay").style.display = "block";
+        currChartType=newChartType;
         if(displayedChart == 1){
           chartMin.panels[0].stockGraphs[0].type = newChartType;
           document.getElementById("chartIndiSelect").selectedIndex = 0  
@@ -504,12 +541,15 @@ function drawMainChart(){
       }
 //////////////////////////////INDICATOR CODE START////////////////////////////////////////
 function displayNewIndi(newIndiType){
+  document.getElementById("chartLoadOverlay").style.display = "block";
   currChart=null;
   currIndiDisplayed=newIndiType;
   indiDisplayed=true;
   var indiProps={"macd":["bottom",["#00e673","#3a5ef2","#ef490e"],["histogram","MACD","signal"],["column","line","line"]],"sma":["top",["#3a5ef2"],["sma"],["line"]],"rsi":["bottom",["#3a5ef2"],["rsi"],["line"]]};//third is third
   console.log(displayedChart);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
+  currDispChart.panels[0].stockGraphs[0].type = currChartType;
+  currDispChart.listeners=newListener;
   if(displayedChart==1){
     currData=consChartDataMin.Data;
   }
@@ -536,17 +576,18 @@ function displayNewIndi(newIndiType){
     else if(whichZoomButton == "MAX")
       var oldZoom=6;
     if(displayedChart==1){
-      currMin.periodSelector.periods[oldZoom].selected=true;
+      chartMin.periodSelector.periods[oldZoom].selected=true;
       chartMin.validateNow();
     }
     else if(displayedChart==2){
-      currHour.periodSelector.periods[oldZoom].selected=true;
+      chartHour.periodSelector.periods[oldZoom].selected=true;
       chartHour.validateNow();
     }
     else if(displayedChart==3){
-      currDay.periodSelector.periods[oldZoom].selected=true;
+      chartDay.periodSelector.periods[oldZoom].selected=true;
       chartDay.validateNow();
     }
+    indiDisplayed=false;
     return;
   }
 
