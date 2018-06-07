@@ -272,6 +272,12 @@ function drawMainChart(){
             //var adjustChartdivHeight=24;//(document.getElementsByClassName("amcharts-stock-div")[0].offsetHeight)-(document.getElementById("chartdiv").offsetHeight)
             //document.getElementById("chartdiv").style.marginBottom=adjustChartdivHeight+"px";
             console.log("Chart Drawing Ended");
+            var patternFile= document.createElement("script")
+            patternFile.src = "patterns.js"
+            document.body.appendChild(patternFile)
+            patternFile.onload = () => {
+              calcPatterns();
+            }
           }
         };
         xhttpHour.open("GET", urlHour, true);
@@ -521,6 +527,7 @@ function drawMainChart(){
           //document.getElementById("chartLoadOverlay").style.display = "none";
           console.log("exit handleZoom");
         }
+        console.log("IN THE END");
       }
       function changeChartType(newChartType){
         document.getElementById("chartLoadOverlay").style.display = "block";
