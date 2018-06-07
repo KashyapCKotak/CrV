@@ -2935,9 +2935,11 @@
             evt.currentTarget.className += " active";
           }
           function initChartTypeChangeNew(){console.log(document.getElementById("chartTypeSelect").value);
+            document.getElementById("chartLoadOverlay").style.display = "block";
             changeChartType(document.getElementById("chartTypeSelect").value);
           }
           function initChartIndiChangeNew(){
+            document.getElementById("chartLoadOverlay").style.display = "block";
             changeIndiType(document.getElementById("chartIndiSelect").value)
           }
         </script>

@@ -332,6 +332,7 @@ function drawMainChart(){
                   }
                   else
                     chartMin = AmCharts.makeChart("chartdiv", newChart);
+                  document.getElementById("chartLoadOverlay").style.display = "none";
                 }
               };
               xhttpNewMin.open("GET", urlMinute, true);
@@ -361,6 +362,7 @@ function drawMainChart(){
                   chartMin.periodSelector.addListener("changed",handleZoom);
                 }
               }
+              document.getElementById("chartLoadOverlay").style.display = "none";
             }
           }
           ///////////////////////////////////////// HOUR ////////////////////////////// 
@@ -399,6 +401,7 @@ function drawMainChart(){
                   }
                   else
                     chartHour = AmCharts.makeChart("chartdiv", newChart);
+                  document.getElementById("chartLoadOverlay").style.display = "none";
                 }
               };
               xhttpNewHour.open("GET", urlHour, true);
@@ -428,6 +431,7 @@ function drawMainChart(){
                 chartHour.periodSelector.addListener("changed",handleZoom);
                 }
               }
+              document.getElementById("chartLoadOverlay").style.display = "none";
             }
           }
           /////////////////////////////////////// DAY ////////////////////////////
@@ -473,6 +477,7 @@ function drawMainChart(){
                   }
                   else
                     chartDay = AmCharts.makeChart("chartdiv", newChart);
+                  document.getElementById("chartLoadOverlay").style.display = "none";
                 }
               };
               xhttpNewDay.open("GET", urlDay, true);
@@ -509,10 +514,11 @@ function drawMainChart(){
                   chartDay.periodSelector.addListener("changed",handleZoom);
                 }
               }
+              document.getElementById("chartLoadOverlay").style.display = "none";
             }
           }
           ////////////////////////////////////End Of All Zoom Levels//////////////////////////////
-          document.getElementById("chartLoadOverlay").style.display = "none";
+          //document.getElementById("chartLoadOverlay").style.display = "none";
           console.log("exit handleZoom");
         }
       }
@@ -541,7 +547,6 @@ function drawMainChart(){
       }
 //////////////////////////////INDICATOR CODE START////////////////////////////////////////
 function displayNewIndi(newIndiType){
-  document.getElementById("chartLoadOverlay").style.display = "block";
   currChart=null;
   currIndiDisplayed=newIndiType;
   indiDisplayed=true;
