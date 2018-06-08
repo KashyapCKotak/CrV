@@ -279,7 +279,7 @@
 }
 /*Main holder for buy sell tabs*/
 .chartTypeTabHolder {
-    /* text-align: center; */
+    text-align: center;
     margin-top: 5px;
     margin-bottom: 10px;
 }
