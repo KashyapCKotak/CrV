@@ -2952,6 +2952,7 @@
           //console.log("Chart Load Start");
         </script>
         <script src="LineChartMain.js"></script>
+        <script src="indi.js"></script>
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
         <div id="chartLoadOverlay">
           <div id="loaderHolder" style="height:100%">
@@ -2980,10 +2981,13 @@
                 <option value="none">None</option>
                 <option value="macd">MACD</option>
                 <option value="rsi">RSI</option>
-                <option value="sma5">SMA 5</option>
-                <option value="sma20">SMA 20</option>
+                <option value="sma25">SMA 25</option>
                 <option value="sma50">SMA 50</option>
-                <option value="sma150">SMA 150</option>
+                <option value="sma150">SMA 100</option>
+                <option value="sma150">SMA 200</option>
+                <option value="ao">AO</option>
+                <option value="so">STOCH</option>
+                <option value="adx">ADX</option>
               </select>
             </div>
           </div>

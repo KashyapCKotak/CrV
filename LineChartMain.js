@@ -26,7 +26,7 @@ currChartType="smoothedLine";
 var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
 
 function drawMainChart(){
-  console.log("Chart Drawing Started");
+  // console.log("Chart Drawing Started");
   var urlHour = "https://min-api.cryptocompare.com/data/histohour?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=744&e=CCCAGG";
   var urlMinute = "https://min-api.cryptocompare.com/data/histominute?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=1440&e=CCCAGG";
   var urlDay = "https://min-api.cryptocompare.com/data/histoday?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&allData=true&e=CCCAGG";
@@ -42,7 +42,7 @@ function drawMainChart(){
     var adjustChartdivHeight=(document.getElementsByClassName("amcharts-stock-div")[0].offsetHeight)-(document.getElementById("chartdiv").offsetHeight);
     adjustChartdivHeight=adjustChartdivHeight+10;
     document.getElementById("chartdiv").style.marginBottom=adjustChartdivHeight+"px";
-    console.log("adjuts:" + adjustChartdivHeight);
+    // console.log("adjuts:" + adjustChartdivHeight);
     event.chart.periodSelector.addListener("changed", handleZoom);
     document.getElementById("chartLoadOverlay").style.display = "none";
   }
@@ -271,7 +271,7 @@ function drawMainChart(){
             
             //var adjustChartdivHeight=24;//(document.getElementsByClassName("amcharts-stock-div")[0].offsetHeight)-(document.getElementById("chartdiv").offsetHeight)
             //document.getElementById("chartdiv").style.marginBottom=adjustChartdivHeight+"px";
-            console.log("Chart Drawing Ended");
+            // console.log("Chart Drawing Ended");
             var patternFile= document.createElement("script")
             patternFile.src = "patterns.js"
             document.body.appendChild(patternFile)
@@ -282,7 +282,7 @@ function drawMainChart(){
         };
         xhttpHour.open("GET", urlHour, true);
         xhttpHour.send();
-        console.log("0");
+        // console.log("0");
 
         function handleZoom(event) {
           if(firstTimeZoom){
@@ -334,7 +334,7 @@ function drawMainChart(){
                   console.log("listener added chartMin");
                   if(indiDisplayed){
                     firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed);
+                    displayNewIndi(currIndiDisplayed,false);
                   }
                   else
                     chartMin = AmCharts.makeChart("chartdiv", newChart);
@@ -361,11 +361,17 @@ function drawMainChart(){
                 }
                 if(indiDisplayed){
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed);
+                  displayNewIndi(currIndiDisplayed,false);
                 }
                 else{
                   chartMin.write("chartdiv");
                   chartMin.periodSelector.addListener("changed",handleZoom);
+                }
+              }
+              else{
+                if(indiDisplayed){
+                  firstTimeZoom=true;
+                  displayNewIndi(currIndiDisplayed,false);
                 }
               }
               document.getElementById("chartLoadOverlay").style.display = "none";
@@ -403,7 +409,7 @@ function drawMainChart(){
                   console.log("listener added chartHour");
                   if(indiDisplayed){
                     firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed);
+                    displayNewIndi(currIndiDisplayed,false);
                   }
                   else
                     chartHour = AmCharts.makeChart("chartdiv", newChart);
@@ -430,11 +436,17 @@ function drawMainChart(){
                 }
                 if(indiDisplayed){
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed);
+                  displayNewIndi(currIndiDisplayed,false);
                 }
                 else{
                   chartHour.write("chartdiv");
                 chartHour.periodSelector.addListener("changed",handleZoom);
+                }
+              }
+              else{
+                if(indiDisplayed){
+                  firstTimeZoom=true;
+                  displayNewIndi(currIndiDisplayed,false);
                 }
               }
               document.getElementById("chartLoadOverlay").style.display = "none";
@@ -479,7 +491,7 @@ function drawMainChart(){
                   console.log("listener added chartDay");
                   if(indiDisplayed){
                     firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed);
+                    displayNewIndi(currIndiDisplayed,false);
                   }
                   else
                     chartDay = AmCharts.makeChart("chartdiv", newChart);
@@ -513,11 +525,17 @@ function drawMainChart(){
                 }
                 if(indiDisplayed){
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed);
+                  displayNewIndi(currIndiDisplayed,false);
                 }
                 else{
                   chartDay.write("chartdiv");
                   chartDay.periodSelector.addListener("changed",handleZoom);
+                }
+              }
+              else{
+                if(indiDisplayed){
+                  firstTimeZoom=true;
+                  displayNewIndi(currIndiDisplayed,false);
                 }
               }
               document.getElementById("chartLoadOverlay").style.display = "none";
@@ -553,225 +571,3 @@ function drawMainChart(){
         }
       }
 //////////////////////////////INDICATOR CODE START////////////////////////////////////////
-function displayNewIndi(newIndiType){
-  currChart=null;
-  currIndiDisplayed=newIndiType;
-  indiDisplayed=true;
-  var indiProps={"macd":["bottom",["#00e673","#3a5ef2","#ef490e"],["histogram","MACD","signal"],["column","line","line"]],"sma":["top",["#3a5ef2"],["sma"],["line"]],"rsi":["bottom",["#3a5ef2"],["rsi"],["line"]]};//third is third
-  console.log(displayedChart);
-  currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
-  currDispChart.panels[0].stockGraphs[0].type = currChartType;
-  currDispChart.listeners=newListener;
-  if(displayedChart==1){
-    currData=consChartDataMin.Data;
-  }
-  else if(displayedChart==2){
-    currData=consChartDataHour.Data;
-  }
-  else if(displayedChart==3){
-    currData=consChartDataDay.Data;
-  }
-
-  if(newIndiType=="none"){
-    if(whichZoomButton=="mm" && whatZoomCount == 60)
-      var oldZoom=0;
-    else if(whichZoomButton=="mm")
-      var oldZoom=1;
-    else if(whichZoomButton == "DD")
-      var oldZoom=2;
-    else if((whichZoomButton == "MM" && whatZoomCount == 1))
-      var oldZoom=3;
-    else if(whichZoomButton == "MM" && whatZoomCount == 3)
-      var oldZoom=4;
-    else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY")
-      var oldZoom=5;
-    else if(whichZoomButton == "MAX")
-      var oldZoom=6;
-    if(displayedChart==1){
-      chartMin.periodSelector.periods[oldZoom].selected=true;
-      chartMin.validateNow();
-    }
-    else if(displayedChart==2){
-      chartHour.periodSelector.periods[oldZoom].selected=true;
-      chartHour.validateNow();
-    }
-    else if(displayedChart==3){
-      chartDay.periodSelector.periods[oldZoom].selected=true;
-      chartDay.validateNow();
-    }
-    indiDisplayed=false;
-    return;
-  }
-
-  function displayIndiChart(indiType, indiPos){
-    var feilds=indiProps[indiType][2];
-    currDispChart.dataSets[0].dataProvider=currData;
-    if(whichZoomButton=="mm" && whatZoomCount == 60)
-      currDispChart.periodSelector.periods[0].selected=true;
-    else if(whichZoomButton=="mm")
-      currDispChart.periodSelector.periods[1].selected=true;
-    else if(whichZoomButton == "DD")
-      currDispChart.periodSelector.periods[2].selected=true;
-    else if((whichZoomButton == "MM" && whatZoomCount == 1))
-      currDispChart.periodSelector.periods[3].selected=true;
-    else if(whichZoomButton == "MM" && whatZoomCount == 3)
-      currDispChart.periodSelector.periods[4].selected=true;
-    else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY")
-      currDispChart.periodSelector.periods[5].selected=true;
-    else if(whichZoomButton == "MAX")
-      currDispChart.periodSelector.periods[6].selected=true;
-    for(var i=0;i<feilds.length;i++){
-      currDispChart.dataSets[0].fieldMappings.push({
-        "fromField": feilds[i],
-        "toField": feilds[i]
-      });
-    }
-
-    if(indiPos=="bottom"){
-      var indiStockGraphs=[];
-      for(var i=0;i<feilds.length;i++){
-        indiStockGraphs.push({
-          "title": feilds[i],
-          "useDataSetColors":false,
-          "precision": 3,
-          "valueField": feilds[i],
-          "type": indiProps[indiType][3][i],
-          "cornerRadiusTop": 2,
-          "fillAlphas": indiProps[indiType][3][i] == "column" ? 1 : 0,
-          "lineColor": indiProps[indiType][1][i]
-        });
-      }
-      // currDispChart.panels[2]=currDispChart.panels[1];
-      currDispChart.panels[1]={
-        "title": indiType,
-        "percentHeight": 30,
-        "stockGraphs": indiStockGraphs,
-        "stockLegend": {
-        }
-      };
-    }
-    else if(indiPos=="top"){
-      var indiStockGraphs=[];
-      for(var i=0;i<feilds.length;i++){
-        currDispChart.panels[0].stockGraphs.push({
-          "title": feilds[i],
-          "useDataSetColors":false,
-          "precision": 3,
-          "valueField": feilds[i],
-          "type": indiProps[indiType][3][i],
-          "cornerRadiusTop": 2,
-          "fillAlphas": indiProps[indiType][3][i] == "column" ? 1 : 0,
-          "lineColor": indiProps[indiType][1][i]
-        });
-      }
-      // currDispChart.panels[2]=currDispChart.panels[1];
-      // currDispChart.panels[1]={
-      //   "title": indiType,
-      //   "percentHeight": 30,
-      //   "stockGraphs": indiStockGraphs,
-      //   "stockLegend": {
-      //   }
-      // };
-    }
-    currDispChart.listeners=newListener;
-    chartMacd = AmCharts.makeChart("chartdiv", currDispChart);
-  }
-
-  function mergeData(indiType){
-    var diff = currData.length - indiData.length;
-    var counter = 0;
-    var feilds=indiProps[indiType][2];
-    currData.forEach(function (d) {
-      if (counter < diff) {
-        for(var i=0;i<feilds.length;i++){
-          d[feilds[i]]=undefined;
-        }
-      }
-      else {
-        if(feilds.length==1){
-          d[feilds[0]]=indiData[counter-diff];
-        }
-        else
-          for(var i=0;i<feilds.length;i++){
-            d[feilds[i]]=indiData[counter-diff][feilds[i]];
-          }
-      }
-      counter++;
-    });
-  }
-
-  function calcTopIndi(indiType, indiPos, indiNum){
-    if(indiType=="sma"){
-      indiData = SMA.calculate({period : indiNum, values : closes});
-      console.log(indiData);
-      mergeData(indiType);
-      displayIndiChart(indiType, indiPos);
-    }
-  }
-
-  function calcBottomIndi(indiType, indiPos, indiNum){
-    if(indiType=="macd"){
-      if(currData.hasOwnProperty("MACD")){
-        displayIndiChart(indiType);
-      }
-      else{
-        var macdInput = {
-          values: closes,
-          fastPeriod:12,
-          slowPeriod:26,
-          signalPeriod:9,
-          SimpleMAOscillator: false,
-          SimpleMASignal: false
-        }
-        indiData = MACD.calculate(macdInput);
-        mergeData(indiType);
-        displayIndiChart(indiType, indiPos);
-      }
-    }
-    else if(indiType=="rsi"){
-      
-    }
-  }
-
-  function calcThreeChartIndi(indiType, indiPos, indiNum){
-    var IndiColors={};//none yet
-  }
-
-  function calcIndi(indiType){
-    closes = [];
-    currData.forEach(function (d) {
-      closes.push(d.close);
-    });
-    var pureIndiType=indiType.replace(/[0-9]/g, '');
-    var indiNum = indiType.replace( /^\D+/g, '');
-    var indiPosition=indiProps[pureIndiType][0];
-    if(indiPosition == "top"){
-      calcTopIndi(pureIndiType,"top",indiNum);
-    }
-    else if(indiPosition == "bottom"){
-      calcBottomIndi(pureIndiType,"bottom",indiNum);
-    }
-    else if(indiPosition === "third"){
-      calcThreeChartIndi(pureIndiType,"third",indiNum);
-    }
-  }
-
-  console.log("new Indicator Displaying !!!");
-  calcIndi(newIndiType);
-}
-
-function changeIndiType(newIndiType){
-  if(firstTimeIndi){//TODO Load only when called for page performance
-    // var indiFiles1 = document.createElement("script");
-    // indiFiles1.src = "https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js";
-    // document.body.appendChild(indiFiles1);
-    // var indiFiles2 = document.createElement("script");
-    // indiFiles2.src = "https://unpkg.com/technicalindicators@1.1.11/dist/browser.js";
-    // document.body.appendChild(indiFiles2);
-    firstTimeIndi=false;
-    displayNewIndi(newIndiType);
-  }
-  else{
-    displayNewIndi(newIndiType);
-  }
-}
