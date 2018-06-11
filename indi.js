@@ -63,13 +63,15 @@ function displayNewIndi(newIndiType,pat){
     function displayIndiChart(indiType, indiPos){
       if(pat)
         return;
+      let variation="";
+      (indiType!=newIndiType) ? variation=newIndiType.replace(/\D/g,'') : "";
       var feilds=indiProps[indiType][2];
       currDispChart.dataSets[0].dataProvider=currData;
       currDispChart.periodSelector.periods[oldZoom].selected=true;
       for(var i=0;i<feilds.length;i++){
         currDispChart.dataSets[0].fieldMappings.push({
-          "fromField": feilds[i],
-          "toField": feilds[i]
+          "fromField": feilds[i]+variation,
+          "toField": feilds[i]+variation
         });
       }
   
@@ -77,10 +79,10 @@ function displayNewIndi(newIndiType,pat){
         var indiStockGraphs=[];
         for(var i=0;i<feilds.length;i++){
           indiStockGraphs.push({
-            "title": feilds[i],
+            "title": feilds[i]+variation,
             "useDataSetColors":false,
             "precision": 4,
-            "valueField": feilds[i],
+            "valueField": feilds[i]+variation,
             "type": indiProps[indiType][3][i],
             "cornerRadiusTop": 2,
             "fillAlphas": indiProps[indiType][4][i],
@@ -100,10 +102,10 @@ function displayNewIndi(newIndiType,pat){
         var indiStockGraphs=[];
         for(var i=0;i<feilds.length;i++){
           currDispChart.panels[0].stockGraphs.push({
-            "title": feilds[i],
+            "title": feilds[i]+variation,
             "useDataSetColors":false,
             "precision": 4,
-            "valueField": feilds[i],
+            "valueField": feilds[i]+variation,
             "type": indiProps[indiType][3][i],
             "cornerRadiusTop": 2,
             "fillAlphas": indiProps[indiType][3][i] == "column" ? 1 : 0,
@@ -127,20 +129,22 @@ function displayNewIndi(newIndiType,pat){
       var diff = currData.length - indiData.length;
       console.log("DIFF:"+diff);
       var counter = 0;
+      let variation="";
+      (indiType!=newIndiType) ? variation=newIndiType.replace(/\D/g,'') : "";
       var feilds=indiProps[indiType][2];
       currData.forEach(function (d) {
         if (counter < diff) {
           for(var i=0;i<feilds.length;i++){
-            d[feilds[i]]=undefined;
+            d[feilds[i]+variation]=undefined;
           }
         }
         else {
           if(feilds.length==1){
-            d[feilds[0]]=indiData[counter-diff];
+            d[feilds[0]+variation]=indiData[counter-diff];
           }
           else
             for(var i=0;i<feilds.length;i++){
-              d[feilds[i]]=indiData[counter-diff][feilds[i]];
+              d[feilds[i]+variation]=indiData[counter-diff][feilds[i]];
             }
         }
         counter++;
@@ -264,7 +268,8 @@ function displayNewIndi(newIndiType,pat){
         opens:[],
         closes:[],
         highs:[],
-        lows:[]
+        lows:[],
+        volume:[]
       };
       let len=currData.length;
       if(pat)
@@ -281,6 +286,7 @@ function displayNewIndi(newIndiType,pat){
           all.closes.push(d.close);
           all.highs.push(d.high);
           all.lows.push(d.low);
+          all.volume.push(d.volume);
         }
       });
       var pureIndiType=indiType.replace(/[0-9]/g, '');

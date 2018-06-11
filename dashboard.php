@@ -2983,8 +2983,8 @@
                 <option value="rsi">RSI</option>
                 <option value="sma25">SMA 25</option>
                 <option value="sma50">SMA 50</option>
-                <option value="sma150">SMA 100</option>
-                <option value="sma150">SMA 200</option>
+                <option value="sma100">SMA 100</option>
+                <option value="sma200">SMA 200</option>
                 <option value="ao">AO</option>
                 <option value="so">STOCH</option>
                 <option value="adx">ADX</option>
