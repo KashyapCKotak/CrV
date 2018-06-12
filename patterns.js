@@ -72,7 +72,7 @@ async function calcPatterns(){
 
     function isMACDCrsOv(){
         if(parseFloat(currPatData[currPatData.length-1].histogram)<0 && parseFloat(currPatData[currPatData.length-2].histogram)>0){
-            return "crossed:0";
+            return "crossed:0:";
         }
         else if(parseFloat(currPatData[currPatData.length-1].histogram)>0 && parseFloat(currPatData[currPatData.length-2].histogram)<0){
             return "crossed:0";
@@ -112,6 +112,8 @@ async function calcPatterns(){
 
     displayNewIndi("adx",true);
     let adxTrend=whichAdxTrend();
+
+    displayNewIndi("mfi",true);
 
     console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOK");
     console.log(MACDCrsOv,adxTrend);

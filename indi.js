@@ -8,8 +8,10 @@ function displayNewIndi(newIndiType,pat){
                   "rsi":["bottom",["#66f0ab","#fff","#3a5ef2"],["top","bottom","rsi"],["line","line","line"],[0.5,1,0]],
                   "ao":["bottom",["#3a5ef2"],["ao"],["column"],[0.7]],
                   "so":["bottom",["#66f0ab","#fff","#3a5ef2","#ef490e"],["top","bottom","k","d"],["line","line","line","line"],[0.5,1,0,0]],
-                  "adx":["bottom",["#f9c554","#3a5ef2","#ef490e","#00e673"],["reference line (25%)","adx","mdi","pdi"],["line","line","line","line"],[0.5,0,0,0]]};//third is third
-    console.log(displayedChart);
+                  "adx":["bottom",["#f9c554","#3a5ef2","#ef490e","#00e673"],["reference line (25%)","adx","mdi","pdi"],["line","line","line","line"],[0.5,0,0,0]],
+                  "mfi":["bottom",["#66f0ab","#fff","#00e673"],["top","bottom","mfi"],["line","line","line"],[0.5,1,0]],
+                  "trix":["bottom",["#66f0ab","#3a5ef2"],["zero line","trix"],["line","line"],[0,0]]};//third is third
+    // console.log(displayedChart);
     currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
     currDispChart.panels[0].stockGraphs[0].type = currChartType;
     currDispChart.listeners=newListener;
@@ -26,7 +28,7 @@ function displayNewIndi(newIndiType,pat){
     else if(displayedChart==3){
       currData=consChartDataDay.Data;
     }
-    console.log(currData);
+    // console.log(currData);
 
     if(whichZoomButton=="mm" && whatZoomCount == 60)
         var oldZoom=0;
@@ -149,12 +151,13 @@ function displayNewIndi(newIndiType,pat){
         }
         counter++;
       });
+      console.log(currData);
     }
   
     function calcTopIndi(indiType, indiPos, indiNum){
       if(indiType=="sma"){
         indiData = SMA.calculate({period : indiNum, values : all.closes});
-        console.log(indiData);
+        // console.log(indiData);
         mergeData(indiType);
         displayIndiChart(indiType, indiPos);
       }
@@ -257,6 +260,49 @@ function displayNewIndi(newIndiType,pat){
         mergeData(indiType);
         displayIndiChart(indiType, indiPos);
       }
+      else if(indiType=="mfi"){
+        indiData=[];
+        var tempindiData = MFI.calculate({
+          high : all.highs,
+          low : all.lows,
+          close : all.closes,
+          volume : all.volumes,
+          period : 14
+        });
+        let diff = currData.length - indiData.length;
+        let tempBlanks=[];
+        for(let i=0;i<diff;i++){
+          tempBlanks.push(undefined);
+        }
+        tempindiData=tempBlanks.concat(tempindiData);
+        tempindiData.forEach(function (d){
+          indiData.push({
+            top:80,
+            mfi:d,
+            bottom:20
+          });
+        });
+        mergeData(indiType);
+        displayIndiChart(indiType, indiPos);
+      }
+      else if(indiType=="trix"){
+        indiData=[];
+        var tempindiData = TRIX.calculate({period : 18, values : all.closes});
+        let diff = currData.length - indiData.length;
+        let tempBlanks=[];
+        for(let i=0;i<diff;i++){
+          tempBlanks.push(undefined);
+        }
+        tempindiData=tempBlanks.concat(tempindiData);
+        tempindiData.forEach(function (d){
+          indiData.push({
+            "zero line":0,
+            trix:d,
+          });
+        });
+        mergeData(indiType);
+        displayIndiChart(indiType, indiPos);
+      }
     }
   
     function calcThreeChartIndi(indiType, indiPos, indiNum){
@@ -269,7 +315,7 @@ function displayNewIndi(newIndiType,pat){
         closes:[],
         highs:[],
         lows:[],
-        volume:[]
+        volumes:[]
       };
       let len=currData.length;
       if(pat)
@@ -282,13 +328,14 @@ function displayNewIndi(newIndiType,pat){
       currData.forEach(function (d) {
         counter++;
         if(counter>len-limit){
-          all.opens.push(d.open);
-          all.closes.push(d.close);
-          all.highs.push(d.high);
-          all.lows.push(d.low);
-          all.volume.push(d.volume);
+          all.opens.push(parseFloat(d.open));
+          all.closes.push(parseFloat(d.close));
+          all.highs.push(parseFloat(d.high));
+          all.lows.push(parseFloat(d.low));
+          all.volumes.push(parseFloat(d.volumeto));
         }
       });
+      console.log(all);
       var pureIndiType=indiType.replace(/[0-9]/g, '');
       var indiNum = indiType.replace( /^\D+/g, '');
       var indiPosition=indiProps[pureIndiType][0];

@@ -2981,13 +2981,15 @@
                 <option value="none">None</option>
                 <option value="macd">MACD</option>
                 <option value="rsi">RSI</option>
+                <option value="ao">AO</option>
+                <option value="so">STOCH</option>
+                <option value="adx">ADX</option>
+                <option value="mfi">MFI</option>
+                <option value="trix">TRIX</option>
                 <option value="sma25">SMA 25</option>
                 <option value="sma50">SMA 50</option>
                 <option value="sma100">SMA 100</option>
                 <option value="sma200">SMA 200</option>
-                <option value="ao">AO</option>
-                <option value="so">STOCH</option>
-                <option value="adx">ADX</option>
               </select>
             </div>
           </div>
