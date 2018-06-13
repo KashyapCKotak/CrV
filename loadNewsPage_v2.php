@@ -16,7 +16,7 @@ $analysisHeaderSet = false;
 $analysisBookmarkSet = false;
 $allNewsObj = json_decode($allNewsObj,true);
 ////var_dump($allNewsObj);
-if(array_key_exists("Promoted",$allNewsObj)){
+if(array_key_exists("Promoted",$allNewsObj)&&false){
       //var_dump($allNewsObj["Promoted"]);
       foreach($allNewsObj["Promoted"] as $promotedNews){
             if($promotedNews["id"] > $latestNewsId)
@@ -61,11 +61,11 @@ if(array_key_exists("Promoted",$allNewsObj)){
             $analysisBookmarkSet=true;
             $newsContent = $newsContent + '<li>' +
                   '<div class="timeline-item">' +
-                  '<img src="' + allNewsObj.Promoted[promotedNews].imageurl + '">' +
+                  '<img src="' + $allNewsObj["Promoted"][$promotedNews]["imageurl"] + '">' +
                   '<div class="title-and-time-holder">' +
-                  '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
-                  '<h3 class="timeline-header"><a href="' + allNewsObj.Promoted[promotedNews].url + '">' + allNewsObj.Promoted[promotedNews].title + '<small>&nbsp;-' + allNewsObj.Promoted[promotedNews].source + '</small></a></h3></div>' +
-                  '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Promoted[promotedNews].body +
+                  '<span class="time"><i class="fa fa-clock-o"></i>' + $newsDate.getDate() + '-' + $monthNames[$newsDate.getMonth()] + '</span>' +
+                  '<h3 class="timeline-header"><a href="' + $allNewsObj["Promoted"][$promotedNews]["url"] + '">' + $allNewsObj["Promoted"][$promotedNews]["title"] + '<small>&nbsp;-' + $allNewsObj["Promoted"][$promotedNews]["source"] + '</small></a></h3></div>' +
+                  '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + $allNewsObj["Promoted"][$promotedNews]["body"] +
                   '</div></div>' +
                   '</div>' +
                   '</li>';

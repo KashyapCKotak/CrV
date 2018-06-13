@@ -82,14 +82,14 @@ async function calcPatterns(){
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:MACDNoCrs";
-                return when+":"+i+":"+"1:"+"MACDCrsUp";
+                return when+":"+i+":"+"1:"+"MACDCrsDown";
             }
             else if(parseFloat(currPatData[i].histogram)>0 && parseFloat(currPatData[i-1].histogram)<0){
                 let when=-1;
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:MACDNoCrs";
-                return when+":"+i+":"+"-1:"+"MACDcrsDown";
+                return when+":"+i+":"+"-1:"+"MACDcrsUp";
             }
         }
     }
@@ -101,14 +101,14 @@ async function calcPatterns(){
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:MFINotOut";
-                return when+":"+i+"1:"+"MFIOut";
+                return when+":"+i+":1:"+"MFIUpOut";
             }
             else if(parseFloat(currPatData[i].mfi)<20){
                 let when=-1;
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:MFINotOut";
-                return when+":"+i+"-1:"+"MFIOut";
+                return when+":"+i+":-1:"+"MFIDownOut";
             }
         }
     }
@@ -120,33 +120,33 @@ async function calcPatterns(){
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:TrixZero";
-                return when+":"+i+"1:"+"TrixAbove";
+                return when+":"+i+":1:"+"TrixAbove";
             }
             else if(parseFloat(currPatData[i].trix)<0){
                 let when=-1;
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:TrixZero";
-                return when+":"+i+"-1:"+"TrixBelow";
+                return when+":"+i+":-1:"+"TrixBelow";
             }
         }
     }
 	
-		function whichAoSig(){
+	function whichAoSig(){
         for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
             if(parseFloat(currPatData[i].ao)>0){
                 let when=-1;
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:AoZero";
-                return when+":"+i+"1:"+"AoAbove";
+                return when+":"+i+":1:"+"AoAbove";
             }
             else if(parseFloat(currPatData[i].ao)<0){
                 let when=-1;
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:AoZero";
-                return when+":"+i+"-1:"+"AoBelow";
+                return when+":"+i+":-1:"+"AoBelow";
             }
         }
     }
@@ -167,20 +167,20 @@ async function calcPatterns(){
         }
     }
 	
-		function finaDec(){
-			let buyCount=0; let sellCount=0; let noneCount=0; let decision=0; let strength=0;
-			for(let signal in sigArray){
-					if(sigArray[signal]=="buy")
-							buyCount++;
-					else if(sigArray[signal]=="sell")
-							sellCount++;
-					else if(sigArray[signal]=="none")
-							noneCount++;
-			}
-			strength = ((buyCount+sellCount)>noneCount) ? "strong" : "weak";
-			decision = (buyCount>sellCount) ? decision="buy" : (sellCount<buyCount) ? "sell" : "hold" ;
-			return strength+":"+decision;
-		}
+    function finalDec(){
+        let buyCount=0; let sellCount=0; let noneCount=0; let decision=0; let strength=0;
+        for(let signal in sigArray){
+            if(sigArray[signal]=="buy")
+                buyCount++;
+            else if(sigArray[signal]=="sell")
+                sellCount++;
+            else if(sigArray[signal]=="none")
+                noneCount++;
+        }
+        strength = ((buyCount+sellCount)>noneCount) ? "strong" : "weak";
+        decision = (buyCount>sellCount) ? decision="buy" : (sellCount<buyCount) ? "sell" : "hold" ;
+        return strength+":"+decision;
+    }
 
     displayNewIndi("macd",true);
     let MACDCrsOv=isMACDCrsOv().split(":");
@@ -191,24 +191,26 @@ async function calcPatterns(){
     displayNewIndi("mfi",true);
     let MFIOut=whichMfiSig().split(":");
 	
-		displayNewIndi("trix",true);
-		let TrixPol=whichTrixSig().split(":");
-	
-		displayNewIndi("ao",true);
-		let aoPol=whichAoSig().split(":");
+    displayNewIndi("trix",true);
+    let TrixPol=whichTrixSig().split(":");
 
-    console.log(MACDCrsOv,adxTrend, MFIOut);
+    displayNewIndi("ao",true);
+    let aoPol=whichAoSig().split(":");
+
+    console.log(MACDCrsOv,adxTrend, MFIOut, TrixPol, aoPol);
+    console.log()
 		
-    if(parseInt(MACDCrsOv[0])!=-1 && parseInt(MFIOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(MFIOut[1]) && parseInt(MACDCrsOv[2])==parseInt(MFIOut[2]))
-      sigArray.MacdMfi=(parseInt(MACDCrsOv[2])>0) ? "buy" : "sell";
+    if(parseInt(MACDCrsOv[0])!=-1 && parseInt(MFIOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(MFIOut[1]) && parseInt(MACDCrsOv[2])!=parseInt(MFIOut[2]))
+        (parseInt(MACDCrsOv[2])>0) ? sigArray.MacdMfi="buy" : sigArray.MacdMfi="sell";
 		
-		if(parseInt(MACDCrsOv[0])!=-1 && parseInt(TrixPol[0])!=-1 && parseInt(MACDCrsOv[1])<=parseInt(TrixPol[1]) && parseInt(MACDCrsOv[2])==parseInt(TrixPol[2]))
-			sigArray.MacdTrix=(parseInt(MACDCrsOv[2])>0) ? "buy" : "sell";
-	
-		if(parseInt(MACDCrsOv[0])!=-1 && parseInt(aoPol[0])!=-1 && parseInt(MACDCrsOv[1])<=parseInt(aoPol[1]) && parseInt(MACDCrsOv[2])==parseInt(aoPol[2]))
-			sigArray.MacdAo=(parseInt(aoPol[2])>0) ? "buy" : "sell";
-	
-		console.log(finalDec());
+    if(parseInt(MACDCrsOv[0])!=-1 && parseInt(TrixPol[0])!=-1 && parseInt(MACDCrsOv[1])<=parseInt(TrixPol[1]) && parseInt(MACDCrsOv[2])==parseInt(TrixPol[2]))
+        (parseInt(MACDCrsOv[2])>0) ? sigArray.MacdTrix="buy" : sigArray.MacdTrix="sell";
+
+    if(parseInt(MACDCrsOv[0])!=-1 && parseInt(aoPol[0])!=-1 && parseInt(MACDCrsOv[1])<=parseInt(aoPol[1]) && parseInt(MACDCrsOv[2])==parseInt(aoPol[2]))
+        (parseInt(aoPol[2])>0) ? sigArray.MacdAo="buy" : sigArray.MacdAo="sell";
+
+    console.log(sigArray);
+    console.log(finalDec());
     
     /////////////////////////////////////// Get Trend //////////////////////////////////////////
     
