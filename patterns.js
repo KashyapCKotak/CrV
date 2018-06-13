@@ -1,7 +1,8 @@
 async function calcPatterns(){
     var sigArray={
       	MacdMfi:"none",
-				MacdTrix:"none"
+				MacdTrix:"none",
+				MacdAo:"none"
     };
     var uptrend=false;
     var downtrend=false;
@@ -130,6 +131,25 @@ async function calcPatterns(){
             }
         }
     }
+	
+		function whichAoSig(){
+        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            if(parseFloat(currPatData[i].ao)>0){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "-1:-1:0:AoZero";
+                return when+":"+i+"1:"+"AoAbove";
+            }
+            else if(parseFloat(currPatData[i].ao)<0){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "-1:-1:0:AoZero";
+                return when+":"+i+"-1:"+"AoBelow";
+            }
+        }
+    }
 
     function whichAdxTrend(){
         let trendSign="none";
@@ -173,14 +193,20 @@ async function calcPatterns(){
 	
 		displayNewIndi("trix",true);
 		let TrixPol=whichTrixSig().split(":");
+	
+		displayNewIndi("ao",true);
+		let aoPol=whichAoSig().split(":");
 
     console.log(MACDCrsOv,adxTrend, MFIOut);
 		
     if(parseInt(MACDCrsOv[0])!=-1 && parseInt(MFIOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(MFIOut[1]) && parseInt(MACDCrsOv[2])==parseInt(MFIOut[2]))
-      sigArray.MacdMfi=(parseInt(MACDCrsOv[2])>0) ? "buy" : "sell" ;
+      sigArray.MacdMfi=(parseInt(MACDCrsOv[2])>0) ? "buy" : "sell";
 		
 		if(parseInt(MACDCrsOv[0])!=-1 && parseInt(TrixPol[0])!=-1 && parseInt(MACDCrsOv[1])<=parseInt(TrixPol[1]) && parseInt(MACDCrsOv[2])==parseInt(TrixPol[2]))
-			sigArray.MacdTrix=(parseInt(MACDCrsOv[2])>0) ? "buy" : "sell" ;
+			sigArray.MacdTrix=(parseInt(MACDCrsOv[2])>0) ? "buy" : "sell";
+	
+		if(parseInt(MACDCrsOv[0])!=-1 && parseInt(aoPol[0])!=-1 && parseInt(MACDCrsOv[1])<=parseInt(aoPol[1]) && parseInt(MACDCrsOv[2])==parseInt(aoPol[2]))
+			sigArray.MacdAo=(parseInt(aoPol[2])>0) ? "buy" : "sell";
 	
 		console.log(finalDec());
     
