@@ -129,7 +129,7 @@ function displayNewIndi(newIndiType,pat){
   
     function mergeData(indiType){
       var diff = currData.length - indiData.length;
-      console.log("DIFF:"+diff);
+      //console.log("DIFF:"+diff);
       var counter = 0;
       let variation="";
       (indiType!=newIndiType) ? variation=newIndiType.replace(/\D/g,'') : "";
@@ -151,7 +151,7 @@ function displayNewIndi(newIndiType,pat){
         }
         counter++;
       });
-      console.log(currData);
+      //console.log(currData);
     }
   
     function calcTopIndi(indiType, indiPos, indiNum){
@@ -322,8 +322,8 @@ function displayNewIndi(newIndiType,pat){
         var limit = 204;
       else
         var limit = (oldZoom==0) ? 96 : (oldZoom==1) ? 1440 : (oldZoom==2) ? 204 : (oldZoom==3) ? 744 : (oldZoom==4) ? 129 : (oldZoom==5) ? 402 : (len-1);
-      console.log(oldZoom);
-      console.log(limit);
+      //console.log(oldZoom);
+      //console.log(limit);
       let counter=0;
       currData.forEach(function (d) {
         counter++;
@@ -335,7 +335,7 @@ function displayNewIndi(newIndiType,pat){
           all.volumes.push(parseFloat(d.volumeto));
         }
       });
-      console.log(all);
+      //console.log(all);
       var pureIndiType=indiType.replace(/[0-9]/g, '');
       var indiNum = indiType.replace( /^\D+/g, '');
       var indiPosition=indiProps[pureIndiType][0];

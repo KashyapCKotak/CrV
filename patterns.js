@@ -1,4 +1,7 @@
 async function calcPatterns(){
+    var sigArray={
+        MacdMfi:false
+    };
     var uptrend=false;
     var downtrend=false;
     const period=204;
@@ -71,23 +74,40 @@ async function calcPatterns(){
     });
 
     function isMACDCrsOv(){
-        if(parseFloat(currPatData[currPatData.length-1].histogram)<0 && parseFloat(currPatData[currPatData.length-2].histogram)>0){
-            return "crossed:0:";
+        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            if(parseFloat(currPatData[i].histogram)<0 && parseFloat(currPatData[i-1].histogram)>0){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "MACDNotcrs:-1:-1";
+                return "MACDcrs:"+when+":"+i;
+            }
+            else if(parseFloat(currPatData[i].histogram)>0 && parseFloat(currPatData[i-1].histogram)<0){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "MACDNotcrs:-1:-1";
+                return "MACDcrs:"+when+":"+i;
+            }
         }
-        else if(parseFloat(currPatData[currPatData.length-1].histogram)>0 && parseFloat(currPatData[currPatData.length-2].histogram)<0){
-            return "crossed:0";
-        }
-        else if(parseFloat(currPatData[currPatData.length-1].histogram)<0 && parseFloat(currPatData[currPatData.length-13].histogram)>0){
-            return "crossed:12";
-        }
-        else if(parseFloat(currPatData[currPatData.length-1].histogram)>0 && parseFloat(currPatData[currPatData.length-13].histogram)<0){
-            return "crossed:12";
-        }
-        else if(parseFloat(currPatData[currPatData.length-1].histogram)<0 && parseFloat(currPatData[currPatData.length-25].histogram)>0){
-            return "crossed:24";
-        }
-        else if(parseFloat(currPatData[currPatData.length-1].histogram)>0 && parseFloat(currPatData[currPatData.length-25].histogram)<0){
-            return "crossed:24";
+    }
+
+    function whichMfiSig(){
+        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            if(parseFloat(currPatData[i].mfi)>80){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "MFINotOut:-1:-1";
+                return "MFIOut:"+when+":"+i;
+            }
+            else if(parseFloat(currPatData[i].mfi)<20){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "MFINotOut:-1:-1";
+                return "MFIOut:"+when+":"+i;
+            }
         }
     }
 
@@ -114,15 +134,19 @@ async function calcPatterns(){
     let adxTrend=whichAdxTrend();
 
     displayNewIndi("mfi",true);
+    let MFIOut=whichMfiSig();
 
-    console.log("LOOOOOOOOOOOOOOOOOOOOOOOOOK");
-    console.log(MACDCrsOv,adxTrend);
+    console.log(MACDCrsOv,adxTrend, MFIOut);
+    if(parseInt(MACDCrsOv.split(":")[2])<=parseInt(MFIOut.split(":")[2]));
+        sigArray.MacdMfi=true;
+
+    
     /////////////////////////////////////// Get Trend //////////////////////////////////////////
     
     displayNewIndi("sma20",true);
-    console.log(currPatData);
+    // console.log(currPatData);
     currPatData=currPatData.slice(currPatData.length-168);
-    console.log(currPatData);
+    // console.log(currPatData);
     var sma168High=0,smaDayHigh=0,smaFHHigh=0,smaSHHigh=0;
     var sma168Low=Number.MAX_VALUE,smaDayLow=Number.MAX_VALUE,smaFHLow=Number.MAX_VALUE,smaSHLow=Number.MAX_VALUE;
     var dayCntr=0;
@@ -167,9 +191,9 @@ async function calcPatterns(){
     console.log(sma168Low,smaDayLow,smaFHLow,smaSHLow);
 
     /////////////////////////////////////////////////////////////////////////////////
-    console.log(patCandles);
-    console.log(patCandles.open[period-1],patCandles.close[period-1]);
-    console.log(patCandles.open[period],patCandles.close[period]);
+    // console.log(patCandles);
+    // console.log(patCandles.open[period-1],patCandles.close[period-1]);
+    // console.log(patCandles.open[period],patCandles.close[period]);
     var tu = await isTrendingUp({ values : patCloses });
     var td = await isTrendingDown({ values : patCloses });
     console.log("Uptrend"+tu);
