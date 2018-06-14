@@ -2,7 +2,10 @@ async function calcPatterns(){
     var sigArray={
       	MacdMfi:"none",
 				MacdTrix:"none",
-				MacdAo:"none"
+				MacdAo:"none",
+				DojiTrend:"none",
+				AbdndBby:"none",
+				RsiMacd:"none"
     };
     var uptrend=false;
     var downtrend=false;
@@ -23,16 +26,38 @@ async function calcPatterns(){
     var counter=0;
     var finalPredict=null;
 
-    function isDoji(open,close){
-        var doji=undefined;
-        if((Math.abs(parseFloat(open)-parseFloat(close))*100/Math.abs(high12-low12))<=1.0)
-            doji=true;
-        else
-            doji=false;
-        // var whichDoji = doji ?     ***TODO***
-        //                     (open)
-        //                 : "afternoon";
+    function isDoji(open1,close1,open2,close2){
+//         let doji=undefined;
+//         if((Math.abs(parseFloat(open1)-parseFloat(close1))*100/Math.abs(high12-low12))<=1.0)
+//             return "1:1";
+//         else if((Math.abs(parseFloat(open2)-parseFloat(close2))*100/Math.abs(high12-low12))<=1.0)
+//             return "1:2";
+// 				else
+// 						return "0:0";
+			
+				for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            if((Math.abs(parseFloat(currPatData[i].open)-parseFloat(currPatData[i].close))*100/Math.abs(high12-low12))<=1.0){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "-1:-1:0:isDoji";
+                return when+":"+i+":1:"+"isDoji";
+            }
+        }
+				return "-1:-1:0:isDoji";
     }
+	
+		/*
+		*Call only if doji exists
+		*/
+		function isAbdndBby(loc){
+				if((parseFloat(currPatData[loc+1].open)-parseFloat(currPatData[loc+1].close))<0&&(parseFloat(currPatData[loc-1].open)-parseFloat(currPatData[loc-1].close))>0)
+					return "bullish";
+				else if((parseFloat(currPatData[loc+1].open)-parseFloat(currPatData[loc+1].close))>0&&(parseFloat(currPatData[loc-1].open)-parseFloat(currPatData[loc-1].close))<0)
+					return "bearish";
+				return "none";
+		}
+	
     function isBlckCrws(obj){
         var len=obj.open.length;
         var blckCrws=(obj.open[len-3]>obj.close[len-3]) ? 
@@ -113,6 +138,25 @@ async function calcPatterns(){
         }
     }
 	
+		function whichRsiSig(){
+        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            if(parseFloat(currPatData[i].rsi)>70){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "-1:-1:0:RSINotOut";
+                return when+":"+i+":1:"+"RSIUpOut";
+            }
+            else if(parseFloat(currPatData[i].rsi)<30){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "-1:-1:0:RSINotOut";
+                return when+":"+i+":-1:"+"RSIDownOut";
+            }
+        }
+    }
+	
 		function whichTrixSig(){
         for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
             if(parseFloat(currPatData[i].trix)>0){
@@ -186,7 +230,7 @@ async function calcPatterns(){
     let MACDCrsOv=isMACDCrsOv().split(":");
 
     displayNewIndi("adx",true);
-    let adxTrend=whichAdxTrend();
+    let adxTrend=whichAdxTrend().split(":");
 
     displayNewIndi("mfi",true);
     let MFIOut=whichMfiSig().split(":");
@@ -196,6 +240,25 @@ async function calcPatterns(){
 
     displayNewIndi("ao",true);
     let aoPol=whichAoSig().split(":");
+	
+		displayNewIndi("rsi",true);
+		let rsiOut=whichRsiSig().split(":");
+
+	
+		let doji=isDoji().split(":");
+		if(parseInt(doji[0])!=-1){
+			if(doji[0]<13 && adxTrend[0]=="trend" && adxTrend[1]=="up")
+				sigArray.DojiTrend="sell";
+			else if(doji[0]<13 && adxTrend[0]=="trend" && adxTrend[1]=="down")
+				sigArray.DojiTrend="buy";
+			if(parseInt(doji[1]==2)){
+				let abdndBby=isAbdndBby(doji[1]);
+				if(abdndBby=="bullish")
+					sigArray.AbdndBby="buy";
+				else if(abdndBby=="bearish")
+					sigArray.AbdndBby="sell";
+			}
+		}
 
     console.log(MACDCrsOv,adxTrend, MFIOut, TrixPol, aoPol);
     console.log()
@@ -208,7 +271,10 @@ async function calcPatterns(){
 
     if(parseInt(MACDCrsOv[0])!=-1 && parseInt(aoPol[0])!=-1 && parseInt(MACDCrsOv[1])<=parseInt(aoPol[1]) && parseInt(MACDCrsOv[2])==parseInt(aoPol[2]))
         (parseInt(aoPol[2])>0) ? sigArray.MacdAo="buy" : sigArray.MacdAo="sell";
-
+	
+		if(parseInt(MACDCrsOv[0])!=-1 && parseInt(rsiOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(rsiOut[1]) && parseInt(MACDCrsOv[2])!=parseInt(rsiOut[2]))
+				(parseInt(MACDCrsOv[2])>0) ? sigArray.RsiMacd="buy" : sigArray.RsiMacd="sell";
+				
     console.log(sigArray);
     console.log(finalDec());
     
@@ -269,23 +335,22 @@ async function calcPatterns(){
     var td = await isTrendingDown({ values : patCloses });
     console.log("Uptrend"+tu);
     console.log("Downtrend"+td);
-    var doji=isDoji(patCandles.open[period-1],patCandles.close[period-1]);
-    console.log("DOJI: "+doji);
-    if(doji){
-        if((patCandles.open[period-1]-patCandles.close[period-1])<0)
-            finalPredict=-5;
-        else if((patCandles.open[period-1]-patCandles.close[period-1])>0)
-            finalPredict=5;
-        else
-            finalPredict=0;
-    }
+//     var doji=isDoji(patCandles.open[period-1],patCandles.close[period-1]);
+//     console.log("DOJI: "+doji);
+//     if(doji){
+//         if((patCandles.open[period-1]-patCandles.close[period-1])<0)
+//             finalPredict=-5;
+//         else if((patCandles.open[period-1]-patCandles.close[period-1])>0)
+//             finalPredict=5;
+//         else
+//             finalPredict=0;
+//     }
     //console.log(threeblackcrows(patCandles));
     var soldiersCrows=undefined
     var blckCrws=isBlckCrws(patCandles);
     var whteSlds=isBlckCrws(patCandles);
     if(blckCrws != "none"){
         soldiersCrows=blckCrws;
-        finalPredict
     }
     else if(whteSlds != "none"){
         soldiersCrows=whteSlds;
