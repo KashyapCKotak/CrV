@@ -12,7 +12,7 @@ xhttp.onreadystatechange = function () {
             var analysisBookmarkSet=false;
             var allNewsObj = JSON.parse(this.responseText);
             console.log(allNewsObj);
-            for (var promotedNews in allNewsObj.Promoted) {
+            for (var promotedNews in []/*allNewsObj.Promoted*/) {
                   var newsDate = new Date(allNewsObj.Promoted[promotedNews].published_on * 1000);
                   var analysisNews = false;
                   for (var i = 0; i < analysisString.length; i++) {
@@ -101,6 +101,8 @@ xhttp.onreadystatechange = function () {
                         '</li>';
             }
             for (var dataNews in allNewsObj.Data) {
+                  if(allNewsObj.Data[dataNews].body.indexOf("submitted sponsored story")!=-1 || allNewsObj.Data[dataNews].body.indexOf("paid-for submitted")!=-1)
+                        continue;
                   var newsDate = new Date(allNewsObj.Data[dataNews].published_on * 1000);
                   var analysisNews = false;
                   for (var i = 0; i < analysisString.length; i++) {
@@ -156,7 +158,7 @@ xhttp.onreadystatechange = function () {
                         '</div>' +
                         '</li>'+
                         '<li><div class="timeline-item-sentiment '+sentClass+'">'+
-                        currSentiment+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'positive=&nbsp;'+sentArray[0]+'%&nbsp;&nbsp;&nbsp;negative=&nbsp;'+sentArray[1]+'%'+
+                        currSentiment+'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'positive=&nbsp;'+parseFloat(sentArray[0]).toFixed(2)+'%&nbsp;&nbsp;&nbsp;negative=&nbsp;'+parseFloat(sentArray[1]).toFixed(2)+'%'+
                         '</div></li>';
             }
             newsContent=newsContent+'</ul>';
