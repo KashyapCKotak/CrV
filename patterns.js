@@ -1,11 +1,12 @@
 async function calcPatterns(){
     var sigArray={
       	MacdMfi:"none",
-				MacdTrix:"none",
-				MacdAo:"none",
-				DojiTrend:"none",
-				AbdndBby:"none",
-				RsiMacd:"none"
+        MacdTrix:"none",
+        MacdAo:"none",
+        DojiTrend:"none",
+        AbdndBby:"none",
+        RsiMacd:"none",
+        OnlyMacd:"none"
     };
     var uptrend=false;
     var downtrend=false;
@@ -26,65 +27,6 @@ async function calcPatterns(){
     var counter=0;
     var finalPredict=null;
 
-    function isDoji(open1,close1,open2,close2){
-//         let doji=undefined;
-//         if((Math.abs(parseFloat(open1)-parseFloat(close1))*100/Math.abs(high12-low12))<=1.0)
-//             return "1:1";
-//         else if((Math.abs(parseFloat(open2)-parseFloat(close2))*100/Math.abs(high12-low12))<=1.0)
-//             return "1:2";
-// 				else
-// 						return "0:0";
-			
-				for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
-            if((Math.abs(parseFloat(currPatData[i].open)-parseFloat(currPatData[i].close))*100/Math.abs(high12-low12))<=1.0){
-                let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
-                if(when==-1)
-                    return "-1:-1:0:isDoji";
-                return when+":"+i+":1:"+"isDoji";
-            }
-        }
-				return "-1:-1:0:isDoji";
-    }
-	
-		/*
-		*Call only if doji exists
-		*/
-		function isAbdndBby(loc){
-				if((parseFloat(currPatData[loc+1].open)-parseFloat(currPatData[loc+1].close))<0&&(parseFloat(currPatData[loc-1].open)-parseFloat(currPatData[loc-1].close))>0)
-					return "bullish";
-				else if((parseFloat(currPatData[loc+1].open)-parseFloat(currPatData[loc+1].close))>0&&(parseFloat(currPatData[loc-1].open)-parseFloat(currPatData[loc-1].close))<0)
-					return "bearish";
-				return "none";
-		}
-	
-    function isBlckCrws(obj){
-        var len=obj.open.length;
-        var blckCrws=(obj.open[len-3]>obj.close[len-3]) ? 
-                    ((obj.open[len-2]>obj.close[len-2]) && (obj.high[len-3]>obj.high[len-2]) && (obj.close[len-3]>obj.close[len-2])) ? 
-                        ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ?
-                        "strong" : "none" 
-                    : "none" 
-                : (obj.open[len-2]>obj.close[len-2]) ? 
-                    ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ? 
-                    "weak" : "none"
-                  : "none";
-        return blckCrws;
-    }
-    function isWhteSlds(obj){
-        var len=obj.length;
-        var whteSlds=(obj.open[len-3]<obj.close[len-3]) ? 
-                    ((obj.open[len-2]<obj.close[len-2]) && (obj.low[len-3]<obj.low[len-2]) && (obj.close[len-3]<obj.close[len-2])) ? 
-                        ((obj.open[len-1]<obj.close[len-1]) && (obj.low[len-2]<obj.low[len-1]) && (obj.close[len-2]<obj.close[len-1])) ?
-                        "strong" : "none" 
-                    : "none" 
-                : (obj.open[len-2]>obj.close[len-2]) ? 
-                    ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ? 
-                    "weak" : "none"
-                  : "none";
-        return whteSlds;
-    }
-
     patCurrData.forEach(function (d) {
         counter++;
         if(counter>total-period){
@@ -100,23 +42,88 @@ async function calcPatterns(){
         }
     });
 
-    function isMACDCrsOv(){
-        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
-            if(parseFloat(currPatData[i].histogram)<0 && parseFloat(currPatData[i-1].histogram)>0){
+    function isDoji(open1,close1,open2,close2){
+		for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            console.log(currPatData[i].open, currPatData[i].close);
+            if((Math.abs(parseFloat(currPatData[i].open)-parseFloat(currPatData[i].close))*100/Math.abs(high12-low12))<=0.5){
                 let when=-1;
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
                 if(when==-1)
-                    return "-1:-1:0:MACDNoCrs";
-                return when+":"+i+":"+"1:"+"MACDCrsDown";
-            }
-            else if(parseFloat(currPatData[i].histogram)>0 && parseFloat(currPatData[i-1].histogram)<0){
-                let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
-                if(when==-1)
-                    return "-1:-1:0:MACDNoCrs";
-                return when+":"+i+":"+"-1:"+"MACDcrsUp";
+                    return "-1:-1:0:isDoji";
+                return when+":"+i+":1:"+"isDoji";
             }
         }
+		return "-1:-1:0:isDoji";
+    }
+	
+    /*
+    *Call only if doji exists
+    */
+    function isAbdndBby(loc){
+        console.log(currPatData[loc+1].open);
+        if((parseFloat(currPatData[loc+1].open)-parseFloat(currPatData[loc+1].close))<0&&(parseFloat(currPatData[loc-1].open)-parseFloat(currPatData[loc-1].close))>0)
+            return "bullish";
+        else if((parseFloat(currPatData[loc+1].open)-parseFloat(currPatData[loc+1].close))>0&&(parseFloat(currPatData[loc-1].open)-parseFloat(currPatData[loc-1].close))<0)
+            return "bearish";
+        return "none";
+    }
+    
+    function isEngulfing(){
+        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            let when=-1;
+            let engulfing=undefined;
+            ((parseFloat(currPatData[i].open)<parseFloat(currPatData[i-1].close)) && (parseFloat(currPatData[i].close)>parseFloat(currPatData[i-1].open))) ?
+                engulfing=when+":"+i+":1:"+"bullish" : ((parseFloat(currPatData[i].open)>parseFloat(currPatData[i-1].close)) && (parseFloat(currPatData[i].close)<parseFloat(currPatData[i-1].open))) ? 
+                engulfing=when+":"+i+":-1:"+"bearish" : engulfing="-1:-1:0:NoEngulfing";
+        }
+    }
+    
+    function isBlckCrws(obj){
+        var len=obj.open.length;
+        var blckCrws=(obj.open[len-3]>obj.close[len-3]) ? 
+                    ((obj.open[len-2]>obj.close[len-2]) && (obj.high[len-3]>obj.high[len-2]) && (obj.close[len-3]>obj.close[len-2])) ? 
+                        ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ?
+                        "strong" : "none" 
+                    : "none" 
+                : (obj.open[len-2]>obj.close[len-2]) ? 
+                    ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ? 
+                    "weak" : "none"
+                  : "none";
+        return blckCrws;
+    }
+
+    function isWhteSlds(obj){
+        var len=obj.length;
+        var whteSlds=(obj.open[len-3]<obj.close[len-3]) ? 
+                    ((obj.open[len-2]<obj.close[len-2]) && (obj.low[len-3]<obj.low[len-2]) && (obj.close[len-3]<obj.close[len-2])) ? 
+                        ((obj.open[len-1]<obj.close[len-1]) && (obj.low[len-2]<obj.low[len-1]) && (obj.close[len-2]<obj.close[len-1])) ?
+                        "strong" : "none" 
+                    : "none" 
+                : (obj.open[len-2]>obj.close[len-2]) ? 
+                    ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ? 
+                    "weak" : "none"
+                  : "none";
+        return whteSlds;
+    }
+
+    function isMACDCrsOv(){
+        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            if(parseFloat(currPatData[i].histogram)>0 && parseFloat(currPatData[i-1].histogram)<0){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "-1:-1:0:MACDNoCrs";
+                return when+":"+i+":"+"1:"+"MACDcrsUp";
+            }
+            else if(parseFloat(currPatData[i].histogram)<0 && parseFloat(currPatData[i-1].histogram)>0){
+                let when=-1;
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                if(when==-1)
+                    return "-1:-1:0:MACDNoCrs";
+                return when+":"+i+":"+"-1:"+"MACDCrsDown";
+            }
+        }
+        return "-1:-1:0:MACDNoCrs";
     }
 
     function whichMfiSig(){
@@ -136,6 +143,7 @@ async function calcPatterns(){
                 return when+":"+i+":-1:"+"MFIDownOut";
             }
         }
+        return "-1:-1:0:MFINotOut";
     }
 	
 		function whichRsiSig(){
@@ -155,6 +163,7 @@ async function calcPatterns(){
                 return when+":"+i+":-1:"+"RSIDownOut";
             }
         }
+        return "-1:-1:0:RSINotOut";
     }
 	
 		function whichTrixSig(){
@@ -206,9 +215,13 @@ async function calcPatterns(){
         if(currPatData[currPatData.length-1].adx>25){
             return ("trend:"+trendSign);
         }
-        else if(currPatData[currPatData.length-1].adx<20){
+        else if(currPatData[currPatData.length-1].adx<25){
             return ("range:"+trendSign);
         }
+        else if(currPatData[currPatData.length-1].adx==25){
+            return ("range:"+trendSign);
+        }
+        return ("unknown:up");
     }
 	
     function finalDec(){
@@ -241,26 +254,25 @@ async function calcPatterns(){
     displayNewIndi("ao",true);
     let aoPol=whichAoSig().split(":");
 	
-		displayNewIndi("rsi",true);
-		let rsiOut=whichRsiSig().split(":");
+    displayNewIndi("rsi",true);
+    let rsiOut=whichRsiSig().split(":");
 
-	
-		let doji=isDoji().split(":");
-		if(parseInt(doji[0])!=-1){
-			if(doji[0]<13 && adxTrend[0]=="trend" && adxTrend[1]=="up")
-				sigArray.DojiTrend="sell";
-			else if(doji[0]<13 && adxTrend[0]=="trend" && adxTrend[1]=="down")
-				sigArray.DojiTrend="buy";
-			if(parseInt(doji[1]==2)){
-				let abdndBby=isAbdndBby(doji[1]);
-				if(abdndBby=="bullish")
-					sigArray.AbdndBby="buy";
-				else if(abdndBby=="bearish")
-					sigArray.AbdndBby="sell";
-			}
-		}
+    let doji=isDoji().split(":");
+    if(parseInt(doji[0])!=-1){
+        if(doji[0]<13 && adxTrend[0]=="trend" && adxTrend[1]=="up")
+            sigArray.DojiTrend="sell";
+        else if(doji[0]<13 && adxTrend[0]=="trend" && adxTrend[1]=="down")
+            sigArray.DojiTrend="buy";
+        if(parseInt(doji[0])==12){
+            let abdndBby=isAbdndBby(parseInt(doji[1]));
+            if(abdndBby=="bullish")
+                sigArray.AbdndBby="buy";
+            else if(abdndBby=="bearish")
+                sigArray.AbdndBby="sell";
+        }
+    }
 
-    console.log(MACDCrsOv,adxTrend, MFIOut, TrixPol, aoPol);
+    console.log(doji, MACDCrsOv,adxTrend, MFIOut, TrixPol, aoPol);
     console.log()
 		
     if(parseInt(MACDCrsOv[0])!=-1 && parseInt(MFIOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(MFIOut[1]) && parseInt(MACDCrsOv[2])!=parseInt(MFIOut[2]))
@@ -272,8 +284,10 @@ async function calcPatterns(){
     if(parseInt(MACDCrsOv[0])!=-1 && parseInt(aoPol[0])!=-1 && parseInt(MACDCrsOv[1])<=parseInt(aoPol[1]) && parseInt(MACDCrsOv[2])==parseInt(aoPol[2]))
         (parseInt(aoPol[2])>0) ? sigArray.MacdAo="buy" : sigArray.MacdAo="sell";
 	
-		if(parseInt(MACDCrsOv[0])!=-1 && parseInt(rsiOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(rsiOut[1]) && parseInt(MACDCrsOv[2])!=parseInt(rsiOut[2]))
-				(parseInt(MACDCrsOv[2])>0) ? sigArray.RsiMacd="buy" : sigArray.RsiMacd="sell";
+    if(parseInt(MACDCrsOv[0])!=-1 && parseInt(rsiOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(rsiOut[1]) && parseInt(MACDCrsOv[2])!=parseInt(rsiOut[2]))
+        (parseInt(MACDCrsOv[2])>0) ? sigArray.RsiMacd="buy" : sigArray.RsiMacd="sell";
+
+    (parseInt(MACDCrsOv[2])>0) ? sigArray.OnlyMacd="buy" : sigArray.OnlyMacd="sell";
 				
     console.log(sigArray);
     console.log(finalDec());

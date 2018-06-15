@@ -1,9 +1,8 @@
 var xhttp = new XMLHttpRequest();
 var newsContent = '<ul class="timeline">';
 var analysisNewsContent = '<ul class="timeline AnalysisTimeline">';
-const monthNames = ["January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-];
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+      "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 var analysisString = ["analysis", "price", "market ", "trading roundup"];
 console.log("Enter");
 xhttp.onreadystatechange = function () {
@@ -128,7 +127,7 @@ xhttp.onreadystatechange = function () {
                         if(!analysisHeaderSet){
                               analysisNewsContent = analysisNewsContent + '<li class="time-label">' +
                                     '<span class="bg-orange" id="analysisNewsBegin">' +
-                                    'Analytical' +
+                                    'Analytical News' +
                                     '</span>' +
                                     '<span class="bg-green mobileOnly"  style="float: right !important">' +
                                     '<a href="#newsBegin" style="color:#FFF">Go to Latest News</a>' +
@@ -136,11 +135,11 @@ xhttp.onreadystatechange = function () {
                                     '</li>';
                               analysisHeaderSet=true;
                         }
-                        analysisNewsContent = analysisNewsContent + '<li>' +
+                        analysisNewsContent = analysisNewsContent + '<li style="margin-bottom: 15px;">' +
                               '<div class="timeline-item">' +
                               '<img src="' + allNewsObj.Data[dataNews].imageurl + '">' +
                               '<div class="title-and-time-holder">' +
-                              '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + newsDate.getHours() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
+                              '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
                               '<h3 class="timeline-header"><a href="' + allNewsObj.Data[dataNews].url + '">' + allNewsObj.Data[dataNews].title + '<small>&nbsp;-' + allNewsObj.Data[dataNews].source + '</small></a></h3></div>' +
                               '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Data[dataNews].body +
                               '</div></div>' +
@@ -151,7 +150,7 @@ xhttp.onreadystatechange = function () {
                         '<div class="timeline-item">' +
                         '<img src="' + allNewsObj.Data[dataNews].imageurl + '">' +
                         '<div class="title-and-time-holder">' +
-                        '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
+                        '<span class="time"><i class="fa fa-clock-o"></i> ' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + " " + newsDate.getHours() + ":" + newsDate.getMinutes() + '</span>' +
                         '<h3 class="timeline-header"><a href="' + allNewsObj.Data[dataNews].url + '">' + allNewsObj.Data[dataNews].title + '<small>&nbsp;-' + allNewsObj.Data[dataNews].source + '</small></a></h3></div>' +
                         '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Data[dataNews].body +
                         '</div></div>' +
