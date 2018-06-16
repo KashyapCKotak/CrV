@@ -2986,6 +2986,7 @@
                 <option value="adx">ADX</option>
                 <option value="mfi">MFI</option>
                 <option value="trix">TRIX</option>
+                <option value="bollinger">Bollinger Bands</option>
                 <option value="sma25">SMA 25</option>
                 <option value="sma50">SMA 50</option>
                 <option value="sma100">SMA 100</option>

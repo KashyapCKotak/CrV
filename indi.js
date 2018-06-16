@@ -10,7 +10,8 @@ function displayNewIndi(newIndiType,pat){
                   "so":["bottom",["#66f0ab","#fff","#3a5ef2","#ef490e"],["top","bottom","k","d"],["line","line","line","line"],[0.5,1,0,0]],
                   "adx":["bottom",["#f9c554","#3a5ef2","#ef490e","#00e673"],["reference line (25%)","adx","mdi","pdi"],["line","line","line","line"],[0.5,0,0,0]],
                   "mfi":["bottom",["#66f0ab","#fff","#00e673"],["top","bottom","mfi"],["line","line","line"],[0.5,1,0]],
-                  "trix":["bottom",["#66f0ab","#3a5ef2"],["zero line","trix"],["line","line"],[0,0]]};//third is third
+                  "trix":["bottom",["#66f0ab","#3a5ef2"],["zero line","trix"],["line","line"],[0,0]],
+                  "bollinger":["top",["#3a5ef2","#3a5ef2","#3a5ef2"],["lower","middle","upper"],["line","line","line"],[0,0,0]]};//third is third
     // console.log(displayedChart);
     currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
     currDispChart.panels[0].stockGraphs[0].type = currChartType;
@@ -157,7 +158,11 @@ function displayNewIndi(newIndiType,pat){
     function calcTopIndi(indiType, indiPos, indiNum){
       if(indiType=="sma"){
         indiData = SMA.calculate({period : indiNum, values : all.closes});
-        // console.log(indiData);
+        mergeData(indiType);
+        displayIndiChart(indiType, indiPos);
+      }
+      else if(indiType=="bollinger"){
+        indiData = BollingerBands.calculate({period : 14, values : all.closes, stdDev : 2});
         mergeData(indiType);
         displayIndiChart(indiType, indiPos);
       }
@@ -349,7 +354,6 @@ function displayNewIndi(newIndiType,pat){
         calcThreeChartIndi(pureIndiType,"third",indiNum);
       }
     }
-  
     console.log("new Indicator Displaying !!!");
     calcIndi(newIndiType);
   }

@@ -4,10 +4,18 @@ async function calcPatterns(){
         MacdTrix:"none",
         MacdAo:"none",
         DojiTrend:"none",
-        AbdndBby:"none",
         RsiMacd:"none",
-        OnlyMacd:"none"
+        OnlyMacd:"none",
+        AdxTrend:"unknown",
+        Engulfing:"none",
+        Stars:"none",
+        OnlyRsi:"none",
+        RsiEngulfing:"none",
+        RsiMacd:"none"
     };
+    /**
+     * Check for abdndbaby2 function to consider even if adx trend is ranging
+     */
     var uptrend=false;
     var downtrend=false;
     const period=204;
@@ -44,7 +52,7 @@ async function calcPatterns(){
 
     function isDoji(open1,close1,open2,close2){
 		for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
-            console.log(currPatData[i].open, currPatData[i].close);
+            // console.log(currPatData[i].open, currPatData[i].close);
             if((Math.abs(parseFloat(currPatData[i].open)-parseFloat(currPatData[i].close))*100/Math.abs(high12-low12))<=0.5){
                 let when=-1;
                 (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
@@ -56,10 +64,11 @@ async function calcPatterns(){
 		return "-1:-1:0:isDoji";
     }
 	
-    /*
-    *Call only if doji exists
-    */
-    function isAbdndBby(loc){
+    /**
+     * **Important**: Call only if doji exists !!
+     * @param {Number} loc : location of doji
+     */
+    function isAbdndBby2(loc){
         console.log(currPatData[loc+1].open);
         if((parseFloat(currPatData[loc+1].open)-parseFloat(currPatData[loc+1].close))<0&&(parseFloat(currPatData[loc-1].open)-parseFloat(currPatData[loc-1].close))>0)
             return "bullish";
@@ -72,10 +81,73 @@ async function calcPatterns(){
         for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
             let when=-1;
             let engulfing=undefined;
-            ((parseFloat(currPatData[i].open)<parseFloat(currPatData[i-1].close)) && (parseFloat(currPatData[i].close)>parseFloat(currPatData[i-1].open))) ?
-                engulfing=when+":"+i+":1:"+"bullish" : ((parseFloat(currPatData[i].open)>parseFloat(currPatData[i-1].close)) && (parseFloat(currPatData[i].close)<parseFloat(currPatData[i-1].open))) ? 
-                engulfing=when+":"+i+":-1:"+"bearish" : engulfing="-1:-1:0:NoEngulfing";
+            if((parseFloat(currPatData[i].open)<parseFloat(currPatData[i-1].close)) && (parseFloat(currPatData[i].close)>parseFloat(currPatData[i-1].open))){
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                engulfing=when+":"+i+":1:"+"bullish";
+            }
+            else if((parseFloat(currPatData[i].open)>parseFloat(currPatData[i-1].close)) && (parseFloat(currPatData[i].close)<parseFloat(currPatData[i-1].open))){
+                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                engulfing=when+":"+i+":-1:"+"bearish";
+            }
+            else engulfing="-1:-1:0:NoEngulfing";
+            if(engulfing!="NoEngulfing")
+                return engulfing;
         }
+    }
+
+    function isStar(){
+        let morning=false;
+        let morningDoji=false;
+        let evening=false;
+        let eveningDoji=false;
+        let abdndBby1=false;
+        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+            let when=-1;
+            (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+            let input={
+                open:[currPatData[i].open,currPatData[i-1].open,currPatData[i-2].open],
+                close:[currPatData[i].close,currPatData[i-1].close,currPatData[i-2].close],
+                high:[currPatData[i].high,currPatData[i-1].high,currPatData[i-2].high],
+                low:[currPatData[i].low,currPatData[i-1].low,currPatData[i-2].low],
+            };
+            if(morning == false){
+                morning=morningstar(input);
+                if(morning != false)
+                    morning=when+":"+i+":1:isMrngStar";
+            }
+            if(morningDoji == false){
+                morningDoji=morningdojistar(input);
+                if(morningDoji != false)
+                    morningDoji=when+":"+i+":1:isMrngDojiStar";
+            }
+            if(evening == false){
+                evening=eveningstar(input);
+                if(evening != false)
+                    evening=when+":"+i+":1:isEvngStar";
+            }
+            if(eveningDoji == false){
+                eveningDoji=eveningdojistar(input);
+                if(eveningDoji != false)
+                    eveningDoji=when+":"+i+":1:isEvngDojiStar";
+            }
+            if(abdndBby1 == false){
+                abdndBby1=abandonedbaby(input);
+                if(abdndBby1 != false)
+                    abdndBby1=when+":"+i+":1:isAbdndBby1";
+            }
+        }
+        if(morning==false)
+            morning="-1:-1:0:notMrngStar";
+        if(morningDoji==false)
+            morningDoji="-1:-1:0:notMrngDojiStar";
+        if(evening==false)
+            evening="-1:-1:0:notEvngStar";
+        if(eveningDoji==false)
+            eveningDoji="-1:-1:0:notEvngDojiStar";
+        if(abdndBby1==false)
+            abdndBby1="-1:-1:0:notAbdndBby1";
+        console.log(morning,morningDoji,evening,eveningDoji,abdndBby1);
+        return morning+"&"+morningDoji+"&"+evening+"&"+eveningDoji+"&"+abdndBby1;
     }
     
     function isBlckCrws(obj){
@@ -146,7 +218,7 @@ async function calcPatterns(){
         return "-1:-1:0:MFINotOut";
     }
 	
-		function whichRsiSig(){
+	function whichRsiSig(){
         for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
             if(parseFloat(currPatData[i].rsi)>70){
                 let when=-1;
@@ -166,7 +238,7 @@ async function calcPatterns(){
         return "-1:-1:0:RSINotOut";
     }
 	
-		function whichTrixSig(){
+	function whichTrixSig(){
         for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
             if(parseFloat(currPatData[i].trix)>0){
                 let when=-1;
@@ -235,7 +307,7 @@ async function calcPatterns(){
                 noneCount++;
         }
         strength = ((buyCount+sellCount)>noneCount) ? "strong" : "weak";
-        decision = (buyCount>sellCount) ? decision="buy" : (sellCount<buyCount) ? "sell" : "hold" ;
+        decision = (buyCount>sellCount) ? decision="buy" : (sellCount>buyCount) ? "sell" : "hold" ;
         return strength+":"+decision;
     }
 
@@ -256,7 +328,9 @@ async function calcPatterns(){
 	
     displayNewIndi("rsi",true);
     let rsiOut=whichRsiSig().split(":");
+    let engulfing=isEngulfing().split();
 
+    let stars=isStar().split("&");
     let doji=isDoji().split(":");
     if(parseInt(doji[0])!=-1){
         if(doji[0]<13 && adxTrend[0]=="trend" && adxTrend[1]=="up")
@@ -264,17 +338,22 @@ async function calcPatterns(){
         else if(doji[0]<13 && adxTrend[0]=="trend" && adxTrend[1]=="down")
             sigArray.DojiTrend="buy";
         if(parseInt(doji[0])==12){
-            let abdndBby=isAbdndBby(parseInt(doji[1]));
-            if(abdndBby=="bullish")
-                sigArray.AbdndBby="buy";
-            else if(abdndBby=="bearish")
-                sigArray.AbdndBby="sell";
+            let abdndBby2=isAbdndBby2(parseInt(doji[1]));
+            console.log(abdndBby2);
+            if(abdndBby2=="bullish" || stars[1].split(":")[2]==1 || stars[4].split(":")[2]==1)
+                sigArray.Stars="buy1";
+            else if(abdndBby2=="bearish" || stars[3].split(":")[2]==1)
+                sigArray.Stars="sell1";
         }
     }
 
-    console.log(doji, MACDCrsOv,adxTrend, MFIOut, TrixPol, aoPol);
-    console.log()
-		
+    if(stars[0].split(":")[2]==1 && sigArray.Stars=="none")
+        sigArray.Stars="buy";
+    if(stars[2].split(":")[2]==1 && sigArray.Stars=="none")
+        sigArray.Stars="sell";
+
+    console.log(doji, MACDCrsOv,adxTrend, MFIOut, TrixPol, aoPol, engulfing, adxTrend, rsiOut);
+	
     if(parseInt(MACDCrsOv[0])!=-1 && parseInt(MFIOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(MFIOut[1]) && parseInt(MACDCrsOv[2])!=parseInt(MFIOut[2]))
         (parseInt(MACDCrsOv[2])>0) ? sigArray.MacdMfi="buy" : sigArray.MacdMfi="sell";
 		
@@ -287,7 +366,17 @@ async function calcPatterns(){
     if(parseInt(MACDCrsOv[0])!=-1 && parseInt(rsiOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(rsiOut[1]) && parseInt(MACDCrsOv[2])!=parseInt(rsiOut[2]))
         (parseInt(MACDCrsOv[2])>0) ? sigArray.RsiMacd="buy" : sigArray.RsiMacd="sell";
 
-    (parseInt(MACDCrsOv[2])>0) ? sigArray.OnlyMacd="buy" : sigArray.OnlyMacd="sell";
+    if(parseInt(rsiOut[0])!=-1 && parseInt(engulfing[0])!=-1 && parseInt(rsiOut[0])==parseInt(engulfing[0]) && parseInt(rsiOut[0])!=24 && parseInt(rsiOut[2])!=parseInt(engulfing[2]))
+        (parseInt(rsiOut[2])<0) ? sigArray.RsiEngulfing="buy" : sigArray.RsiEngulfing="sell";
+
+    if(parseInt(rsiOut[0])!=-1 && parseInt(MACDCrsOv[0])!=-1 && parseInt(rsiOut[0])==parseInt(MACDCrsOv[0]) && parseInt(rsiOut[0])!=24 && parseInt(rsiOut[2])!=parseInt(MACDCrsOv[2]))
+        (parseInt(MACDCrsOv[2])>0) ? sigArray.RsiMacd="buy" : sigArray.RsiMacd="sell";
+
+    (parseInt(MACDCrsOv[2])>0) ? sigArray.OnlyMacd="buy" : (parseInt(MACDCrsOv[2])<0) ? sigArray.OnlyMacd="sell" : sigArray.OnlyMacd="none";
+    (parseInt(engulfing[2])>0) ? sigArray.OnlyMacd="buy" : (parseInt(engulfing[2])<0) ? sigArray.OnlyMacd="sell" : sigArray.OnlyMacd="none";
+    (adxTrend[0]=="trend") ? sigArray.AdxTrend="trend" : (adxTrend[0]=="range") ? sigArray.AdxTrend="range" : sigArray.AdxTrend="unknown";
+    (parseInt(engulfing[2])==1) ? sigArray.Engulfing="buy" : (parseInt(engulfing[2])==-1) ? sigArray.Engulfing="sell" : sigArray.Engulfing="none";
+    (parseInt(rsiOut[2])==-1) ? sigArray.OnlyRsi="buy" : (parseInt(rsiOut[2])==1) ? sigArray.OnlyRsi="sell" : sigArray.OnlyRsi="none" ;
 				
     console.log(sigArray);
     console.log(finalDec());
@@ -345,6 +434,7 @@ async function calcPatterns(){
     // console.log(patCandles);
     // console.log(patCandles.open[period-1],patCandles.close[period-1]);
     // console.log(patCandles.open[period],patCandles.close[period]);
+    console.log(patCloses);
     var tu = await isTrendingUp({ values : patCloses });
     var td = await isTrendingDown({ values : patCloses });
     console.log("Uptrend"+tu);
