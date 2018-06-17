@@ -76,7 +76,6 @@
     // console.log(($('#marketsDataTable').is(':visible')));
     // console.log(($('#cryptsyb').is(':visible')));
     console.log("PAGE LOAD COMPLETE");
-    var patternFile= document.createElement("script")
     // startStream(currSubList);
   }
 </script>
