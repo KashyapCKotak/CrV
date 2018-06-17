@@ -76,6 +76,7 @@
     // console.log(($('#marketsDataTable').is(':visible')));
     // console.log(($('#cryptsyb').is(':visible')));
     console.log("PAGE LOAD COMPLETE");
+    var patternFile= document.createElement("script")
     // startStream(currSubList);
   }
 </script>
@@ -2953,6 +2954,13 @@
         </script>
         <script src="LineChartMain.js"></script>
         <script src="indi.js"></script>
+        <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
+          <table>
+          <tr><td><img src="dist/img/robot.png" style="height:70px"></td>
+          <td style="padding: 5px"><b><div id="AIPredictionTd" class="typewriter"><span id="AIPredictionSpan">Jay Yogeshwar! </span></div></b></td>
+          </tr>
+          </table>
+        </div>
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
         <div id="chartLoadOverlay">
           <div id="loaderHolder" style="height:100%">

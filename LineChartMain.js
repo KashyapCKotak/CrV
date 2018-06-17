@@ -15,6 +15,7 @@
 
 //<!-- Chart code -->
 //<script>
+predicted=false;
 var chartHour;
 var chartMin;
 var chartDay;
@@ -45,6 +46,15 @@ function drawMainChart(){
     // console.log("adjuts:" + adjustChartdivHeight);
     event.chart.periodSelector.addListener("changed", handleZoom);
     document.getElementById("chartLoadOverlay").style.display = "none";
+    if(!predicted){
+      let patternFile= document.createElement("script")
+      patternFile.src = "patterns.js";
+      document.body.appendChild(patternFile);
+      patternFile.onload = () => {
+      calcPatterns();
+      // setTimeout(calcPatterns(), 3000);
+      };
+    }
   }
 
   newListener = [{"event":"rendered","method":handleRender}];
@@ -272,12 +282,6 @@ function drawMainChart(){
             //var adjustChartdivHeight=24;//(document.getElementsByClassName("amcharts-stock-div")[0].offsetHeight)-(document.getElementById("chartdiv").offsetHeight)
             //document.getElementById("chartdiv").style.marginBottom=adjustChartdivHeight+"px";
             // console.log("Chart Drawing Ended");
-            var patternFile= document.createElement("script")
-            patternFile.src = "patterns.js"
-            document.body.appendChild(patternFile)
-            patternFile.onload = () => {
-              calcPatterns();
-            }
           }
         };
         xhttpHour.open("GET", urlHour, true);
