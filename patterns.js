@@ -1,4 +1,11 @@
 async function calcPatterns(){
+    var quotes={stars:[" the stars indicates that you must (Sign) immediately if you'll (OppSign) in an hour or two!"," if you believe the stars, you may want to (Sign) now and (OppSign) in a couple of hours!"," what your Horoscope says today? My Parrot says that you may want to (Sign) now and (OppSign) immediately for quick profit!"," you may (Sign) now for quick profit! But don't be greedy and take whatever you get."," your short term future looks bright if you (Sign). Be careful... I said 'short term'"],
+                mainStrong:["Contact you local zoo. It seems some (BullBear)s have escaped and entered into the market!","(Sign) if you want to survive!","(Sign)ing now may gift you a vacation to Moon!","Trust me, (Sign) now and keep a Pop song ready to dance when you (OppSign)","Whoa! There is so much charge flowing from my electrical brain as I see strong signs for (Sign)ing","(Sign) now and book a luxurious holiday in India!","Some (BullBear)s have broke the jails. Spot for them and inform me. Oh, btw, are you one of those (BullBear)s? If yes go ahead and (Sign), I won't catch you..."],
+                mainWeak:["Your pet (BullBear)s seems really weak. Feed him well and (Sign) cautiously.","(BullBear)s are waking up from sleep. Watch this space for a chance of sighting! Weak (Sign) signs visible","Hmmm... Can't say much... My electrical Brain is confused watching the market!","Hmmm... my Artificial Intelligence is pretty confused! Consult a Human instead!","Current market can't be predicted with 0s & 1s. Go find a human expert & please don't ask me for a contact :)"],
+                strongHold:["Spectacular fight going on between Bulls & Bears. Hold and enjoy the show! You can buy lows & sell highs","UltimateBulls & FantasticBears : support your team and hold for now! You can buy lows & sell highs.","JUST HODL!!"],
+                weakHold:[],
+                marketSent:["My robotic brain sees a pretty (PosNeg) market sentiment.","The news predict a (BullBear)ish market ahead.","My robotic wind sensors are confirming the presence of a lots of (BullBear)s around. Be careful... They may be around you."],
+                outage:["There were some short circuits in my brain while predicting future! I am in a self healing mode right now..."]};
     var sigArray={
       	MacdMfi:"none",
         MacdTrix:"none",
@@ -11,7 +18,8 @@ async function calcPatterns(){
         Stars:"none",
         OnlyRsi:"none",
         RsiEngulfing:"none",
-        RsiMacd:"none"
+        RsiMacd:"none",
+        SldsCrws:"none"
     };
     /**
      * Check for abdndbaby2 function to consider even if adx trend is ranging
@@ -20,6 +28,7 @@ async function calcPatterns(){
     var downtrend=false;
     const period=204;
     var patCurrData=consChartDataHour.Data;
+    currPatDataLen=744;
     //patCurrData=patCurrData.slice(0,patCurrData.length-1);
     const total=patCurrData.length;
     var currLength=patCurrData.length;
@@ -51,11 +60,11 @@ async function calcPatterns(){
     });
 
     function isDoji(open1,close1,open2,close2){
-		for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+		for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
             // console.log(currPatData[i].open, currPatData[i].close);
             if((Math.abs(parseFloat(currPatData[i].open)-parseFloat(currPatData[i].close))*100/Math.abs(high12-low12))<=0.5){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:isDoji";
                 return when+":"+i+":1:"+"isDoji";
@@ -78,15 +87,15 @@ async function calcPatterns(){
     }
     
     function isEngulfing(){
-        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
             let when=-1;
             let engulfing=undefined;
             if((parseFloat(currPatData[i].open)<parseFloat(currPatData[i-1].close)) && (parseFloat(currPatData[i].close)>parseFloat(currPatData[i-1].open))){
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 engulfing=when+":"+i+":1:"+"bullish";
             }
             else if((parseFloat(currPatData[i].open)>parseFloat(currPatData[i-1].close)) && (parseFloat(currPatData[i].close)<parseFloat(currPatData[i-1].open))){
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 engulfing=when+":"+i+":-1:"+"bearish";
             }
             else engulfing="-1:-1:0:NoEngulfing";
@@ -101,9 +110,9 @@ async function calcPatterns(){
         let evening=false;
         let eveningDoji=false;
         let abdndBby1=false;
-        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
             let when=-1;
-            (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+            (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
             let input={
                 open:[currPatData[i].open,currPatData[i-1].open,currPatData[i-2].open],
                 close:[currPatData[i].close,currPatData[i-1].close,currPatData[i-2].close],
@@ -149,47 +158,85 @@ async function calcPatterns(){
         console.log(morning,morningDoji,evening,eveningDoji,abdndBby1);
         return morning+"&"+morningDoji+"&"+evening+"&"+eveningDoji+"&"+abdndBby1;
     }
-    
-    function isBlckCrws(obj){
-        var len=obj.open.length;
-        var blckCrws=(obj.open[len-3]>obj.close[len-3]) ? 
-                    ((obj.open[len-2]>obj.close[len-2]) && (obj.high[len-3]>obj.high[len-2]) && (obj.close[len-3]>obj.close[len-2])) ? 
-                        ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ?
-                        "strong" : "none" 
-                    : "none" 
-                : (obj.open[len-2]>obj.close[len-2]) ? 
-                    ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ? 
-                    "weak" : "none"
-                  : "none";
+
+    function isBlckCrws(){
+        let blckCrws=null;
+        // let currPatData = [{open:7707.82,high:7709.61,close:7684.76,low:7682.37},{open:7684.76,high:7695.64,close:7675.04,low:7672.36},{open:7675.76,high:7677.15,close:7651.54,low:7647.49}];
+        // let currPatDataLen=3;
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
+            let when=-1;
+            (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
+            (currPatData[i-2].open>currPatData[i-2].close) ? 
+                        ((currPatData[i-1].open>currPatData[i-1].close) && (currPatData[i-2].high>currPatData[i-1].high) && (currPatData[i-2].close>currPatData[i-1].close)) ? 
+                            ((currPatData[i].open>currPatData[i].close) && (currPatData[i-1].high>currPatData[i].high) && (currPatData[i-1].close>currPatData[i].close)) ?
+                            blckCrws=when+":"+i+":2:strngCrws" : blckCrws="-1:-1:0:strngCrws" 
+                        : blckCrws="-1:-1:0:strngCrws"
+                    : (currPatData[i-1].open>currPatData[i-1].close) ? 
+                        ((currPatData[i].open>currPatData[i].close) && (currPatData[i-1].high>currPatData[i].high) && (currPatData[i-1].close>currPatData[i].close)) ? 
+                        blckCrws=when+":"+i+":1:weakCrws" : blckCrws="-1:-1:0:strngCrws"
+                    : blckCrws="-1:-1:0:strngCrws";
+        }
         return blckCrws;
     }
+    
+    // function isBlckCrws(obj){
+    //     var len=obj.open.length;
+    //     var blckCrws=(obj.open[len-3]>obj.close[len-3]) ? 
+    //                 ((obj.open[len-2]>obj.close[len-2]) && (obj.high[len-3]>obj.high[len-2]) && (obj.close[len-3]>obj.close[len-2])) ? 
+    //                     ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ?
+    //                     "strong" : "none" 
+    //                 : "none" 
+    //             : (obj.open[len-2]>obj.close[len-2]) ? 
+    //                 ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ? 
+    //                 "weak" : "none"
+    //               : "none";
+    //     return blckCrws;
+    // }
 
-    function isWhteSlds(obj){
-        var len=obj.length;
-        var whteSlds=(obj.open[len-3]<obj.close[len-3]) ? 
-                    ((obj.open[len-2]<obj.close[len-2]) && (obj.low[len-3]<obj.low[len-2]) && (obj.close[len-3]<obj.close[len-2])) ? 
-                        ((obj.open[len-1]<obj.close[len-1]) && (obj.low[len-2]<obj.low[len-1]) && (obj.close[len-2]<obj.close[len-1])) ?
-                        "strong" : "none" 
-                    : "none" 
-                : (obj.open[len-2]>obj.close[len-2]) ? 
-                    ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ? 
-                    "weak" : "none"
-                  : "none";
+    function isWhteSlds(){
+        let whteSlds=null;
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
+            let when=-1;
+            (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
+            (currPatData[i-2].open<currPatData[i-2].close) ? 
+                    ((currPatData[i-1].open<currPatData[i-1].close) && (currPatData[i-2].low<currPatData[i-1].low) && (currPatData[i-2].close<currPatData[i-1].close)) ? 
+                        ((currPatData[i].open<currPatData[i].close) && (currPatData[i-1].low<currPatData[i].low) && (currPatData[i-1].close<currPatData[i].close)) ?
+                        whteSlds=when+":"+i+":2:strngSlds" : whteSlds="-1:-1:0:strngSlds" 
+                    : whteSlds="-1:-1:0:strngSlds"  
+                : (currPatData[i-1].open>currPatData[i-1].close) ? 
+                    ((currPatData[i].open>currPatData[i].close) && (currPatData[i-1].high>currPatData[i].high) && (currPatData[i-1].close>currPatData[i].close)) ? 
+                    whteSlds=when+":"+i+":1:weakSlds" : whteSlds="-1:-1:0:strngSlds" 
+                  : whteSlds="-1:-1:0:strngSlds" ;
+        }
         return whteSlds;
     }
 
+    // function isWhteSlds(obj){
+    //     var len=obj.length;
+    //     var whteSlds=(obj.open[len-3]<obj.close[len-3]) ? 
+    //                 ((obj.open[len-2]<obj.close[len-2]) && (obj.low[len-3]<obj.low[len-2]) && (obj.close[len-3]<obj.close[len-2])) ? 
+    //                     ((obj.open[len-1]<obj.close[len-1]) && (obj.low[len-2]<obj.low[len-1]) && (obj.close[len-2]<obj.close[len-1])) ?
+    //                     "strong" : "none" 
+    //                 : "none" 
+    //             : (obj.open[len-2]>obj.close[len-2]) ? 
+    //                 ((obj.open[len-1]>obj.close[len-1]) && (obj.high[len-2]>obj.high[len-1]) && (obj.close[len-2]>obj.close[len-1])) ? 
+    //                 "weak" : "none"
+    //               : "none";
+    //     return whteSlds;
+    // }
+
     function isMACDCrsOv(){
-        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
             if(parseFloat(currPatData[i].histogram)>0 && parseFloat(currPatData[i-1].histogram)<0){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:MACDNoCrs";
                 return when+":"+i+":"+"1:"+"MACDcrsUp";
             }
             else if(parseFloat(currPatData[i].histogram)<0 && parseFloat(currPatData[i-1].histogram)>0){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:MACDNoCrs";
                 return when+":"+i+":"+"-1:"+"MACDCrsDown";
@@ -199,17 +246,17 @@ async function calcPatterns(){
     }
 
     function whichMfiSig(){
-        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
             if(parseFloat(currPatData[i].mfi)>80){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:MFINotOut";
                 return when+":"+i+":1:"+"MFIUpOut";
             }
             else if(parseFloat(currPatData[i].mfi)<20){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:MFINotOut";
                 return when+":"+i+":-1:"+"MFIDownOut";
@@ -219,17 +266,17 @@ async function calcPatterns(){
     }
 	
 	function whichRsiSig(){
-        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
             if(parseFloat(currPatData[i].rsi)>70){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:RSINotOut";
                 return when+":"+i+":1:"+"RSIUpOut";
             }
             else if(parseFloat(currPatData[i].rsi)<30){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:RSINotOut";
                 return when+":"+i+":-1:"+"RSIDownOut";
@@ -239,58 +286,63 @@ async function calcPatterns(){
     }
 	
 	function whichTrixSig(){
-        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
             if(parseFloat(currPatData[i].trix)>0){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:TrixZero";
                 return when+":"+i+":1:"+"TrixAbove";
             }
             else if(parseFloat(currPatData[i].trix)<0){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:TrixZero";
                 return when+":"+i+":-1:"+"TrixBelow";
             }
         }
+        return "-1:-1:0:TrixZero";
     }
 	
 	function whichAoSig(){
-        for(var i=currPatData.length-1;i>=currPatData.length-26;i--){
+        for(var i=currPatDataLen-1;i>=currPatDataLen-26;i--){
             if(parseFloat(currPatData[i].ao)>0){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:AoZero";
                 return when+":"+i+":1:"+"AoAbove";
             }
             else if(parseFloat(currPatData[i].ao)<0){
                 let when=-1;
-                (i==currPatData.length-1) ? when=0 : (i>=currPatData.length-12) ? when=12 : (i>=currPatData.length-24) ? when=24 : when=-1;
+                (i==currPatDataLen-1) ? when=0 : (i>=currPatDataLen-12) ? when=12 : (i>=currPatDataLen-24) ? when=24 : when=-1;
                 if(when==-1)
                     return "-1:-1:0:AoZero";
                 return when+":"+i+":-1:"+"AoBelow";
             }
         }
+        return "-1:-1:0:AoZero";
     }
 
     function whichAdxTrend(){
         let trendSign="none";
-        trendSign=(currPatData[currPatData.length-1].pdi-currPatData[currPatData.length-1].mdi>0) ? trendSign="up" : trendSign="down";
-        trendSign=(currPatData[currPatData.length-1].pdi-currPatData[currPatData.length-1].mdi==0) ?  
-                    (currPatData[currPatData.length-2].pdi-currPatData[currPatData.length-2].mdi>0) ? 
+        trendSign=(currPatData[currPatDataLen-1].pdi-currPatData[currPatDataLen-1].mdi>0) ? trendSign="up" : trendSign="down";
+        trendSign=(currPatData[currPatDataLen-1].pdi-currPatData[currPatDataLen-1].mdi==0) ?  
+                    (currPatData[currPatDataLen-2].pdi-currPatData[currPatDataLen-2].mdi>0) ? 
                         trendSign="up"
                     : trendSign="down"
                 : trendSign=trendSign;
-        if(currPatData[currPatData.length-1].adx>25){
+        console.log(currPatData);
+        console.log(currPatDataLen);
+        console.log(currPatData[currPatDataLen-1].adx);
+        if(currPatData[currPatDataLen-1].adx>25){
             return ("trend:"+trendSign);
         }
-        else if(currPatData[currPatData.length-1].adx<25){
+        else if(currPatData[currPatDataLen-1].adx<25){
             return ("range:"+trendSign);
         }
-        else if(currPatData[currPatData.length-1].adx==25){
+        else if(currPatData[currPatDataLen-1].adx==25){
             return ("range:"+trendSign);
         }
         return ("unknown:up");
@@ -325,6 +377,8 @@ async function calcPatterns(){
 
     displayNewIndi("ao",true);
     let aoPol=whichAoSig().split(":");
+
+    displayNewIndi("bollinger",true);
 	
     displayNewIndi("rsi",true);
     let rsiOut=whichRsiSig().split(":");
@@ -341,18 +395,23 @@ async function calcPatterns(){
             let abdndBby2=isAbdndBby2(parseInt(doji[1]));
             console.log(abdndBby2);
             if(abdndBby2=="bullish" || stars[1].split(":")[2]==1 || stars[4].split(":")[2]==1)
-                sigArray.Stars="buy1";
+                sigArray.Stars="buy";
             else if(abdndBby2=="bearish" || stars[3].split(":")[2]==1)
-                sigArray.Stars="sell1";
+                sigArray.Stars="sell";
         }
     }
 
-    if(stars[0].split(":")[2]==1 && sigArray.Stars=="none")
-        sigArray.Stars="buy";
-    if(stars[2].split(":")[2]==1 && sigArray.Stars=="none")
-        sigArray.Stars="sell";
+    let blckCrws=isBlckCrws().split(":");
+    let whteSlds=isWhteSlds().split(":");
 
-    console.log(doji, MACDCrsOv,adxTrend, MFIOut, TrixPol, aoPol, engulfing, adxTrend, rsiOut);
+    if(stars[0].split(":")[2]==1 && sigArray.Stars=="none"){
+        sigArray.Stars="buy";
+    }
+    if(stars[2].split(":")[2]==1 && sigArray.Stars=="none"){
+        sigArray.Stars="sell";
+    }
+
+    console.log(doji,MACDCrsOv,adxTrend,MFIOut,TrixPol, aoPol, engulfing, rsiOut,stars,blckCrws,whteSlds);
 	
     if(parseInt(MACDCrsOv[0])!=-1 && parseInt(MFIOut[0])!=-1 && parseInt(MACDCrsOv[1])>=parseInt(MFIOut[1]) && parseInt(MACDCrsOv[2])!=parseInt(MFIOut[2]))
         (parseInt(MACDCrsOv[2])>0) ? sigArray.MacdMfi="buy" : sigArray.MacdMfi="sell";
@@ -372,93 +431,102 @@ async function calcPatterns(){
     if(parseInt(rsiOut[0])!=-1 && parseInt(MACDCrsOv[0])!=-1 && parseInt(rsiOut[0])==parseInt(MACDCrsOv[0]) && parseInt(rsiOut[0])!=24 && parseInt(rsiOut[2])!=parseInt(MACDCrsOv[2]))
         (parseInt(MACDCrsOv[2])>0) ? sigArray.RsiMacd="buy" : sigArray.RsiMacd="sell";
 
+    if(parseInt(blckCrws[0])!=-1 || parseInt(whteSlds[0])!=-1){
+        if(parseInt(whteSlds[1])>parseInt(blckCrws[1]))
+            sigArray.SldsCrws="buy";
+        else if(parseInt(blckCrws[1])>parseInt(whteSlds[1]))
+            sigArray.SldsCrws="sell";
+    }
+
     (parseInt(MACDCrsOv[2])>0) ? sigArray.OnlyMacd="buy" : (parseInt(MACDCrsOv[2])<0) ? sigArray.OnlyMacd="sell" : sigArray.OnlyMacd="none";
     (parseInt(engulfing[2])>0) ? sigArray.OnlyMacd="buy" : (parseInt(engulfing[2])<0) ? sigArray.OnlyMacd="sell" : sigArray.OnlyMacd="none";
     (adxTrend[0]=="trend") ? sigArray.AdxTrend="trend" : (adxTrend[0]=="range") ? sigArray.AdxTrend="range" : sigArray.AdxTrend="unknown";
     (parseInt(engulfing[2])==1) ? sigArray.Engulfing="buy" : (parseInt(engulfing[2])==-1) ? sigArray.Engulfing="sell" : sigArray.Engulfing="none";
     (parseInt(rsiOut[2])==-1) ? sigArray.OnlyRsi="buy" : (parseInt(rsiOut[2])==1) ? sigArray.OnlyRsi="sell" : sigArray.OnlyRsi="none" ;
+    
+    
 				
     console.log(sigArray);
     console.log(finalDec());
     
     /////////////////////////////////////// Get Trend //////////////////////////////////////////
     
-    displayNewIndi("sma20",true);
-    // console.log(currPatData);
-    currPatData=currPatData.slice(currPatData.length-168);
-    // console.log(currPatData);
-    var sma168High=0,smaDayHigh=0,smaFHHigh=0,smaSHHigh=0;
-    var sma168Low=Number.MAX_VALUE,smaDayLow=Number.MAX_VALUE,smaFHLow=Number.MAX_VALUE,smaSHLow=Number.MAX_VALUE;
-    var dayCntr=0;
-    var firstHalfCntr=0;
-    var SecondHalfCntr=0
-    currPatData.forEach(function (d){
-        dayCntr++;
-        if (dayCntr>(168-24)){
-            if(d.sma>smaDayHigh)
-                smaDayHigh=d.sma;
-            if(d.sma<smaDayLow)
-                smaDayLow=d.sma;
-            firstHalfCntr++;
-            SecondHalfCntr++;
-            if(firstHalfCntr<13){
-                if(d.sma>smaFHHigh)
-                    smaFHHigh=d.sma;
-                if(d.sma<smaFHLow)
-                    smaFHLow=d.sma;
-            }
-            if(SecondHalfCntr>12){
-                if(d.sma>smaSHHigh)
-                    smaSHHigh=d.sma;
-                if(d.sma<smaSHLow)
-                    smaSHLow=d.sma;
-            }
-        }
-        if(parseFloat(d.sma)>sma168High)
-            sma168High=parseFloat(d.sma);
-        if(parseFloat(d.sma)<sma168Low)
-            sma168Low=parseFloat(d.sma);
-    });
-    var dayPat=currPatData.slice(168-24);
-    var twelveHPat1=dayPat.slice(0,24);
-    var twelveHPat2=dayPat.slice(24);
-    /////// Identify Trend ////////
+//     displayNewIndi("sma20",true);
+//     // console.log(currPatData);
+//     currPatData=currPatData.slice(currPatDataLen-168);
+//     // console.log(currPatData);
+//     var sma168High=0,smaDayHigh=0,smaFHHigh=0,smaSHHigh=0;
+//     var sma168Low=Number.MAX_VALUE,smaDayLow=Number.MAX_VALUE,smaFHLow=Number.MAX_VALUE,smaSHLow=Number.MAX_VALUE;
+//     var dayCntr=0;
+//     var firstHalfCntr=0;
+//     var SecondHalfCntr=0
+//     currPatData.forEach(function (d){
+//         dayCntr++;
+//         if (dayCntr>(168-24)){
+//             if(d.sma>smaDayHigh)
+//                 smaDayHigh=d.sma;
+//             if(d.sma<smaDayLow)
+//                 smaDayLow=d.sma;
+//             firstHalfCntr++;
+//             SecondHalfCntr++;
+//             if(firstHalfCntr<13){
+//                 if(d.sma>smaFHHigh)
+//                     smaFHHigh=d.sma;
+//                 if(d.sma<smaFHLow)
+//                     smaFHLow=d.sma;
+//             }
+//             if(SecondHalfCntr>12){
+//                 if(d.sma>smaSHHigh)
+//                     smaSHHigh=d.sma;
+//                 if(d.sma<smaSHLow)
+//                     smaSHLow=d.sma;
+//             }
+//         }
+//         if(parseFloat(d.sma)>sma168High)
+//             sma168High=parseFloat(d.sma);
+//         if(parseFloat(d.sma)<sma168Low)
+//             sma168Low=parseFloat(d.sma);
+//     });
+//     var dayPat=currPatData.slice(168-24);
+//     var twelveHPat1=dayPat.slice(0,24);
+//     var twelveHPat2=dayPat.slice(24);
+//     /////// Identify Trend ////////
     
-    /////// End Identify Trend ////////
+//     /////// End Identify Trend ////////
 
 
-    console.log(sma168High,smaDayHigh,smaFHHigh,smaSHHigh);
-    console.log(sma168Low,smaDayLow,smaFHLow,smaSHLow);
+//     console.log(sma168High,smaDayHigh,smaFHHigh,smaSHHigh);
+//     console.log(sma168Low,smaDayLow,smaFHLow,smaSHLow);
 
-    /////////////////////////////////////////////////////////////////////////////////
-    // console.log(patCandles);
-    // console.log(patCandles.open[period-1],patCandles.close[period-1]);
-    // console.log(patCandles.open[period],patCandles.close[period]);
-    console.log(patCloses);
-    var tu = await isTrendingUp({ values : patCloses });
-    var td = await isTrendingDown({ values : patCloses });
-    console.log("Uptrend"+tu);
-    console.log("Downtrend"+td);
-//     var doji=isDoji(patCandles.open[period-1],patCandles.close[period-1]);
-//     console.log("DOJI: "+doji);
-//     if(doji){
-//         if((patCandles.open[period-1]-patCandles.close[period-1])<0)
-//             finalPredict=-5;
-//         else if((patCandles.open[period-1]-patCandles.close[period-1])>0)
-//             finalPredict=5;
-//         else
-//             finalPredict=0;
+//     /////////////////////////////////////////////////////////////////////////////////
+//     // console.log(patCandles);
+//     // console.log(patCandles.open[period-1],patCandles.close[period-1]);
+//     // console.log(patCandles.open[period],patCandles.close[period]);
+//     console.log(patCloses);
+//     var tu = await isTrendingUp({ values : patCloses });
+//     var td = await isTrendingDown({ values : patCloses });
+//     console.log("Uptrend"+tu);
+//     console.log("Downtrend"+td);
+// //     var doji=isDoji(patCandles.open[period-1],patCandles.close[period-1]);
+// //     console.log("DOJI: "+doji);
+// //     if(doji){
+// //         if((patCandles.open[period-1]-patCandles.close[period-1])<0)
+// //             finalPredict=-5;
+// //         else if((patCandles.open[period-1]-patCandles.close[period-1])>0)
+// //             finalPredict=5;
+// //         else
+// //             finalPredict=0;
+// //     }
+//     //console.log(threeblackcrows(patCandles));
+//     var soldiersCrows=undefined
+//     var blckCrws=isBlckCrws(patCandles);
+//     var whteSlds=isBlckCrws(patCandles);
+//     if(blckCrws != "none"){
+//         soldiersCrows=blckCrws;
 //     }
-    //console.log(threeblackcrows(patCandles));
-    var soldiersCrows=undefined
-    var blckCrws=isBlckCrws(patCandles);
-    var whteSlds=isBlckCrws(patCandles);
-    if(blckCrws != "none"){
-        soldiersCrows=blckCrws;
-    }
-    else if(whteSlds != "none"){
-        soldiersCrows=whteSlds;
-    }
-    console.log("bearish "+bearish(patCandles));
-    console.log("bullish "+bullish(patCandles));
+//     else if(whteSlds != "none"){
+//         soldiersCrows=whteSlds;
+//     }
+//     console.log("bearish "+bearish(patCandles));
+//     console.log("bullish "+bullish(patCandles));
 }
