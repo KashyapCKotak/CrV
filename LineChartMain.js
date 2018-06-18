@@ -47,6 +47,7 @@ function drawMainChart(){
     event.chart.periodSelector.addListener("changed", handleZoom);
     document.getElementById("chartLoadOverlay").style.display = "none";
     if(!predicted){
+			predicted=true;
       let patternFile= document.createElement("script")
       patternFile.src = "patterns.js";
       document.body.appendChild(patternFile);
