@@ -2956,7 +2956,7 @@
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
           <table>
           <tr><td><img src="dist/img/robot.png" style="height:70px"></td>
-          <td style="padding: 5px"><b><div id="AIPredictionTd" class="typewriter"><span id="AIPredictionSpan">Jay Yogeshwar! </span></div></b></td>
+          <td style="padding: 5px"><b><div id="AIPredictionTd"><span id="AIPredictionSpan">Jay Yogeshwar! </span></div></b></td>
           </tr>
           </table>
         </div>

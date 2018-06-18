@@ -1,8 +1,8 @@
 async function calcPatterns(){
     var quotes={stars:[" the stars indicates that you must (Sign) immediately if you'll (OppSign) in an hour or two!"," if you believe the stars, you may want to (Sign) now and (OppSign) in a couple of hours!"," what your Horoscope says today? My Parrot says that you may want to (Sign) now and (OppSign) immediately for quick profit!"," you may (Sign) now for quick profit! But don't be greedy and take whatever you get."," your short term future looks bright if you (Sign). Be careful... I said 'short term'"],
                 mainStrong:["Contact your local zoo. It seems some (BullBear)s have escaped and entered into the market!","(Sign) if you want to prosper!","(Sign)ing now may gift you a vacation to the Moon!","(Sign) now and keep a Pop song ready to dance when you (OppSign)","Whoa! There is so much charge flowing from my electrical brain as I see strong signs for (Sign)ing","(Sign) now and book a luxurious holiday in India!","Some (BullBear)s have broke the jails. Spot for them and inform me. Oh, btw, are you one of those (BullBear)s? If yes go ahead and (Sign), I won't catch you..."],
-                mainWeak:["Your pet (BullBear)s seems to be really weak. Feed him well and (Sign) cautiously.","(BullBear)s are waking up from sleep. Watch this space for a chance of sighting! Weak (Sign) signs visible","Hmmm... Can't say much... My electrical brain is confused watching the market!","Hmmm... my Artificial Intelligence is pretty confused! Consult a Human instead!","Current market can't be predicted with 0s & 1s. Go find a human expert & please don't ask me for a contact :)"],
-                weakHold:["Hmmm... Can't quite decide. May be you should hold.","Hmmm... My artificial brain is unable to decide. Consult a human! But my gut feeling is 'Hold'","Now I know that Future Prediction is so difficult! May be you can Hold... Not sure.","There were sparks in my system after seeing such a complex market! I would say Hold... but not sure.","I am dizzing by seeing this market... By the time I consult my programmer doctor, I can tell you to Hold. But remember, I am not sure."],
+                mainWeak:["Your pet (BullBear)s seems to be really weak. Feed him well and (Sign) cautiously.","(BullBear)s are waking up from sleep. Watch this space for a chance of sighting! Weak (Sign) signs visible","Hmmm... Can't say much... My electrical brain is confused watching the market! But I can see weak signs which point towards (Sign)ing.","Hmmm... my Artificial Intelligence is pretty confused! Consult a Human instead! But I can tell you that weak signs of (Sign)ing are visible.","I think its time to (Sign), but current market can't be predicted with 0s & 1s. Go find a human expert & please don't ask me for a contact :)"],
+                weakHold:["Hmmm... Can't quite decide. According to me, you may hold.","Hmmm... My artificial brain is unable to decide. Consult a human! But my gut feeling is 'Hold'","Now I know that Future Prediction is so difficult! May be you can Hold... Not sure.","There were sparks in my system after seeing such a complex market! I would say Hold... but not sure.","I am dizzing by seeing this market... By the time I consult my programmer doctor, I can tell you to Hold. But remember, I am not sure."],
                 strongHold:["Spectacular fight going on between Bulls & Bears. Hold and enjoy the show! You can buy lows & sell highs","RagingBulls & FierceBears - support your team and hold for now! You can buy lows & sell highs.","JUST HODL!!","My Artificial Intelligence sees a ranging market. Go long at lows and short at highs.","I can see a lot of ups and downs in the market... You must have developed pain in your neck. Don't worry, just Hold!","I would just say: Sit back, relax and hold! But I you are too active trader for this, Buy the lows and sell the highs","Just go Long when you see a low, go Short when you see high. Remember- Don't be too greedy!"],
                 marketSent:["My robotic brain sees a pretty (PosNeg) market sentiment.","The news predict a (BullBear)ish market ahead.","My robotic wind sensors are confirming the presence of a lots of (BullBear)s around. Be careful... They may be around you."],
                 outage:["There were some short circuits in my brain while predicting future! I am in a self healing mode right now..."]};
@@ -349,9 +349,9 @@ async function calcPatterns(){
     }
 	
     function finalDec(){
-        let buyCount=0; let sellCount=0; let noneCount=0; let decision=0;
-        let strength="hold"; let effStrngthCnt=0; let sign="?"; let oppSign="?"; let bullBear="?"; let posNeg="?";
-        let mainString=""; let starString=""; let marketString="";
+         buyCount=0;  sellCount=0;  noneCount=0;  decision=0;
+         strength="hold";  effStrngthCnt=0;  sign="?";  oppSign="?";  bullBear="?";  posNeg="?";
+         mainString="";  starString="";  marketString="";
         for(let signal in sigArray){
             if(sigArray[signal]=="buy")
                 buyCount++;
@@ -382,28 +382,29 @@ async function calcPatterns(){
             (buyCount>sellCount) ? (sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive") : (sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative");
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             mainString=quotes.mainStrong[randomQuote];
-            mainString.replace("(Sign)",sign); mainString.replace("(OppSign)",oppSign); mainString.replace("(BullBear)",bullBear); mainString.replace("(PosNeg)",posNeg);
+            mainString=mainString.replace("(Sign)",sign); mainString=mainString.replace("(OppSign)",oppSign); mainString=mainString.replace("(BullBear)",bullBear); mainString=mainString.replace("(PosNeg)",posNeg);
         }
-        else if(strength=="weak"){            
+        else if(strength=="weak"){   
+            console.log("here weak sign");
             let noOfQuotes=quotes.mainWeak.length;
             (buyCount>sellCount) ? (sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive") : (sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative");
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             mainString=quotes.mainWeak[randomQuote];
-            mainString.replace("(Sign)",sign); mainString.replace("(OppSign)",oppSign); mainString.replace("(BullBear)",bullBear); mainString.replace("(PosNeg)",posNeg);
+            mainString=mainString.replace("(Sign)",sign); mainString=mainString.replace("(OppSign)",oppSign); mainString=mainString.replace("(BullBear)",bullBear); mainString=mainString.replace("(PosNeg)",posNeg);
         }
         else if(strength=="hold" && adxTrend[0]=="range"){            
             let noOfQuotes=quotes.strongHold.length;
             (buyCount>sellCount) ? (sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive") : (sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative");
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             mainString=quotes.strongHold[randomQuote];
-            mainString.replace("(Sign)",sign); mainString.replace("(OppSign)",oppSign); mainString.replace("(BullBear)",bullBear); mainString.replace("(PosNeg)",posNeg);
+            mainString=mainString.replace("(Sign)",sign); mainString=mainString.replace("(OppSign)",oppSign); mainString=mainString.replace("(BullBear)",bullBear); mainString=mainString.replace("(PosNeg)",posNeg);
         }
         else if(strength=="hold" && adxTrend[0]=="trend"){            
             let noOfQuotes=quotes.weakHold.length;
             (buyCount>sellCount) ? (sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive") : (sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative");
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             mainString=quotes.weakHold[randomQuote];
-            mainString.replace("(Sign)",sign); mainString.replace("(OppSign)",oppSign); mainString.replace("(BullBear)",bullBear); mainString.replace("(PosNeg)",posNeg);
+            mainString=mainString.replace("(Sign)",sign); mainString=mainString.replace("(OppSign)",oppSign); mainString=mainString.replace("(BullBear)",bullBear); mainString=mainString.replace("(PosNeg)",posNeg);
         }
 
         if(sigArray.Stars=="buy"){
@@ -411,7 +412,7 @@ async function calcPatterns(){
             sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive";
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             starString=quotes.stars[randomQuote];
-            starString.replace("(Sign)",sign); starString.replace("(OppSign)",oppSign); starString.replace("(BullBear)",bullBear); starString.replace("(PosNeg)",posNeg);
+            starString=starString.replace("(Sign)",sign); starString=starString.replace("(OppSign)",oppSign); starString=starString.replace("(BullBear)",bullBear); starString=starString.replace("(PosNeg)",posNeg);
             starString="However,"+starString
         }
         else if(sigArray.Stars=="sell"){
@@ -419,12 +420,23 @@ async function calcPatterns(){
             sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative";
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             starString=quotes.stars[randomQuote];
-            starString.replace("(Sign)",sign); starString.replace("(OppSign)",oppSign); starString.replace("(BullBear)",bullBear); starString.replace("(PosNeg)",posNeg);
+            starString=starString.replace("(Sign)",sign); starString=starString.replace("(OppSign)",oppSign); starString=starString.replace("(BullBear)",bullBear); starString=starString.replace("(PosNeg)",posNeg);
             starString="However,"+starString
         }
         marketString=" I am still learning to identify Market Sentiment."
         var finalString=mainString+starString+marketString;  
-        document.getElementById("AIPredictionSpan").innerHTML=finalString;
+        // document.getElementById("AIPredictionSpan").innerHTML=finalString;
+        var i = 0;
+        var speed = 50; /* The speed/duration of the effect in milliseconds */
+        function typeWriter() {
+            if (i < finalString.length) {
+                document.getElementById("AIPredictionSpan").innerHTML += finalString.charAt(i);
+                i++;
+                setTimeout(typeWriter, speed);
+            }
+        }
+        document.getElementById("AIPredictionSpan").innerHTML="";
+        typeWriter();
         return finalString;
         // strength = ((buyCount+sellCount)>noneCount) ? "strong" : "weak";
         // decision = (buyCount>sellCount) ? decision="buy" : (sellCount>buyCount) ? "sell" : "hold" ;
