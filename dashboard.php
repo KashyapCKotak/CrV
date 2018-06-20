@@ -2984,7 +2984,7 @@
             </div>
             <div class="chartIndicator">
             <b>Indicator:</b>
-              <select id="chartIndiSelect" onchange="initChartIndiChangeNew()">
+              <select id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
                 <option value="none">None</option>
                 <option value="macd">MACD</option>
                 <option value="rsi">RSI</option>

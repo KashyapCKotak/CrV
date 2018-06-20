@@ -237,9 +237,35 @@ session_start();
                 </li>
                 <li class="list-group-item">
                   <b>Cryptocurrencies<br>Invested</b> <a class="pull-right">
-                  <?php
+                  <scrpit type="text/javascript">
+                    var myPrsnPort = <?php
+                    if(isset($_SESSION['prsn_portfolio']) && $_SESSION['prsn_portfolio'] != ''){
+                      echo $_SESSION['prsn_portfolio'];
+                    }
+                    else
+                      echo "NotSet";
+                    ?>;
+                    // var totPrsnPort=0;
+                    // if(myPrsnPort!="NotSet"){
+                    //   var prsnRootFiat=Object.keys(myPrsnPort)[0];
+                    //   myPrsnPort=myPrsnPort[prsnRootFiat];
+                    //   var cryptosPrsn=[];
+                    //   for(fiatPort in myPrsnPort)
+                    //     for(cryptoPort in myPrsnPort[fiatPort]){
+                    //       if(!cryptosPrsn.includes[cryptoPort])
+                    //         cryptosPrsn.push(cryptoPort);
+                    //     }
+                    //   if(cryptosPrsn.length!=0)
+                    //     document.write(cryptosPrsn.length);
+                    //   else
+                    //     document.write("None yet. Invest!<br>Start Something New!");
+                    // }
+                    // else
+                    //  document.write("Login again"); 
+                  </scrpit>
+                  <!--<?php
                     if(!isset($_SESSION['prsn_portfolio']) || $_SESSION['prsn_portfolio'] == ''){
-                      echo "NA";
+                      echo "Login again";
                     }
                     else {
                       $portfolioVar=json_decode($_SESSION['prsn_portfolio'],true);
@@ -251,17 +277,43 @@ session_start();
 											else
                       	echo "None yet. Invest!<br>Start Something New!";
                     }
-                  ?>
+                  ?>-->
                   </a>
                 </li>
                 <li class="list-group-item">
                   <b>Cryptocurrencies<br>Practicing</b> <a class="pull-right">
-                  <?php
+                  <scrpit>
+                    var myPrtcPort = <?php
+                    if(isset($_SESSION['prtc_portfolio']) && $_SESSION['prtc_portfolio'] != ''){
+                      echo $_SESSION['prtc_portfolio'];
+                    }
+                    else
+                      echo "NotSet";
+                    ?>;
+                    var totPrtcPort=0;
+                    if(myPrtcPort!="NotSet"){
+                      var prtcRootFiat=Object.keys(myPrtcPort)[0];
+                      myPrtcPort=myPrtcPort[prtcRootFiat];
+                      var cryptosPrtc=[];
+                      for(fiatPort in myPrtcPort)
+                        for(cryptoPort in myPrtcPort[fiatPort]){
+                          if(!cryptosPrtc.includes[cryptoPort])
+                            cryptosPrtc.push(cryptoPort);
+                        }
+                      if(cryptosPrtc.length!=0)
+                        document.write(cryptosPrtc.length);
+                      else
+                        document.write("None yet. Invest!<br>Start Something New!");
+                    }
+                    else
+                     document.write("Login again"); 
+                  </scrpit>
+                  <!--<?php
                     if(!isset($_SESSION['prtc_portfolio']) || $_SESSION['prtc_portfolio'] == ''){
-                      echo "NA";
+                      echo "Login again";
                     }
                     else {
-                      $portfolioVar=json_decode($_SESSION['prsn_portfolio'],true);
+                      $portfolioVar=json_decode($_SESSION['prtc_portfolio'],true);
                       $prtcroot=array_keys($portfolioVar);
                       $prtcroot=$prtcroot[0];
                       $prtcroot=$portfolioVar[$prtcroot];
@@ -270,7 +322,7 @@ session_start();
 											else
                       	echo "None yet. Invest!<br>Start Something New!";
                     }
-                  ?>
+                  ?>--> 
                   </a>
                 </li>
               </ul>
