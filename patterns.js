@@ -4,7 +4,7 @@ async function calcPatterns(){
                 mainWeak:["Your pet (BullBear)s seems to be really weak. Feed him well and (Sign) cautiously.","(BullBear)s are waking up from sleep. Watch this space for a chance of sighting! Weak (Sign) signs visible","Hmmm... Can't say much... My electrical brain is confused watching the market! But I can see weak signs which point towards (Sign)ing.","Hmmm... my Artificial Intelligence is pretty confused! Consult a Human instead! But I can tell you that weak signs of (Sign)ing are visible.","I think its time to (Sign), but current market can't be predicted with 0s & 1s. Go find a human expert & please don't ask me for a contact :)"],
                 weakHold:["Hmmm... Can't quite decide. According to me, you may hold.","Hmmm... My artificial brain is unable to decide. Consult a human! But my gut feeling is 'Hold'","Now I know that Future Prediction is so difficult! May be you can Hold... Not sure.","There were sparks in my system after seeing such a complex market! I would say Hold... but not sure.","I am dizzing by seeing this market... By the time I consult my programmer doctor, I can tell you to Hold. But remember, I am not sure."],
                 strongHold:["Spectacular fight going on between Bulls & Bears. Hold and enjoy the show! You can buy lows & sell highs","RagingBulls & FierceBears - support your team and hold for now! You can buy lows & sell highs.","JUST HODL!!","My Artificial Intelligence sees a ranging market. Go long at lows and short at highs.","I can see a lot of ups and downs in the market... You must have developed pain in your neck. Don't worry, just Hold!","I would just say: Sit back, relax and hold! But I you are too active trader for this, Buy the lows and sell the highs","Just go Long when you see a low, go Short when you see high. Remember- Don't be too greedy!"],
-                marketSent:["My robotic brain sees a pretty (PosNeg) market sentiment.","The news predict a (BullBear)ish market ahead.","My robotic wind sensors are confirming the presence of a lots of (BullBear)s around. Be careful... They may be around you."],
+                marketSent:["My robotic brain sees a pretty (PosNeg) market sentiment.","The news predict a (BullBear)ish market ahead.","My robotic wind sensors are confirming the smell of a lots of (BullBear)s around. Be careful... They may be around you."],
                 outage:["There were some short circuits in my brain while predicting future! I am in a self healing mode right now..."]};
     var sigArray={
       	MacdMfi:"none",
@@ -382,7 +382,7 @@ async function calcPatterns(){
             (buyCount>sellCount) ? (sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive") : (sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative");
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             mainString=quotes.mainStrong[randomQuote];
-            mainString=mainString.replace("(Sign)",sign); mainString=mainString.replace("(OppSign)",oppSign); mainString=mainString.replace("(BullBear)",bullBear); mainString=mainString.replace("(PosNeg)",posNeg);
+            mainString=mainString.replace(/\(Sign\)/g,sign); mainString=mainString.replace(/\(OppSign\)/g,oppSign); mainString=mainString.replace(/\(BullBear\)/g,bullBear); mainString=mainString.replace(/\(PosNeg\)/g,posNeg);
         }
         else if(strength=="weak"){   
             console.log("here weak sign");
@@ -390,21 +390,21 @@ async function calcPatterns(){
             (buyCount>sellCount) ? (sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive") : (sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative");
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             mainString=quotes.mainWeak[randomQuote];
-            mainString=mainString.replace("(Sign)",sign); mainString=mainString.replace("(OppSign)",oppSign); mainString=mainString.replace("(BullBear)",bullBear); mainString=mainString.replace("(PosNeg)",posNeg);
+            mainString=mainString.replace(/\(Sign\)/g,sign); mainString=mainString.replace(/\(OppSign\)/g,oppSign); mainString=mainString.replace(/\(BullBear\)/g,bullBear); mainString=mainString.replace(/\(PosNeg\)/g,posNeg);
         }
         else if(strength=="hold" && adxTrend[0]=="range"){            
             let noOfQuotes=quotes.strongHold.length;
             (buyCount>sellCount) ? (sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive") : (sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative");
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             mainString=quotes.strongHold[randomQuote];
-            mainString=mainString.replace("(Sign)",sign); mainString=mainString.replace("(OppSign)",oppSign); mainString=mainString.replace("(BullBear)",bullBear); mainString=mainString.replace("(PosNeg)",posNeg);
+            mainString=mainString.replace(/\(Sign\)/g,sign); mainString=mainString.replace(/\(OppSign\)/g,oppSign); mainString=mainString.replace(/\(BullBear\)/g,bullBear); mainString=mainString.replace(/\(PosNeg\)/g,posNeg);
         }
         else if(strength=="hold" && adxTrend[0]=="trend"){            
             let noOfQuotes=quotes.weakHold.length;
             (buyCount>sellCount) ? (sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive") : (sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative");
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             mainString=quotes.weakHold[randomQuote];
-            mainString=mainString.replace("(Sign)",sign); mainString=mainString.replace("(OppSign)",oppSign); mainString=mainString.replace("(BullBear)",bullBear); mainString=mainString.replace("(PosNeg)",posNeg);
+            mainString=mainString.replace(/\(Sign\)/g,sign); mainString=mainString.replace(/\(OppSign\)/g,oppSign); mainString=mainString.replace(/\(BullBear\)/g,bullBear); mainString=mainString.replace(/\(PosNeg\)/g,posNeg);
         }
 
         if(sigArray.Stars=="buy"){
@@ -412,18 +412,35 @@ async function calcPatterns(){
             sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive";
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             starString=quotes.stars[randomQuote];
-            starString=starString.replace("(Sign)",sign); starString=starString.replace("(OppSign)",oppSign); starString=starString.replace("(BullBear)",bullBear); starString=starString.replace("(PosNeg)",posNeg);
-            starString="However,"+starString
+            starString=starString.replace(/\(Sign\)/g,sign); starString=starString.replace(/\(OppSign\)/g,oppSign); starString=starString.replace(/\(BullBear\)/g,bullBear); starString=starString.replace(/\(PosNeg\)/g,posNeg);
+            starString="However,"+starString;
         }
         else if(sigArray.Stars=="sell"){
             let noOfQuotes=quotes.stars.length;
             sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative";
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
             starString=quotes.stars[randomQuote];
-            starString=starString.replace("(Sign)",sign); starString=starString.replace("(OppSign)",oppSign); starString=starString.replace("(BullBear)",bullBear); starString=starString.replace("(PosNeg)",posNeg);
-            starString="However,"+starString
+            starString=starString.replace(/\(Sign\)/g,sign); starString=starString.replace(/\(OppSign\)/g,oppSign); starString=starString.replace(/\(BullBear\)/g,bullBear); starString=starString.replace(/\(PosNeg\)/g,posNeg);
+            starString="However,"+starString;
         }
-        marketString=" I am still learning to identify Market Sentiment."
+
+        if(document.getElementById("marketSentiment").textContent=="Positive"){
+            let noOfQuotes=quotes.marketSent.length;
+            sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive";
+            let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
+            marketString=quotes.marketSent[randomQuote];
+            marketString=marketString.replace(/\(Sign\)/g,sign); marketString=marketString.replace(/\(OppSign\)/g,oppSign); marketString=marketString.replace(/\(BullBear\)/g,bullBear); marketString=marketString.replace(/\(PosNeg\)/g,posNeg);
+            marketString=" "+marketString;
+        }
+        else if(document.getElementById("marketSentiment").textContent=="Negative"){
+            let noOfQuotes=quotes.marketSent.length;
+            sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative";
+            let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
+            marketString=quotes.marketSent[randomQuote];
+            marketString=marketString.replace(/\(Sign\)/g,sign); marketString=marketString.replace(/\(OppSign\)/g,oppSign); marketString=marketString.replace(/\(BullBear\)/g,bullBear); marketString=marketString.replace(/\(PosNeg\)/g,posNeg);
+            marketString=" "+marketString;
+        }
+        // marketString=" I am still learning to identify Market Sentiment."
         var finalString=mainString+starString+marketString;  
         // document.getElementById("AIPredictionSpan").innerHTML=finalString;
         var i = 0;

@@ -6,10 +6,12 @@ if(isset($_POST["newsObj"])){
     $postObj=$_POST["newsObj"];
     // error_log($postObj);
     $newsObj=json_decode($postObj,true);
-    // error_log(json_encode($newsObj));
+    error_log(json_encode($newsObj));
     $latestNewsId=$newsObj["latestNewsId"];
     $marketSent=$newsObj["finalMarketSent"];
     $newsObj=$newsObj["newsObj"];
+    error_log("!!!");
+    error_log($marketSent);
     // error_log(json_encode($newsObj));
     // error_log($latestNewsId);
     if($newsObj!="" && $newsObj!="{}" && $newsObj!="[]" && $latestNewsId!=0){
@@ -23,7 +25,7 @@ if(isset($_POST["newsObj"])){
         fclose($latestIdsFile);
 
         error_log((string)$marketSent);
-        $latestMktSntFile = fopen("finalMarketSentiment.json", "w") or die("Unable to open file market sentiment!");
+        $latestMktSntFile = fopen("finalMarketSentiment.txt", "w") or die("Unable to open file market sentiment!");
         fwrite($latestMktSntFile, (string)$marketSent);   //145826
         fclose($latestMktSntFile);
     }

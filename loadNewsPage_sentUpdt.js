@@ -138,6 +138,9 @@ xhttp.onreadystatechange = function () {
                         '</li>';
             }
             latestNewsId=0;
+            totPosNews=0;
+            totNegNews=0;
+            finalMarketSent="";
             for (var dataNews in allNewsObj.Data) {
                   if(allNewsObj.Data[dataNews].body.indexOf("submitted sponsored story")!=-1 || allNewsObj.Data[dataNews].body.indexOf("paid-for submitted")!=-1)
                         continue;
@@ -153,9 +156,6 @@ xhttp.onreadystatechange = function () {
                   var currSentiment="";
                   var sentClass="";
                   var sentArray=allNewsObj.Data[dataNews].sentiment.split("&");
-                  totPosNews=0;
-                  totNegNews=0;
-                  finalMarketSent="";
                   if(parseFloat(sentArray[0])>parseFloat(sentArray[1])){
                         sentClass='label-success';
                         currSentiment='Positive';
@@ -218,6 +218,8 @@ xhttp.onreadystatechange = function () {
                         currSentiment+
                         '</div></li>';
             }
+            console.log(totPosNews);
+            console.log(totNegNews);
             if(totPosNews>totNegNews)
                   finalMarketSent="Positive";
             else if(totPosNews<totNegNews)

@@ -1,3 +1,4 @@
+function loadNewsPage(requestBy){
 var xhttp = new XMLHttpRequest();
 var newsContent = '<ul class="timeline">';
 var analysisNewsContent = '<ul class="timeline AnalysisTimeline">';
@@ -144,6 +145,8 @@ xhttp.onreadystatechange = function () {
                         currSentiment='Neutral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'positive=&nbsp;'+parseFloat(sentArray[0]).toFixed(2)+'%&nbsp;&nbsp;&nbsp;negative=&nbsp;'+parseFloat(sentArray[1]).toFixed(2)+'%'
                   }
                   if (analysisNews) {
+                        if(requestBy==2)
+                              analysisHeaderSet=true;
                         if(!analysisHeaderSet){
                               analysisNewsContent = analysisNewsContent + '<li class="time-label">' +
                                     '<span class="bg-orange" id="analysisNewsBegin">' +
@@ -195,3 +198,4 @@ xhttp.onreadystatechange = function () {
 //xhttp.open("GET", "https://min-api.cryptocompare.com/data/v2/news/?lang=EN", true);
 xhttp.open("GET", "currentNews.json", true);
 xhttp.send();
+}

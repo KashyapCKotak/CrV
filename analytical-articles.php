@@ -42,6 +42,7 @@
       var globalCryptoValue="BTC";
       var globalFiatValue="USD";
     </script>
+    <script src="updateIfNewNews.js"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -82,7 +83,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <img src=
                   <?php
-                    if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                    if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                       echo '"dist/img/notSigned.jpg"';
                     }
                     else {
@@ -92,7 +93,7 @@
                   class="user-image" alt="User Image">
                 <span class="hidden-xs">
                 <?php 
-                  if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                  if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                     echo 'Sign In';
                   }
                   else {
@@ -106,7 +107,7 @@
                   <li class="user-header">
                     <img src=
                       <?php
-                        if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                        if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                           echo '"dist/img/notSigned.jpg"';
                         }
                         else {
@@ -117,7 +118,7 @@
                     <p style="font-size: 25px">
                       <strong>
                       <?php
-                        if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                        if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                           echo 'Anonymous User';
                         }
                         else {
@@ -130,7 +131,7 @@
                   <!-- Menu Footer-->
                   <li class="user-footer">
                     <?php
-                      if (!isset($_SESSION['cryptoview_user']) || $_SESSION['cryptoview_user'] == ''){
+                      if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         echo '<div class="pull-left">
                       <a href="pages/login.php" name="signin" class="btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
                       </div>';
@@ -455,12 +456,14 @@
             </div>
           </div>
         </div>
+        <div id="latestNewsId" style="display:none"></div>
+        <div id="new_news" style="display:none"></div>
         <script src="livedatatop.js"></script>
         <!-- Content Header (Page header) -->
-        <section class="content-header">
+        <section class="content-header" style=" margin-bottom: 10px;margin-top:  10px;">
           <h1 style="text-align:center">
-            News & Analysis
-            <br><small>Combinig more than 19 news & analysis sources, worldwide</small>
+            Crypto Analysis
+            <br><small>Combinig more than 19 news analysis sources, worldwide</small>
           </h1>
         </section>
         <!-- Main content -->
@@ -471,11 +474,11 @@
               <div class="loader"></div>
             </div>
             <div id="newsAnchor"></div>
-            <div id="timelineNews" class="col-md-8" style="padding-right: 10px; padding-left: 10px">
+            <div id="timelineNews" class="col-md-8" style="padding-right: 10px; padding-left: 10px; display:none">
               <!-- The time line -->
             </div>
             <div id="analysisAnchor"></div>
-            <div id="analysisNews" class="col-md-4" style="padding-right: 10px; padding-left: 10px">
+            <div id="analysisNews" class="col-md-8" style="padding-right: 10px; padding-left: 10px">
               <!-- The time line -->
             </div>
             <!-- /.col -->
@@ -486,6 +489,9 @@
       </div>
       <!-- /.content-wrapper -->
       <script src="loadNewsPage.js"></script>
+      <script type="text/javascript">
+        loadNewsPage(2);
+      </script>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.4.0

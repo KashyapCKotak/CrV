@@ -4,6 +4,7 @@
 <head>
   <?php
     session_start();
+    $marketSent=file_get_contents("finalMarketSentiment.txt");
   ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -382,6 +383,7 @@
           </div>
         </div>
       </div>
+      <div id="marketSentiment" style="display:none"><?php echo $marketSent;?></div>
       <!-- <script src="livedatatop.js"></script> -->
       <!-- Content Header (Page header) -->
       <script type="text/javascript">

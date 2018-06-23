@@ -489,6 +489,9 @@
       </div>
       <!-- /.content-wrapper -->
       <script src="loadNewsPage.js"></script>
+      <script type="text/javascript">
+        loadNewsPage(1);
+      </script>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
           <b>Version</b> 2.4.0
