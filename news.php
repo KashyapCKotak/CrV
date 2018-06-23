@@ -42,6 +42,7 @@
       var globalCryptoValue="BTC";
       var globalFiatValue="USD";
     </script>
+    <script src="updateIfNewNews.js"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -455,6 +456,8 @@
             </div>
           </div>
         </div>
+        <div id="latestNewsId" style="display:none"></div>
+        <div id="new_news" style="display:none"></div>
         <script src="livedatatop.js"></script>
         <!-- Content Header (Page header) -->
         <section class="content-header">

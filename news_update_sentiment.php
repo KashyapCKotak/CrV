@@ -36,8 +36,8 @@
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <script>
       $.widget.bridge('uibutton', $.ui.button);
-      $(document).ajaxStart(function() { Pace.restart(); });
     </script>
+    <script src="updateIfNewNews.js"></script>
     <script type="text/javascript">
       var globalCryptoValue="BTC";
       var globalFiatValue="USD";
@@ -455,7 +455,8 @@
             </div>
           </div>
         </div>
-        <div id="latestNewsId" style="display:hidden"></div>
+        <div id="latestNewsId" style="display:block"></div>
+        <div id="new_news" style="display:block"></div>
         <script src="livedatatop.js"></script>
         <!-- Content Header (Page header) -->
         <section class="content-header">
@@ -748,6 +749,5 @@
                       })
                     
     </script>
-    <script src="updateIfNewNews.js"></script>
   </body>
 </html>
