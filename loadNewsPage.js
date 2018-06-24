@@ -167,10 +167,10 @@ xhttp.onreadystatechange = function () {
                               '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Data[dataNews].body +
                               '</div></div>' +
                               '</div>' +
-                              '</li>'+
+                              '</li>';/*+
                               '<li><div class="timeline-item-sentiment '+sentClass+'">'+
                               currSentiment+
-                              '</div></li>';
+                              '</div></li>';*/
                   }
                   newsContent = newsContent + '<li>' +
                         '<div class="timeline-item">' +

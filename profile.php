@@ -237,13 +237,13 @@ session_start();
                 </li>
                 <li class="list-group-item">
                   <b>Cryptocurrencies<br>Invested</b> <a class="pull-right">
-                  <scrpit type="text/javascript">
-                    var myPrsnPort = <?php
+                  <script type="text/javascript">
+                    myPrsnPort = <?php
                     if(isset($_SESSION['prsn_portfolio']) && $_SESSION['prsn_portfolio'] != ''){
                       echo $_SESSION['prsn_portfolio'];
                     }
                     else
-                      echo "NotSet";
+                      echo "'NotSet'";
                     ?>;
                     // var totPrsnPort=0;
                     // if(myPrsnPort!="NotSet"){
@@ -261,8 +261,8 @@ session_start();
                     //     document.write("None yet. Invest!<br>Start Something New!");
                     // }
                     // else
-                    //  document.write("Login again"); 
-                  </scrpit>
+                    //document.write("Login again"); 
+                  </script>
                   <!--<?php
                     if(!isset($_SESSION['prsn_portfolio']) || $_SESSION['prsn_portfolio'] == ''){
                       echo "Login again";

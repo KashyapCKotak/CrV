@@ -10,8 +10,6 @@ if(isset($_POST["newsObj"])){
     $latestNewsId=$newsObj["latestNewsId"];
     $marketSent=$newsObj["finalMarketSent"];
     $newsObj=$newsObj["newsObj"];
-    error_log("!!!");
-    error_log($marketSent);
     // error_log(json_encode($newsObj));
     // error_log($latestNewsId);
     if($newsObj!="" && $newsObj!="{}" && $newsObj!="[]" && $latestNewsId!=0){

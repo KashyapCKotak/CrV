@@ -15,7 +15,6 @@ function updateIfNewNes(){
             for (var dataNews in allNewsObj.Data) {
                 if(latestNewsId<parseInt(allNewsObj.Data[dataNews].id)){
                     latestNewsId=parseInt(allNewsObj.Data[dataNews].id);
-                    allNewsObj.Data[dataNews].sentiment="-1&-1";
                 }
             }
             if(oldLatestNewsId<latestNewsId){
@@ -25,6 +24,11 @@ function updateIfNewNes(){
                 console.log("http://localhost/adminlte-2.4.2/newNews_v2.php?newNewsId="+latestNewsId);
                 newNewsXmlHttp.open("GET", "http://localhost/adminlte-2.4.2/newNews_v2.php?newNewsId="+latestNewsId, true); 
                 newNewsXmlHttp.send(null);  
+                // $.ajax({
+                //     type: "POST",
+                //     url: 'http://localhost/adminlte-2.4.2/updateSentiment.php',
+                //     data: {"newsObj":JSON.stringify(tempObj)}
+                // });
                 //alert("It seems that there are latest news articles which were not cached since you loaded the page. Please reload the page once to view latest news.");
                 
             }

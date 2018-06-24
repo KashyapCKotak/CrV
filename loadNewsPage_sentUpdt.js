@@ -159,13 +159,13 @@ xhttp.onreadystatechange = function () {
                   if(parseFloat(sentArray[0])>parseFloat(sentArray[1])){
                         sentClass='label-success';
                         currSentiment='Positive';
-                        currSentiment='Positive&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'positive=&nbsp;'+parseFloat(sentArray[0]).toFixed(2)+'%&nbsp;&nbsp;&nbsp;negative=&nbsp;'+parseFloat(sentArray[1]).toFixed(2)+'%'
+                        currSentiment='<span class="newIds" id="'+allNewsObj.Data[dataNews].id+'">Positive &nbsp;&nbsp; positive<input type="text" name="pos" id="'+ allNewsObj.Data[dataNews].id +'pos" style="color:#000;width:40px" value="'+parseFloat(sentArray[0]).toFixed(2)+'">%     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   negative<input type="text" name="neg" id="'+ allNewsObj.Data[dataNews].id +'neg" style="color:#000;width:40px" value="'+parseFloat(sentArray[1]).toFixed(2)+'">% &nbsp;&nbsp;id:'+allNewsObj.Data[dataNews].id+'</span>';
                         totPosNews++;
                   }
                   else if(parseFloat(sentArray[0])<parseFloat(sentArray[1])){
                         sentClass='label-danger';
                         currSentiment='Negative';
-                        currSentiment='Negative&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'positive=&nbsp;'+parseFloat(sentArray[0]).toFixed(2)+'%&nbsp;&nbsp;&nbsp;negative=&nbsp;'+parseFloat(sentArray[1]).toFixed(2)+'%'
+                        currSentiment='<span class="newIds" id="'+allNewsObj.Data[dataNews].id+'">Negative &nbsp;&nbsp; positive<input type="text" name="pos" id="'+ allNewsObj.Data[dataNews].id +'pos" style="color:#000;width:40px" value="'+parseFloat(sentArray[0]).toFixed(2)+'">%     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   negative<input type="text" name="neg" id="'+ allNewsObj.Data[dataNews].id +'neg" style="color:#000;width:40px" value="'+parseFloat(sentArray[1]).toFixed(2)+'">% &nbsp;&nbsp;id:'+allNewsObj.Data[dataNews].id+'</span>';
                         totNegNews++;
                   }
                   else if(parseInt(sentArray[0])==-1&&parseInt(sentArray[1])==-1){
@@ -176,7 +176,7 @@ xhttp.onreadystatechange = function () {
                   else{
                         sentClass='label-warning';
                         currSentiment='Neutral';
-                        currSentiment='Neutral&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+'positive=&nbsp;'+parseFloat(sentArray[0]).toFixed(2)+'%&nbsp;&nbsp;&nbsp;negative=&nbsp;'+parseFloat(sentArray[1]).toFixed(2)+'%'
+                        currSentiment='<span class="newIds" id="'+allNewsObj.Data[dataNews].id+'">Neutral &nbsp;&nbsp; positive<input type="text" name="pos" id="'+ allNewsObj.Data[dataNews].id +'pos" style="color:#000;width:40px" value="'+parseFloat(sentArray[0]).toFixed(2)+'">%     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   negative<input type="text" name="neg" id="'+ allNewsObj.Data[dataNews].id +'neg" style="color:#000;width:40px" value="'+parseFloat(sentArray[1]).toFixed(2)+'">% &nbsp;&nbsp;id:'+allNewsObj.Data[dataNews].id+'</span>';
                   }
                   if (analysisNews) {
                         if(!analysisHeaderSet){
@@ -199,10 +199,10 @@ xhttp.onreadystatechange = function () {
                               '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Data[dataNews].body +
                               '</div></div>' +
                               '</div>' +
-                              '</li>'+
+                              '</li>';/*+
                               '<li><div class="timeline-item-sentiment '+sentClass+'">'+
                               currSentiment+
-                              '</div></li>';
+                              '</div></li>';*/
                   }
                   newsContent = newsContent + '<li>' +
                         '<div class="timeline-item">' +
