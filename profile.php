@@ -232,9 +232,9 @@ session_start();
               <p class="text-muted text-center">Golden User</p>
 
               <ul class="list-group list-group-unbordered">
-								<li class="list-group-item">
+								<!-- <li class="list-group-item">
                   <b>Rank</b> <a class="pull-right">13,287</a>
-                </li>
+                </li> -->
                 <li class="list-group-item">
                   <b>Cryptocurrencies<br>Invested</b> <a class="pull-right">
                   <script type="text/javascript">
@@ -389,8 +389,8 @@ session_start();
               <div class="tab-pane" id="settings">
                 <form class="form-horizontal" action="" method="get">
                   <div class="profile-form-entry">
-                    <label for="inputName" class="col-sm-4 control-label">Base Currency :</label>
-                    <div class="col-sm-8">
+                    <label for="inputName" class="col-xs-4 col-sm-4 control-label">Base Currency:</label>
+                    <div class="col-xs-2 col-sm-8">
                     <select name="baseCurrency" id="fiatSelectBox" class="form-control select2" style="width:auto" onchange="selectFiat()">
                       <option id="default-fiat" selected="selected">INR</option>
                       <option>CNY</option>
@@ -423,18 +423,19 @@ session_start();
                     </div>
                   </div>
                   <div class="profile-form-entry">
-                    <label for="inputEmail" class="col-sm-4 control-label">Receive Daily Updates on Mail :</label>
-                    <div class="col-sm-8">
+                    <label for="inputEmail" class="col-xs-4 col-sm-4 control-label">Mail daily updates:</label>
+                    <div class="col-xs-4 col-sm-8">
                       <!-- Rounded switch -->
                       <label class="switch">
                         <input name="mail" type="checkbox">
                         <span class="slider round"></span>
                       </label>
+                      <span style="padding-top:8px;padding-left:7px;position:absolute">Coming Soon!</span>
                     </div>
                   </div>
                   <div class="profile-form-entry" style="margin-top:80px">
-                    <button name="save" type="submit" class="col-sm-4 col-md-2 btn btn-success" style="float:right;margin:0px 5px 0px 5px">Save</button>
-                    <button type="button" class="col-sm-4 col-md-2 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
+                    <button name="save" type="submit" class="col-xs-3 col-sm-2 col-md-1 btn btn-success" style="float:right;margin:0px 15px 0px 5px">Save</button>
+                    <button type="button" class="col-xs-3 col-sm-2 col-md-1 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
                   </div>
                 </form>
               </div>
@@ -442,8 +443,8 @@ session_start();
               <div class="active tab-pane" id="info">
                 <form class="form-horizontal" action="" method="get">
                   <div class="profile-form-entry">
-                    <label for="inputName" class="col-sm-4 control-label">Cryptos Invested:</label>
-                    <div class="col-sm-4">
+                    <label for="inputName" class="col-sm-4 control-label" style="font-weight:400">Cryptos Invested:</label>
+                    <div class="col-sm-2" style="padding-top:7px;font-weight:650">
                       <script type="text/javascript">
                         var fiatArray=Object.keys(myPrsnPort);
                         document.write(fiatArray);
@@ -451,18 +452,30 @@ session_start();
                     </div>
                   </div>
                   <div class="profile-form-entry">
-                    <label for="inputEmail" class="col-sm-4 control-label">Receive Daily Updates on Mail :</label>
-                    <div class="col-sm-8">
-                      <!-- Rounded switch -->
-                      <label class="switch">
-                        <input name="mail" type="checkbox">
-                        <span class="slider round"></span>
-                      </label>
+                    <label for="inputName" class="col-sm-4 control-label" style="font-weight:400">Fiats used for Investing:</label>
+                    <div class="col-sm-2" style="padding-top:7px;font-weight:650">
+                      <script type="text/javascript">
+                        document.write(cryptosPrsn);
+                      </script>
                     </div>
                   </div>
-                  <div class="profile-form-entry" style="margin-top:80px">
-                    <button name="save" type="submit" class="col-sm-4 col-md-2 btn btn-success" style="float:right;margin:0px 5px 0px 5px">Save</button>
-                    <button type="button" class="col-sm-4 col-md-2 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
+                  <hr style="width:95%">
+                  <div class="profile-form-entry">
+                    <label for="inputName" class="col-sm-4 control-label" style="font-weight:400">Cryptos Practicing:</label>
+                    <div class="col-sm-2" style="padding-top:7px;font-weight:650">
+                      <script type="text/javascript">
+                        var fiatArray=Object.keys(myPrtcPort);
+                        document.write(fiatArray);
+                      </script>
+                    </div>
+                  </div>
+                  <div class="profile-form-entry">
+                    <label for="inputName" class="col-sm-4 control-label" style="font-weight:400">Fiats used for Practicing:</label>
+                    <div class="col-sm-2" style="padding-top:7px;font-weight:650">
+                      <script type="text/javascript">
+                        document.write(cryptosPrtc);
+                      </script>
+                    </div>
                   </div>
                 </form>
               </div>

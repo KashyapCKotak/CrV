@@ -6,6 +6,14 @@
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
 /* The typing effect */
+@media (min-width: 397px){
+.form-horizontal .control-label {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: right;
+}
+}
+
 #AIPredictionSpan {
     color:#00468C;
     text-shadow: 0 0 6px #5af85a;
