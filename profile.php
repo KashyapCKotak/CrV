@@ -39,7 +39,7 @@ session_start();
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse">
 <div class="wrapper">
 
   <header class="main-header">
@@ -238,32 +238,32 @@ session_start();
                 <li class="list-group-item">
                   <b>Cryptocurrencies<br>Invested</b> <a class="pull-right">
                   <script type="text/javascript">
-                    myPrsnPort = <?php
+                    var myPrsnPort = <?php
                     if(isset($_SESSION['prsn_portfolio']) && $_SESSION['prsn_portfolio'] != ''){
                       echo $_SESSION['prsn_portfolio'];
                     }
                     else
                       echo "'NotSet'";
                     ?>;
-                    // var totPrsnPort=0;
-                    // if(myPrsnPort!="NotSet"){
-                    //   var prsnRootFiat=Object.keys(myPrsnPort)[0];
-                    //   myPrsnPort=myPrsnPort[prsnRootFiat];
-                    //   var cryptosPrsn=[];
-                    //   for(fiatPort in myPrsnPort)
-                    //     for(cryptoPort in myPrsnPort[fiatPort]){
-                    //       if(!cryptosPrsn.includes[cryptoPort])
-                    //         cryptosPrsn.push(cryptoPort);
-                    //     }
-                    //   if(cryptosPrsn.length!=0)
-                    //     document.write(cryptosPrsn.length);
-                    //   else
-                    //     document.write("None yet. Invest!<br>Start Something New!");
-                    // }
-                    // else
-                    //document.write("Login again"); 
+                    var totPrsnPort=0;
+                    if(myPrsnPort!="NotSet"){
+                      var prsnRootFiat=Object.keys(myPrsnPort)[0];
+                      myPrsnPort=myPrsnPort[prsnRootFiat];
+                      var cryptosPrsn=[];
+                      for(fiatPort in myPrsnPort)
+                        for(cryptoPort in myPrsnPort[fiatPort]){
+                          if(!cryptosPrsn.includes(cryptoPort))
+                            cryptosPrsn.push(cryptoPort);
+                        }
+                      if(cryptosPrsn.length!=0)
+                        document.write(cryptosPrsn.length);
+                      else
+                        document.write("None yet. Invest!<br>Start Something New!");
+                    }
+                    else
+                    document.write("Login again"); 
                   </script>
-                  <!--<?php
+                  <!--</?php
                     if(!isset($_SESSION['prsn_portfolio']) || $_SESSION['prsn_portfolio'] == ''){
                       echo "Login again";
                     }
@@ -282,7 +282,7 @@ session_start();
                 </li>
                 <li class="list-group-item">
                   <b>Cryptocurrencies<br>Practicing</b> <a class="pull-right">
-                  <scrpit>
+                  <script>
                     var myPrtcPort = <?php
                     if(isset($_SESSION['prtc_portfolio']) && $_SESSION['prtc_portfolio'] != ''){
                       echo $_SESSION['prtc_portfolio'];
@@ -297,7 +297,7 @@ session_start();
                       var cryptosPrtc=[];
                       for(fiatPort in myPrtcPort)
                         for(cryptoPort in myPrtcPort[fiatPort]){
-                          if(!cryptosPrtc.includes[cryptoPort])
+                          if(!cryptosPrtc.includes(cryptoPort))
                             cryptosPrtc.push(cryptoPort);
                         }
                       if(cryptosPrtc.length!=0)
@@ -307,8 +307,8 @@ session_start();
                     }
                     else
                      document.write("Login again"); 
-                  </scrpit>
-                  <!--<?php
+                  </script>
+                  <!--</?php
                     if(!isset($_SESSION['prtc_portfolio']) || $_SESSION['prtc_portfolio'] == ''){
                       echo "Login again";
                     }
@@ -378,14 +378,15 @@ session_start();
         <div class="col-md-9">
           <div class="nav-tabs-custom">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="#settings" data-toggle="tab">Settings</a></li>
+              <li class="active"><a href="#info" data-toggle="tab">Info</a></li>
+              <li><a href="#settings" data-toggle="tab">Settings</a></li>
               <!-- <li><a href="#activity" data-toggle="tab">Activity</a></li>
               <li><a href="#timeline" data-toggle="tab">Timeline</a></li> -->
             </ul>
             <div class="tab-content">
               
             
-              <div class="active tab-pane" id="settings">
+              <div class="tab-pane" id="settings">
                 <form class="form-horizontal" action="" method="get">
                   <div class="profile-form-entry">
                     <label for="inputName" class="col-sm-4 control-label">Base Currency :</label>
@@ -432,8 +433,36 @@ session_start();
                     </div>
                   </div>
                   <div class="profile-form-entry" style="margin-top:80px">
-                    <button type="button" class="col-sm-4 col-md-2 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
                     <button name="save" type="submit" class="col-sm-4 col-md-2 btn btn-success" style="float:right;margin:0px 5px 0px 5px">Save</button>
+                    <button type="button" class="col-sm-4 col-md-2 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
+                  </div>
+                </form>
+              </div>
+              <!-- /.tab-pane -->
+              <div class="active tab-pane" id="info">
+                <form class="form-horizontal" action="" method="get">
+                  <div class="profile-form-entry">
+                    <label for="inputName" class="col-sm-4 control-label">Cryptos Invested:</label>
+                    <div class="col-sm-4">
+                      <script type="text/javascript">
+                        var fiatArray=Object.keys(myPrsnPort);
+                        document.write(fiatArray);
+                      </script>
+                    </div>
+                  </div>
+                  <div class="profile-form-entry">
+                    <label for="inputEmail" class="col-sm-4 control-label">Receive Daily Updates on Mail :</label>
+                    <div class="col-sm-8">
+                      <!-- Rounded switch -->
+                      <label class="switch">
+                        <input name="mail" type="checkbox">
+                        <span class="slider round"></span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="profile-form-entry" style="margin-top:80px">
+                    <button name="save" type="submit" class="col-sm-4 col-md-2 btn btn-success" style="float:right;margin:0px 5px 0px 5px">Save</button>
+                    <button type="button" class="col-sm-4 col-md-2 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
                   </div>
                 </form>
               </div>
