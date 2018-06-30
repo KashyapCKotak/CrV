@@ -4,7 +4,7 @@
   <?php
   include ($_SERVER['DOCUMENT_ROOT'].'/AdminLTE-2.4.2/pages/checkLogin.php');
   ?>
-  <script src="mobileConsole.js"></script>
+  <!-- <script src="mobileConsole.js"></script> -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>AdminLTE 2 | Portfolio</title>

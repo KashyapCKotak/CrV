@@ -38,8 +38,14 @@ session_start();
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <script type="text/javascript">
+    function onLoad(){
+      $("#fiatSelectBox").val(prsnRootFiat);
+      $('#fiatSelectBox').trigger('change');
+    }
+  </script>
 </head>
-<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse">
+<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="onLoad()">
 <div class="wrapper">
 
   <header class="main-header">
@@ -247,7 +253,7 @@ session_start();
                     ?>;
                     var totPrsnPort=0;
                     if(myPrsnPort!="NotSet"){
-                      var prsnRootFiat=Object.keys(myPrsnPort)[0];
+                      prsnRootFiat=Object.keys(myPrsnPort)[0];
                       myPrsnPort=myPrsnPort[prsnRootFiat];
                       var cryptosPrsn=[];
                       for(fiatPort in myPrsnPort)
@@ -292,7 +298,7 @@ session_start();
                     ?>;
                     var totPrtcPort=0;
                     if(myPrtcPort!="NotSet"){
-                      var prtcRootFiat=Object.keys(myPrtcPort)[0];
+                      prtcRootFiat=Object.keys(myPrtcPort)[0];
                       myPrtcPort=myPrtcPort[prtcRootFiat];
                       var cryptosPrtc=[];
                       for(fiatPort in myPrtcPort)
@@ -383,42 +389,66 @@ session_start();
               <!-- <li><a href="#activity" data-toggle="tab">Activity</a></li>
               <li><a href="#timeline" data-toggle="tab">Timeline</a></li> -->
             </ul>
+            <script type="text/javascript">
+            function updateBaseCcy(){
+              $.ajax({
+              type: "POST",
+              url: "changeBaseCcy.php",
+              data: { "baseCurrency" : document.getElementById("fiatSelectBox").value},
+              success: function( msg ) {
+                console.log("Done");
+                if(msg == 1){
+                  alert("Base Currency Updated!" );
+                  $("#fiatSelectBox").val(document.getElementById("fiatSelectBox").value);
+                  $('#fiatSelectBox').trigger('change');
+                }
+                else if(msg == 2){
+                  alert("Something went wrong and its very serious. Please contact support immediately" );
+                  $("#fiatSelectBox").val(document.getElementById("fiatSelectBox").value);
+                  $('#fiatSelectBox').trigger('change');
+                }
+                else if(msg == 3){
+                  alert("Base Currency Update Unsuccessful. Please contact support." );
+                }
+              }
+              });
+              return false;
+            }
+            </script>
             <div class="tab-content">
-              
-            
               <div class="tab-pane" id="settings">
-                <form class="form-horizontal" action="" method="get">
+                <form class="form-horizontal" action="" method="post">
                   <div class="profile-form-entry">
                     <label for="inputName" class="col-xs-4 col-sm-4 control-label">Base Currency:</label>
                     <div class="col-xs-2 col-sm-8">
-                    <select name="baseCurrency" id="fiatSelectBox" class="form-control select2" style="width:auto" onchange="selectFiat()">
-                      <option id="default-fiat" selected="selected">INR</option>
-                      <option>CNY</option>
-                      <option>USD</option>
-                      <option>EUR</option>
-                      <option>GBP</option>
-                      <option>JPY</option>
-                      <option>RUB</option>
-                      <option>SGD</option>
-                      <option>KRW</option>
-                      <option>PLN</option>
-                      <option>HUF</option>
-                      <option>AUD</option>
-                      <option>CAD</option>
-                      <option>ZAR</option>
-                      <option>SEK</option>
-                      <option>AED</option>
-                      <option>INR</option>
-                      <option>DKK</option>
-                      <option>MXN</option>
-                      <option>RON</option>
-                      <option>CHF</option>
-                      <option>NOK</option>
-                      <option>PHP</option>
-                      <option>HKD</option>
-                      <option>CZK</option>
-                      <option>BRL</option>
-                      <option>VEF</option>
+                    <select name="baseCurrency" id="fiatSelectBox" class="form-control select2" style="width:auto">
+                    <option value="INR">INR</option>
+                    <option value="CNY">CNY</option>
+                    <option value="USD">USD</option>
+                    <option value="EUR">EUR</option>
+                    <option value="GBP">GBP</option>
+                    <option value="JPY">JPY</option>
+                    <option value="RUB">RUB</option>
+                    <option value="SGD">SGD</option>
+                    <option value="KRW">KRW</option>
+                    <option value="PLN">PLN</option>
+                    <option value="HUF">HUF</option>
+                    <option value="AUD">AUD</option>
+                    <option value="CAD">CAD</option>
+                    <option value="ZAR">ZAR</option>
+                    <option value="SEK">SEK</option>
+                    <option value="AED">AED</option>
+                    <option value="INR">INR</option>
+                    <option value="DKK">DKK</option>
+                    <option value="MXN">MXN</option>
+                    <option value="RON">RON</option>
+                    <option value="CHF">CHF</option>
+                    <option value="NOK">NOK</option>
+                    <option value="PHP">PHP</option>
+                    <option value="HKD">HKD</option>
+                    <option value="CZK">CZK</option>
+                    <option value="BRL">BRL</option>
+                    <option value="VEF">VEF</option>
                     </select>
                     </div>
                   </div>
@@ -434,8 +464,8 @@ session_start();
                     </div>
                   </div>
                   <div class="profile-form-entry" style="margin-top:80px">
-                    <button name="save" type="submit" class="col-xs-3 col-sm-2 col-md-1 btn btn-success" style="float:right;margin:0px 15px 0px 5px">Save</button>
-                    <button type="button" class="col-xs-3 col-sm-2 col-md-1 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
+                    <button name="save" type="button" onclick="updateBaseCcy()" class="col-xs-3 col-sm-2 col-md-1 btn btn-success" style="float:right;margin:0px 15px 0px 5px">Save</button>
+                    <button type="reset" class="col-xs-3 col-sm-2 col-md-1 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
                   </div>
                 </form>
               </div>

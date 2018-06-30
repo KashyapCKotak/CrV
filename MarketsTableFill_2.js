@@ -321,6 +321,41 @@ function updateMarketsDataTblINR(){
     console.log("lowestB: "+lowestB);
     console.log("highestS: "+highestS);
 }
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+var prices={"zebpay":0,"koinex":0,"unocoin":0};
+var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","stats:fiat:crypto:highest_bid/lowest_ask"],
+            "koinex":[1,"https://koinex.in/api/ticker"],
+            "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell",]};
+var pairMark={"BTC/INR":["zebpay","koinex","unocoin"]};
+function dispData(mark,crypto,fiat){
+    let URLnos=markDet[mark][0];
+    let paths=(URLnos==1) ? markDet[mark][1+URLnos] : (URLnos==2) ? markDet[mark][1+URLnos]+"&"+markDet[mark][1+URLnos] : "error";
+    paths=paths.split("&");
+    for(let i=1;i<=URLnos;i++){
+        let xhttpMarket = new XMLHttpRequest();
+        xhttpMarket.onreadystatechange = function() {
+            paths
+            if (this.readyState == 4 && this.status == 200) {
+                let buy=0;
+            }
+        };
+        xhttpMarket.open("GET", markDet[mark][i], true);
+        xhttpMarket.send();
+    }
+}
+function getPairsPrice(crypto,fiat){
+    let pair=market.hasOwnProperty(crypto+"/"+fiat) ? crypto+"/"+fiat : market.hasOwnProperty(fiat+"/"+crypto) ? fiat+"/"+crypto : "absent";
+    if(pair != "absent"){
+        let markets=pairMark[pair];
+        for(mark in markets){
+            dispData(mark,crypto,fiat);
+        }
+    }
+}
+
 
 function updateMarketsDataTblNotINR () {
     var mktSubsTbl=[]; 
