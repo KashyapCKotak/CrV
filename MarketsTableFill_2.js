@@ -326,32 +326,49 @@ function updateMarketsDataTblINR(){
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 var prices={"zebpay":0,"koinex":0,"unocoin":0};
-var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","stats:fiat:crypto:highest_bid/lowest_ask"],
-            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:highest_bid/lowest_ask"],
-            "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell",]};
-var pairMark={"BTC/INR":["zebpay","koinex","unocoin"]};
+var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/sell",[],[],false,false],
+            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:highest_bid/lowest_ask",{"BTC":"bitcoin","ETH":"ether","XRP":"ripple"},[],false,true],
+            "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell","buying_price","selling_price"]};
+var pairMark={"BTC/INR":["zebpay","koinex"]};
 function getData(mark,crypto,fiat){
     console.log(mark);
     let URLnos=markDet[mark][0];
-    let paths=(URLnos==1) ? markDet[mark][1+URLnos] : (URLnos==2) ? markDet[mark][1+URLnos]+"&"+markDet[mark][1+URLnos] : "error";
-    console.log(paths);
-    let paths=paths.replace(/crypto/g,crypto);
-    paths=paths.replace(/fiat/g,fiat);
-    paths=paths.split("&");
-    for(let i=1;i<=URLnos;i++){
-        let marketUrl=markDet[mark][i].replace(/\(crypto\)/g,crypto);
-        marketUrl=marketUrl.replace(/\(fiat\)/g,fiat);
+    let markLength=markDet[mark].length;
+    let paths=(URLnos==1) ? [markDet[mark][1+URLnos]] : (URLnos==2) ? [markDet[mark][1+URLnos],markDet[mark][1+URLnos]] : "error";
+    let newFiat=fiat;
+    let newCrypto=crypto;
+    if(markDet[mark][markLength-1]){
+        newFiat=fiat.toLowerCase();
+    }
+    if(markDet[mark][markLength-2]){
+        newCrypto=crypto.toLowerCase();
+    }
+    if(markDet[mark][markLength-3].length>0){
+        newFiat=markDet[mark][markLength-2][fiat];
+    }
+    if(markDet[mark][markLength-4].length>0){
+        newCrypto=markDet[mark][markLength-2][crypto];
+    }
+    for(let i=1;i<=URLnos;i++){   
+        paths[i-1]=paths[i-1].replace(/crypto/g,newCrypto);
+        paths[i-1]=paths[i-1].replace(/fiat/g,newFiat);
+        let marketUrl=markDet[mark][i].replace(/\(crypto\)/g,newCrypto);
+        marketUrl=marketUrl.replace(/\(fiat\)/g,newFiat);
         let xhttpMarket = new XMLHttpRequest();
         xhttpMarket.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 let currObj=JSON.parse(this.responseText);
-                let currPath=paths[i].split(":");
+                let currPath=paths[i-1].split(":");
                 let buy=0; let sell=0;
-                for(let i=0;i<currPath.length-1;i++){
-                    currObj=currObj[currPath[i]];
+                console.log(currPath);
+                for(let j=0;j<currPath.length-1;j++){
+                    console.log(currPath[j]);
+                    currObj=currObj[currPath[j]];
                 }
-                buy=currObj[currPath[currPath.length-1].split("/")[0]];
-                sell=currObj[currPath[currPath.length-1].split("/")[1]];
+                if(i<=1)
+                    buy=currObj[currPath[currPath.length-1].split("/")[0]];
+                if(i<=2)
+                    sell=currObj[currPath[currPath.length-1].split("/")[1]];
                 console.log("!!!!!!!!!!!!!!!!!!",mark);
                 console.log("buy",buy);
                 console.log("sell",sell);
@@ -361,6 +378,7 @@ function getData(mark,crypto,fiat){
         xhttpMarket.send();
     }
 }
+
 function getPairsPrice(crypto,fiat){
     console.log("in getPairsPrice");
     let pair=pairMark.hasOwnProperty(crypto+"/"+fiat) ? crypto+"/"+fiat : pairMark.hasOwnProperty(fiat+"/"+crypto) ? fiat+"/"+crypto : "absent";
