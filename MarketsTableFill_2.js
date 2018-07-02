@@ -327,35 +327,52 @@ function updateMarketsDataTblINR(){
 //////////////////////////////////////////////////////////////////////////////////////////
 var prices={"zebpay":0,"koinex":0,"unocoin":0};
 var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","stats:fiat:crypto:highest_bid/lowest_ask"],
-            "koinex":[1,"https://koinex.in/api/ticker"],
+            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:highest_bid/lowest_ask"],
             "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell",]};
 var pairMark={"BTC/INR":["zebpay","koinex","unocoin"]};
-function dispData(mark,crypto,fiat){
+function getData(mark,crypto,fiat){
+    console.log(mark);
     let URLnos=markDet[mark][0];
     let paths=(URLnos==1) ? markDet[mark][1+URLnos] : (URLnos==2) ? markDet[mark][1+URLnos]+"&"+markDet[mark][1+URLnos] : "error";
+    console.log(paths);
+    let paths=paths.replace(/crypto/g,crypto);
+    paths=paths.replace(/fiat/g,fiat);
     paths=paths.split("&");
     for(let i=1;i<=URLnos;i++){
+        let marketUrl=markDet[mark][i].replace(/\(crypto\)/g,crypto);
+        marketUrl=marketUrl.replace(/\(fiat\)/g,fiat);
         let xhttpMarket = new XMLHttpRequest();
         xhttpMarket.onreadystatechange = function() {
-            paths
             if (this.readyState == 4 && this.status == 200) {
-                let buy=0;
+                let currObj=JSON.parse(this.responseText);
+                let currPath=paths[i].split(":");
+                let buy=0; let sell=0;
+                for(let i=0;i<currPath.length-1;i++){
+                    currObj=currObj[currPath[i]];
+                }
+                buy=currObj[currPath[currPath.length-1].split("/")[0]];
+                sell=currObj[currPath[currPath.length-1].split("/")[1]];
+                console.log("!!!!!!!!!!!!!!!!!!",mark);
+                console.log("buy",buy);
+                console.log("sell",sell);
             }
         };
-        xhttpMarket.open("GET", markDet[mark][i], true);
+        xhttpMarket.open("GET", marketUrl, true);
         xhttpMarket.send();
     }
 }
 function getPairsPrice(crypto,fiat){
-    let pair=market.hasOwnProperty(crypto+"/"+fiat) ? crypto+"/"+fiat : market.hasOwnProperty(fiat+"/"+crypto) ? fiat+"/"+crypto : "absent";
+    console.log("in getPairsPrice");
+    let pair=pairMark.hasOwnProperty(crypto+"/"+fiat) ? crypto+"/"+fiat : pairMark.hasOwnProperty(fiat+"/"+crypto) ? fiat+"/"+crypto : "absent";
+    console.log(pair);
     if(pair != "absent"){
         let markets=pairMark[pair];
         for(mark in markets){
-            dispData(mark,crypto,fiat);
+            getData(markets[mark],crypto,fiat);
         }
     }
 }
-
+getPairsPrice("BTC","INR");
 
 function updateMarketsDataTblNotINR () {
     var mktSubsTbl=[]; 
