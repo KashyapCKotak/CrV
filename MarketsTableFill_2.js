@@ -326,15 +326,15 @@ function updateMarketsDataTblINR(){
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 var prices={"zebpay":0,"koinex":0,"unocoin":0};
-var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/sell",[],[],false,false],
-            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:highest_bid/lowest_ask",{"BTC":"bitcoin","ETH":"ether","XRP":"ripple"},[],false,true],
-            "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell","buying_price","selling_price"]};
-var pairMark={"BTC/INR":["zebpay","koinex"]};
+var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/sell",false,false],
+            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:highest_bid/lowest_ask",false,true],
+            "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell","selling_price","buying_price",false,false]};
+var pairMark={"BTC/INR":["zebpay","koinex","unocoin"]};
 function getData(mark,crypto,fiat){
     console.log(mark);
     let URLnos=markDet[mark][0];
     let markLength=markDet[mark].length;
-    let paths=(URLnos==1) ? [markDet[mark][1+URLnos]] : (URLnos==2) ? [markDet[mark][1+URLnos],markDet[mark][1+URLnos]] : "error";
+    let paths=(URLnos==1) ? [markDet[mark][1+URLnos]] : (URLnos==2) ? [markDet[mark][1+URLnos],markDet[mark][2+URLnos]] : "error";
     let newFiat=fiat;
     let newCrypto=crypto;
     if(markDet[mark][markLength-1]){
@@ -343,12 +343,13 @@ function getData(mark,crypto,fiat){
     if(markDet[mark][markLength-2]){
         newCrypto=crypto.toLowerCase();
     }
-    if(markDet[mark][markLength-3].length>0){
-        newFiat=markDet[mark][markLength-2][fiat];
-    }
-    if(markDet[mark][markLength-4].length>0){
-        newCrypto=markDet[mark][markLength-2][crypto];
-    }
+    // if(markDet[mark][markLength-3].length>0){
+    //     newFiat=markDet[mark][markLength-2][fiat];
+    // }
+    // if(markDet[mark][markLength-4].length>0){
+    //     newCrypto=markDet[mark][markLength-2][crypto];
+    // }
+    console.log(paths);
     for(let i=1;i<=URLnos;i++){   
         paths[i-1]=paths[i-1].replace(/crypto/g,newCrypto);
         paths[i-1]=paths[i-1].replace(/fiat/g,newFiat);
@@ -365,10 +366,15 @@ function getData(mark,crypto,fiat){
                     console.log(currPath[j]);
                     currObj=currObj[currPath[j]];
                 }
-                if(i<=1)
+                console.log(currPath[currPath.length-1].split("/")[0]);
+                console.log(currPath[currPath.length-1].split("/")[1]);
+                if(i<=1){
                     buy=currObj[currPath[currPath.length-1].split("/")[0]];
-                if(i<=2)
                     sell=currObj[currPath[currPath.length-1].split("/")[1]];
+                }
+                if(i==2){
+                    sell=currObj[currPath[currPath.length-1].split("/")[0]];
+                }
                 console.log("!!!!!!!!!!!!!!!!!!",mark);
                 console.log("buy",buy);
                 console.log("sell",sell);
