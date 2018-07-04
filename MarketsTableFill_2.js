@@ -325,10 +325,11 @@ function updateMarketsDataTblINR(){
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
-var prices={"zebpay":0,"koinex":0,"unocoin":0};
+var prices={"zebpayb":0,"zebpays":0,"koinexb":0,"koinexs":0,"unocoinb":0,"unocoins":0};
 var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/sell",false,false],
-            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:highest_bid/lowest_ask",false,true],
-            "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell","selling_price","buying_price",false,false]};
+            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:lowest_ask/highest_bid",false,true],
+            "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell","buying_price","selling_price",false,false]};
+var aliases={"BTC":"bitcoin","ETH":"ether"};
 var pairMark={"BTC/INR":["zebpay","koinex","unocoin"]};
 function getData(mark,crypto,fiat){
     console.log(mark);
@@ -349,7 +350,7 @@ function getData(mark,crypto,fiat){
     // if(markDet[mark][markLength-4].length>0){
     //     newCrypto=markDet[mark][markLength-2][crypto];
     // }
-    console.log(paths);
+    // console.log(paths);
     for(let i=1;i<=URLnos;i++){   
         paths[i-1]=paths[i-1].replace(/crypto/g,newCrypto);
         paths[i-1]=paths[i-1].replace(/fiat/g,newFiat);
@@ -358,26 +359,34 @@ function getData(mark,crypto,fiat){
         let xhttpMarket = new XMLHttpRequest();
         xhttpMarket.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
+                let flag=1;
                 let currObj=JSON.parse(this.responseText);
                 let currPath=paths[i-1].split(":");
                 let buy=0; let sell=0;
-                console.log(currPath);
+                // console.log(currPath);
                 for(let j=0;j<currPath.length-1;j++){
                     console.log(currPath[j]);
                     currObj=currObj[currPath[j]];
                 }
-                console.log(currPath[currPath.length-1].split("/")[0]);
-                console.log(currPath[currPath.length-1].split("/")[1]);
-                if(i<=1){
+                // console.log(currPath[currPath.length-1].split("/")[0]);
+                // console.log(currPath[currPath.length-1].split("/")[1]);
+                let oldBuy=(prices[mark+"b"] == null) ? -1 : buy;
+                if(URLnos==1){
                     buy=currObj[currPath[currPath.length-1].split("/")[0]];
                     sell=currObj[currPath[currPath.length-1].split("/")[1]];
+                    prices[mark+"b"]=buy;
+                    prices[mark+"s"]=sell;
                 }
-                if(i==2){
+                else if(URLnos==2 && i==1){
+                    buy=currObj[currPath[currPath.length-1].split("/")[0]];
+                    prices[mark+"b"]=buy;
+                }
+                else if(URLnos==2 && i==2){
                     sell=currObj[currPath[currPath.length-1].split("/")[0]];
+                    prices[mark+"s"]=sell;
                 }
-                console.log("!!!!!!!!!!!!!!!!!!",mark);
-                console.log("buy",buy);
-                console.log("sell",sell);
+                (oldBuy<prices[mark+"b"]) ? flag=1 : (oldBuy>prices[mark+"b"]) ? flag=2 : (oldBuy==prices[mark+"b"]) ? flag=3 : flag=0;
+                console.log(JSON.stringify(prices));
             }
         };
         xhttpMarket.open("GET", marketUrl, true);
@@ -386,6 +395,10 @@ function getData(mark,crypto,fiat){
 }
 
 function getPairsPrice(crypto,fiat){
+    if(crypto in aliases)
+        getPairsPrice(aliases[crypto],fiat);
+    if(fiat in aliases)
+        getPairsPrice(crypto,aliases[fiat]);    
     console.log("in getPairsPrice");
     let pair=pairMark.hasOwnProperty(crypto+"/"+fiat) ? crypto+"/"+fiat : pairMark.hasOwnProperty(fiat+"/"+crypto) ? fiat+"/"+crypto : "absent";
     console.log(pair);

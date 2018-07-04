@@ -1,5 +1,5 @@
-var displayVals=[];
-var displayValsAgg=[];
+displayVals=[];
+displayValsAgg=[];
 var FLAGS=["defunct","up","down","what","noChange",];
 $('.bitfinext').on('DOMSubtreeModified propertychange', function() {
     console.log("YEEEEEESSSSSSSSS");//TODO
