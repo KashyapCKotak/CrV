@@ -138,17 +138,17 @@ function startStream(currSubList) {
 			if(dataElem == "FLAGS")
 				displayVals[market+"flg"]=data[dataElem];
 			else if(dataElem == "PRICE"){
-				displayVals[market+"b"]=currFSymb+" "+data[dataElem].toFixed(2);
+				displayVals[market+"b"]=currFSymb+""+data[dataElem].toFixed(2);
 				displayVals[market+"bn"]=data[dataElem].toFixed(4);
 			}
 			else if(dataElem == "LASTVOLUME")
-				displayVals[market+"tc"]=currCSymb+" "+data[dataElem].toFixed(4);
+				displayVals[market+"tc"]=currCSymb+""+data[dataElem].toFixed(4);
 			else if(dataElem == "LASTVOLUMETO")	
-				displayVals[market+"tf"]=currFSymb+" "+data[dataElem].toFixed(2);
+				displayVals[market+"tf"]=currFSymb+""+data[dataElem].toFixed(2);
 			else if(dataElem == "VOLUME24HOUR")
-				displayVals[market+"vc"]=currCSymb+" "+data[dataElem].toFixed(2);
+				displayVals[market+"vc"]=currCSymb+""+data[dataElem].toFixed(2);
 			else if(dataElem == "VOLUME24HOURTO"){
-				displayVals[market+"vf"]=currFSymb+" "+data[dataElem].toFixed(2);
+				displayVals[market+"vf"]=currFSymb+""+data[dataElem].toFixed(2);
 				if(parseFloat(data[dataElem]) == parseFloat(0))
 					displayVals[market+"flg"]=0;//hide market
 			}

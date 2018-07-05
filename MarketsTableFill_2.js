@@ -326,12 +326,12 @@ function updateMarketsDataTblINR(){
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 var prices={"zebpayb":0,"zebpays":0,"koinexb":0,"koinexs":0,"unocoinb":0,"unocoins":0};
-var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/sell",false,false],
+var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/sell",[],false,false],
             "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:lowest_ask/highest_bid",false,true],
             "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell","buying_price","selling_price",false,false]};
 var aliases={"BTC":"bitcoin","ETH":"ether"};
-var pairMark={"BTC/INR":["zebpay","koinex","unocoin"]};
-function getData(mark,crypto,fiat){
+var pairMark={"INR/BTC":["zebpay","koinex","unocoin"]};
+function getData(mark,crypto,fiat,sign){
     console.log(mark);
     let URLnos=markDet[mark][0];
     let markLength=markDet[mark].length;
@@ -372,17 +372,18 @@ function getData(mark,crypto,fiat){
                 // console.log(currPath[currPath.length-1].split("/")[1]);
                 let oldBuy=(prices[mark+"b"] == null) ? -1 : buy;
                 if(URLnos==1){
-                    buy=currObj[currPath[currPath.length-1].split("/")[0]];
-                    sell=currObj[currPath[currPath.length-1].split("/")[1]];
+                    buy=currObj[currPath[currPath.length-1].split("/")[0]]*sign;
+                    if(currPath[currPath.length-1].split("/")[1] in currObj)
+                        sell=currObj[currPath[currPath.length-1].split("/")[1]]*sign;
                     prices[mark+"b"]=buy;
                     prices[mark+"s"]=sell;
                 }
                 else if(URLnos==2 && i==1){
-                    buy=currObj[currPath[currPath.length-1].split("/")[0]];
+                    buy=currObj[currPath[currPath.length-1].split("/")[0]]*sign;
                     prices[mark+"b"]=buy;
                 }
                 else if(URLnos==2 && i==2){
-                    sell=currObj[currPath[currPath.length-1].split("/")[0]];
+                    sell=currObj[currPath[currPath.length-1].split("/")[0]]*sign;
                     prices[mark+"s"]=sell;
                 }
                 (oldBuy<prices[mark+"b"]) ? flag=1 : (oldBuy>prices[mark+"b"]) ? flag=2 : (oldBuy==prices[mark+"b"]) ? flag=3 : flag=0;
@@ -398,14 +399,17 @@ function getPairsPrice(crypto,fiat){
     if(crypto in aliases)
         getPairsPrice(aliases[crypto],fiat);
     if(fiat in aliases)
-        getPairsPrice(crypto,aliases[fiat]);    
+        getPairsPrice(crypto,aliases[fiat]);  
+    if(crypto in aliases && fiat in aliases)
+        getPairsPrice(aliases[crypto],aliases[fiat]);  
     console.log("in getPairsPrice");
     let pair=pairMark.hasOwnProperty(crypto+"/"+fiat) ? crypto+"/"+fiat : pairMark.hasOwnProperty(fiat+"/"+crypto) ? fiat+"/"+crypto : "absent";
+    let sign=(pair==fiat+"/"+crypto) ? -1 : 1;
     console.log(pair);
     if(pair != "absent"){
         let markets=pairMark[pair];
         for(mark in markets){
-            getData(markets[mark],crypto,fiat);
+            getData(markets[mark],crypto,fiat,sign);
         }
     }
 }
