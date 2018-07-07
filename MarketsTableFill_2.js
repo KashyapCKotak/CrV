@@ -325,12 +325,37 @@ function updateMarketsDataTblINR(){
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
-var prices={"zebpayb":0,"zebpays":0,"koinexb":0,"koinexs":0,"unocoinb":0,"unocoins":0};
-var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/sell",[],false,false],
-            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:lowest_ask/highest_bid",false,true],
-            "unocoin":[2,"https://api.unocoin.com/api/trades/buy","https://api.unocoin.com/api/trades/sell","buying_price","selling_price",false,false]};
+var SYMBOLS = {
+    'BTC': 'Ƀ',
+    'LTC': 'Ł',
+    'DAO': 'Ð',
+    'USD': '$',
+    'CNY': '¥',
+    'EUR': '€',
+    'GBP': '£',
+    'JPY': '¥',
+    'PLN': 'zł',
+    'RUB': '₽',
+    'ETH': 'Ξ',
+    'GOLD': 'Gold g',
+    'INR': '₹',
+    'BRL': 'R$'
+  };
+    currFSymb=SYMBOLS[globalFiatValue] || globalFiatValue;
+    currCSymb=SYMBOLS[globalCryptoValue] || globalCryptoValue;
+/**
+ * marketDet={marketName:[url nos,urls,paths buy/sell/vol crypto/vol fiat/last price crypto/last price fiat/change%,crypto small case,fiat small case]}
+ * prices={marketb:market last buy price,markets:market last sell price}
+ * aliases={search for aliases and repeat the finding process}
+ * pairMark={paris:markes array}
+ */
+var prices={"zebpayb":0,"zebpays":0,"koinexb":0,"koinexs":0,"unocoinb":0,"unocoins":0}; 
+var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/?/volume/?/?/?/pricechange",false,false], // [url Numbers, urls, buy/sell/vol to/vol from/ ]
+            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:lowest_ask/?/vol_24hrs/trade_volume/?/last_traded_price/per_change",false,true],
+            "unocoin":[1,"https://api.unocoin.com/api/trades/buy","buying_price/?/?/?/?/?/?",false,false]};
 var aliases={"BTC":"bitcoin","ETH":"ether"};
 var pairMark={"INR/BTC":["zebpay","koinex","unocoin"]};
+dispArray=[];
 function getData(mark,crypto,fiat,sign){
     console.log(mark);
     let URLnos=markDet[mark][0];
@@ -359,7 +384,11 @@ function getData(mark,crypto,fiat,sign){
         let xhttpMarket = new XMLHttpRequest();
         xhttpMarket.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                let flag=1;
+
+                dispArray[mark+"flg"]=0;dispArray[mark+"b"]=currFSymb+""+0;dispArray[mark+"bn"]=0;
+                dispArray[mark+"tc"]="NA";dispArray[mark+"tf"]="NA";
+                dispArray[mark+"vc"]="NA";dispArray[mark+"vf"]="NA";dispArray[mark+"od"]="NA";
+                dispArray[mark+"p"]="NA";
                 let currObj=JSON.parse(this.responseText);
                 let currPath=paths[i-1].split(":");
                 let buy=0; let sell=0;
@@ -371,22 +400,46 @@ function getData(mark,crypto,fiat,sign){
                 // console.log(currPath[currPath.length-1].split("/")[0]);
                 // console.log(currPath[currPath.length-1].split("/")[1]);
                 let oldBuy=(prices[mark+"b"] == null) ? -1 : buy;
+                let allPaths=currPath[currPath.length-1].split("/");
+                console.log(allPaths);
                 if(URLnos==1){
-                    buy=currObj[currPath[currPath.length-1].split("/")[0]]*sign;
-                    if(currPath[currPath.length-1].split("/")[1] in currObj)
-                        sell=currObj[currPath[currPath.length-1].split("/")[1]]*sign;
+                    buy=Math.pow(currObj[allPaths[0]],sign);
                     prices[mark+"b"]=buy;
-                    prices[mark+"s"]=sell;
+                    dispArray[mark+"b"]=currFSymb+buy;
+                    if(allPaths[2] in currObj && allPaths[2] !="?"){
+                        // sell=Math.pow(currObj[currPath[currPath.length-1].split("/")[1]],sign);
+                        // prices[mark+"s"]=sell;
+                        dispArray[mark+"vc"]=currCSymb+currObj[allPaths[2]];
+                    }
+                    if(allPaths[3] in currObj && allPaths[3] !="?"){
+                        dispArray[mark+"vf"]=currFSymb+currObj[allPaths[3]];
+                    }
+                    if(allPaths[4] in currObj && allPaths[4] !="?"){
+                        dispArray[mark+"tc"]=currCSymb+currObj[allPaths[4]];
+                    }
+                    if(allPaths[5] in currObj && allPaths[5] !="?"){
+                        dispArray[mark+"tf"]=currFSymb+currObj[allPaths[5]];
+                    }
+                    if(allPaths[6] in currObj && allPaths[6] !="?"){
+                        dispArray[mark+"p"]=currObj[allPaths[6]]+"%";
+                    }
                 }
                 else if(URLnos==2 && i==1){
-                    buy=currObj[currPath[currPath.length-1].split("/")[0]]*sign;
+                    buy=Math.pow(currObj[currPath[currPath.length-1].split("/")[0]],sign);
                     prices[mark+"b"]=buy;
                 }
                 else if(URLnos==2 && i==2){
-                    sell=currObj[currPath[currPath.length-1].split("/")[0]]*sign;
+                    sell=Math.pow(currObj[currPath[currPath.length-1].split("/")[0]],sign);
                     prices[mark+"s"]=sell;
                 }
-                (oldBuy<prices[mark+"b"]) ? flag=1 : (oldBuy>prices[mark+"b"]) ? flag=2 : (oldBuy==prices[mark+"b"]) ? flag=3 : flag=0;
+                (oldBuy<prices[mark+"b"]) ? dispArray[mark+"flg"]=1 : (oldBuy>prices[mark+"b"]) ? dispArray[mark+"flg"]=2 : (oldBuy==prices[mark+"b"]) ? dispArray[mark+"flg"]=3 : dispArray[mark+"flg"]=0;
+                let newTblRow=document.createElement("tr");
+                marketTable=document.getElementById("MarketsDataTable");
+                //newTblRow=marketTable.insertRow(parseInt(marketTable.rows.length/2));
+                newTblRow.style.animationDuration="15s";
+                let newTblData='<td>'+mark.charAt(0).toUpperCase()+mark.slice(1)+'</td><td id="'+mark+'b">⌛</td><td id="'+mark+'t"><span id="'+mark+'tf">⌛</span><br><span id="'+mark+'tc">⌛</span></td><td id="'+mark+'v"><span id="'+mark+'vf">⌛</span><br><span id="'+mark+'vc">⌛</span></td><td id="'+mark+'p">⌛</td>';
+                newTblRow.innerHTML=newTblData;
+                document.getElementById("MarketsDataTable").appendChild(newTblRow);
                 console.log(JSON.stringify(prices));
             }
         };
@@ -413,7 +466,7 @@ function getPairsPrice(crypto,fiat){
         }
     }
 }
-getPairsPrice("BTC","INR");
+// getPairsPrice("BTC","INR");
 
 function updateMarketsDataTblNotINR () {
     var mktSubsTbl=[]; 
