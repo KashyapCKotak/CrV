@@ -354,7 +354,7 @@ var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypt
             "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:lowest_ask/?/vol_24hrs/trade_volume/?/last_traded_price/per_change",false,true],
             "unocoin":[1,"https://api.unocoin.com/api/trades/buy","buying_price/?/?/?/?/?/?",false,false]};
 var aliases={"BTC":"bitcoin","ETH":"ether"};
-var pairMark={"INR/BTC":["zebpay","koinex","unocoin"]};
+var pairMark={"BTC/INR":["zebpay","koinex","unocoin"]};
 dispArray=[];
 function getData(mark,crypto,fiat,sign){
     console.log(mark);
@@ -493,6 +493,7 @@ function updateMarketsDataTblNotINR () {
             currSubList.push(currSubAgg);
             startStream(currSubList);
             console.log("Streaming Started");
+            // getPairsPrice(globalCryptoValue,globalFiatValue)
         }
     };
     xhttpOtherFiatMkts.open("GET", "https://min-api.cryptocompare.com/data/subs?fsym="+globalCryptoValue+"&tsyms="+globalFiatValue, true);
@@ -579,11 +580,12 @@ var tableString='<table id="example1" class="table table-bordered table-striped"
 '<tr><td><a href="https://www.pocketbits.in">PocketBits</a></td><td id="Pocketbitsb">loading</td><td id="Pocketbitss">loading</td></tr>'+
 '<tr><td><a href="https://www.localbitcoins.com">LocalBitcoins</a></td><td id="LocalBitcoinsb">loading</td><td id="LocalBitcoinss">loading</td></tr>'+
 '<tr><td><a href="https://www.zebpay.com">Zebpay</a></td><td id="Zebpayb">loading</td><td id="Zebpays">loading</td></tr></tbody></table>';
-document.getElementById("marketsDataTable").innerHTML=tableString;
-$(function () {
-    $('#example1').DataTable()
-})
-updateMarketsDataTblINR();
+//document.getElementById("marketsDataTable").innerHTML=tableString;
+// $(function () {
+//     $('#example1').DataTable()
+// })
+//updateMarketsDataTblINR();
+updateMarketsDataTblNotINR();
 }   
 
 if( globalFiatValue != "INR" ){
