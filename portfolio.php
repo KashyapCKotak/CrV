@@ -82,13 +82,13 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src=
+                <img id="userImg" src=
                   <?php
                     if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                       echo '"dist/img/notSigned.jpg"';
                     }
                     else {
-                      echo '"dist/img/signedIn.jpg"';
+                      echo '"'.$_SESSION['cryptoview_userImg'].'"';
                     }
                     ?>
                   class="user-image" alt="User Image">
@@ -740,6 +740,7 @@
                     <ul class="nav nav-tabs">
                       <li class="active portfolioTab"><a id="portTab1" tabindex="0" href="#tab_1" data-toggle="tab">Personal Portfolio</a></li>
                       <li class="portfolioTab"><a id="portTab2" tabindex="0" href="#tab_2" data-toggle="tab">Practice Portfolio</a></li>
+                      <li class="portfolioTab" style="display:none;pointer-events:none"><a id="portTab3" tabindex="0" href="#tab_3" data-toggle="tab">Practice Portfolio</a></li>
                     </ul>
                     <script type="text/javascript">
                     var maxTime = 2000; // 2 seconds
@@ -1212,6 +1213,20 @@
                           </div>
                           <!-- /.tab-pane -->
                           <!-- /.tab-pane -->
+                          <!-- ////////////////////////////////////////////////////// -->
+                          <!-- ////////////////////////////////////////////////////// -->
+                          <!-- ////////////////////////////////////////////////////// -->
+                          <!-- ////////////////////////////////////////////////////// -->
+                          <!-- ////////////////////////////////////////////////////// -->
+                          <!-- ////////////////////////////////////////////////////// -->
+                          <div class="tab-pane active" id="tab_3" style="text-align:center">
+                            <span style="margin: 20vh 10px 85vh 10px;display:inline-block;font-size:15px;">Please <a href="pages/login.php">login</a> to unlock the most comprehensive system to track your funds and cryptos!!<br>Go ahead, we won't charge you for this...</span>
+                          </div>
+                            <!-- ////////////////////////////////////////////////////// -->
+                            <!-- ////////////////////////////////////////////////////// -->
+                            <!-- ////////////////////////////////////////////////////// -->
+                            <!-- ////////////////////////////////////////////////////// -->
+                            <!-- ////////////////////////////////////////////////////// -->
                         </div>
                         <!-- /.tab-content -->
                         <!-- </div> -->
@@ -1603,6 +1618,16 @@
                     </script>
                     <!-- Select2 -->
                     <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+                    <script type="text/javascript">
+                      console.log("checking");
+                      let userImg=document.getElementById("userImg").src;
+                      console.log(userImg);
+                      if(userImg.indexOf("notSigned")!=-1){
+                        document.getElementById("portTab3").click();
+                        document.getElementById("portTab1").style.pointerEvents="none";
+                        document.getElementById("portTab2").style.pointerEvents="none";
+                      }
+                    </script>
                     <script>
                       $(function () {
                         //Initialize Select2 Elements

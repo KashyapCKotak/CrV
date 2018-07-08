@@ -646,7 +646,7 @@
             <section class="content">
                 <!-- row -->
                 <div class="row">
-                    <div class="chartTypeTabHolder" style="margin-bottom:15px">
+                    <div class="chartTypeTabHolder" style="margin-bottom:15px;text-align:center">
                         <div class="chartTypeTab">
                             <button class="tabChartTyp" onclick="initChartTypeChange(event,'icoFinishedTable')">Missed</button>
                             <button class="tabChartTyp active" onclick="initChartTypeChange(event,'icoLiveTable')">Ongoing</button>
@@ -662,8 +662,8 @@
                     <div class="col-xs-12">
                     <div id="icoHolder" class="box" style="display:none">
                         <div class="box-body table-responsive no-padding">
-                        <table class="table table-striped" id="icoUpcomingTable">
-                        <table class="table table-striped" id="icoFinishedTable">
+                        <table class="table table-striped" id="icoUpcomingTable" style="display:none">
+                        <table class="table table-striped" id="icoFinishedTable" style="display:none">
                         <table class="table table-striped" id="icoLiveTable">
                             <!-- <tr>
                             <th><div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2">ICO Name</div></th>

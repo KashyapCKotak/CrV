@@ -34,6 +34,7 @@
         //console.log("Start Scripts Start");
       </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>
+    <script src="coinData.js"></script>
     <!-- Morris chart -->
 
     <!-- jvectormap -->
@@ -2802,12 +2803,12 @@
         </div>
         <script type="text/javascript">
           function loadGTrenGraph(){
-            var currSelection=document.getElementById("cryptoSelectBox");
+            let currSelection=document.getElementById("cryptoSelectBox");
             document.getElementById("gTrenGraph").innerHTML="";
             trends.embed.renderExploreWidgetTo(document.getElementById("gTrenGraph"),"TIMESERIES", {"comparisonItem":[{"keyword":currSelection.options[currSelection.selectedIndex].text,"geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q="+currSelection.options[currSelection.selectedIndex].text+"&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); 
           } 
           function loadGTrenGeo(){
-            var currSelection1=document.getElementById("cryptoSelectBox");
+            let currSelection1=document.getElementById("cryptoSelectBox");
             document.getElementById("gTrenGeo").innerHTML="";
             trends.embed.renderExploreWidgetTo(document.getElementById("gTrenGeo"),"GEO_MAP", {"comparisonItem":[{"keyword":currSelection1.options[currSelection1.selectedIndex].text,"geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q="+currSelection1.options[currSelection1.selectedIndex].text+"&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); 
           }
@@ -3207,11 +3208,17 @@
               gTrendLoaded=false;
                 //console.log("Twitter End");
                 function loadTwitter(){
-                  document.getElementById("twitter").innerHTML='<a class="twitter-timeline" href="https://twitter.com/Bitcoin?ref_src=twsrc%5Etfw">Tweets by Bitcoin</a>'+
+                  let currSelection=document.getElementById("cryptoSelectBox");
+                  let twitterUrl=coinData[globalCryptoValue];
+                  if(twitterUrl==undefined){
+                    twitterUrl="https://twitter.com/blockchain";
+                  }
+                  document.getElementById("twitter").innerHTML='<a class="twitter-timeline" href="'+twitterUrl+'">Tweets by '+currSelection.options[currSelection.selectedIndex].text+'</a>'+
                   '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">\<\/script>';
                   var twitterScript = document.createElement('script');
                   twitterScript.setAttribute('src','https://platform.twitter.com/widgets.js');
                   twitterScript.setAttribute('charset',"utf-8");
+                  
                   //console.log(document.getElementById("loaderHolder"));
                   // document.getElementById("loaderHolder").style.display="none";
                   document.getElementById("twitter").appendChild(twitterScript);
