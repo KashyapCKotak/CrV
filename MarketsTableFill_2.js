@@ -344,20 +344,30 @@ var SYMBOLS = {
     currFSymb=SYMBOLS[globalFiatValue] || globalFiatValue;
     currCSymb=SYMBOLS[globalCryptoValue] || globalCryptoValue;
 /**
- * marketDet={marketName:[url nos,urls,paths buy/sell/vol crypto/vol fiat/last price crypto/last price fiat/change%,crypto small case,fiat small case]}
+ * marketDet={marketName:[url nos,urls,paths buy/sell/vol crypto/vol fiat/last price crypto/last price fiat/change%/open or yesterday's price,crypto small case,fiat small case]}
  * prices={marketb:market last buy price,markets:market last sell price}
  * aliases={search for aliases and repeat the finding process}
  * pairMark={paris:markes array}
  */
 var prices={"zebpayb":0,"zebpays":0,"koinexb":0,"koinexs":0,"unocoinb":0,"unocoins":0}; 
-var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/?/volume/?/?/?/pricechange",false,false], // [url Numbers, urls, buy/sell/vol to/vol from/ ]
-            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:lowest_ask/?/vol_24hrs/trade_volume/?/last_traded_price/per_change",false,true],
-            "unocoin":[1,"https://api.unocoin.com/api/trades/buy","buying_price/?/?/?/?/?/?",false,false]};
+var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/?/volume/?/?/?/pricechange/?",false,false], // [url Numbers, urls, buy/sell/vol to/vol from/ ]
+            "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:lowest_ask/?/vol_24hrs/trade_volume/?/last_traded_price/per_change/?",false,true],
+            "unocoin":[1,"https://api.unocoin.com/api/trades/buy","buying_price/?/?/?/?/?/?/?",false,false],
+            "coindelta":[1,"https://api.coindelta.com/api/v1/public/getticker/","{(MarketName)=(crypto-fiat)}:Ask/?/?/?/?/Last/?/?",true,true],
+            "buyucoin":[1,"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20json%20where%20url%3D%22https%3A%2F%2Fwww.buyucoin.com%2Fapi%2Fv1.2%2Fcurrency%2Fmarkets%22&format=json","query:results:json:data:crypto_fiat:ask/?/vol/?/?/last_trade/change/?",true,true],
+            "bitbns":[1,"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20json%20where%20url%3D%22https%3A%2F%2Fbitbns.com%2Forder%2FgetTickerWithVolume%2F%22&format=json","query:results:json:crypto:highest_buy_bid/?/volume|volume/volume|rate/?/last_traded_price/?/yes_price",false,false],
+            "unodax":[1,"https://api.unocoin.com/api/exchange/unodax-ticker","stats:fiat:crypto:last_traded_price/?/vol_24hrs/?/?/last_traded_price/per_change/?",false,true],
+            "wazirx":[1,"https://api.wazirx.com/api/v2/tickers","cryptofiat:buy/?/volume/?/?/last/?/open",true,true],
+            "cxihub":[1,"https://api.cxihub.com/market/v1/ticker","data:{(market)=(fiat/crypto)}:buy/?/volume/?/?/?/changePercent/?",true,true],
+            "coindcx":[1,"https://api.coindcx.com/exchange/ticker","{(market)=(cryptofiat)}:bid/?/?/?/?/last_price/change_24_hour/?",false,false]};
+            
 var aliases={"BTC":"bitcoin","ETH":"ether"};
-var pairMark={"BTC/INR":["zebpay","koinex","unocoin"]};
-dispArray=[];
+var pairMark={"BTC/INR":["zebpay","koinex","unocoin","coindelta","buyucoin","bitbns","unodax","wazirx","cxihub"],
+            "ETH/BTC":["coindcx"]};
+
+// dispArray=[];
 function getData(mark,crypto,fiat,sign){
-    console.log(mark);
+    console.log(crypto+"/"+fiat);
     let URLnos=markDet[mark][0];
     let markLength=markDet[mark].length;
     let paths=(URLnos==1) ? [markDet[mark][1+URLnos]] : (URLnos==2) ? [markDet[mark][1+URLnos],markDet[mark][2+URLnos]] : "error";
@@ -376,7 +386,7 @@ function getData(mark,crypto,fiat,sign){
     //     newCrypto=markDet[mark][markLength-2][crypto];
     // }
     // console.log(paths);
-    for(let i=1;i<=URLnos;i++){   
+    for(let i=1;i<=URLnos;i++){
         paths[i-1]=paths[i-1].replace(/crypto/g,newCrypto);
         paths[i-1]=paths[i-1].replace(/fiat/g,newFiat);
         let marketUrl=markDet[mark][i].replace(/\(crypto\)/g,newCrypto);
@@ -384,44 +394,91 @@ function getData(mark,crypto,fiat,sign){
         let xhttpMarket = new XMLHttpRequest();
         xhttpMarket.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-
-                dispArray[mark+"flg"]=0;dispArray[mark+"b"]=currFSymb+""+0;dispArray[mark+"bn"]=0;
-                dispArray[mark+"tc"]="NA";dispArray[mark+"tf"]="NA";
-                dispArray[mark+"vc"]="NA";dispArray[mark+"vf"]="NA";dispArray[mark+"od"]="NA";
-                dispArray[mark+"p"]="NA";
+                displayVals[mark+"flg"]=0;displayVals[mark+"b"]=currFSymb+""+0;
+                displayVals[mark+"tc"]="NA";displayVals[mark+"tf"]="NA";
+                displayVals[mark+"vc"]="NA";displayVals[mark+"vf"]="NA";displayVals[mark+"od"]="NA";
+                displayVals[mark+"p"]="NA";
+                let percent="NA";
                 let currObj=JSON.parse(this.responseText);
                 let currPath=paths[i-1].split(":");
                 let buy=0; let sell=0;
                 // console.log(currPath);
                 for(let j=0;j<currPath.length-1;j++){
-                    console.log(currPath[j]);
+                    if(currPath[j].indexOf('{')!=-1){
+                        console.log(currObj);
+                        let gotPath=false;
+                        let subPath=currPath[j].substr(1,currPath[j].indexOf('}')-1);
+                        subPath=subPath.split('=');
+                        var where=subPath[0].substr(1,subPath[0].indexOf(')')-1);
+                        var value=subPath[1].substr(1,subPath[1].indexOf(')')-1);
+                        for(object in currObj){
+                            if(currObj[object][where]==value){
+                                currObj=currObj[object];
+                                gotPath=true;
+                                break;
+                            }
+                        }
+                        if(gotPath)
+                            continue;
+                    }
                     currObj=currObj[currPath[j]];
                 }
                 // console.log(currPath[currPath.length-1].split("/")[0]);
                 // console.log(currPath[currPath.length-1].split("/")[1]);
-                let oldBuy=(prices[mark+"b"] == null) ? -1 : buy;
+                let oldBuy=(mark+"b" in prices && prices[mark+"b"]==0) ? -1 : (!(mark+"b" in prices)) ? -1 : prices[mark+"b"];
+                console.log(currPath);
                 let allPaths=currPath[currPath.length-1].split("/");
-                console.log(allPaths);
                 if(URLnos==1){
-                    buy=Math.pow(currObj[allPaths[0]],sign);
+                    tempBuy=Math.pow(parseFloat(currObj[allPaths[0]]),sign);
+                    console.log(tempBuy);
+                    buy=parseFloat(tempBuy).toFixed(2);
+                    console.log(buy);
+                    if(buy==0.00){
+                        console.log("in");
+                        console.log(Math.pow(tempBuy,sign));
+                        buy=tempBuy.toFixed(Math.max(-Math.log10(tempBuy) + 2, 2));
+                    }
                     prices[mark+"b"]=buy;
-                    dispArray[mark+"b"]=currFSymb+buy;
-                    if(allPaths[2] in currObj && allPaths[2] !="?"){
+                    displayVals[mark+"b"]=currFSymb+""+buy;
+                    if(allPaths[2] !="?"){
                         // sell=Math.pow(currObj[currPath[currPath.length-1].split("/")[1]],sign);
                         // prices[mark+"s"]=sell;
-                        dispArray[mark+"vc"]=currCSymb+currObj[allPaths[2]];
+                        if(allPaths[2].indexOf("|")!=-1){
+                            console.log("in volume |");
+                            let tempPath=allPaths[2].split("|");
+                            let tempObj=null;
+                            for(let i=0;i<tempPath.length-1;i++){
+                                tempObj=currObj[tempPath[i]];
+                            }
+                            displayVals[mark+"vc"]=currFSymb+parseFloat(tempObj[tempPath[tempPath.length-1]]).toFixed(2);
+                        }
+                        else
+                            displayVals[mark+"vc"]=currCSymb+parseFloat(currObj[allPaths[2]]).toFixed(2);
                     }
-                    if(allPaths[3] in currObj && allPaths[3] !="?"){
-                        dispArray[mark+"vf"]=currFSymb+currObj[allPaths[3]];
+                    if(allPaths[3] !="?"){
+                        if(allPaths[3].indexOf('|')!=-1){
+                            let tempPath=allPaths[3].split("|");
+                            let tempObj=null;
+                            for(let i=0;i<tempPath.length-1;i++){
+                                tempObj=currObj[tempPath[i]];
+                            }
+                            displayVals[mark+"vf"]=currFSymb+parseFloat(tempObj[tempPath[tempPath.length-1]]).toFixed(2);
+                        }
+                        else
+                            displayVals[mark+"vf"]=currFSymb+parseFloat(currObj[allPaths[3]]).toFixed(2);
                     }
-                    if(allPaths[4] in currObj && allPaths[4] !="?"){
-                        dispArray[mark+"tc"]=currCSymb+currObj[allPaths[4]];
+                    if(allPaths[4] !="?"){
+                        displayVals[mark+"tc"]=currCSymb+parseFloat(currObj[allPaths[4]]).toFixed(2);
                     }
-                    if(allPaths[5] in currObj && allPaths[5] !="?"){
-                        dispArray[mark+"tf"]=currFSymb+currObj[allPaths[5]];
+                    if(allPaths[5] !="?"){
+                        displayVals[mark+"tf"]=currFSymb+parseFloat(currObj[allPaths[5]]).toFixed(2);
                     }
-                    if(allPaths[6] in currObj && allPaths[6] !="?"){
-                        dispArray[mark+"p"]=currObj[allPaths[6]]+"%";
+                    if(allPaths[6] !="?"){
+                        displayVals[mark+"p"]=parseFloat(currObj[allPaths[6]]).toFixed(2)+"%";
+                        percent=parseInt(currObj[allPaths[6]]);
+                    }
+                    if(allPaths[7] !="?" && displayVals[mark+"p"]=="NA"){
+                        displayVals[mark+"p"]=parseFloat(((buy-currObj[allPaths[7]])/currObj[allPaths[7]])*100).toFixed(2)+"%";
                     }
                 }
                 else if(URLnos==2 && i==1){
@@ -432,14 +489,27 @@ function getData(mark,crypto,fiat,sign){
                     sell=Math.pow(currObj[currPath[currPath.length-1].split("/")[0]],sign);
                     prices[mark+"s"]=sell;
                 }
-                (oldBuy<prices[mark+"b"]) ? dispArray[mark+"flg"]=1 : (oldBuy>prices[mark+"b"]) ? dispArray[mark+"flg"]=2 : (oldBuy==prices[mark+"b"]) ? dispArray[mark+"flg"]=3 : dispArray[mark+"flg"]=0;
-                let newTblRow=document.createElement("tr");
-                marketTable=document.getElementById("MarketsDataTable");
+                (oldBuy<prices[mark+"b"]) ? displayVals[mark+"flg"]=1 : (oldBuy>prices[mark+"b"]) ? displayVals[mark+"flg"]=2 : (oldBuy==prices[mark+"b"]) ? displayVals[mark+"flg"]=3 : displayVals[mark+"flg"]=0;
+                if(percent>0){
+                    displayVals[mark+"p"]="<span style='color:#3D9400'>"+displayVals[mark+"p"]+"%</span>";
+			        displayVals[mark+"b"]="<span style='color:#3D9400'>"+displayVals[mark+"b"]+"</span>";
+                }
+                else if(percent<0){
+                    displayVals[mark+"p"]="<span style='color:#A11B0A'>"+percent+"%</span>";
+			        displayVals[mark+"b"]="<span style='color:#A11B0A'>"+displayVals[mark+"b"]+"</span>";
+                }
                 //newTblRow=marketTable.insertRow(parseInt(marketTable.rows.length/2));
-                newTblRow.style.animationDuration="15s";
-                let newTblData='<td>'+mark.charAt(0).toUpperCase()+mark.slice(1)+'</td><td id="'+mark+'b">⌛</td><td id="'+mark+'t"><span id="'+mark+'tf">⌛</span><br><span id="'+mark+'tc">⌛</span></td><td id="'+mark+'v"><span id="'+mark+'vf">⌛</span><br><span id="'+mark+'vc">⌛</span></td><td id="'+mark+'p">⌛</td>';
-                newTblRow.innerHTML=newTblData;
-                document.getElementById("MarketsDataTable").appendChild(newTblRow);
+                if(oldBuy==-1){
+                    let newTblRow=document.createElement("tr");
+                    marketTable=document.getElementById("MarketsDataTable");
+                    newTblRow.style.animationDuration="15s";
+                    (percent=="NA" || percent==0) ? newTblRow.style.animationName="pulseColorYellowMkt" : (percent>0) ? newTblRow.style.animationName="pulseColorGreenMkt" : (percent<0) ? newTblRow.style.animationName="pulseColorRedMkt" : newTblRow.style.animationName="pulseColorYellowMkt";
+                    (percent=="NA" || percent==0) ? displayVals[mark+"flg"]=3 : (percent>0) ? displayVals[mark+"flg"]=1 : (percent<0) ? displayVals[mark+"flg"]=2 : displayVals[mark+"flg"]=3;
+                    let newTblData='<td>'+mark.charAt(0).toUpperCase()+mark.slice(1)+'</td><td id="'+mark+'b">'+displayVals[mark+"b"]+'</td><td id="'+mark+'t"><span id="'+mark+'tf">'+displayVals[mark+"tf"]+'</span><br><span id="'+mark+'tc">'+displayVals[mark+"tc"]+'</span></td><td id="'+mark+'v"><span id="'+mark+'vf">'+displayVals[mark+"vf"]+'</span><br><span id="'+mark+'vc">'+displayVals[mark+"vc"]+'</span></td><td id="'+mark+'p">'+displayVals[mark+"p"]+'</td>';
+                    newTblRow.innerHTML=newTblData;
+                    document.getElementById("MarketsDataTable").appendChild(newTblRow);
+                    console.log("rendered");
+                }
                 console.log(JSON.stringify(prices));
             }
         };
@@ -447,7 +517,9 @@ function getData(mark,crypto,fiat,sign){
         xhttpMarket.send();
     }
 }
-
+/**
+ * return pair. if pait=="absent", stop checking for more
+ */
 function getPairsPrice(crypto,fiat){
     if(crypto in aliases)
         getPairsPrice(aliases[crypto],fiat);
@@ -457,7 +529,16 @@ function getPairsPrice(crypto,fiat){
         getPairsPrice(aliases[crypto],aliases[fiat]);  
     console.log("in getPairsPrice");
     let pair=pairMark.hasOwnProperty(crypto+"/"+fiat) ? crypto+"/"+fiat : pairMark.hasOwnProperty(fiat+"/"+crypto) ? fiat+"/"+crypto : "absent";
-    let sign=(pair==fiat+"/"+crypto) ? -1 : 1;
+    let sign=1;
+    if(pair==fiat+"/"+crypto){
+        sign=-1;
+        let temp=fiat;
+        fiat=crypto;
+        crypto=temp;
+    }
+    else
+        sign=1;
+    console.log(sign);
     console.log(pair);
     if(pair != "absent"){
         let markets=pairMark[pair];
@@ -465,6 +546,7 @@ function getPairsPrice(crypto,fiat){
             getData(markets[mark],crypto,fiat,sign);
         }
     }
+    return pair;
 }
 // getPairsPrice("BTC","INR");
 
@@ -493,7 +575,14 @@ function updateMarketsDataTblNotINR () {
             currSubList.push(currSubAgg);
             startStream(currSubList);
             console.log("Streaming Started");
-            // getPairsPrice(globalCryptoValue,globalFiatValue)
+            let pairPresent="absent";
+            otherMarketsTimer=setInterval(function (){
+                pairPresent=getPairsPrice(globalCryptoValue,globalFiatValue);
+            }, 20000);
+            // if(pairPresent=="absent"){
+            //     clearInterval(otherMarketsTimer);
+            //     pairPresent="something";
+            // }
         }
     };
     xhttpOtherFiatMkts.open("GET", "https://min-api.cryptocompare.com/data/subs?fsym="+globalCryptoValue+"&tsyms="+globalFiatValue, true);

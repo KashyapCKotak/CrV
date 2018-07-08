@@ -371,10 +371,13 @@
   
   @keyframes pulseColorYellowMkt {
     0% {
-      background-color: #f9f9f9;
+      background-color: #f9f59a;
+    }
+    97% {
+      background-color: #f9f59a;
     }
     100% {
-      background-color: #fff533;
+      background-color: #f9f9f9;
     }
   }
 

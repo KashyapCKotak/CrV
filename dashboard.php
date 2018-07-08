@@ -2812,6 +2812,9 @@
             trends.embed.renderExploreWidgetTo(document.getElementById("gTrenGeo"),"GEO_MAP", {"comparisonItem":[{"keyword":currSelection1.options[currSelection1.selectedIndex].text,"geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q="+currSelection1.options[currSelection1.selectedIndex].text+"&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); 
           }
           function selectCrypto() {
+            clearInterval(otherMarketsTimer);
+            clearInterval(typewriterTimer);
+            predicted=false;
             globalCryptoValue = document.getElementById("cryptoSelectBox").value; //.match(/\(([^)]+)\)/)[1];
             resetStrm();
             changeAllTop();
@@ -2825,13 +2828,16 @@
           }
 
           function selectFiat() {
+            clearInterval(otherMarketsTimer);
+            clearTimeout(typewriterTimer);
+            predicted=false;
             globalFiatValue = document.getElementById("fiatSelectBox").value;
             resetStrm();
             changeAllTop();
             drawMainChart();
             getMarketData();
             console.log("CHANGE2");
-            document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;;
+            document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
           }
         </script>
         <br class="break-enable">
