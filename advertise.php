@@ -331,7 +331,7 @@
     <section class="content-header">
       <h1 style="text-align:center">
           Advertise With Us<br>
-          <small style="width: 100%;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto;color: black;height: 26px;padding: 5px;font-weight:400">let us make the masses notice you...</small>
+          <small style="width: 100%;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto;color: black;height: 26px;padding: 5px;font-weight:400">let us take you to the masses...</small>
       </h1>
       <!-- <ol class="breadcrumb" style="text-align:center;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto">
         let us make the masses notice you...
