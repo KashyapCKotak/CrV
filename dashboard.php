@@ -2926,8 +2926,11 @@
                 <span class="mainFactsValue">----</span>
               </div>
             </div>
+            <!-- <link rel="stylesheet" href="https://changelly.com/widget.css"/> <a id="changellyButton" href="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=045fe0" target="_blank"> <img src="dist/img/pay_button.png" style="height:40px;margin-top:14px"/> </a> <div id="changellyModal"> <div class="changellyModal-content"> <span class="changellyModal-close">x</span> <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=045fe0" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Can't load widget </iframe> </div> <script type="text/javascript"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div> -->
+            <link rel="stylesheet" href="https://changelly.com/widget.css"/> <a id="changellyButton" href="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=00cf70" target="_blank"> <img src="dist/img/pay_button.png" style="height:40px;margin-top:14px"/> </a> <div id="changellyModal"> <div class="changellyModal-content"> <span class="changellyModal-close">x</span> <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=1&ref_id=8d450131fbb6&color=00cf70" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Can't load widget </iframe> </div> <script type="text/javascript"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div>
           </div>
         </div>
+        
         <script type="text/javascript">
           //console.log("Live Data Top Start");
         </script>
@@ -2969,7 +2972,9 @@
           </tr>
           </table>
         </div>
-        <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
+        <div class="row" style="width:100%;margin-left:0px;margin-right:0px;height:auto;">
+        <div class="col-md-8" style="padding-left:0px">
+        <div class="box" style="padding:5px 5px 1px 5px">
         <div id="chartLoadOverlay">
           <div id="loaderHolder" style="height:100%">
             <div class="loader" style="width: 60px;height: 60px !important;border-radius: 0 !important;top: 40%;position: relative;"></div>
@@ -3059,6 +3064,11 @@
             <script type="text/javascript">
               //console.log("Chart Load End");
             </script>
+          </div>
+          </div>
+          </div>
+          <div class="col-md-4">
+          Your Add Here
           </div>
         </div>
 
