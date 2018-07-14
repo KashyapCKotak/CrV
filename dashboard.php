@@ -2973,7 +2973,7 @@
           </table>
         </div>
         <div class="row" style="width:100%;margin-left:0px;margin-right:0px;height:auto;">
-        <div class="col-md-8" style="padding-left:0px">
+        <div class="col-md-8" style="padding-left:0px;padding-right:0px">
         <div class="box" style="padding:5px 5px 1px 5px">
         <div id="chartLoadOverlay">
           <div id="loaderHolder" style="height:100%">
@@ -3068,7 +3068,10 @@
           </div>
           </div>
           <div class="col-md-4">
-          Your Add Here
+          <div class="box" style="text-align:center;/*background-color:#68d5f3;*/background-image: url('background1.jpg');margin-bottom:0px;height:589px;font-weight:600">
+          <br><br><br><br><br><br><br><br><br><br><br>
+          <span style="color:#fff;font-size:40px;font-weight:800;">Your Ad Here</span>
+          </div>
           </div>
         </div>
 
@@ -3126,7 +3129,7 @@
         <div class="row" style="margin:0">
           <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Other Details</h3>
+              <h3 class="box-title">Details for<script>document.write(" "+globalCryptoValue)</script></h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body no-padding" style="overflow:auto">
@@ -3162,14 +3165,11 @@
           <!-- /.box -->
         </div>
         <!-- /.row -->
-        <script type="text/javascript">
-          //console.log("Other Table Start");
-        </script>
         <script src="OthDetTbl.js"></script>
-        <script type="text/javascript">
-          //console.log("Other Table End");
-        </script>
 
+        <div class="row box" style="height:80px;margin: 0px 0px 15px 0px;text-align:center;/*background-color:#68d5f38;*/background-image:url('background3.jpg')">
+          <br><span style="font-weight:600;font-size: 40px;top: 10px;position:  absolute;color: #fff;margin-left: -70px;">Your Ad Here</span><br>
+        </div>
 
         <div class="row">
           <div class="col-xs-12">
