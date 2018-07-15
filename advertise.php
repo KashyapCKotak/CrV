@@ -288,13 +288,14 @@
           </div>
           <hr>
           <div class="row">
-            <div class="col-md-6" style="margin-left:-10px">
+            <div class="col-md-6 customadright" style="margin-left:-10px">
               <span class="AdpageText">Let the users know about you when they go through important content...<span>
             </div>
-            <div class="col-md-6" style="background-image:url('dist/img/aboveMarketsMobile.JPG');background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
-              <!-- <img style="display:inline !important;height:37vh" src="dist/img/mainChartRight2.jpg"/> -->
+            <div class="col-md-6 customadleft" style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <img style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
             </div>
           </div>
+          <hr>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
