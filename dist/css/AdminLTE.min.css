@@ -14,14 +14,13 @@
     font-size:15px;
     position:absolute;
 } */
-@media(min-width:992px){
-    customadright{
-        float:right;
-    }
-    customadleft{
-        float:left;
-    }
+.customadright{
+    float:right;
 }
+.customadleft{
+    float:left;
+}
+
 
 .AdpageText{
     font-weight:600;
@@ -45,6 +44,15 @@
         padding-left: 8px;
         position:relative;
         width:100%
+    }
+    .customadimage{
+        margin:auto
+    }
+    .customadright{
+        float:unset;
+    }
+    .customadleft{
+        float:unset;
     }
 }
 

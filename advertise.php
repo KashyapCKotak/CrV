@@ -289,13 +289,38 @@
           <hr>
           <div class="row">
             <div class="col-md-6 customadright" style="margin-left:-10px">
-              <span class="AdpageText">Let the users know about you when they go through important content...<span>
+              <span class="AdpageText">Get your ICO Listed on the most comprehensive ICO list in the world!!<span>
             </div>
-            <div class="col-md-6 customadleft" style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
-              <img style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
+            <div class="col-md-6 customadleft" style="background-image:url('dist/img/icoBig.JPG');background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <!-- <img style="display:inline !important;height:37vh" src="dist/img/mainChartRight2.jpg"/> -->
             </div>
           </div>
           <hr>
+          <div class="row">
+            <div class="col-md-6 " style="margin-left:-10px">
+              <span class="AdpageText">Show your business to our users when they go through important content...<span>
+            </div>
+            <div class="col-md-6 " style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <img class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 customadright" style="margin-left:-10px">
+              <span class="AdpageText">Flaunt about the change you bring when users look for what's happening in the world in the News Page with sentiment analysis!<span>
+            </div>
+            <div class="col-md-6 customadleft" style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <img class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12" style="text-align:center">
+              <span style="font-size: 16px;font-weight: 1000;color: #205a77;">
+                For all above spaces and more on many other pages, know more by reaching out to <a href="mailto:kckotak99@gmail.com?Subject=Advertise%20Query" target="_top">Kashyap Kotak</a> by mail.<br><br>We'll soon get back to you.
+              </span>
+            </div>
+          </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
