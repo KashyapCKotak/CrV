@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
   <meta charset="utf-8">
@@ -18,7 +18,6 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -200,6 +199,9 @@
     <!-- Content Header (Page header) -->
     <div class="row">
         <div class="top-price-bar">
+          <div class="top-price-bar-cryptos" style="text-align:center">
+            <span class="top-label" style="font-weight:600"> Impact on your business:<br><small style="font-weight:100">(representational numbers)</small></span>
+          </div>
           <div class="top-price-bar-cryptos">
             <img class="top-image" src="dist/img/up.png" alt=⌛ />
             <span class="top-label"> Views</span>
@@ -209,115 +211,43 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img class="top-image" src="dist/img/up.png" />
             <span class="top-label"> User Base</span>
             <br />
-            <span class="top-price">3.1M&nbsp;
+            <span class="top-price">4.1M&nbsp;
               <span class="top-pct" style="color: #00C605">80%</span>
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> Ripple</span>
+            <img class="top-image" src="dist/img/up.png" />
+            <span class="top-label"> User Reach</span>
             <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
+            <span class="top-price">2.9M&nbsp;
+              <span class="top-pct" style="color: #00C605">77%</span>
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> B Cash</span>
+            <img class="top-image" src="dist/img/up.png" />
+            <span class="top-label"> Populatrity</span>
             <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
+            <span class="top-price">9.1/10&nbsp;
+              <span class="top-pct" style="color: #00C605">63%</span>
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> Litecoin</span>
+            <img class="top-image" src="dist/img/up.png" />
+            <span class="top-label"> Unique Visitors</span>
             <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
+            <span class="top-price">3.7M&nbsp;
+              <span class="top-pct" style="color: #00C605">51%</span>
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> TRON</span>
+            <img class="top-image" src="dist/img/up.png" />
+            <span class="top-label"> Revenue</span>
             <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> Dash</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> B Gold</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> ZCash</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> Monero</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> ETH Classic</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> IOTA</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> NXT</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> EOS</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
-            <span class="top-label"> NEO</span>
-            <br />
-            <span class="top-price">updating&nbsp;
-              <span class="top-pct" style="color: #aaaaaa">--</span>
+            <span class="top-price">$30M&nbsp;
+              <span class="top-pct" style="color: #00C605">59%</span>
             </span>
           </div>
         </div>
@@ -343,19 +273,28 @@
 
       <!-- Default box -->
       <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Title</h3>
+        <div class="box-header with-border" style="display:none">
+          <h3 class="box-title">Sample Ad Spaces</h3>
 
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                    title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
         </div>
         <div class="box-body">
-          Start creating your amazing application!
+          <div class="row">
+            <div class="col-md-6" style="margin-left:-10px">
+              <span class="AdpageText">Let the users view your business near the most famous information source... A full fledged Chart!<span>
+            </div>
+            <div class="col-md-6" style="background-image:url('dist/img/mainChartRight2.jpg');background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <!-- <img style="display:inline !important;height:37vh" src="dist/img/mainChartRight2.jpg"/> -->
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6" style="margin-left:-10px">
+              <span class="AdpageText">Let the users know about you when they go through important content...<span>
+            </div>
+            <div class="col-md-6" style="background-image:url('dist/img/aboveMarketsMobile.JPG');background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <!-- <img style="display:inline !important;height:37vh" src="dist/img/mainChartRight2.jpg"/> -->
+            </div>
+          </div>
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
