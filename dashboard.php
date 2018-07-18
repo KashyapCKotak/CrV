@@ -73,16 +73,22 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
 <script type="text/javascript">
-  function myFunction() {
+  function onLoadPage() {
     // console.log(document.getElementById("cryptsyb"));
     // console.log(($('#marketsDataTable').is(':visible')));
     // console.log(($('#cryptsyb').is(':visible')));
     console.log("PAGE LOAD COMPLETE");
     // startStream(currSubList);
+    document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div> <script type=\"text/javascript\"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div>";
   }
+  // if (window.addEventListener)
+  // window.addEventListener("load", onLoadPage, false);
+  // else if (window.attachEvent)
+  // window.attachEvent("onload", onLoadPage);
+  // else window.onload = onLoadPage;
 </script>
 
-<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="myFunction()">
+<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="onLoadPage()">
   <div class="wrapper">
   <div id="techIndiScripts"></div>
     <header class="main-header">
@@ -2937,7 +2943,8 @@
               </div>
             </div>
             <!-- <link rel="stylesheet" href="https://changelly.com/widget.css"/> <a id="changellyButton" href="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=045fe0" target="_blank"> <img src="dist/img/pay_button.png" style="height:40px;margin-top:14px"/> </a> <div id="changellyModal"> <div class="changellyModal-content"> <span class="changellyModal-close">x</span> <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=045fe0" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Can't load widget </iframe> </div> <script type="text/javascript"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div> -->
-            <link rel="stylesheet" href="https://changelly.com/widget.css"/> <a id="changellyButton" href="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=00cf70" target="_blank"> <img src="dist/img/pay_button.png" style="height:40px;margin-top:14px"/> </a> <div id="changellyModal"> <div class="changellyModal-content"> <span class="changellyModal-close">x</span> <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=1&ref_id=8d450131fbb6&color=00cf70" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Can't load widget </iframe> </div> <script type="text/javascript"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div>
+            <!-- <link rel="stylesheet" href="https://changelly.com/widget.css"/> <a id="changellyButton" href="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70" target="_blank"> <img src="dist/img/pay_button.png" /> </a> <div id="changellyModal"> <div class="changellyModal-content"> <span class="changellyModal-close">x</span> <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Can't load widget </iframe> </div> <script type="text/javascript"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div> -->
+            <span id="buysellButton"></span>
           </div>
         </div>
         
