@@ -248,6 +248,12 @@
           </li>
           <li>
             <a href="news.php">
+              <i class="far fa-newspaper"></i>
+              <span>&nbsp;CrV Blog</span>
+            </a>
+          </li>
+          <li>
+            <a href="news.php">
               <i class="fas fa-newspaper"></i>
               <span>&nbsp;Latest News</span>
             </a>
@@ -261,7 +267,7 @@
           <li>
             <a href="help.php">
               <i class="far fa-question-circle"></i>
-              <span>&nbsp;About & Contact</span>
+              <span>&nbsp;How to Use CrV</span>
             </a>
           </li>
         </ul>
