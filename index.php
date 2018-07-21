@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <!-- Ionicons -->
-    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet">
     <!-- Select2 -->
     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
     <!-- Theme style -->
@@ -74,8 +74,9 @@
     <script type="text/javascript">
       function onLoadPage() {
         console.log("PAGE LOAD COMPLETE");
+        $('.select2').select2();
         // document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
-        document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
+        document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img alt=\"Buy/Sell Now\" src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\" style=\"display:none\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
         var changellyModal = document.getElementById('changellyModal');
         var changellyButton = document.getElementById('changellyButton');
         var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0];
@@ -191,9 +192,6 @@
                 </ul>
               </li>
               <!-- Control Sidebar Toggle Button -->
-              <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-              </li>
             </ul>
         </div>
       </nav>
@@ -236,8 +234,14 @@
           </li>
           <li>
             <a href="portfolio.php">
-              <i class="fas fa-line-chart"></i>
-              <span>&nbsp;Portfolio</span>
+              <i class="fas fa-donate"></i>
+              <span>&nbsp;Manage Portfolio</span>
+            </a>
+          </li>
+          <li>
+            <a href="exchange.php">
+              <i class="fas fa-chart-line"></i>
+              <span>&nbsp;Exchange</span>
             </a>
           </li>
           <li>
@@ -248,14 +252,8 @@
           </li>
           <li>
             <a href="news.php">
-              <i class="far fa-newspaper"></i>
-              <span>&nbsp;CrV Blog</span>
-            </a>
-          </li>
-          <li>
-            <a href="news.php">
               <i class="fas fa-newspaper"></i>
-              <span>&nbsp;Latest News</span>
+              <span>&nbsp;News around the World</span>
             </a>
           </li>
           <li>
@@ -265,9 +263,21 @@
             </a>
           </li>
           <li>
+            <a href="advertise.php">
+              <i class="fab fa-buysellads"></i>
+              <span>&nbsp;Advertise</span>
+            </a>
+          </li>
+          <li>
+            <a href="login.php">
+              <i class="fas fa-share"></i>
+              <span>&nbsp;Login/Sign up</span>
+            </a>
+          </li>
+          <li>
             <a href="help.php">
-              <i class="far fa-question-circle"></i>
-              <span>&nbsp;How to Use CrV</span>
+              <i class="far fa-smile"></i>
+              <span>&nbsp;About & Contact</span>
             </a>
           </li>
         </ul>
@@ -280,7 +290,7 @@
       <div class="row">
         <div class="top-price-bar">
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" alt=⌛ />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" alt=⌛ />
             <span class="top-label"> Bitcoin</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -288,7 +298,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Ethereum</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -296,7 +306,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Ripple</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -304,7 +314,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> B Cash</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -312,7 +322,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Litecoin</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -320,7 +330,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> TRON</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -328,7 +338,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Dash</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -336,15 +346,15 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> B Gold</span>
             <br />
             <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
             </span>
           </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+          <div alt="price direction" class="top-price-bar-cryptos">
+            <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> ZCash</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -352,7 +362,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Monero</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -360,7 +370,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> ETH Classic</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -368,7 +378,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> IOTA</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -376,7 +386,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> NXT</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -384,7 +394,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> EOS</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -392,7 +402,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> NEO</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -415,7 +425,7 @@
       <section class="content-header custom-content-header">
         <div class="crypto-select">
           <label class="label-enable">Crypto Currency: </label>
-          <select id="cryptoSelectBox" class="form-control select2" style="width:157px" onchange="selectCrypto()">
+          <select id="cryptoSelectBox" class="form-control select2" style="width:140px;display:inline" onchange="selectCrypto()">
             <option id="default-fiat" selected="selected" value="BTC">Bitcoin (BTC)</option>
             <option value="ETH">Ethereum (ETH)</option>
             <option value="XRP">Ripple (XRP)</option>
@@ -2788,7 +2798,7 @@
         </div>
         <div class="fiat-select">
           <label class="label-enable">Fiat Currency: </label>
-          <select id="fiatSelectBox" class="form-control select2" style="width:auto" onchange="selectFiat()">
+          <select id="fiatSelectBox" class="form-control select2" style="width:140px;display:inline" onchange="selectFiat()">
             <option id="default-fiat" selected="selected">USD</option>
             <option>RUB</option>
             <option>GBP</option>
@@ -2830,6 +2840,7 @@
             trends.embed.renderExploreWidgetTo(document.getElementById("gTrenGeo"),"GEO_MAP", {"comparisonItem":[{"keyword":currSelection1.options[currSelection1.selectedIndex].text,"geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q="+currSelection1.options[currSelection1.selectedIndex].text+"&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); 
           }
           function selectCrypto() {
+            document.getElementById("chartLoadOverlay").style.display="block";
             clearInterval(otherMarketsTimer);
             clearInterval(typewriterTimer);
             predicted=false;
@@ -2846,6 +2857,7 @@
           }
 
           function selectFiat() {
+            document.getElementById("chartLoadOverlay").style.display="block";
             clearInterval(otherMarketsTimer);
             clearTimeout(typewriterTimer);
             predicted=false;
@@ -2888,7 +2900,7 @@
           <div id="cryptoCurr-name-logo">
             <!-- <img src="https://www.cryptocompare.com/media/19633/btc.png" class="logo-img">   Bitcoin (BTC) -->
             <!-- <img id="titleLogo" src="" class="logo-img"> -->
-            <img id="titleLogo" src="https://www.cryptocompare.com//media/19633/btc.png" class="logo-img">
+            <img alt="coin logo" id="titleLogo" src="https://www.cryptocompare.com//media/19633/btc.png" class="logo-img">
             <span id="titleCurr"> Bitcoin (BTC)</span>
           </div>
         </h1>
@@ -2985,7 +2997,7 @@
         <script src="indi.js"></script>
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
           <table>
-          <tr><td><img src="dist/img/robot.png" style="height:10vh"></td>
+          <tr><td><img alt="future prediction robot/AI image" src="dist/img/robot.png" style="height:10vh"></td>
           <td style="padding: 5px"><b><div id="AIPredictionTd"><span id="AIPredictionSpan">Jay Yogeshwar! </span></div></b></td>
           </tr>
           </table>
@@ -3335,205 +3347,7 @@
     </footer>
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Create the tabs -->
-      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-        <li>
-          <a href="#control-sidebar-home-tab" data-toggle="tab">
-            <i class="fa fa-home"></i>
-          </a>
-        </li>
-        <li>
-          <a href="#control-sidebar-settings-tab" data-toggle="tab">
-            <i class="fa fa-gears"></i>
-          </a>
-        </li>
-      </ul>
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <!-- Home tab content -->
-        <div class="tab-pane" id="control-sidebar-home-tab">
-          <h3 class="control-sidebar-heading">Recent Activity</h3>
-          <ul class="control-sidebar-menu">
-            <li>
-              <a href="javascript:void(0)">
-                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                  <p>Will be 23 on April 24th</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                  <p>New phone +1(800)555-1234</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                  <p>nora@example.com</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                  <p>Execution time 5 seconds</p>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <!-- /.control-sidebar-menu -->
-
-          <h3 class="control-sidebar-heading">Tasks Progress</h3>
-          <ul class="control-sidebar-menu">
-            <li>
-              <a href="javascript:void(0)">
-                <h4 class="control-sidebar-subheading">
-                  Custom Template Design
-                  <span class="label label-danger pull-right">70%</span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <h4 class="control-sidebar-subheading">
-                  Update Resume
-                  <span class="label label-success pull-right">95%</span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <h4 class="control-sidebar-subheading">
-                  Laravel Integration
-                  <span class="label label-warning pull-right">50%</span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <h4 class="control-sidebar-subheading">
-                  Back End Framework
-                  <span class="label label-primary pull-right">68%</span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <!-- /.control-sidebar-menu -->
-
-        </div>
-        <!-- /.tab-pane -->
-        <!-- Stats tab content -->
-        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-        <!-- /.tab-pane -->
-        <!-- Settings tab content -->
-        <div class="tab-pane" id="control-sidebar-settings-tab">
-          <form method="post">
-            <h3 class="control-sidebar-heading">General Settings</h3>
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Report panel usage
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-
-              <p>
-                Some information about this general settings option
-              </p>
-            </div>
-            <!-- /.form-group -->
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Allow mail redirect
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-
-              <p>
-                Other sets of options are available
-              </p>
-            </div>
-            <!-- /.form-group -->
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Expose author name in posts
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-
-              <p>
-                Allow the user to show his name in blog posts
-              </p>
-            </div>
-            <!-- /.form-group -->
-
-            <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Show me as online
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-            </div>
-            <!-- /.form-group -->
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Turn off notifications
-                <input type="checkbox" class="pull-right">
-              </label>
-            </div>
-            <!-- /.form-group -->
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Delete chat history
-                <a href="javascript:void(0)" class="text-red pull-right">
-                  <i class="fa fa-trash-o"></i>
-                </a>
-              </label>
-            </div>
-            <!-- /.form-group -->
-          </form>
-        </div>
-        <!-- /.tab-pane -->
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
+    
     <!-- Add the sidebar's background. This div must be placed
                       immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
@@ -3588,7 +3402,6 @@
   <script type="text/javascript">
     $(function () {
       //Initialize Select2 Elements
-      $('.select2').select2()
       //Datemask dd/mm/yyyy
       // $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
       //Datemask2 mm/dd/yyyy

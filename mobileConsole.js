@@ -447,9 +447,9 @@ var mobileConsole = (function () {
       wordWrap: 'break-word',
       whiteSpace: 'nowrap'
     }),
-    arrowUp: '<img width="10" height="10" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAACVBMVEUAAAD///93d3eMZ/YKAAAAAnRSTlMAAHaTzTgAAAAdSURBVHgBY2CEAAYgYAJiEMXEBKHADCYIgKmD0QAFdAA2OHJXEwAAAABJRU5ErkJggg==">',
-    arrowDown: '<img width="10" height="10" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAG0lEQVR42mNgwAfKy8v/48I4FeA0AacVDFQBAP9wJkE/KhUMAAAAAElFTkSuQmCC">',
-    arrowRight: '<img width="10" height="10" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAJUlEQVR42mNgAILy8vL/DLgASBKnApgkVgXIkhgKiNKJ005s4gDLbCZBiSxfygAAAABJRU5ErkJggg==">'
+    arrowUp: '<img alt="up arrow" width="10" height="10" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAMAAADzjKfhAAAACVBMVEUAAAD///93d3eMZ/YKAAAAAnRSTlMAAHaTzTgAAAAdSURBVHgBY2CEAAYgYAJiEMXEBKHADCYIgKmD0QAFdAA2OHJXEwAAAABJRU5ErkJggg==">',
+    arrowDown: '<img alt="down arrow" width="10" height="10" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAG0lEQVR42mNgwAfKy8v/48I4FeA0AacVDFQBAP9wJkE/KhUMAAAAAElFTkSuQmCC">',
+    arrowRight: '<img alt="right arrow" width="10" height="10" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAJUlEQVR42mNgAILy8vL/DLgASBKnApgkVgXIkhgKiNKJ005s4gDLbCZBiSxfygAAAABJRU5ErkJggg==">'
   };
 
   //shared functions

@@ -1,5 +1,5 @@
 var coinData={"BTC":"https://twitter.com/Bitcoin",
-"ETH":"https://twitter.com/ethereumproject",
+"ETH":"https://twitter.com/ethereum",
 "XRP":"https://twitter.com/Ripple",
 "BCH":"https://twitter.com/BITCOlNCASH",
 "ADA":"https://twitter.com/cardanocom",

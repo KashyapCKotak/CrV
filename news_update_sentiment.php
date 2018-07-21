@@ -364,91 +364,91 @@
         <div class="row">
           <div class="top-price-bar">
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" alt=⌛ /><span class="top-label"> Bitcoin</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" alt=⌛ /><span class="top-label"> Bitcoin</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Ethereum</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Ethereum</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Ripple</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Ripple</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> B Cash</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> B Cash</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Litecoin</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Litecoin</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> TRON</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> TRON</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Dash</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Dash</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> B Gold</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> B Gold</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> ZCash</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> ZCash</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Monero</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> Monero</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> ETH Classic</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> ETH Classic</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> IOTA</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> IOTA</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> NXT</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> NXT</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> EOS</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> EOS</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>
             </div>
             <div class="top-price-bar-cryptos">
-              <img class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> NEO</span><br />
+              <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" /><span class="top-label"> NEO</span><br />
               <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
               </span>

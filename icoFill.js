@@ -61,7 +61,7 @@ xhttpIco.onreadystatechange = function() {
             liveIcoStr = liveIcoStr+'<tr>'+
             '<td>'+
             '<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 imageIcoHolder">'+
-            '<img class="imageIco" src="'+icoLiveList[liveIco].image+'">'+
+            '<img alt="ico logo" class="imageIco" src="'+icoLiveList[liveIco].image+'">'+
             '</div>'+
             '<div class="hidden-sm hidden-xs col-xs-8 col-sm-3 col-md-3 col-lg-3 col-xl-2">'+
             icoLiveList[liveIco].description+
@@ -151,7 +151,7 @@ xhttpIco.onreadystatechange = function() {
             upcomingIcoStr = upcomingIcoStr+'<tr>'+
             '<td>'+
             '<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 imageIcoHolder">'+
-            '<img class="imageIco" src="'+ icoUpcomingList[upcomingIco].image +'">'+
+            '<img alt="ico logo" class="imageIco" src="'+ icoUpcomingList[upcomingIco].image +'">'+
             '</div>'+
             '<div class="hidden-sm hidden-xs col-xs-8 col-sm-3 col-md-3 col-lg-3 col-xl-2">'+
             icoUpcomingList[upcomingIco].description+
@@ -224,7 +224,7 @@ xhttpIco.onreadystatechange = function() {
             finishedIcoStr = finishedIcoStr+'<tr>'+
             '<td>'+
             '<div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-2 imageIcoHolder">'+
-            '<img class="imageIco" src="'+ icoFinishedList[finishedIco].image +'">'+
+            '<img alt="ico logo" class="imageIco" src="'+ icoFinishedList[finishedIco].image +'">'+
             '</div>'+
             '<div class="hidden-sm hidden-xs col-xs-8 col-sm-3 col-md-3 col-lg-3 col-xl-2">'+
             icoFinishedList[finishedIco].description+

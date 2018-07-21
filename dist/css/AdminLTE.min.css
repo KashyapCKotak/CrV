@@ -923,8 +923,19 @@
 }
 .label-enable{
     display: inline;
+    font-size: 15px;
+    font-weight: 600;
 }
-@media (max-width: 675px){
+
+@media (max-width: 872px){
+    .label-enable{
+        display: inline;
+        font-size: 12px;
+        font-weight: 700;
+    }
+}
+
+@media (max-width: 852px){
     .label-enable{
         display: none;
     }
