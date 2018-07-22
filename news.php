@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <!-- Ionicons -->
     <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
     <!-- Select2 -->
@@ -57,6 +58,7 @@
   <script type="text/javascript">
     function myFunction(){
       console.log("PAGE LOAD COMPLETE");
+      loadNewsPage(1);
     }
   </script>
   <body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="myFunction()">
@@ -229,7 +231,7 @@
             </a>
           </li>
           <li>
-            <a href="login.php">
+            <a href="pages/login.php">
               <i class="fas fa-share"></i>
               <span>&nbsp;Login/Sign up</span>
             </a>
@@ -374,7 +376,7 @@
       <!-- /.content-wrapper -->
       <script src="loadNewsPage.js"></script>
       <script type="text/javascript">
-        loadNewsPage(1);
+        // loadNewsPage(1);
       </script>
       <footer class="main-footer">
         <div class="pull-right hidden-xs">

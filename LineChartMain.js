@@ -16,9 +16,9 @@
 //<!-- Chart code -->
 //<script>
 predicted=false;
-var chartHour;
-var chartMin;
-var chartDay;
+chartHour=null;
+chartMin=null;
+chartDay=null;
 firstTimeZoom=true;
 firstTimeIndi=true;
 indiDisplayed=false;
@@ -338,6 +338,7 @@ function drawMainChart(){
                   //chartMin.periodSelector.addListener("changed", handleZoom);
                   console.log("listener added chartMin");
                   if(indiDisplayed){
+                    chartMin = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
                     displayNewIndi(currIndiDisplayed,false);
                   }
@@ -413,6 +414,7 @@ function drawMainChart(){
                   //chartHour.periodSelector.addListener("changed", handleZoom);
                   console.log("listener added chartHour");
                   if(indiDisplayed){
+                    chartHour = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
                     displayNewIndi(currIndiDisplayed,false);
                   }
@@ -495,6 +497,7 @@ function drawMainChart(){
                   //chartDay.periodSelector.addListener("changed", handleZoom);
                   console.log("listener added chartDay");
                   if(indiDisplayed){
+                    chartDay = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
                     displayNewIndi(currIndiDisplayed,false);
                   }

@@ -269,7 +269,7 @@
             </a>
           </li>
           <li>
-            <a href="login.php">
+            <a href="pages/login.php">
               <i class="fas fa-share"></i>
               <span>&nbsp;Login/Sign up</span>
             </a>

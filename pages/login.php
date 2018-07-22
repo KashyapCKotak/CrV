@@ -153,9 +153,9 @@ if(isset($_POST['userSub'])){
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-      <p class="login-box-msg" style="font-size: 35px">Log in</p>
+      <p class="login-box-msg" style="font-size: 35px">Log in/Sign up</p>
 
-      <form action="" method="post">
+      <form action="" method="post" style="display:none">
         <div class="form-group has-feedback">
           <input type="text" name="username" class="form-control" placeholder="Username">
           <span class="glyphicon glyphicon-user form-control-feedback"></span>
@@ -164,7 +164,7 @@ if(isset($_POST['userSub'])){
           <input type="password" name="password" class="form-control" placeholder="Password">
           <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
-        <div class="row" style="width: 100%;margin: 0">
+        <div class="row" style="width: 100%;margin: 0; display:none">
           <div class="col-xs-8" style="padding: 0">
             <div class="checkbox icheck" style="margin-top:0 !important;margin-bottom:15px !important;text-align: left;text-align:  -webkit-left;">
               <label>
@@ -184,16 +184,16 @@ if(isset($_POST['userSub'])){
       </form>
 
       <div class="social-auth-links text-center">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+        <p style="display:none">- OR -</p>
+        <a style="display:none" href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
         Facebook</a>
-        <div id="GPlusSignInButton" class="btn btn-block btn-social btn-google btn-flat customGPlusSignIn"><i class="fa fa-google-plus"></i> Sign in using
-        Google+</div>
+        <div id="GPlusSignInButton" class="btn btn-block btn-social btn-google btn-flat customGPlusSignIn"><i class="fa fa-google-plus"></i> Log in/Sign up using
+        Google</div>
       </div>
       <script>startApp();</script>
       <!-- /.social-auth-links -->
 
-      <a href="#">I forgot my password</a><br>
+      <a href="#" style="display:none">I forgot my password</a><br>
 
     </div>
     <!-- /.login-box-body -->
