@@ -11,6 +11,8 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -32,7 +34,6 @@
     // console.log(($('#marketsDataTable').is(':visible')));
     // console.log(($('#cryptsyb').is(':visible')));
     console.log("PAGE LOAD COMPLETE");
-    document.getElementById("excahngeWidgetHolder").innerHTML='<iframe src="https://changelly.com/widget/v1?auth=email&from=BTC&to=ETH&merchant_id=8d450131fbb6&address=&amount=1&ref_id=8d450131fbb6&color=00cf70" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Cannot load widget </iframe>';
     // startStream(currSubList);
   }
 </script>
@@ -216,7 +217,7 @@
             </a>
           </li>
           <li>
-            <a href="help.php">
+            <a href="about.php">
               <i class="far fa-smile"></i>
               <span>&nbsp;About & Contact</span>
             </a>
@@ -229,95 +230,98 @@
   <!-- =============================================== -->
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper" style="overflow-x:scroll">
-    <!-- Content Header (Page header) -->
-    <div class="row">
-        <div class="top-price-bar">
-          <div class="top-price-bar-cryptos" style="text-align:center">
-            <span class="top-label" style="font-weight:600"> Impact on your business:<br><small style="font-weight:100">(representational numbers)</small></span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img alt="price direction image" class="top-image" src="dist/img/up.png" alt=⌛ />
-            <span class="top-label"> Views</span>
-            <br />
-            <span class="top-price">5M&nbsp;
-              <span class="top-pct" style="color: #00C605">100%</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
-            <span class="top-label"> User Base</span>
-            <br />
-            <span class="top-price">4.1M&nbsp;
-              <span class="top-pct" style="color: #00C605">80%</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
-            <span class="top-label"> User Reach</span>
-            <br />
-            <span class="top-price">2.9M&nbsp;
-              <span class="top-pct" style="color: #00C605">77%</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
-            <span class="top-label"> Populatrity</span>
-            <br />
-            <span class="top-price">9.1/10&nbsp;
-              <span class="top-pct" style="color: #00C605">63%</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
-            <span class="top-label"> Unique Visitors</span>
-            <br />
-            <span class="top-price">3.7M&nbsp;
-              <span class="top-pct" style="color: #00C605">51%</span>
-            </span>
-          </div>
-          <div class="top-price-bar-cryptos">
-            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
-            <span class="top-label"> Revenue</span>
-            <br />
-            <span class="top-price">$30M&nbsp;
-              <span class="top-pct" style="color: #00C605">59%</span>
-            </span>
-          </div>
-        </div>
-      </div>
+  <div class="content-wrapper">
       <!-- Content Header (Page header) -->
       <script type="text/javascript">
         var globalCryptoValue = "BTC";
         var globalFiatValue = "USD";
       </script>
       <!-- <script src="livedatatop.js"></script> -->
-    <!-- <section class="content-header">
-      <h1 style="text-align:center">
-          Exchange<br>
-          <small style="width: 100%;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto;color: black;height: 26px;padding: 5px;font-weight:400">BuySell CryptoCurrencies instantly...</small>
-      </h1>
-    </section> -->
     <section class="content-header">
-        <h1 style="text-align:center">
-        Exchange
-        <br><small>BuySell CryptoCurrencies instantly...</small>
-        </h1>
+      <h1 style="text-align:center">
+        About Us<br>
+          <small style="width: 100%;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto;margin-bottom:15px;color: black;height: 26px;padding: 5px;font-weight:400">Know how we deliver value to you...!</small>
+      </h1>
+      <!-- <ol class="breadcrumb" style="text-align:center;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto">
+        let us make the masses notice you...
+      </ol> -->
     </section>
 
     <!-- Main content -->
-    <div style="overflow-x:auto">
-    <section class="content" style="width:650px;margin:auto">
+    <section class="content">
 
       <!-- Default box -->
       <div class="box">
         <!-- <div class="box-header with-border" style="display:none">
           <h3 class="box-title">Sample Ad Spaces</h3>
         </div> -->
-        <div class="box-body">
-            <div id="excahngeWidgetHolder">
-                
+        <div class="box-header with-border">
+            <div class="box-title" style="text-align:center;width:100%">
+                <span style="font-size:18px;color: #3c8dbc"><strong><_Name_> brings you all the content you need to know about the Crypto World.</strong></span><br><span style="font-size:15px"><strong>Whether it is Trading, Predicting, Researching Market, Managing Portfolio and much more!</strong></span>
             </div>
+        </div>
+        <div class="box-body">
+          <div class="row">
+            <div class="col-md-6" style="margin-left:-10px">
+                <span class="AdpageText">View useful insights about what your next actions should be using the <b>Artificial Intelligence</b> advise on the <a href="dashboard.php">Dashboard</a>!</span>
+            </div>
+            <div class="col-md-6" style="background-image:url('dist/img/about-dashboard-ai.jpg');background-size:100% 100%;height: 350px;margin-right:  5px;background-clip:  content-box;">
+              <!-- <img style="display:inline !important;height:37vh" src="dist/img/mainChartRight2.jpg"/> -->
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 customadright" style="margin-left:-10px">
+              <span class="AdpageText">Manage your portfolio in the <b>most sophisticated way</b> on the <a href="portfolio.php">Portfolio Tracker</a>!</span>
+            </div>
+            <div class="col-md-6 customadleft" style="background-image:url('dist/img/icoBig.JPG');background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <!-- <img style="display:inline !important;height:37vh" src="dist/img/mainChartRight2.jpg"/> -->
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 " style="margin-left:-10px">
+              <span class="AdpageText">Get all the important crypto news <b>consolidated from all around the world</b> at the <a href="news.php">News Page</a>. Our AI shows you calculated <b>Sentiment Analysis</b> of the news so that you can get quick insights from an ocean of news!</span>
+            </div>
+            <div class="col-md-6 " style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 customadright" style="margin-left:-10px">
+              <span class="AdpageText">Know about all the past, new & upcoming <b>Initial Coin Offerings</b> at the <a href="ico.php">ICO Tracker</a>!</span>
+            </div>
+            <div class="col-md-6 customadleft" style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 " style="margin-left:-10px">
+              <span class="AdpageText"><b>Exchange</b> Cryptocurrencies/Fiat Currencies in as convenient as possible way on the <a href="exchange.php">Exchange Page</a>!</span>
+            </div>
+            <div class="col-md-6 " style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6 customadright" style="margin-left:-10px">
+              <span class="AdpageText">Access the analysis of Cryptos and Market at the <a href="analytical-articles.php">Analytical Articles Page</a>!</span>
+            </div>
+            <div class="col-md-6 customadleft" style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
+              <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12" style="text-align:center">
+              <span style="font-size: 16px;font-weight: 1000;color: #205a77;">
+              All this on One Single Platform - <_NAME_> !!!
+              </span>
+            </div>
+          </div>
         </div>
         <!-- /.box-body -->
         <!-- /.box-footer-->
@@ -325,7 +329,6 @@
       <!-- /.box -->
 
     </section>
-    </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -337,7 +340,8 @@
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
   </footer>
-  <!-- /.control-sidebar -->
+
+  
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
