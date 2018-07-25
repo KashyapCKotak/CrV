@@ -125,7 +125,7 @@ function displayNewIndi(newIndiType,pat){
         // };
       }
       currDispChart.listeners=newListener;
-      chartMacd = AmCharts.makeChart("chartdiv", currDispChart);
+      chartWithIndi = AmCharts.makeChart("chartdiv", currDispChart);
     }
   
     function mergeData(indiType){

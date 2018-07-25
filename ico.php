@@ -166,33 +166,11 @@
         <aside class="main-sidebar">
       <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar">
-        <!-- Sidebar user panel -->
-        <!-- <div class="user-panel">
-                <div class="pull-left image">
-                  <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                  <p>Login</p>
-                  <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                </div>
-              </div> -->
-        <!-- search form -->
-        <!-- <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                  <input type="text" name="q" class="form-control" placeholder="Search...">
-                  <span class="input-group-btn">
-                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                    </button>
-                  </span>
-                </div>
-              </form> -->
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <!-- <li class="header">
             <center>MENU</center>
           </li> -->
-          <li class="active treeview">
+          <li class="active">
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
               <span>&nbsp;Dashboard</span>
@@ -235,13 +213,13 @@
             </a>
           </li>
           <li>
-            <a href="pages/login.php">
-              <i class="fas fa-share"></i>
-              <span>&nbsp;Login/Sign up</span>
+            <a id="loginMenuItemLink" href="pages/login.php">
+              <i id="loginMenuItemIcon" class="fas fa-share"></i>
+              <span id="loginMenuItemText">&nbsp;Login/Sign up</span>
             </a>
           </li>
           <li>
-            <a href="help.php">
+            <a href="about.php">
               <i class="far fa-smile"></i>
               <span>&nbsp;About & Contact</span>
             </a>
@@ -249,6 +227,16 @@
         </ul>
       </section>
       <!-- /.sidebar -->
+      <script>
+        if((document.getElementsByClassName("user-image")[0].currentSrc).includes("notSigned")){
+          //do Nothing
+        }
+        else{
+          document.getElementById("loginMenuItemLink").setAttribute("href","profile.php");
+          document.getElementById("loginMenuItemText").innerHTML="&nbsp;My Profile";
+          document.getElementById("loginMenuItemIcon").className="fas fa-user";
+        }
+      </script>
     </aside>
         <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">

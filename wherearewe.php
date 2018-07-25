@@ -143,74 +143,80 @@
 
   <!-- Left side column. contains the sidebar -->
   <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <!-- <div class="user-panel">
-              <div class="pull-left image">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-              </div>
-              <div class="pull-left info">
-                <p>Login</p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-              </div>
-            </div> -->
-      <!-- search form -->
-      <!-- <form action="#" method="get" class="sidebar-form">
-              <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
-                <span class="input-group-btn">
-                  <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                  </button>
-                </span>
-              </div>
-            </form> -->
-      <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <!-- <li class="header">
-          <center>MENU</center>
-        </li> -->
-        <li class="active treeview">
-          <a href="dashboard.php">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>&nbsp;Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="portfolio.php">
-            <i class="fas fa-line-chart"></i>
-            <span>&nbsp;Portfolio</span>
-          </a>
-        </li>
-        <li>
-          <a href="ico.php">
-            <i class="far fa-calendar-alt"></i>
-            <span>&nbsp;ICO Calender</span>
-          </a>
-        </li>
-        <li>
-          <a href="news.php">
-            <i class="fas fa-newspaper"></i>
-            <span>&nbsp;Latest News</span>
-          </a>
-        </li>
-        <li>
-          <a href="analytical-articles.php">
-            <i class="fas fa-chart-pie"></i>
-            <span>&nbsp;Analytical Articles</span>
-          </a>
-        </li>
-        <li>
-          <a href="help.php">
-            <i class="far fa-question-circle"></i>
-            <span>&nbsp;About & Contact</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+          <!-- <li class="header">
+            <center>MENU</center>
+          </li> -->
+          <li class="active">
+            <a href="dashboard.php">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>&nbsp;Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="portfolio.php">
+              <i class="fas fa-donate"></i>
+              <span>&nbsp;Manage Portfolio</span>
+            </a>
+          </li>
+          <li>
+            <a href="exchange.php">
+              <i class="fas fa-chart-line"></i>
+              <span>&nbsp;Exchange</span>
+            </a>
+          </li>
+          <li>
+            <a href="ico.php">
+              <i class="far fa-calendar-alt"></i>
+              <span>&nbsp;ICO Calender</span>
+            </a>
+          </li>
+          <li>
+            <a href="news.php">
+              <i class="fas fa-newspaper"></i>
+              <span>&nbsp;News around the World</span>
+            </a>
+          </li>
+          <li>
+            <a href="analytical-articles.php">
+              <i class="fas fa-chart-pie"></i>
+              <span>&nbsp;Analytical Articles</span>
+            </a>
+          </li>
+          <li>
+            <a href="advertise.php">
+              <i class="fab fa-buysellads"></i>
+              <span>&nbsp;Advertise</span>
+            </a>
+          </li>
+          <li>
+            <a id="loginMenuItemLink" href="pages/login.php">
+              <i id="loginMenuItemIcon" class="fas fa-share"></i>
+              <span id="loginMenuItemText">&nbsp;Login/Sign up</span>
+            </a>
+          </li>
+          <li>
+            <a href="about.php">
+              <i class="far fa-smile"></i>
+              <span>&nbsp;About & Contact</span>
+            </a>
+          </li>
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+      <script>
+        if((document.getElementsByClassName("user-image")[0].currentSrc).includes("notSigned")){
+          //do Nothing
+        }
+        else{
+          document.getElementById("loginMenuItemLink").setAttribute("href","profile.php");
+          document.getElementById("loginMenuItemText").innerHTML="&nbsp;My Profile";
+          document.getElementById("loginMenuItemIcon").className="fas fa-user";
+        }
+      </script>
+    </aside>
 
   <!-- =============================================== -->
 

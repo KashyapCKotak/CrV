@@ -188,6 +188,7 @@ function startStream(currSubList) {
 			else if(dataElem == "PRICE"){
 				displayValsAgg[7]=currFSymb+" "+data[dataElem].toFixed(2);
 				displayValsAgg[8]=data[dataElem].toFixed(2);
+				currTopPriceAmount=data[dataElem].toFixed(2);
 			}
 		}
 		var chg=parseFloat(displayValsAgg[8]-displayValsAgg[9]).toFixed(2);

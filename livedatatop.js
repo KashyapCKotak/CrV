@@ -14,7 +14,7 @@
   var cryptoInTop = false;
   //console.log(currTopPriceUrl);
   var currTopPriceObj;
-  var currTopPriceAmount;
+  currTopPriceAmount=0;
   var xhttpTopPrice = new XMLHttpRequest();
     xhttpTopPrice.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {

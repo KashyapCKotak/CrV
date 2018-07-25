@@ -40,8 +40,13 @@ session_start();
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script type="text/javascript">
     function onLoad(){
-      $("#fiatSelectBox").val(prsnRootFiat);
-      $('#fiatSelectBox').trigger('change');
+      if(typeof prsnRootFiat=="undefined"){
+        document.getElementById("fiatSelectBox").disabled=true;
+      }
+      else{
+        $("#fiatSelectBox").val(prsnRootFiat);
+        $('#fiatSelectBox').trigger('change');
+      }
     }
   </script>
 </head>
@@ -149,7 +154,10 @@ session_start();
       <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar">
         <ul class="sidebar-menu" data-widget="tree">
-          <li class="active treeview">
+          <!-- <li class="header">
+            <center>MENU</center>
+          </li> -->
+          <li class="active">
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
               <span>&nbsp;Dashboard</span>
@@ -157,8 +165,14 @@ session_start();
           </li>
           <li>
             <a href="portfolio.php">
-              <i class="fas fa-line-chart"></i>
-              <span>&nbsp;Portfolio</span>
+              <i class="fas fa-donate"></i>
+              <span>&nbsp;Manage Portfolio</span>
+            </a>
+          </li>
+          <li>
+            <a href="exchange.php">
+              <i class="fas fa-chart-line"></i>
+              <span>&nbsp;Exchange</span>
             </a>
           </li>
           <li>
@@ -169,14 +183,8 @@ session_start();
           </li>
           <li>
             <a href="news.php">
-              <i class="far fa-newspaper"></i>
-              <span>&nbsp;CrV Blog</span>
-            </a>
-          </li>
-          <li>
-            <a href="news.php">
               <i class="fas fa-newspaper"></i>
-              <span>&nbsp;Latest News</span>
+              <span>&nbsp;News around the World</span>
             </a>
           </li>
           <li>
@@ -186,14 +194,36 @@ session_start();
             </a>
           </li>
           <li>
-            <a href="help.php">
-              <i class="far fa-question-circle"></i>
-              <span>&nbsp;How to Use CrV</span>
+            <a href="advertise.php">
+              <i class="fab fa-buysellads"></i>
+              <span>&nbsp;Advertise</span>
+            </a>
+          </li>
+          <li>
+            <a id="loginMenuItemLink" href="pages/login.php">
+              <i id="loginMenuItemIcon" class="fas fa-share"></i>
+              <span id="loginMenuItemText">&nbsp;Login/Sign up</span>
+            </a>
+          </li>
+          <li>
+            <a href="about.php">
+              <i class="far fa-smile"></i>
+              <span>&nbsp;About & Contact</span>
             </a>
           </li>
         </ul>
       </section>
       <!-- /.sidebar -->
+      <script>
+        if((document.getElementsByClassName("user-image")[0].currentSrc).includes("notSigned")){
+          //do Nothing
+        }
+        else{
+          document.getElementById("loginMenuItemLink").setAttribute("href","profile.php");
+          document.getElementById("loginMenuItemText").innerHTML="&nbsp;My Profile";
+          document.getElementById("loginMenuItemIcon").className="fas fa-user";
+        }
+      </script>
     </aside>
 
   <!-- Content Wrapper. Contains page content -->
@@ -235,7 +265,7 @@ session_start();
                 ?>
               </h3>
 
-              <p class="text-muted text-center">Golden User</p>
+              <p id="userType" class="text-muted text-center">Golden User</p>
 
               <ul class="list-group list-group-unbordered">
 								<!-- <li class="list-group-item">
@@ -261,13 +291,19 @@ session_start();
                           if(!cryptosPrsn.includes(cryptoPort))
                             cryptosPrsn.push(cryptoPort);
                         }
-                      if(cryptosPrsn.length!=0)
+                      if(cryptosPrsn.length!=0){
+                        loggedIn=true;
                         document.write(cryptosPrsn.length);
-                      else
+                      }
+                      else{
+                        loggedIn=true;
                         document.write("None yet. Invest!<br>Start Something New!");
+                      }
                     }
-                    else
-                    document.write("Login again"); 
+                    else{
+                      loggedIn=false;
+                      document.write("Please Login"); 
+                    }
                   </script>
                   <!--</?php
                     if(!isset($_SESSION['prsn_portfolio']) || $_SESSION['prsn_portfolio'] == ''){
@@ -294,7 +330,7 @@ session_start();
                       echo $_SESSION['prtc_portfolio'];
                     }
                     else
-                      echo "NotSet";
+                      echo "'NotSet'";
                     ?>;
                     var totPrtcPort=0;
                     if(myPrtcPort!="NotSet"){
@@ -312,7 +348,7 @@ session_start();
                         document.write("None yet. Invest!<br>Start Something New!");
                     }
                     else
-                     document.write("Login again"); 
+                     document.write("Please Login"); 
                   </script>
                   <!--</?php
                     if(!isset($_SESSION['prtc_portfolio']) || $_SESSION['prtc_portfolio'] == ''){
@@ -464,11 +500,17 @@ session_start();
                     </div>
                   </div>
                   <div class="profile-form-entry" style="margin-top:80px">
-                    <button name="save" type="button" onclick="updateBaseCcy()" class="col-xs-3 col-sm-2 col-md-1 btn btn-success" style="float:right;margin:0px 15px 0px 5px">Save</button>
-                    <button type="reset" class="col-xs-3 col-sm-2 col-md-1 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
+                    <button id="saveButton" name="save" type="button" onclick="updateBaseCcy()" class="col-xs-3 col-sm-2 col-md-1 btn btn-success" style="float:right;margin:0px 15px 0px 5px">Save</button>
+                    <button id="resetButton" type="reset" class="col-xs-3 col-sm-2 col-md-1 btn btn-danger" style="float:right;margin:0px 10px 0px 5px">Cancel</button>
                   </div>
                 </form>
               </div>
+              <script type="text/javascript">
+                if(myPrsnPort=="NotSet"){
+                  document.getElementById("saveButton").disabled="true";
+                  document.getElementById("resetButton").disabled="true";
+                }
+              </script>
               <!-- /.tab-pane -->
               <div class="active tab-pane" id="info">
                 <form class="form-horizontal" action="" method="get">
@@ -477,7 +519,14 @@ session_start();
                     <div class="col-sm-2" style="padding-top:7px;font-weight:650">
                       <script type="text/javascript">
                         var fiatArray=Object.keys(myPrsnPort);
-                        document.write(fiatArray);
+                        if(myPrsnPort=="NotSet"){
+                          document.write("Please Login to view");
+                          document.getElementById("userType").innerHTML="<a href='login.php'>Login Here</a>";
+                          document.getElementById("userType").style.fontSize="20px";
+                        }
+                        else{
+                          document.write(fiatArray);
+                        }
                       </script>
                     </div>
                   </div>
@@ -485,7 +534,12 @@ session_start();
                     <label for="inputName" class="col-sm-4 control-label" style="font-weight:400">Fiats used for Investing:</label>
                     <div class="col-sm-2" style="padding-top:7px;font-weight:650">
                       <script type="text/javascript">
-                        document.write(cryptosPrsn);
+                        if(myPrsnPort=="NotSet"){
+                          document.write("--");
+                        }
+                        else{
+                          document.write(cryptosPrsn);
+                        }
                       </script>
                     </div>
                   </div>
@@ -495,7 +549,12 @@ session_start();
                     <div class="col-sm-2" style="padding-top:7px;font-weight:650">
                       <script type="text/javascript">
                         var fiatArray=Object.keys(myPrtcPort);
-                        document.write(fiatArray);
+                        if(myPrtcPort=="NotSet"){
+                          document.write("Please Login to view");
+                        }
+                        else{
+                          document.write(fiatArray);
+                        }
                       </script>
                     </div>
                   </div>
@@ -503,7 +562,12 @@ session_start();
                     <label for="inputName" class="col-sm-4 control-label" style="font-weight:400">Fiats used for Practicing:</label>
                     <div class="col-sm-2" style="padding-top:7px;font-weight:650">
                       <script type="text/javascript">
-                        document.write(cryptosPrtc);
+                        if(myPrsnPort=="NotSet"){
+                          document.write("--");
+                        }
+                        else{
+                          document.write(cryptosPrtc);
+                        }
                       </script>
                     </div>
                   </div>

@@ -542,7 +542,7 @@ async function calcPatterns(){
     (parseInt(rsiOut[2])==-1) ? sigArray.OnlyRsi="buy" : (parseInt(rsiOut[2])==1) ? sigArray.OnlyRsi="sell" : sigArray.OnlyRsi="none" ;
     
     
-				
+	indiDisplayed=false;		
     console.log(sigArray);
     console.log(finalDec());
     
