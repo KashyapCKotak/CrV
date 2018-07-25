@@ -37,6 +37,7 @@
         <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
         <!-- Moment js for dates -->
         <script src="dist/js/moment.js"></script>
+        <script src="icoFill.js"></script>
         <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
         <script>
             $.widget.bridge('uibutton', $.ui.button);
@@ -62,6 +63,7 @@
 <script type="text/javascript">
     function myFunction() {
         console.log("PAGE LOAD COMPLETE");
+        loadICOs();
     }
 </script>
 
@@ -551,7 +553,6 @@
             </section>
             <!-- /.content -->
         </div>
-        <script src="icoFill.js"></script>
         <!-- /.content-wrapper -->
         <!-- <script src="loadNewsPage.js"></script> -->
         <footer class="main-footer">

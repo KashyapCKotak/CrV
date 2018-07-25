@@ -166,13 +166,13 @@
           <!-- <li class="header">
             <center>MENU</center>
           </li> -->
-          <li class="active">
+          <li>
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
               <span>&nbsp;Dashboard</span>
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="portfolio.php">
               <i class="fas fa-donate"></i>
               <span>&nbsp;Manage Portfolio</span>
@@ -1498,6 +1498,9 @@
                         document.getElementById("portTab3").click();
                         document.getElementById("portTab1").style.pointerEvents="none";
                         document.getElementById("portTab2").style.pointerEvents="none";
+                      }
+                      else{
+                        document.getElementById("tab_3").style.display="none";
                       }
                     </script>
                     <script>

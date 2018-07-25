@@ -1,3 +1,4 @@
+function loadICOs(){
 var liveIcoStr="";
 var upcomingIcoStr="";
 var finishedIcoStr="";
@@ -252,3 +253,4 @@ xhttpIco.onreadystatechange = function() {
 };
 xhttpIco.open("GET", "https://api.icowatchlist.com/public/v1/", true);
 xhttpIco.send();
+}

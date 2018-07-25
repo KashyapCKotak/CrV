@@ -14,6 +14,10 @@
     font-size:15px;
     position:absolute;
 } */
+.chart-responsive1, .chart-responsive2{
+    text-align: center;
+}
+
 .custom-sidebar-toggle{
     float:left;
     width: 50px;
