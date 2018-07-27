@@ -352,12 +352,12 @@ var SYMBOLS = {
 var prices={"zebpayb":0,"zebpays":0,"koinexb":0,"koinexs":0,"unocoinb":0,"unocoins":0}; 
 var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypto)/(fiat)","buy/?/volume/?/?/?/pricechange/?",false,false], // [url Numbers, urls, buy/sell/vol to/vol from/ ]
             "koinex":[1,"https://koinex.in/api/ticker","stats:fiat:crypto:lowest_ask/?/vol_24hrs/trade_volume/?/last_traded_price/per_change/?",false,true],
-            "unocoin":[1,"https://api.unocoin.com/api/trades/buy","buying_price/?/?/?/?/?/?/?",false,false],
+            "unocoin":[1,"https://api.unocoin.com/api/trades/btc/buy","buying_price/?/?/?/?/?/?/?",false,false],
             "coindelta":[1,"https://api.coindelta.com/api/v1/public/getticker/","{(MarketName)=(crypto-fiat)}:Ask/?/?/?/?/Last/?/?",true,true],
             "buyucoin":[1,"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20json%20where%20url%3D%22https%3A%2F%2Fwww.buyucoin.com%2Fapi%2Fv1.2%2Fcurrency%2Fmarkets%22&format=json","query:results:json:data:crypto_fiat:ask/?/vol/?/?/last_trade/change/?",true,true],
             "bitbns":[1,"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20json%20where%20url%3D%22https%3A%2F%2Fbitbns.com%2Forder%2FgetTickerWithVolume%2F%22&format=json","query:results:json:crypto:highest_buy_bid/?/volume|volume/volume|rate/?/last_traded_price/?/yes_price",false,false],
             "unodax":[1,"https://api.unocoin.com/api/exchange/unodax-ticker","stats:fiat:crypto:last_traded_price/?/vol_24hrs/?/?/last_traded_price/per_change/?",false,true],
-            "wazirx":[1,"https://api.wazirx.com/api/v2/tickers","cryptofiat:buy/?/volume/?/?/last/?/open",true,true],
+            "wazirx":[1,"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20json%20where%20url%3D%22https%3A%2F%2Fapi.wazirx.com%2Fapi%2Fv2%2Ftickers%22","query:results:json:cryptofiat:buy/?/volume/?/?/last/?/open",true,true],
             "cxihub":[1,"https://api.cxihub.com/market/v1/ticker","data:{(market)=(fiat/crypto)}:buy/?/volume/?/?/?/changePercent/?",true,true],
             "coindcx":[1,"https://api.coindcx.com/exchange/ticker","{(market)=(cryptofiat)}:bid/?/?/?/?/last_price/change_24_hour/?",false,false]};
             
@@ -576,9 +576,10 @@ function updateMarketsDataTblNotINR () {
             startStream(currSubList);
             console.log("Streaming Started");
             let pairPresent="absent";
+            getPairsPrice(globalCryptoValue,globalFiatValue);
             otherMarketsTimer=setInterval(function (){
                 pairPresent=getPairsPrice(globalCryptoValue,globalFiatValue);
-            }, 20000);
+            }, 60000);
             // if(pairPresent=="absent"){
             //     clearInterval(otherMarketsTimer);
             //     pairPresent="something";
