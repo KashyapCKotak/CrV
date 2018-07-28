@@ -1,3 +1,43 @@
+/*/////////////// Custom Below //////////////*/
+.skin-blue .top-price-bar {
+  background: #205a77;
+}
+.skin-blue-light .top-price-bar {
+  background: #205a77;
+}
+.skin-yellow .top-price-bar {
+  background: #735321;
+}
+.skin-yellow-light .top-price-bar {
+  background: #735321;
+}
+.skin-purple .top-price-bar {
+  background: #211e5a;
+}
+.skin-purple-light .top-price-bar {
+  background: #211e5a;
+}
+.skin-green .top-price-bar {
+  background: #175237;
+}
+.skin-green-light .top-price-bar {
+  background: #175237;
+}
+.skin-red .top-price-bar {
+  background: #431610;
+}
+.skin-red-light .top-price-bar {
+  background: #431610;
+}
+.skin-black .top-price-bar {
+  background: #dbe0dc;
+  color: #000000;
+}
+.skin-black-light .top-price-bar {
+  background: #dbe0dc;
+  color: #000000;
+}
+/*/////////////// Custom Above //////////////*/
 /*
  * Skin: Blue
  * ----------

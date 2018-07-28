@@ -25,18 +25,18 @@
   <script src="pieChartPortfolio.js"></script>
   <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
     <!-- Data Tables -->
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- Morris chart -->
     <!-- jvectormap -->
     <link rel="stylesheet" href="bower_components/jvectormap/jquery-jvectormap.css">
     <!-- Date Picker -->
-    <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <!-- <link rel="stylesheet" href="bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"> -->
     <!-- Daterange picker -->
-    <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css">
+    <!-- <link rel="stylesheet" href="bower_components/bootstrap-daterangepicker/daterangepicker.css"> -->
     <!-- bootstrap wysihtml5 - text editor -->
-    <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+    <!-- <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css"> -->
     
     <!-- jQuery 3 -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
@@ -73,9 +73,16 @@
           <!-- Header Navbar: style can be found in header.less -->
           <nav class="navbar navbar-static-top">
             <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-              <span class="sr-only">Toggle navigation</span>
-            </a>
+            <script>
+              function menuToggle(x) {
+                x.classList.toggle("change");
+              }
+            </script>
+            <div class="custom-sidebar-toggle" data-toggle="push-menu" role="button" onclick="menuToggle(this)">
+              <div class="bar1" style="margin-top:15px"></div>
+              <div class="bar2"></div>
+              <div class="bar3"></div>
+            </div>
 
             <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
@@ -159,20 +166,20 @@
           </nav>
         </header>
         <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar">
+    <aside class="main-sidebar">
       <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar">
         <ul class="sidebar-menu" data-widget="tree">
           <!-- <li class="header">
             <center>MENU</center>
           </li> -->
-          <li>
+          <li class="active">
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
               <span>&nbsp;Dashboard</span>
             </a>
           </li>
-          <li class="active">
+          <li>
             <a href="portfolio.php">
               <i class="fas fa-donate"></i>
               <span>&nbsp;Manage Portfolio</span>
@@ -214,11 +221,143 @@
               <span id="loginMenuItemText">&nbsp;Login/Sign up</span>
             </a>
           </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fa fa-files-o"></i>
+              <span>UI Colors</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="clearfix treeview-menu"><!-- style="color:#8aa4af"-->
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-lights-on" style="display: block; padding-left:5px ;" class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Lights on</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-lights-off" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #000"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Lights off</p>
+                </a>
+              </li>
+              <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-blue" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Blue</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-black" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Black</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-purple" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Purple</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-green" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Green</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-red" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Red</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-yellow" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Orange</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-blue-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Blue Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-black-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Back Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-purple-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Purple Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-green-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Green Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-red-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Red Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-yellow-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Orange Light</p>
+                </a>
+              </li>
+            </ul>
+            <!-- <ul class="treeview-menu">
+              <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+              <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+              <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+              <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            </ul> -->
+          </li>
           <li>
             <a href="about.php">
               <i class="far fa-smile"></i>
               <span>&nbsp;About & Contact</span>
             </a>
+          </li>
+          <li style="height:100px">
           </li>
         </ul>
       </section>
@@ -1446,18 +1585,18 @@
                     <!-- Sparkline -->
                     <script src="bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
                     <!-- jvectormap -->
-                    <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-                    <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+                    <!-- <script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script> -->
+                    <!-- <script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script> -->
                     <!-- jQuery Knob Chart -->
                     <script src="bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
                     
                     <!-- daterangepicker -->
                     <script src="bower_components/moment/min/moment.min.js"></script>
-                    <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+                    <!-- <script src="bower_components/bootstrap-daterangepicker/daterangepicker.js"></script> -->
                     <!-- datepicker -->
-                    <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+                    <!-- <script src="bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> -->
                     <!-- Bootstrap WYSIHTML5 -->
-                    <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+                    <!-- <script src="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script> -->
                     <!-- Slimscroll -->
                     <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
                     <!-- FastClick -->

@@ -63,7 +63,7 @@ $(function () {
     if (typeof (Storage) !== 'undefined') {
       localStorage.setItem(name, val)
     } else {
-      window.alert('Please use a modern browser to properly view this template!')
+      window.alert('Please use a more modern browser to save your preferences!')
     }
   }
 
@@ -98,6 +98,13 @@ $(function () {
     return false
   }
 
+  function turnLightsOff(){
+  }
+
+  function turnLightsOn(){
+    
+  }
+
   /**
    * Retrieve default settings and apply them to the template
    *
@@ -110,6 +117,15 @@ $(function () {
 
     // Add the change skin listener
     $('[data-skin]').on('click', function (e) {
+      if($(this).data('skin').indexOf("lights-on")!=-1){
+        console.log($(this).data('skin'));
+        
+        return;
+      }
+      else if($(this).data('skin').indexOf("lights-off")!=-1){
+        console.log($(this).data('skin'));
+        return;
+      }
       if ($(this).hasClass('knob'))
         return
       e.preventDefault()
