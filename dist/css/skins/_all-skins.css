@@ -1,38 +1,68 @@
 /*/////////////// Custom Below //////////////*/
+/*Blue Dark*/
+.skin-blue .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-blue .lightsOff #MarketsTable>tr{
+  background-color: #205a77
+}
 .skin-blue .top-price-bar {
   background: #205a77;
 }
+/*Blue Light*/
 .skin-blue-light .top-price-bar {
   background: #205a77;
 }
-.skin-yellow .top-price-bar {
-  background: #735321;
+/*Yellow Dark*/
+.skin-yellow .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-yellow .lightsOff #MarketsTable>tr{
+  background-color: #7c4f08
 }
+.skin-yellow .top-price-bar {
+  background: #7c4f08;
+}
+/*Yellow Light*/
 .skin-yellow-light .top-price-bar {
-  background: #735321;
+  background: #7c4f08;
+}
+/*Purple Dark*/
+.skin-purple .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-purple .lightsOff #MarketsTable>tr{
+  background-color: #211e5a
 }
 .skin-purple .top-price-bar {
   background: #211e5a;
 }
+/*Purple Light*/
 .skin-purple-light .top-price-bar {
   background: #211e5a;
+}
+/*Green Dark*/
+.skin-green .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-green .lightsOff #MarketsTable>tr{
+  background-color: #175237
 }
 .skin-green .top-price-bar {
   background: #175237;
 }
+/*Green Light*/
 .skin-green-light .top-price-bar {
   background: #175237;
+}
+/*Red Dark*/
+.skin-red .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-red .lightsOff #MarketsTable>tr{
+  background-color: #431610
 }
 .skin-red .top-price-bar {
   background: #431610;
 }
+/*Red Light*/
 .skin-red-light .top-price-bar {
   background: #431610;
+}
+/*Black Dark*/
+.skin-black .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-black .lightsOff #MarketsTable>tr{
+  background-color: #dbe0dc
 }
 .skin-black .top-price-bar {
   background: #dbe0dc;
   color: #000000;
 }
+/*Black Light*/
 .skin-black-light .top-price-bar {
   background: #dbe0dc;
   color: #000000;

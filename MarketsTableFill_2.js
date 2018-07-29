@@ -553,8 +553,8 @@ function getPairsPrice(crypto,fiat){
 function updateMarketsDataTblNotINR () {
     var mktSubsTbl=[]; 
     var xhttpOtherFiatMkts = new XMLHttpRequest();
-    var tableString='<table id="example1" class="table table-bordered table-striped">'+
-            '<thead><tr><th>Name</th><th>Price</th><th>Last Trade</th><th>24H Volume</th><th>24H Change</th></tr></thead><tbody id="MarketsDataTable">';
+    var tableString='<table class="table table-bordered">'+
+            '<thead id="MarketsTable"><tr><th>Name</th><th>Price</th><th>Last Trade</th><th>24H Volume</th><th>24H Change</th></tr></thead><tbody id="MarketsDataTable">';
     xhttpOtherFiatMkts.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
             console.log("Streaming Started");
@@ -658,7 +658,7 @@ if( globalCryptoValue == "BTC" && globalFiatValue == "INR"){
 // var marketsToLoad = [{"name":"Zebpay","site":"www.zebpay.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"},
 // {"name":"Unocoin","site":"www.unocoin.com","dataurl":"https://www.zebapi.com/api/v1/market/ticker/btc/inr"}];
 //////////////////////////////////////////////////////////////////////////
-var tableString='<table id="example1" class="table table-bordered table-striped">'+
+var tableString='<table id="example1" class="table table-bordered">'+
 '<thead><tr><th>Name</th><th>Buy(lowest Ask)</th><th>Sell(highest Bid)</th></tr></thead><tbody id="MarketsDataTable">'+
 '<tr><td><a href="https://www.koinex.in">Koinex</a></td><td id="Koinexb">loading</td><td id="Koinexs">loading</td></tr>'+
 '<tr><td><a href="https://www.unocoin.com">Unocoin</a></td><td id="Unocoinb">loading</td><td id="Unocoins">loading</td></tr>'+

@@ -90,8 +90,8 @@
     </script>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse lightsOn" onload="onLoadPage()">
-  <div class="wrapper">
+<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="onLoadPage()">
+  <div id="bodyWrapper" class="wrapper lightsOff">
   <div id="techIndiScripts"></div>
     <header class="main-header">
       <!-- Logo -->

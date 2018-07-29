@@ -119,11 +119,11 @@ $(function () {
   }
 
   function toggleLights(cls){
-    $.each(mySkins, function (i) {
-      $('body').removeClass(lightSkins[i])
+    $.each(lightSkins, function (i) {
+      $('#bodyWrapper').removeClass(lightSkins[i])
     })
 
-    $('body').addClass(cls)
+    $('#bodyWrapper').addClass(cls)
     store('lightSkin', cls)
     return false
   }
@@ -140,7 +140,6 @@ $(function () {
 
     var lightstmp = get('lightSkin')
     if (lightstmp && $.inArray(lightstmp, lightSkins)){
-      console.log("!!!!!!!!!!!!!!!!!!!!"+lightstmp);
       if(lightstmp.indexOf("lights")!=-1){
         console.log("!!!!!!!!!!!!!!!!!!!!"+lightstmp);
         toggleLights(lightstmp);
