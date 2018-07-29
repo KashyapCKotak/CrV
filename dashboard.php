@@ -90,7 +90,7 @@
     </script>
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="onLoadPage()">
+<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse lightsOn" onload="onLoadPage()">
   <div class="wrapper">
   <div id="techIndiScripts"></div>
     <header class="main-header">
@@ -262,7 +262,7 @@
             </a>
             <ul class="clearfix treeview-menu"><!-- style="color:#8aa4af"-->
               <li style="float:left; width: 33.33333%; padding: 5px;">
-                <a href="javascript:void(0)" data-skin="skin-lights-on" style="display: block; padding-left:5px ;" class="clearfix full-opacity-hover">
+                <a href="javascript:void(0)" data-skin="lightsOn" style="display: block; padding-left:5px ;" class="clearfix full-opacity-hover">
                   <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
                   <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
                   <br>
@@ -270,7 +270,7 @@
                 </a>
               </li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
-                <a href="javascript:void(0)" data-skin="skin-lights-off" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                <a href="javascript:void(0)" data-skin="lightsOff" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
                   <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
                   <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #000"></span></div>
                   <br>
@@ -406,7 +406,7 @@
     </aside>
 
     <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper lightsOff">
+    <div class="content-wrapper">
       <div class="row">
         <div class="top-price-bar">
           <div class="top-price-bar-cryptos">
@@ -3165,7 +3165,7 @@
               </select>
             </div>
           </div>
-          <div id="chartdiv" style="height:80vh;width:100%;overflow:visible">
+          <div id="chartdiv" class="chartdivlight">
             <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
             <script src="https://www.amcharts.com/lib/3/serial.js"></script>
             <!-- <script src="/amCharts/amstock.js"></script> -->

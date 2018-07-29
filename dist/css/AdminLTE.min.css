@@ -5,9 +5,65 @@
 *   License: Open source - MIT
 *           Please visit http://opensource.org/licenses/MIT for more information
 */
-.lightsOff{
-    color:rgba(255, 255, 255, 0.795);
+.lightsOff .content-wrapper,
+.lightsOff .box, .lightsOff input{
+    /* color:rgba(255, 255, 255, 0.795) !important; */
+    color:rgba(255, 255, 255) !important;
     background: #000 !important;
+    /* text-shadow: 0 0 6px #5af85a; */
+}
+
+.lightsOff #chartdiv text, .lightsOff #chartdiv input, .lightsOff .amChartsPeriodSelector, .lightsOff .box-header{
+    color: #fff !important;
+    fill: #fff !important;
+    text-shadow: 0px 0px 6px #008a45
+}
+
+.lightsOff .input_convert:focus ~ .label_convert, .lightsOff input:valid ~ .label_convert{
+    color: #008a45
+}
+
+.lightsOff .bar_convert:before, .lightsOff .bar_convert:after{
+    background: #008a45
+}
+
+.lightsOff #AIPredictionSpan{
+    color: #00d56e;
+}
+
+.lightsOff .select2-container--default{
+    background: #302f2f;
+    color: #fff;
+    border-color: #000;
+}
+
+.lightsOff .mainFactsValue{
+    background: #302f2f;
+}
+
+.lightsOff #chartTypeSelect, .lightsOff #chartIndiSelect{
+    background: #302f2f;
+    border-color: #008a45;
+}
+/*//////////////////*/
+.lightsOn .content-wrapper{
+    color:#000;
+    background: #ecf0f5 !important; /*TODO: change according to theme*/
+}
+
+/*
+*
+* backlight css above
+*
+*/
+.chartdivlight{
+    height:80vh;
+    width:100%;
+    overflow:visible;
+}
+
+.amcharts-start-date-input, .amcharts-end-date-input{
+    pointer-events: none;
 }
 
 .chart-responsive1, .chart-responsive2{
@@ -805,7 +861,7 @@
     overflow-x: auto;
     /* overflow-y: hidden; */
     /* background: #d2d6de;#41b3ec; */
-    color: #000;
+    /* color: #000; */
     padding-left: 15px;
     padding-right: 15px;
     /* white-space: nowrap; */

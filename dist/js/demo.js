@@ -38,6 +38,8 @@ $(function () {
     'skin-green-light'
   ]
 
+  var lightSkins = ['lightsOn','lightsOff']
+
   /**
    * Get a prestored setting
    *
@@ -98,11 +100,32 @@ $(function () {
     return false
   }
 
-  function turnLightsOff(){
+  function turnLightsOn(cls){
+    $.each(mySkins, function (i) {
+      $('body').removeClass(lightSkins[i])
+    })
+    $('body').addClass(cls)
+    store('lightSkin', cls)
+    return false
   }
 
-  function turnLightsOn(){
-    
+  function turnLightsOff(cls){
+    $.each(mySkins, function (i) {
+      $('body').removeClass(lightSkins[i])
+    })
+    $('body').addClass(cls)
+    store('lightSkin', cls)
+    return false
+  }
+
+  function toggleLights(cls){
+    $.each(mySkins, function (i) {
+      $('body').removeClass(lightSkins[i])
+    })
+
+    $('body').addClass(cls)
+    store('lightSkin', cls)
+    return false
   }
 
   /**
@@ -115,17 +138,24 @@ $(function () {
     if (tmp && $.inArray(tmp, mySkins))
       changeSkin(tmp)
 
+    var lightstmp = get('lightSkin')
+    if (lightstmp && $.inArray(lightstmp, lightSkins)){
+      console.log("!!!!!!!!!!!!!!!!!!!!"+lightstmp);
+      if(lightstmp.indexOf("lights")!=-1){
+        console.log("!!!!!!!!!!!!!!!!!!!!"+lightstmp);
+        toggleLights(lightstmp);
+      }
+    }
+
     // Add the change skin listener
     $('[data-skin]').on('click', function (e) {
-      if($(this).data('skin').indexOf("lights-on")!=-1){
+      if($(this).data('skin').indexOf("lights")!=-1){
         console.log($(this).data('skin'));
-        
+        toggleLights($(this).data('skin'));
         return;
       }
-      else if($(this).data('skin').indexOf("lights-off")!=-1){
-        console.log($(this).data('skin'));
-        return;
-      }
+      console.log(e);
+      console.log($(this));
       if ($(this).hasClass('knob'))
         return
       e.preventDefault()
