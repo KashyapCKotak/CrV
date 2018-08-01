@@ -17,7 +17,9 @@ $(function () {
   var $pushMenu       = $('[data-toggle="push-menu"]').data('lte.pushmenu')
   var $controlSidebar = $('[data-toggle="control-sidebar"]').data('lte.controlsidebar')
   var $layout         = $('body').data('lte.layout')
-
+  var currThemeSkin="skin-blue";
+  var skinColors={"skin-blue":"#205a77","skin-yellow":"#7c4f08","skin-purple":"#211e5a","skin-red":"#431610","skin-green":"#175237","skin-black":"#2B7BB9",
+                  "skin-blue-light":"#205a77","skin-yellow-light":"#7c4f08","skin-purple-light":"#211e5a","skin-red-light":"#431610","skin-green-light":"#175237","skin-black-light":"#2B7BB9"};
   /**
    * List of all the available skins
    *
@@ -97,6 +99,7 @@ $(function () {
 
     $('body').addClass(cls)
     store('skin', cls)
+    currThemeSkin=cls;
     return false
   }
 
@@ -124,6 +127,10 @@ $(function () {
     })
 
     $('#bodyWrapper').addClass(cls)
+    twitterWidgetTheme=(cls=="lightsOn") ? "light" : (cls=="lightsOff") ? "dark" : "light";
+    twitterLinksColor=skinColors[currThemeSkin];
+    if(twitterLoaded)
+      loadTwitter();
     store('lightSkin', cls)
     return false
   }

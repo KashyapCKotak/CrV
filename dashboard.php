@@ -535,6 +535,9 @@
       <!-- <script src="livedatatop.js"></script> -->
       <!-- Content Header (Page header) -->
       <script type="text/javascript">
+        twitterLoaded=false;
+        twitterWidgetTheme="light";
+        twitterLinksColor="#2B7BB9";
         var globalCryptoValue = "BTC";
         var globalFiatValue = "USD";
       </script>
@@ -3373,8 +3376,9 @@
                   if(twitterUrl==undefined){
                     twitterUrl="https://twitter.com/blockchain";
                   }
-                  document.getElementById("twitter").innerHTML='<a class="twitter-timeline" href="'+twitterUrl+'">Tweets by '+currSelection.options[currSelection.selectedIndex].text+'</a>'+
+                  document.getElementById("twitter").innerHTML='<a class="twitter-timeline" data-theme="'+ twitterWidgetTheme +'" data-link-color="'+ twitterLinksColor +'" href="'+twitterUrl+'">Tweets by '+currSelection.options[currSelection.selectedIndex].text+'</a>'+
                   '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">\<\/script>';
+                  
                   var twitterScript = document.createElement('script');
                   twitterScript.setAttribute('src','https://platform.twitter.com/widgets.js');
                   twitterScript.setAttribute('charset',"utf-8");
