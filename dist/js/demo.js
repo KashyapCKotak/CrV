@@ -52,7 +52,7 @@ $(function () {
     if (typeof (Storage) !== 'undefined') {
       return localStorage.getItem(name)
     } else {
-      window.alert('Please use a modern browser to properly view this template!')
+      window.alert('Please use a modern browser to properly view this website!')
     }
   }
 
@@ -126,11 +126,18 @@ $(function () {
       $('#bodyWrapper').removeClass(lightSkins[i])
     })
 
-    $('#bodyWrapper').addClass(cls)
-    twitterWidgetTheme=(cls=="lightsOn") ? "light" : (cls=="lightsOff") ? "dark" : "light";
-    twitterLinksColor=skinColors[currThemeSkin];
-    if(twitterLoaded)
-      loadTwitter();
+    $('#bodyWrapper').addClass(cls);
+    if (typeof twitterWidgetTheme === 'undefined'){
+
+    }
+    else{
+      if(cls=="lightsOn") twitterWidgetTheme="light";
+      else if(cls=="lightsOff") twitterWidgetTheme="dark"; 
+      else twitterWidgetTheme="light";
+      twitterLinksColor=skinColors[currThemeSkin];
+      if(twitterLoaded)
+        loadTwitter();
+    }
     store('lightSkin', cls)
     return false
   }
@@ -146,6 +153,7 @@ $(function () {
       changeSkin(tmp)
 
     var lightstmp = get('lightSkin')
+    // lightstmp="lightsOn";
     if (lightstmp && $.inArray(lightstmp, lightSkins)){
       if(lightstmp.indexOf("lights")!=-1){
         console.log("!!!!!!!!!!!!!!!!!!!!"+lightstmp);

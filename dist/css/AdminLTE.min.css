@@ -21,8 +21,8 @@
     --pulseColorRedMktTrns:#f5d9d900;
     --pulseColorRedMktTrns:#f9f59a00;
 }
-.lightsOff .content-wrapper,
-.lightsOff .box, .lightsOff input{
+.lightsOff .content-wrapper, .lightsOff .box, .lightsOff input, .lightsOff .nav-tabs-custom, 
+.lightsOff .tab-content, .lightsOff #portfolioTablePersonal tr, .lightsOff #portfolioTablePractice tr{
     /* color:rgba(255, 255, 255, 0.795) !important; */
     color:rgba(255, 255, 255) !important;
     background: #000 !important;
@@ -3690,7 +3690,7 @@ a:focus {
     border-color: transparent
 }
 .nav-tabs-custom>.nav-tabs>li.active {
-    border-top-color: #3c8dbc
+    /* border-top-color: #3c8dbc; */
 }
 .nav-tabs-custom>.nav-tabs>li.active>a,
 .nav-tabs-custom>.nav-tabs>li.active:hover>a {
