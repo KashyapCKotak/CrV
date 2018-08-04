@@ -745,7 +745,7 @@
             <!-- Main content -->
 
             <section class="content" style="padding-left:5px;padding-right:5px;">
-              <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto">
+              <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;border-top-width: 0">
                 <!-- <div class="col-md-6"> -->
                   <!-- Custom Tabs -->
                   <div class="nav-tabs-custom" style="margin:0">
