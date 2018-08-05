@@ -21,8 +21,18 @@
     --pulseColorRedMktTrns:#f5d9d900;
     --pulseColorRedMktTrns:#f9f59a00;
 }
+.lightsOff section>h1>small{
+    color: #fff
+}
+.lightsOff .box-without-top-border{
+    border-top-width: 0
+}
+.lightsOff .imageIco{
+    background-color: #fff !important;
+}
 .lightsOff .content-wrapper, .lightsOff .box, .lightsOff input, .lightsOff .nav-tabs-custom, 
-.lightsOff .tab-content, .lightsOff #portfolioTablePersonal tr, .lightsOff #portfolioTablePractice tr{
+.lightsOff .tab-content, .lightsOff #portfolioTablePersonal tr, .lightsOff #portfolioTablePractice tr,
+.lightsOff .icoTable tr, .lightsOff .timeline-item{
     /* color:rgba(255, 255, 255, 0.795) !important; */
     color:rgba(255, 255, 255) !important;
     background: #000 !important;
@@ -60,6 +70,9 @@
 }
 .lightsOff #MarketsDataTable>tr{
     background-color: #000 !important;
+}
+.lightsOff portfolioTablePersonal .table>tbody>tr>td, .lightsOff portfolioTablePractice .table>tbody>tr>td{
+    border-top: 1px solid #393939;
 }
 /*//////////////////*/
 .lightsOn .content-wrapper{

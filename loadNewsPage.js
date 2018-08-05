@@ -58,7 +58,7 @@ xhttp.onreadystatechange = function () {
                               '<div class="timeline-item">' +
                               '<img alt="news image tumbnail" src="' + allNewsObj.Promoted[promotedNews].imageurl + '">' +
                               '<div class="title-and-time-holder">' +
-                              '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
+                              '<span class="time"><i class="fa fa-clock-o"></i> ' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + " " + newsDate.getHours() + ":" + newsDate.getMinutes() + '</span>' +
                               '<h3 class="timeline-header"><a href="' + allNewsObj.Promoted[promotedNews].url + '">' + allNewsObj.Promoted[promotedNews].title + '<small>&nbsp;-' + allNewsObj.Promoted[promotedNews].source + '</small></a></h3></div>' +
                               '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Promoted[promotedNews].body +
                               '</div></div>' +
@@ -81,7 +81,7 @@ xhttp.onreadystatechange = function () {
                         '<div class="timeline-item">' +
                         '<img alt="news image tumbnail" src="' + allNewsObj.Promoted[promotedNews].imageurl + '">' +
                         '<div class="title-and-time-holder">' +
-                        '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
+                        '<span class="time"><i class="fa fa-clock-o"></i> ' + + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + " " + newsDate.getHours() + ":" + newsDate.getMinutes() + '</span>' +
                         '<h3 class="timeline-header"><a href="' + allNewsObj.Promoted[promotedNews].url + '">' + allNewsObj.Promoted[promotedNews].title + '<small>&nbsp;-' + allNewsObj.Promoted[promotedNews].source + '</small></a></h3></div>' +
                         '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Promoted[promotedNews].body +
                         '</div></div>' +
@@ -162,7 +162,7 @@ xhttp.onreadystatechange = function () {
                               '<div class="timeline-item">' +
                               '<img alt="news image tumbnail" src="' + allNewsObj.Data[dataNews].imageurl + '">' +
                               '<div class="title-and-time-holder">' +
-                              '<span class="time"><i class="fa fa-clock-o"></i>' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + '</span>' +
+                              '<span class="time"><i class="fa fa-clock-o"></i> ' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + " " + newsDate.getHours() + ":" + newsDate.getMinutes() + '</span>' +
                               '<h3 class="timeline-header"><a href="' + allNewsObj.Data[dataNews].url + '">' + allNewsObj.Data[dataNews].title + '<small>&nbsp;-' + allNewsObj.Data[dataNews].source + '</small></a></h3></div>' +
                               '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Data[dataNews].body +
                               '</div></div>' +

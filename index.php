@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <!-- Ionicons -->
-    <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet">
+    <!-- <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet"> -->
     <!-- Select2 -->
     <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
     <!-- Theme style -->
@@ -91,7 +91,7 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="onLoadPage()">
-  <div class="wrapper">
+  <div id="bodyWrapper" class="wrapper lightsOn">
   <div id="techIndiScripts"></div>
     <header class="main-header">
       <!-- Logo -->
@@ -262,7 +262,7 @@
             </a>
             <ul class="clearfix treeview-menu"><!-- style="color:#8aa4af"-->
               <li style="float:left; width: 33.33333%; padding: 5px;">
-                <a href="javascript:void(0)" data-skin="skin-lights-on" style="display: block; padding-left:5px ;" class="clearfix full-opacity-hover">
+                <a href="javascript:void(0)" data-skin="lightsOn" style="display: block; padding-left:5px ;" class="clearfix full-opacity-hover">
                   <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
                   <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
                   <br>
@@ -270,7 +270,7 @@
                 </a>
               </li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
-                <a href="javascript:void(0)" data-skin="skin-lights-off" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                <a href="javascript:void(0)" data-skin="lightsOff" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
                   <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
                   <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #000"></span></div>
                   <br>
@@ -287,11 +287,11 @@
                 </a>
               </li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
-                <a href="javascript:void(0)" data-skin="skin-black" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
-                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
-                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                <a href="javascript:void(0)" data-skin="skin-yellow" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
                   <br>
-                  <p class="text-center no-margin">Black</p>
+                  <p class="text-center no-margin">Orange</p>
                 </a>
               </li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
@@ -318,14 +318,15 @@
                   <p class="text-center no-margin">Red</p>
                 </a>
               </li>
-              <li style="float:left; width: 33.33333%; padding: 5px;">
-                <a href="javascript:void(0)" data-skin="skin-yellow" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
-                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
-                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+              <li style="float:left; width: 33.33333%; padding: 5px; display:none">
+                <a href="javascript:void(0)" data-skin="skin-black" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
                   <br>
-                  <p class="text-center no-margin">Orange</p>
+                  <p class="text-center no-margin">Black</p>
                 </a>
               </li>
+              <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
                 <a href="javascript:void(0)" data-skin="skin-blue-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
                   <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
@@ -335,11 +336,11 @@
                 </a>
               </li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
-                <a href="javascript:void(0)" data-skin="skin-black-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
-                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                <a href="javascript:void(0)" data-skin="skin-yellow-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
                   <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
                   <br>
-                  <p class="text-center no-margin" style="font-size: 12px">Back Light</p>
+                  <p class="text-center no-margin" style="font-size: 12px">Orange Light</p>
                 </a>
               </li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
@@ -366,12 +367,12 @@
                   <p class="text-center no-margin" style="font-size: 12px">Red Light</p>
                 </a>
               </li>
-              <li style="float:left; width: 33.33333%; padding: 5px;">
-                <a href="javascript:void(0)" data-skin="skin-yellow-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
-                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+              <li style="float:left; width: 33.33333%; padding: 5px; display:none">
+                <a href="javascript:void(0)" data-skin="skin-black-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
                   <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
                   <br>
-                  <p class="text-center no-margin" style="font-size: 12px">Orange Light</p>
+                  <p class="text-center no-margin" style="font-size: 12px">Back Light</p>
                 </a>
               </li>
             </ul>
@@ -535,6 +536,9 @@
       <!-- <script src="livedatatop.js"></script> -->
       <!-- Content Header (Page header) -->
       <script type="text/javascript">
+        twitterLoaded=false;
+        twitterWidgetTheme="light";
+        twitterLinksColor="#2B7BB9";
         var globalCryptoValue = "BTC";
         var globalFiatValue = "USD";
       </script>
@@ -3165,7 +3169,7 @@
               </select>
             </div>
           </div>
-          <div id="chartdiv" style="height:80vh;width:100%;overflow:visible">
+          <div id="chartdiv" class="chartdivlight">
             <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
             <script src="https://www.amcharts.com/lib/3/serial.js"></script>
             <!-- <script src="/amCharts/amstock.js"></script> -->
@@ -3373,8 +3377,9 @@
                   if(twitterUrl==undefined){
                     twitterUrl="https://twitter.com/blockchain";
                   }
-                  document.getElementById("twitter").innerHTML='<a class="twitter-timeline" href="'+twitterUrl+'">Tweets by '+currSelection.options[currSelection.selectedIndex].text+'</a>'+
+                  document.getElementById("twitter").innerHTML='<a class="twitter-timeline" data-theme="'+ twitterWidgetTheme +'" data-link-color="'+ twitterLinksColor +'" href="'+twitterUrl+'">Tweets by '+currSelection.options[currSelection.selectedIndex].text+'</a>'+
                   '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">\<\/script>';
+                  
                   var twitterScript = document.createElement('script');
                   twitterScript.setAttribute('src','https://platform.twitter.com/widgets.js');
                   twitterScript.setAttribute('charset',"utf-8");

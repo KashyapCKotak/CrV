@@ -374,7 +374,6 @@
         }
       </script>
     </aside>
-          
           <!-- Content Wrapper. Contains page content -->
           <div class="content-wrapper">
             <div class="row">
@@ -745,7 +744,7 @@
             <!-- Main content -->
 
             <section class="content" style="padding-left:5px;padding-right:5px;">
-              <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;border-top-width: 0">
+              <div class="row box box-without-top-border" style="width:100%;margin-left:0px;margin-right:0px;height:auto">
                 <!-- <div class="col-md-6"> -->
                   <!-- Custom Tabs -->
                   <div class="nav-tabs-custom" style="margin:0">
@@ -807,6 +806,10 @@
                     $("#portTab2").focusout(function() {
                       //drawPie(invstListForPiePrtc,2);
                     });
+
+                    function seeAll(){
+
+                    }
                     </script>
                     <div class="tab-content">
                       <div class="tab-pane active" id="tab_1">
@@ -854,7 +857,7 @@
                               <div id="BuyTabPrsn" class="BuySellTabContentPrsn" style="display: inline-block;">
                                 <br>
                                 <div class="crypto-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">To Currency: </label>
                                   <select id="cryptoSelectBoxBuyPrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(1,'Prsn')">
                                     <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
                                     <option value="ETH">Ethereum (ETH)</option>
@@ -868,7 +871,7 @@
                                 <br>
                                 <br>
                                 <div class="fiat-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">From Currency:</label>
                                   <select id="fiatSelectBoxBuyPrsn" class="form-control select2" style="width:auto" onchange="selectFiat(1,'Prsn')">
                                     <option class="default-fiat" selected="selected">INR</option>
                                     <option>USD</option>
@@ -882,8 +885,8 @@
                                   <input id="cryptoInputBuyPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prsn')" required>
                                   <!-- <span class="highlight"></span> -->
                                   <span class="bar_convert" style="width: 100%"></span>
-                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                                  <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">To Currency</label>
+                                  <button class="label_convert seeAll" onClick="seeAll(0)" style="font-size: 15px; width: auto; text-align: right; border: none; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
                                 </div>
                                 <br>
                                 <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
@@ -901,7 +904,7 @@
                                 </div>
                                 <br>
                                 <br>
-                                <button onclick='buyPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                                <button class="updateButton" onclick='buyPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                               </div>
                               <!-- /////////////////////////// -->
 
@@ -909,7 +912,7 @@
                               <div id="SellTabPrsn" class="BuySellTabContentPrsn" style="display: none;">
                                 <br>
                                 <div class="crypto-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">To Currency: </label>
                                   <select id="cryptoSelectBoxSellPrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(2,'Prsn')">
                                     <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
                                     <option value="ETH">Ethereum (ETH)</option>
@@ -923,7 +926,7 @@
                                 <br>
                                 <br>
                                 <div class="fiat-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">From Currency:</label>
                                   <select id="fiatSelectBoxSellPrsn" class="form-control select2" style="width:auto" onchange="selectFiat(2,'Prsn')">
                                     <option class="default-fiat" selected="selected">INR</option>
                                     <option>INR</option>
@@ -938,8 +941,8 @@
                                   <input id="cryptoInputSellPrsn" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prsn')" required>
                                   <!-- <span class="highlight"></span> -->
                                   <span class="bar_convert" style="width: 100%"></span>
-                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                                  <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">To Currency</label>
+                                  <button class="label_convert seeAll" onClick="seeAll(1)" style="font-size: 15px; width: auto; text-align: right; border: none; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
                                 </div>
                                 <br>
                                 <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
@@ -957,13 +960,13 @@
                                 </div>
                                 <br>
                                 <br>
-                                <button onclick='sellPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                                <button class="updateButton" onclick='sellPortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                               </div>
                               <!-- ////////////////////////////// -->
                               <div id="UpdateTabPrsn" class="BuySellTabContentPrsn" style="display: none;">
                                 <br>
                                 <div class="crypto-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">To Currency: </label>
                                   <select id="cryptoSelectBoxUpdatePrsn" class="form-control select2" style="width:157px" onchange="selectCrypto(3,'Prsn')">
                                     <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
                                     <option value="ETH">Ethereum (ETH)</option>
@@ -977,7 +980,7 @@
                                 <br>
                                 <br>
                                 <div class="fiat-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">From Currency:</label>
                                   <select id="fiatSelectBoxUpdatePrsn" class="form-control select2" style="width:auto" onchange="selectFiat(3,'Prsn')">
                                     <option class="default-fiat" selected="selected">INR</option>
                                     <option>INR</option>
@@ -1004,7 +1007,7 @@
                                 </div>
                                 <br>
                                 <br>
-                                <button onclick='updatePortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                                <button class="updateButton" onclick='updatePortfolio("Personal")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                               </div>
                               <!-- ////////////////////////////// -->
                             </div>
@@ -1067,7 +1070,7 @@
                               <div id="BuyTabPrtc" class="BuySellTabContentPrtc" style="display: inline-block;">
                                 <br>
                                 <div class="crypto-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">To Currency: </label>
                                   <select id="cryptoSelectBoxBuyPrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(1,'Prtc')">
                                     <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
                                     <option value="ETH">Ethereum (ETH)</option>
@@ -1081,7 +1084,7 @@
                                 <br>
                                 <br>
                                 <div class="fiat-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">From Currency:</label>
                                   <select id="fiatSelectBoxBuyPrtc" class="form-control select2" style="width:auto" onchange="selectFiat(1,'Prtc')">
                                     <option class="default-fiat" selected="selected">INR</option>
                                     <option>INR</option>
@@ -1096,8 +1099,8 @@
                                   <input id="cryptoInputBuyPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(1,'Prtc')" required>
                                   <!-- <span class="highlight"></span> -->
                                   <span class="bar_convert" style="width: 100%"></span>
-                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                                  <button class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">To Currency</label>
+                                  <button class="label_convert seeAll" onClick="seeAll(3)" style="font-size: 15px; width: auto; text-align: right; border: none; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
                                 </div>
                                 <br>
                                 <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
@@ -1115,7 +1118,7 @@
                                 </div>
                                 <br>
                                 <br>
-                                <button onclick='buyPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                                <button class="updateButton" onclick='buyPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                               </div>
                               <!-- /////////////////////////// -->
 
@@ -1123,7 +1126,7 @@
                               <div id="SellTabPrtc" class="BuySellTabContentPrtc"  style="display: none;">
                                 <br>
                                 <div class="crypto-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">To Currency: </label>
                                   <select id="cryptoSelectBoxSellPrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(2,'Prtc')">
                                     <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
                                     <option value="ETH">Ethereum (ETH)</option>
@@ -1137,7 +1140,7 @@
                                 <br>
                                 <br>
                                 <div class="fiat-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">From Currency:</label>
                                   <select id="fiatSelectBoxSellPrtc" class="form-control select2" style="width:auto" onchange="selectFiat(2,'Prtc')">
                                     <option class="default-fiat" selected="selected">INR</option>
                                     <option>INR</option>
@@ -1152,8 +1155,8 @@
                                   <input id="cryptoInputSellPrtc" class="input_convert" style="font-size: 15px; width: 100%" type="text" oninput="convertToFiat(2,'Prtc')" required>
                                   <!-- <span class="highlight"></span> -->
                                   <span class="bar_convert" style="width: 100%"></span>
-                                  <label class="label_convert" style="font-size: 15px; left: 0">Crypto Currency</label>
-                                  <button  class="label_convert" style="font-size: 15px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
+                                  <label class="label_convert" style="font-size: 15px; left: 0">To Currency</label>
+                                  <button class="label_convert seeAll" onClick="seeAll(4)" style="font-size: 15px; width: auto; text-align: right; border: none; color: #fff; border-radius: 10px; left: auto; right: 0; pointer-events: auto;">See All</button>
                                 </div>
                                 <br>
                                 <div class="group_convert claculatorComponents" style=" margin-bottom: 0; width: 100%; padding: 0">      
@@ -1171,13 +1174,13 @@
                                 </div>
                                 <br>
                                 <br>
-                                <button onclick='sellPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                                <button class="updateButton" onclick='sellPortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                               </div>
                               <!-- ////////////////////////////// -->
                               <div id="UpdateTabPrtc" class="BuySellTabContentPrtc"  style="display: none;">
                                 <br>
                                 <div class="crypto-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Crypto Currency: </label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">To Currency: </label>
                                   <select id="cryptoSelectBoxUpdatePrtc" class="form-control select2" style="width:157px" onchange="selectCrypto(3,'Prtc')">
                                     <option id="default-crypto" selected="selected" value="BTC">Bitcoin (BTC)</option>
                                     <option value="ETH">Ethereum (ETH)</option>
@@ -1191,7 +1194,7 @@
                                 <br>
                                 <br>
                                 <div class="fiat-select" style="display: inline-block; float: left;">
-                                  <label class="label-enable" style="width: 108px;display: inline-block;text-align: left;">Fiat Currency:</label>
+                                  <label class="" style="width: 108px;display: inline-block;text-align: left;">From Currency:</label>
                                   <select id="fiatSelectBoxUpdatePrtc" class="form-control select2" style="width:auto" onchange="selectFiat(3,'Prtc')">
                                     <option class="default-fiat" selected="selected">INR</option>
                                     <option>INR</option>
@@ -1218,7 +1221,7 @@
                                 </div>
                                 <br>
                                 <br>
-                                <button onclick='updatePortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; background-color: #3c8dbc; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
+                                <button class="updateButton" onclick='updatePortfolio("Practice")' style="font-size: 17px; padding: 14px 16px; width: auto; text-align: right; border: none; color: #fff; border-radius: 15px; left: auto; right: 0; pointer-events: auto;">Update</button>
                               </div>
                               <!-- ////////////////////////////// -->
                             </div>

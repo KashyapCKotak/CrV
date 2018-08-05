@@ -2,15 +2,19 @@
 /*Blue Dark*/
 .skin-blue .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-blue .lightsOff #MarketsTable>tr,
 .skin-blue .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-blue .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
-.skin-blue .lightsOff .BuySellTab button.active{
-  border-top-color: #0e364b;
+.skin-blue .lightsOff .BuySellTab button.active, .skin-blue .lightsOff .seeAll, .skin-blue .lightsOff .updateButton,
+.skin-blue .lightsOff .chartTypeTab button.active{
+  /* border-top-color: #0e364b; */
+  border-top-color: #c1c1c1;
   background-color: #205a77;
   color: #fff;
 }
-.skin-blue .lightsOff .BuySellTab{
+.skin-blue .lightsOff .BuySellTab, .skin-blue .lightsOff .chartTypeTab, .skin-blue .lightsOff .detailsIco>a,
+.skin-blue .lightsOff .progress-bar-primary{
   background-color: #3c8dbc;
+  border: 0;
 }
-.skin-blue .lightsOff .BuySellTab button:hover{
+.skin-blue .lightsOff .BuySellTab button:hover, .skin-blue .lightsOff .chartTypeTab button:hover{
   background-color: #8bc3e4;
 }
 .skin-blue .top-price-bar{
@@ -23,15 +27,19 @@
 /*Yellow Dark*/
 .skin-yellow .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-yellow .lightsOff #MarketsTable>tr,
 .skin-yellow .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-yellow .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
-.skin-yellow .lightsOff .BuySellTab button.active{
-	border-top-color: #442f0c;
+.skin-yellow .lightsOff .BuySellTab button.active, .skin-yellow .lightsOff .seeAll, .skin-yellow .lightsOff .updateButton,
+.skin-yellow .lightsOff .chartTypeTab button.active{
+  /* border-top-color: #442f0c; */
+  border-top-color: #c1c1c1;
   background-color: #7c4f08;
   color: #fff
 }
-.skin-yellow .lightsOff .BuySellTab{
+.skin-yellow .lightsOff .BuySellTab, .skin-yellow .lightsOff .chartTypeTab, .skin-yellow .lightsOff .detailsIco>a,
+.skin-yellow .lightsOff .progress-bar-primary{
   background-color: #f39c12;
+  border: 0;
 }
-.skin-yellow .lightsOff .BuySellTab button:hover{
+.skin-yellow .lightsOff .BuySellTab button:hover, .skin-yellow .lightsOff .chartTypeTab button:hover{
   background-color: #e2c088;
 }
 .skin-yellow .top-price-bar{
@@ -44,16 +52,20 @@
 /*Purple Dark*/
 .skin-purple .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-purple .lightsOff #MarketsTable>tr,
 .skin-purple .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-purple .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
-.skin-purple .lightsOff .BuySellTab button.active{
-	border-top-color: #100d47;
+.skin-purple .lightsOff .BuySellTab button.active, .skin-purple .lightsOff .seeAll, .skin-purple .lightsOff .updateButton,
+.skin-purple .lightsOff .chartTypeTab button.active{
+  /* border-top-color: #100d47; */
+  border-top-color: #c1c1c1;
   background-color: #211e5a;
   color: #fff
 }
-.skin-purple .lightsOff .BuySellTab button:hover{
+.skin-purple .lightsOff .BuySellTab button:hover, .skin-purple .lightsOff .chartTypeTab button:hover{
   background-color: #8c88e2;
 }
-.skin-purple .lightsOff .BuySellTab{
+.skin-purple .lightsOff .BuySellTab, .skin-purple .lightsOff .chartTypeTab, .skin-purple .lightsOff .detailsIco>a,
+.skin-purple .lightsOff .progress-bar-primary{
   background-color: #605ca8;
+  border: 0;
 }
 .skin-purple .top-price-bar {
   background: #211e5a !important;
@@ -65,15 +77,20 @@
 /*Green Dark*/
 .skin-green .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-green .lightsOff #MarketsTable>tr,
 .skin-green .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-green .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
-.skin-green .lightsOff .BuySellTab button.active{
-	border-top-color: #0c492e;
+.skin-green .lightsOff .BuySellTab button.active, .skin-green .lightsOff .seeAll, .skin-green .lightsOff .updateButton,
+.skin-green .lightsOff .chartTypeTab button.active{
+  /* border-top-color: #0c492e; */
+  border-top-color: #c1c1c1;
   background-color: #175237;
   color: #fff
 }
-.skin-green .lightsOff .BuySellTab{
+.skin-green .lightsOff .BuySellTab, .skin-green .lightsOff .chartTypeTab, .skin-green .lightsOff .detailsIco>a,
+.skin-green .lightsOff .progress-bar-primary{
   background-color: #00a65a;
+  border: 0;
 }
-.skin-green .lightsOff .BuySellTab button:hover{
+.skin-green .lightsOff .BuySellTab button:hover, .skin-green .lightsOff .chartTypeTab button:hover,
+.skin-green .lightsOff .progress-bar-primary{
   background-color: #87e0b8;
 }
 .skin-green .top-price-bar {
@@ -86,15 +103,19 @@
 /*Red Dark*/
 .skin-red .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-red .lightsOff #MarketsTable>tr,
 .skin-red .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-red .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
-.skin-red .lightsOff .BuySellTab button.active{
-	border-top-color: #46130c;
+.skin-red .lightsOff .BuySellTab button.active, .skin-red .lightsOff .seeAll, .skin-red .lightsOff .updateButton,
+.skin-red .lightsOff .chartTypeTab button.active{
+  /* border-top-color: #46130c; */
+  border-top-color: #c1c1c1;
   background-color: #431610;
   color: #fff
 }
-.skin-red .lightsOff .BuySellTab{
+.skin-red .lightsOff .BuySellTab, .skin-red .lightsOff .chartTypeTab, .skin-red .lightsOff .detailsIco>a,
+.skin-red .lightsOff .progress-bar-primary{
   background-color: #dd4b39;
+  border: 0;
 }
-.skin-red .lightsOff .BuySellTab button:hover{
+.skin-red .lightsOff .BuySellTab button:hover, .skin-red .lightsOff .chartTypeTab button:hover{
   background-color: #e4998f;
 }
 .skin-red .top-price-bar {
@@ -107,12 +128,14 @@
 /*Black Dark*/
 .skin-black .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-black .lightsOff #MarketsTable>tr,
 .skin-black .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-black .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
-.skin-black .lightsOff .BuySellTab button.active{
+.skin-black .lightsOff .BuySellTab button.active, .skin-black .lightsOff .seeAll, .skin-black .lightsOff .updateButton,
+.skin-black .lightsOff .chartTypeTab button.active{
 	border-top-color: #dbe0dc98;
   background-color: #dbe0dc;
   color: #fff
 }
-.skin-black .lightsOff .BuySellTab button:hover{
+.skin-black .lightsOff .BuySellTab button:hover, .skin-black .lightsOff .chartTypeTab button:hover,
+.skin-black .lightsOff .progress-bar-primary{
   background-color: #8bc3e4;
 }
 .skin-black .top-price-bar {
