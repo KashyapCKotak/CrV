@@ -4430,9 +4430,9 @@ table.text-center th {
     /*position: fixed;*/
     position: relative;
     top: 50%;
-    transform: translateY(-50%);
+    /* transform: translateY(-50%); */
     display: inline-block;
-    /*margin: 7% auto;*/
+    margin: 15% auto;
 }
 @media (max-width: 768px) {
     .login-box,

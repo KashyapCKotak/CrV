@@ -51,9 +51,16 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
+      <script>
+        function menuToggle(x) {
+          x.classList.toggle("change");
+        }
+      </script>
+      <div class="custom-sidebar-toggle" data-toggle="push-menu" role="button" onclick="menuToggle(this)">
+        <div class="bar1" style="margin-top:15px"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
 
       <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">

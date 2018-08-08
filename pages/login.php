@@ -145,6 +145,33 @@ if(isset($_POST['userSub'])){
     </script>
 </head>
 <body class="hold-transition login-page" style="height: 100vh">
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '287390465399302',
+      cookie     : true,
+      xfbml      : true,
+      version    : '287390465399302'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+   
+  FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+  });
+</script>
+
   <div class="loginBackground" style="width:100%;height:100%"></div>
   <!-- <img src="../dist/img/small_login_back.jpg"> -->
   <div class="login-box">
