@@ -146,19 +146,37 @@ if(isset($_POST['userSub'])){
 </head>
 <body class="hold-transition login-page" style="height: 100vh">
 <script>
+
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    if (response.status === 'connected') {
+      testAPI();
+    } else {
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    }
+  }
+  
+  function checkLoginState() {
+      FB.getLoginStatus(function(response) {
+        statusChangeCallback(response);
+      });
+    }
+
   window.fbAsyncInit = function() {
     FB.init({
       appId      : '287390465399302',
       cookie     : true,
       xfbml      : true,
-      version    : '287390465399302'
+      version    : 'v2.8'
     });
-      
     FB.AppEvents.logPageView();   
       
   };
 
   (function(d, s, id){
+     console.log("FB Initiated");
      var js, fjs = d.getElementsByTagName(s)[0];
      if (d.getElementById(id)) {return;}
      js = d.createElement(s); js.id = id;
@@ -166,10 +184,27 @@ if(isset($_POST['userSub'])){
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 
-   
-  FB.getLoginStatus(function(response) {
-      statusChangeCallback(response);
-  });
+   function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+
+  function fbLogin(){
+      FB.login(function(response) {
+      console.log('statusChangeCallback');
+      console.log(response);
+      if (response.status === 'connected') {
+        testAPI();
+      } else {
+        document.getElementById('status').innerHTML = 'Please log ' +
+          'into this app.';
+      }
+    });
+  }
 </script>
 
   <div class="loginBackground" style="width:100%;height:100%"></div>
@@ -212,9 +247,9 @@ if(isset($_POST['userSub'])){
 
       <div class="social-auth-links text-center">
         <p style="display:none">- OR -</p>
-        <a style="display:none" href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+        <a href="#" onclick="FB.login()" class="btn btn-block btn-social btn-facebook btn-flat customSignInButtons"><i class="fa fa-facebook"></i> Log in/Sign up using
         Facebook</a>
-        <div id="GPlusSignInButton" class="btn btn-block btn-social btn-google btn-flat customGPlusSignIn"><i class="fa fa-google-plus"></i> Log in/Sign up using
+        <div id="GPlusSignInButton" class="btn btn-block btn-social btn-google btn-flat customSignInButtons"><i class="fa fa-google-plus"></i> Log in/Sign up using
         Google</div>
       </div>
       <script>startApp();</script>
