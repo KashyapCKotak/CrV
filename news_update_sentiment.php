@@ -133,12 +133,12 @@
                     <?php
                       if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         echo '<div class="pull-left">
-                      <a href="pages/login.php" name="signin" class="btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
+                      <a href="pages/login.php" name="signin" class="userLogAction btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
                       </div>';
                       }
                       else {
                         echo '<div class="pull-left">
-                      <a href="#" name="profile" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;border-color:#367fa9;color:#fff">My Profile</a>
+                      <a href="profile.php" name="profile" class="userLogAction btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;border-color:#367fa9;color:#fff">My Profile</a>
                       </div>
                       <div class="pull-right">
                       <a href="pages/logout.php" name="signout" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#d67070;border-color:#a93636;color:#fff">Sign out</a>

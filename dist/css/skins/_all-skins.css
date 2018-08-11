@@ -5,7 +5,7 @@
 .skin-blue .lightsOff .BuySellTab button.active, .skin-blue .lightsOff .seeAll, .skin-blue .lightsOff .updateButton,
 .skin-blue .lightsOff .chartTypeTab button.active{
   /* border-top-color: #0e364b; */
-  border-top-color: #c1c1c1;
+  border-color: #c1c1c1;
   background-color: #205a77;
   color: #fff;
 }

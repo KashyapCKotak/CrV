@@ -18,14 +18,15 @@ $(function () {
   var $controlSidebar = $('[data-toggle="control-sidebar"]').data('lte.controlsidebar')
   var $layout         = $('body').data('lte.layout')
   var currThemeSkin="skin-blue";
-  var skinColors={"skin-blue":"#205a77","skin-yellow":"#7c4f08","skin-purple":"#211e5a","skin-red":"#431610","skin-green":"#175237","skin-black":"#2B7BB9",
-                  "skin-blue-light":"#205a77","skin-yellow-light":"#7c4f08","skin-purple-light":"#211e5a","skin-red-light":"#431610","skin-green-light":"#175237","skin-black-light":"#2B7BB9"};
+  var skinColors={"skin-blue":"#205a77","skin-yellow":"#7c4f08","skin-purple":"#817dc9","skin-red":"#431610","skin-green":"#175237","skin-black":"#2B7BB9",
+                  "skin-blue-light":"#205a77","skin-yellow-light":"#7c4f08","skin-purple-light":"#817dc9","skin-red-light":"#431610","skin-green-light":"#175237","skin-black-light":"#2B7BB9"};
   /**
    * List of all the available skins
    *
    * @type Array
    */
   var mySkins = [
+    'not-to-be-considered-to-prevent-0',
     'skin-blue',
     'skin-black',
     'skin-red',
@@ -40,7 +41,7 @@ $(function () {
     'skin-green-light'
   ]
 
-  var lightSkins = ['lightsOn','lightsOff']
+  var lightSkins = ['not-to-be-considered-to-prevent-0','lightsOn','lightsOff']
 
   /**
    * Get a prestored setting
@@ -128,7 +129,7 @@ $(function () {
 
     $('#bodyWrapper').addClass(cls);
     if (typeof twitterWidgetTheme === 'undefined'){
-
+      twitterLinksColor=skinColors[currThemeSkin];
     }
     else{
       if(cls=="lightsOn") twitterWidgetTheme="light";
@@ -156,7 +157,6 @@ $(function () {
     // lightstmp="lightsOn";
     if (lightstmp && $.inArray(lightstmp, lightSkins)){
       if(lightstmp.indexOf("lights")!=-1){
-        console.log("!!!!!!!!!!!!!!!!!!!!"+lightstmp);
         toggleLights(lightstmp);
       }
     }

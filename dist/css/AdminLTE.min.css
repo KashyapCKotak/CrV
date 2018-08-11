@@ -16,7 +16,7 @@
 .lightsOn{
     --pulseColorGreenMktOpq:#cbf5e0ff;
     --pulseColorRedMktOpq:#f5d9d9ff;
-    --pulseColorRedMktOpq:#f9f59aff;
+    --pulseColorYellowMktOpq:#f9f59aff;
     --pulseColorGreenMktTrns:#cbf5e000;
     --pulseColorRedMktTrns:#f5d9d900;
     --pulseColorRedMktTrns:#f9f59a00;
@@ -4426,13 +4426,20 @@ table.text-center th {
 }
 .login-box,
 .register-box {
-    width: 360px;
+    /* width: 360px;*/
     /*position: fixed;*/
-    position: relative;
+    /*position: relative;
     top: 50%;
     transform: translateY(-50%);
     display: inline-block;
-    margin: 0 auto;
+    margin: 0 auto; */
+    position: fixed;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 298px;
 }
 @media (max-width: 768px) {
     .login-box,

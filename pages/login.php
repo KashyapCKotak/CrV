@@ -209,7 +209,7 @@ if(isset($_POST['userSub'])){
 
   <div class="loginBackground" style="width:100%;height:100%"></div>
   <!-- <img src="../dist/img/small_login_back.jpg"> -->
-  <div class="login-box">
+  <div class="login-box col-sm-6 col-md-4">
     <div class="login-logo">
       <a href="../index2.html"><b>CryptoView</b></a>
     </div>
