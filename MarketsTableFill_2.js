@@ -585,7 +585,7 @@ function updateMarketsDataTblNotINR () {
             startStream(currSubList);
             console.log("Streaming Started");
             let pairPresent="absent";
-            // getPairsPrice(globalCryptoValue,globalFiatValue);
+            getPairsPrice(globalCryptoValue,globalFiatValue);
             otherMarketsTimer=setInterval(function (){
                 pairPresent=getPairsPrice(globalCryptoValue,globalFiatValue);
             }, 60000);

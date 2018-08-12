@@ -3345,6 +3345,10 @@
 
             <div class="box">
               <div class="box-header">
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
                 <h3 class="box-title" id="MarketBox">Markets for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
               </div>
               <div id="marketsDataTable" class="box-body" style="padding:0;overflow-x:scroll">

@@ -10,6 +10,9 @@ function resetStrm(){
 	clearInterval(streamUpdtIntvl);
 	console.log("Stream Reset");
 }
+function deleteMarket(){
+
+}
 function displayData(){
 		for(var marketElem in displayVals){
 			// console.log(marketElem);
@@ -19,6 +22,7 @@ function displayData(){
 				try{
 				if(displayVals[marketElem] == 0){
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.display="none";
+					deleteMarket();
 				}
 				else if(displayVals[marketElem] == 1){//#3D9400
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.animationName="pulseColorGreenMkt";//backgroundColor="#cbf5e0";//"#baf5d8";
