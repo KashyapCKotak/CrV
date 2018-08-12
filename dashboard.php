@@ -50,6 +50,7 @@
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
     <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
@@ -58,6 +59,9 @@
       $(document).ajaxStart(function () {
         Pace.restart();
       });
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+      }
     </script>
     <!-- Bootstrap 3.3.7 -->
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -391,6 +395,11 @@
             <a href="about.php">
               <i class="far fa-smile"></i>
               <span>&nbsp;About & Contact</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span>&nbsp;<div id="google_translate_element"></div></span>
             </a>
           </li>
           <li style="height:100px">
