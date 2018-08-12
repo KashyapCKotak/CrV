@@ -10,8 +10,10 @@ function resetStrm(){
 	clearInterval(streamUpdtIntvl);
 	console.log("Stream Reset");
 }
-function deleteMarket(){
-
+function deleteMarket(let market){
+	delete displayVals[market+'b'];
+	if(displayVals.indexOf(market+'s'))
+		delete displayVals[market+'s'];
 }
 function displayData(){
 		for(var marketElem in displayVals){
@@ -22,7 +24,7 @@ function displayData(){
 				try{
 				if(displayVals[marketElem] == 0){
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.display="none";
-					deleteMarket();
+					deleteMarket(marketElem.split('flg')[0]);
 				}
 				else if(displayVals[marketElem] == 1){//#3D9400
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.animationName="pulseColorGreenMkt";//backgroundColor="#cbf5e0";//"#baf5d8";
