@@ -5,9 +5,9 @@ $('.bitfinext').on('DOMSubtreeModified propertychange', function() {
     console.log("YEEEEEESSSSSSSSS");//TODO
 });
 function resetStrm(){
-	clearInterval(streamUpdtIntvl);
-	displayVals=[];
 	socket.emit('SubRemove', { subs: subscription });
+	displayVals=[];
+	clearInterval(streamUpdtIntvl);
 	console.log("Stream Reset");
 }
 function displayData(){
@@ -16,6 +16,7 @@ function displayData(){
 			// console.log(marketElem[marketElem.length-1]);
 			if(marketElem[marketElem.length-1] == 'g'){
 				// document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="#f9f9f9";
+				try{
 				if(displayVals[marketElem] == 0){
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.display="none";
 				}
@@ -26,7 +27,11 @@ function displayData(){
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.animationName="pulseColorRedMkt";//backgroundColor="#f5d9d9";//"#f3cccc";
 				}
 				else{
-					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="#f9f9f9";
+					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="pulseColorYellowMkt";
+				}
+				} catch(e) {
+					console.log("ERROR @@@@@@");
+					console.log(marketElem);
 				}
 			}
 			else if(marketElem[marketElem.length-1] == 'd' || marketElem[marketElem.length-1] == 'n'){
@@ -46,6 +51,7 @@ function displayData(){
 function startStream(currSubList) {
 	console.log("STREAMING STARTS HERE!!!!!");
 	var currentPrice = {};
+	displayVals=[];
 	socket = io.connect('https://streamer.cryptocompare.com/');
 	//Format: {SubscriptionId}~{ExchangeName}~{FromSymbol}~{ToSymbol}
 	//Use SubscriptionId 0 for TRADE, 2 for CURRENT, 5 for CURRENTAGG eg use key '5~CCCAGG~BTC~USD' to get aggregated data from the CCCAGG exchange 
@@ -135,8 +141,12 @@ function startStream(currSubList) {
 		// console.log(data);
 		var market=data['MARKET'].toLowerCase();
 		for(var dataElem in data){
-			if(dataElem == "FLAGS")
-				displayVals[market+"flg"]=data[dataElem];
+			if(dataElem == "FLAGS"){
+				if(data[dataElem]==0)
+					displayVals[market+"flg"]=3;//not buy not sell and not 0 to prevent it from hiding. If theres no trades on markets, it will be set to 0 below while checking "volme 24 h to"
+				else
+					displayVals[market+"flg"]=data[dataElem];
+			}
 			else if(dataElem == "PRICE"){
 				displayVals[market+"b"]=currFSymb+""+data[dataElem].toFixed(2);
 				displayVals[market+"bn"]=data[dataElem].toFixed(4);
@@ -149,8 +159,10 @@ function startStream(currSubList) {
 				displayVals[market+"vc"]=currCSymb+""+data[dataElem].toFixed(2);
 			else if(dataElem == "VOLUME24HOURTO"){
 				displayVals[market+"vf"]=currFSymb+""+data[dataElem].toFixed(2);
-				if(parseFloat(data[dataElem]) == parseFloat(0))
+				if(parseFloat(data[dataElem]) == parseFloat(0)){
+					console.log("!!!!!!!! Unsetting Market"+market+" as vol 24 hour to is "+parseFloat(data[dataElem]).toFixed(10));
 					displayVals[market+"flg"]=0;//hide market
+				}
 			}
 			else if(dataElem == "OPEN24HOUR")
 				displayVals[market+"od"]=data[dataElem].toFixed(4);

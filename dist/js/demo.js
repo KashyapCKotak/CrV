@@ -129,7 +129,11 @@ $(function () {
 
     $('#bodyWrapper').addClass(cls);
     if (typeof twitterWidgetTheme === 'undefined'){
-      twitterLinksColor=skinColors[currThemeSkin];
+      try{
+        twitterLinksColor=skinColors[currThemeSkin];
+      } catch (e){
+        //Do Nothing
+      }
     }
     else{
       if(cls=="lightsOn") twitterWidgetTheme="light";

@@ -122,19 +122,20 @@ session_start();
                     </p>
                   </li>
                   <!-- Menu Footer-->
-                  <li class="user-footer">
+                  <hr style="margin-top: 0px;margin-bottom: 0px;">
+<li class="user-footer">
                     <?php
                       if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         echo '<div class="pull-left">
-                      <a href="pages/login.php" name="signin" class="userLogAction btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
+                      <a href="pages/login.php" name="signin" class="userLogAction user-buttons btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;color:#fff">Sign In</a>
                       </div>';
                       }
                       else {
                         echo '<div class="pull-left">
-                      <a href="profile.php" name="profile" class="userLogAction btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;border-color:#367fa9;color:#fff">My Profile</a>
+                      <a href="profile.php" name="profile" class="userLogAction user-buttons btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;color:#fff">My Profile</a>
                       </div>
                       <div class="pull-right">
-                      <a href="pages/logout.php" name="signout" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#d67070;border-color:#a93636;color:#fff">Sign out</a>
+                      <a href="pages/logout.php" name="signout" class="user-buttons btn btn-default btn-block btn-flat" style="width:84px;background-color:#a93636;color:#fff">Sign out</a>
                       </div>';
                       }
                       ?>

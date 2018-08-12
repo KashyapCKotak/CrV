@@ -362,12 +362,12 @@ var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypt
             "coindcx":[1,"https://api.coindcx.com/exchange/ticker","{(market)=(cryptofiat)}:bid/?/?/?/?/last_price/change_24_hour/?",false,false]};
             
 var aliases={"BTC":"bitcoin","ETH":"ether"};
-var pairMark={"BTC/INR":["zebpay","koinex","unocoin","coindelta","buyucoin","bitbns","unodax","wazirx","cxihub"],
+var pairMark={"BTC/INR":["zebpay","koinex","unocoin","coindelta",/*"buyucoin","bitbns",*/"unodax",/*"wazirx",*/"cxihub"],
             "ETH/BTC":["coindcx"]};
 
 // dispArray=[];
 function getData(mark,crypto,fiat,sign){
-    console.log(crypto+"/"+fiat);
+    console.log(crypto+"/"+fiat+":"+mark);
     let URLnos=markDet[mark][0];
     let markLength=markDet[mark].length;
     let paths=(URLnos==1) ? [markDet[mark][1+URLnos]] : (URLnos==2) ? [markDet[mark][1+URLnos],markDet[mark][2+URLnos]] : "error";
@@ -394,10 +394,6 @@ function getData(mark,crypto,fiat,sign){
         let xhttpMarket = new XMLHttpRequest();
         xhttpMarket.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                displayVals[mark+"flg"]=0;displayVals[mark+"b"]=currFSymb+""+0;
-                displayVals[mark+"tc"]="NA";displayVals[mark+"tf"]="NA";
-                displayVals[mark+"vc"]="NA";displayVals[mark+"vf"]="NA";displayVals[mark+"od"]="NA";
-                displayVals[mark+"p"]="NA";
                 let percent="NA";
                 let currObj=null;
                 try{
@@ -409,9 +405,10 @@ function getData(mark,crypto,fiat,sign){
                 let currPath=paths[i-1].split(":");
                 let buy=0; let sell=0;
                 console.log(currPath);
-                let gotPath=false;
+                let gotPath=true;
                 for(let j=0;j<currPath.length-1;j++){
                     if(currPath[j].indexOf('{')!=-1){
+                        gotPath=false;
                         console.log(currObj);
                         let subPath=currPath[j].substr(1,currPath[j].indexOf('}')-1);
                         subPath=subPath.split('=');
@@ -432,6 +429,10 @@ function getData(mark,crypto,fiat,sign){
                 if(gotPath){
                     // console.log(currPath[currPath.length-1].split("/")[0]);
                     // console.log(currPath[currPath.length-1].split("/")[1]);
+                    displayVals[mark+"flg"]=0;displayVals[mark+"b"]=currFSymb+""+0;
+                    displayVals[mark+"tc"]="NA";displayVals[mark+"tf"]="NA";
+                    displayVals[mark+"vc"]="NA";displayVals[mark+"vf"]="NA";displayVals[mark+"od"]="NA";
+                    displayVals[mark+"p"]="NA";
                     let oldBuy=(mark+"b" in prices && prices[mark+"b"]==0) ? -1 : (!(mark+"b" in prices)) ? -1 : prices[mark+"b"];
                     console.log(currPath);
                     let allPaths=currPath[currPath.length-1].split("/");
@@ -498,7 +499,7 @@ function getData(mark,crypto,fiat,sign){
                     }
                     (oldBuy<prices[mark+"b"]) ? displayVals[mark+"flg"]=1 : (oldBuy>prices[mark+"b"]) ? displayVals[mark+"flg"]=2 : (oldBuy==prices[mark+"b"]) ? displayVals[mark+"flg"]=3 : displayVals[mark+"flg"]=0;
                     if(percent>0){
-                        displayVals[mark+"p"]="<span style='color:#3D9400'>"+displayVals[mark+"p"]+"%</span>";
+                        displayVals[mark+"p"]="<span style='color:#3D9400'>"+displayVals[mark+"p"]+"</span>";
                         displayVals[mark+"b"]="<span style='color:#3D9400'>"+displayVals[mark+"b"]+"</span>";
                     }
                     else if(percent<0){
