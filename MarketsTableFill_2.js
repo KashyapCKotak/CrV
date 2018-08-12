@@ -323,6 +323,11 @@ function updateMarketsDataTblINR(){
 }
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
+
+function calcArbitrage(){
+
+}
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 var SYMBOLS = {
@@ -430,7 +435,7 @@ function getData(mark,crypto,fiat,sign){
                     // console.log(currPath[currPath.length-1].split("/")[0]);
                     // console.log(currPath[currPath.length-1].split("/")[1]);
                     displayVals[mark+"flg"]=0;displayVals[mark+"b"]=currFSymb+""+0;
-                    displayVals[mark+"tc"]="NA";displayVals[mark+"tf"]="NA";
+                    displayVals[mark+"bn"]=0;displayVals[mark+"tc"]="NA";displayVals[mark+"tf"]="NA";
                     displayVals[mark+"vc"]="NA";displayVals[mark+"vf"]="NA";displayVals[mark+"od"]="NA";
                     displayVals[mark+"p"]="NA";
                     let oldBuy=(mark+"b" in prices && prices[mark+"b"]==0) ? -1 : (!(mark+"b" in prices)) ? -1 : prices[mark+"b"];
@@ -447,6 +452,7 @@ function getData(mark,crypto,fiat,sign){
                             buy=tempBuy.toFixed(Math.max(-Math.log10(tempBuy) + 2, 2));
                         }
                         prices[mark+"b"]=buy;
+                        displayVals[mark+"bn"]=buy;
                         displayVals[mark+"b"]=currFSymb+""+buy;
                         if(allPaths[2] !="?"){
                             // sell=Math.pow(currObj[currPath[currPath.length-1].split("/")[1]],sign);
@@ -560,7 +566,7 @@ function getPairsPrice(crypto,fiat){
 // getPairsPrice("BTC","INR");
 
 function updateMarketsDataTblNotINR () {
-    var mktSubsTbl=[]; 
+    mktSubsTbl=[]; 
     var xhttpOtherFiatMkts = new XMLHttpRequest();
     var tableString='<table class="table table-bordered">'+
             '<thead id="MarketsTable"><tr><th>Name</th><th>Price</th><th>Last Trade</th><th>24H Volume</th><th>24H Change</th></tr></thead><tbody id="MarketsDataTable">';

@@ -3370,6 +3370,23 @@
             //console.log("Streaming End");
           </script>
         </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box collapsed-box">
+              <div class="box-header">
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+                </button>
+              </div>
+                <h3 class="box-title" id="MarketBox">Arbitrage Opportunities for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+          <!-- /.col -->
+        </div>
           
         <div class="row box" style="margin:0;width:auto;margin-bottom:20px">
           <div class="col-md-6" style="margin-left:0;margin-right:0;margin-bottom:10px;height:70vh;padding:10px">

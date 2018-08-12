@@ -1,5 +1,7 @@
 displayVals=[];
 displayValsAgg=[];
+maxPice={};
+minPrice={};
 var FLAGS=["defunct","up","down","what","noChange",];
 $('.bitfinext').on('DOMSubtreeModified propertychange', function() {
     console.log("YEEEEEESSSSSSSSS");//TODO
@@ -10,12 +12,15 @@ function resetStrm(){
 	clearInterval(streamUpdtIntvl);
 	console.log("Stream Reset");
 }
-function deleteMarket(let market){
+function deleteMarket(market){
 	delete displayVals[market+'b'];
+	delete displayVals[market+'bn'];
 	if(displayVals.indexOf(market+'s'))
 		delete displayVals[market+'s'];
 }
 function displayData(){
+	tempMin={m:'',p:9999999999999.9};
+	tempMax={m:'',p:0.00};
 		for(var marketElem in displayVals){
 			// console.log(marketElem);
 			// console.log(marketElem[marketElem.length-1]);
@@ -40,11 +45,22 @@ function displayData(){
 					console.log(marketElem);
 				}
 			}
-			else if(marketElem[marketElem.length-1] == 'd' || marketElem[marketElem.length-1] == 'n'){
+			else if(marketElem[marketElem.length-1] == 'd'){
+			}
+			else if(marketElem[marketElem.length-1] == 'n'){
+				if(parseFloat(displayVals[marketElem])<tempMin.p){
+					tempMin.m=marketElem.substring(0,marketElem.length-2);
+					tempMin.p=parseFloat(displayVals[marketElem]);
+				}
+				if(parseFloat(displayVals[marketElem])>tempMax.p){
+					tempMax.m=marketElem.substring(0,marketElem.length-2);
+					tempMax.p=parseFloat(displayVals[marketElem]);
+				}
 			}
 			else{
 				document.getElementById(marketElem).innerHTML=displayVals[marketElem];
 			}
+			//TODO
 		}
 		var mainFactsDOM=document.getElementsByClassName("mainFactsValue");
 		for(var i=0;i<7;i++){
