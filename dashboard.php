@@ -554,6 +554,8 @@
         twitterLinksColor="#2B7BB9";
         var globalCryptoValue = "BTC";
         var globalFiatValue = "USD";
+        firstSltd=false;
+        secondSltd=false;
       </script>
       
       <script type="text/javascript">
@@ -2992,7 +2994,6 @@
             console.log("CHANGE1");
             document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
           }
-
           function selectFiat() {
             document.getElementById("chartLoadOverlay").style.display="block";
             clearInterval(otherMarketsTimer);
@@ -3005,6 +3006,19 @@
             getMarketData();
             console.log("CHANGE2");
             document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
+          }
+          function chgArbSel(which){
+            if(which==1){
+              firstSltd=true;
+              document.getElementById("othBuyPr").innerHTML=currFSymb + displayVals[document.getElementById("othSel1").value.toLowerCase()+"bn"];
+            }
+            else if(which==2){
+              secondSltd=true;
+              document.getElementById("othSellPr").innerHTML=currFSymb + displayVals[document.getElementById("othSel2").value.toLowerCase()+"bn"];
+            }
+            if(firstSltd && secondSltd){
+              document.getElementById("othProfPr").innerHTML=currFSymb + parseFloat(parseFloat(displayVals[document.getElementById("othSel2").value.toLowerCase()+"bn"])-parseFloat(displayVals[document.getElementById("othSel1").value.toLowerCase()+"bn"])).toFixed(3);
+            }
           }
         </script>
         <br class="break-enable">
@@ -3380,6 +3394,24 @@
                 </button>
               </div>
                 <h3 class="box-title" id="MarketBox">Arbitrage Opportunities for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
+              </div>
+              <div id="arbitrage-div" class="box-body" style="padding=0">
+                <div class="alert alert-success" style="overflow:auto">
+                  <h4> Best Opportunity:</h4>
+                  <div id="best-arbitrage">
+                    <div id="bestBuyArbDiv" class="col-md-4">Buy at <span id="bestBuyMark" class="arbText">Loading ⌛</span> for <span id="bestBuyPr" class="arbText">Loading ⌛</span></div>
+                    <div id="bestBuyArbDiv" class="col-md-4">Sell at <span id="bestSellMark" class="arbText">Loading ⌛</span> for <span id="bestSellPr" class="arbText">Loading ⌛</span></div><br>
+                    <div id="bestBuyArbDiv" class="col-md-6">For a Profit of : <span id="bestProfPr" class="arbText">Loading ⌛</span></div>
+                  </div>
+                </div>
+                <div class="alert alert-warning" style="overflow:auto">
+                  <h4> Or Choose your Exchanges:</h4>
+                  <div id="other-arbitrage">
+                    <div id="othBuyArbDiv" class="col-md-4">Buy at &nbsp;<select id="othSel1" onChange="chgArbSel(1)" style="color:#000;border-radius: 9px"></select>&nbsp; for <span id="othBuyPr" class="arbText">&nbsp;--&nbsp;</span></div>
+                    <div id="othBuyArbDiv" class="col-md-4">Sell at &nbsp;<select id="othSel2" onChange="chgArbSel(2)" style="color:#000;border-radius: 9px"></select>&nbsp; for <span id="othSellPr" class="arbText">&nbsp;--&nbsp;</span></div><br>
+                    <div id="othBuyArbDiv" class="col-md-6">For a Profit of : &nbsp;<span id="othProfPr" class="arbText">&nbsp;--&nbsp;</span></div>
+                  </div>
+                </div>
               </div>
               <!-- /.box-body -->
             </div>

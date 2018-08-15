@@ -1,3 +1,4 @@
+sigArray={};
 async function calcPatterns(){
     var quotes={stars:[" the stars indicates that you must (Sign) immediately if you'll (OppSign) in an hour or two!"," if you believe the stars, you may want to (Sign) now and (OppSign) in a couple of hours!"," what your Horoscope says today? My Parrot says that you may want to (Sign) now and (OppSign) immediately for quick profit!"," you may (Sign) now for quick profit! But don't be greedy and take whatever you get."," your short term future looks bright if you (Sign). Be careful... I said 'short term'"],
                 mainStrong:["Contact your local zoo. It seems some (BullBear)s have escaped and entered into the market!","(Sign) if you want to prosper!","(Sign)ing now may gift you a vacation to the Moon!","(Sign) now and keep a Pop song ready to dance when you (OppSign)","Whoa! There is so much charge flowing from my electrical brain as I see strong signs for (Sign)ing","(Sign) now and book a luxurious holiday in India!","Some (BullBear)s have broke the jails. Spot for them and inform me. Oh, btw, are you one of those (BullBear)s? If yes go ahead and (Sign), I won't catch you..."],
@@ -6,7 +7,7 @@ async function calcPatterns(){
                 strongHold:["Spectacular fight going on between Bulls & Bears. Hold and enjoy the show! You can buy lows & sell highs","RagingBulls & FierceBears - support your team and hold for now! You can buy lows & sell highs.","JUST HODL!!","My Artificial Intelligence sees a ranging market. Go long at lows and short at highs.","I can see a lot of ups and downs in the market... You must have developed pain in your neck. Don't worry, just Hold!","I would just say: Sit back, relax and hold! But I you are too active trader for this, Buy the lows and sell the highs","Just go Long when you see a low, go Short when you see high. Remember- Don't be too greedy!"],
                 marketSent:["My robotic brain sees a pretty (PosNeg) market sentiment.","The news predict a (BullBear)ish market ahead.","My robotic wind sensors are confirming the smell of a lots of (BullBear)s around. Be careful... They may be around you."],
                 outage:["There were some short circuits in my brain while predicting future! I am in a self healing mode right now..."]};
-    var sigArray={
+    sigArray={
       	MacdMfi:"none",
         MacdTrix:"none",
         MacdAo:"none",

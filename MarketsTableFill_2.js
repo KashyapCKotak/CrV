@@ -576,7 +576,7 @@ function updateMarketsDataTblNotINR () {
             var subList = JSON.parse(this.responseText)[globalFiatValue];
             currSubAgg=subList.CURRENTAGG; 
             currSubList=subList.CURRENT;
-            for(mktSub in currSubList){
+            for(let mktSub in currSubList){
                 // mktSubs.push(currSubList[mktSub]);
                 mktSubsTbl.push(currSubList[mktSub].substring(currSubList[mktSub].indexOf("~")+1, currSubList[mktSub].indexOf("~",2)));
                 tableString = tableString + '<tr style="animation-duration:15s"><td>'+mktSubsTbl[mktSub]+'</td><td id="'+mktSubsTbl[mktSub].toLowerCase()+'b">⌛</td><td id="'+mktSubsTbl[mktSub].toLowerCase()+'t"><span id="'+mktSubsTbl[mktSub].toLowerCase()+'tf">⌛</span><br><span id="'+mktSubsTbl[mktSub].toLowerCase()+'tc">⌛</span></td><td id="'+mktSubsTbl[mktSub].toLowerCase()+'v"><span id="'+mktSubsTbl[mktSub].toLowerCase()+'vf">⌛</span><br><span id="'+mktSubsTbl[mktSub].toLowerCase()+'vc">⌛</span></td><td id="'+mktSubsTbl[mktSub].toLowerCase()+'p">⌛</td></tr>';

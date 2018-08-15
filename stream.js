@@ -2,10 +2,10 @@ displayVals=[];
 displayValsAgg=[];
 maxPice={};
 minPrice={};
-var FLAGS=["defunct","up","down","what","noChange",];
-$('.bitfinext').on('DOMSubtreeModified propertychange', function() {
-    console.log("YEEEEEESSSSSSSSS");//TODO
-});
+var FLAGS=["defunct","up","down","what","noChange"];
+// $('.bitfinext').on('DOMSubtreeModified propertychange', function() {
+//     console.log("YEEEEEESSSSSSSSS");//TODO
+// });
 function resetStrm(){
 	socket.emit('SubRemove', { subs: subscription });
 	displayVals=[];
@@ -14,22 +14,41 @@ function resetStrm(){
 }
 function deleteMarket(market){
 	delete displayVals[market+'b'];
+	delete displayVals[market+'flg'];
 	delete displayVals[market+'bn'];
 	if(displayVals.indexOf(market+'s'))
 		delete displayVals[market+'s'];
 }
+function loadOtherArb(){
+	othMarkArbSel='<option value="" selected disabled hidden>Choose market</option>';
+	for(let mktSub in mktSubsTbl)
+		othMarkArbSel=othMarkArbSel+"<option value='" + mktSubsTbl[mktSub] + "'>" + mktSubsTbl[mktSub] + "</option>";
+	document.getElementById("othSel1").innerHTML=othMarkArbSel;
+	document.getElementById("othSel2").innerHTML=othMarkArbSel;
+}
+function dispArbInfo(){
+	document.getElementById("bestBuyMark").innerHTML="&nbsp;"+arbMin.m+"&nbsp;";
+	document.getElementById("bestBuyPr").innerHTML="&nbsp;"+currFSymb + arbMin.p+"&nbsp;";
+	document.getElementById("bestSellMark").innerHTML="&nbsp;"+arbMax.m+"&nbsp;";
+	document.getElementById("bestSellPr").innerHTML="&nbsp;"+currFSymb + arbMax.p+"&nbsp;";
+	document.getElementById("bestProfPr").innerHTML="&nbsp;"+currFSymb + parseFloat(arbMax.p-arbMin.p).toFixed(3)+"&nbsp;";
+}
 function displayData(){
-	tempMin={m:'',p:9999999999999.9};
-	tempMax={m:'',p:0.00};
+	arbMin={m:'',p:9999999999999.9};
+	arbMax={m:'',p:0.00};
 		for(var marketElem in displayVals){
 			// console.log(marketElem);
 			// console.log(marketElem[marketElem.length-1]);
-			if(marketElem[marketElem.length-1] == 'g'){
+			let lastChars=marketElem[marketElem.length-1];
+			if(lastChars == 'g'){
 				// document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.backgroundColor="#f9f9f9";
 				try{
 				if(displayVals[marketElem] == 0){
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.display="none";
 					deleteMarket(marketElem.split('flg')[0]);
+					let delIndex=$.inArray(displayVals[marketElem.split('flg')[0]+"name"],mktSubsTbl);
+					if(delIndex!=-1)
+						mktSubsTbl.splice(delIndex,1);
 				}
 				else if(displayVals[marketElem] == 1){//#3D9400
 					document.getElementById(marketElem.substr(0,marketElem.length-3)+"b").parentElement.style.animationName="pulseColorGreenMkt";//backgroundColor="#cbf5e0";//"#baf5d8";
@@ -43,24 +62,25 @@ function displayData(){
 				} catch(e) {
 					console.log("ERROR @@@@@@");
 					console.log(marketElem);
+					console.log(e);
 				}
 			}
-			else if(marketElem[marketElem.length-1] == 'd'){
+			else if(lastChars == 'd' || lastChars == 'e'){
 			}
-			else if(marketElem[marketElem.length-1] == 'n'){
-				if(parseFloat(displayVals[marketElem])<tempMin.p){
-					tempMin.m=marketElem.substring(0,marketElem.length-2);
-					tempMin.p=parseFloat(displayVals[marketElem]);
+			else if(lastChars == 'n'){
+				if(parseFloat(displayVals[marketElem])<arbMin.p){
+					arbMin.m=marketElem.substring(0,marketElem.length-2);
+					arbMin.p=parseFloat(displayVals[marketElem]);
 				}
-				if(parseFloat(displayVals[marketElem])>tempMax.p){
-					tempMax.m=marketElem.substring(0,marketElem.length-2);
-					tempMax.p=parseFloat(displayVals[marketElem]);
+				if(parseFloat(displayVals[marketElem])>arbMax.p){
+					arbMax.m=marketElem.substring(0,marketElem.length-2);
+					arbMax.p=parseFloat(displayVals[marketElem]);
 				}
 			}
 			else{
 				document.getElementById(marketElem).innerHTML=displayVals[marketElem];
 			}
-			//TODO
+			dispArbInfo();
 		}
 		var mainFactsDOM=document.getElementsByClassName("mainFactsValue");
 		for(var i=0;i<7;i++){
@@ -134,6 +154,7 @@ function startStream(currSubList) {
 			displayData();
 			console.log("Done First");
 			streamUpdtIntvl=setInterval(function(){ displayData(); }, 5000);
+			loadOtherArb();
 		}
 	});
 
@@ -163,6 +184,9 @@ function startStream(currSubList) {
 		// console.log(data);
 		var market=data['MARKET'].toLowerCase();
 		for(var dataElem in data){
+			if(dataElem == "MARKET"){
+				displayVals[market+"name"]=data['MARKET'];
+			}
 			if(dataElem == "FLAGS"){
 				if(data[dataElem]==0)
 					displayVals[market+"flg"]=3;//not buy not sell and not 0 to prevent it from hiding. If theres no trades on markets, it will be set to 0 below while checking "volme 24 h to"

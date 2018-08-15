@@ -85,6 +85,13 @@
 * backlight css above
 *
 */
+.arbText{
+    font-weight: 800;
+    font-size: 20px;
+}
+.bestBuyMark{
+    font-weight: 600;
+}
 .user-buttons{
     border-width: 0px !important;
     border-radius: 10px !important
