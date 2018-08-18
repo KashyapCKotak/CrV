@@ -2,6 +2,8 @@ displayVals=[];
 displayValsAgg=[];
 maxPice={};
 minPrice={};
+arbMin={m:'',p:9999999999999.9};
+arbMax={m:'',p:0.00};
 var FLAGS=["defunct","up","down","what","noChange"];
 // $('.bitfinext').on('DOMSubtreeModified propertychange', function() {
 //     console.log("YEEEEEESSSSSSSSS");//TODO
@@ -11,6 +13,20 @@ function resetStrm(){
 	displayVals=[];
 	clearInterval(streamUpdtIntvl);
 	console.log("Stream Reset");
+	arbMin={m:'',p:9999999999999.9};
+	arbMax={m:'',p:0.00};
+	document.getElementById("bestBuyMark").innerHTML="Loading ⌛";
+	document.getElementById("bestBuyPr").innerHTML="Loading ⌛";
+	document.getElementById("bestSellMark").innerHTML="Loading ⌛";
+	document.getElementById("bestSellPr").innerHTML="Loading ⌛";
+	document.getElementById("bestProfPr").innerHTML="Loading ⌛";
+	document.getElementById("othSel1").value="NoMarket";
+	document.getElementById("othSel2").value="NoMarket";
+	document.getElementById("othProfPr").innerHTML="Select Markets";
+	document.getElementById("arbBuyFee").value=0;
+	document.getElementById("arbSellFee").value=0;
+	document.getElementById("othBuyPr").innerHTML="--"
+	document.getElementById("othSellPr").innerHTML="--"
 }
 function deleteMarket(market){
 	delete displayVals[market+'b'];
@@ -20,7 +36,7 @@ function deleteMarket(market){
 		delete displayVals[market+'s'];
 }
 function loadOtherArb(){
-	othMarkArbSel='<option value="" selected disabled hidden>Choose market</option>';
+	othMarkArbSel='<option value="NoMarket" selected disabled hidden>Choose market</option>';
 	for(let mktSub in mktSubsTbl)
 		othMarkArbSel=othMarkArbSel+"<option value='" + mktSubsTbl[mktSub] + "'>" + mktSubsTbl[mktSub] + "</option>";
 	document.getElementById("othSel1").innerHTML=othMarkArbSel;
@@ -80,8 +96,9 @@ function displayData(){
 			else{
 				document.getElementById(marketElem).innerHTML=displayVals[marketElem];
 			}
-			dispArbInfo();
 		}
+		dispArbInfo();
+		chgArbPrs(4,true);
 		var mainFactsDOM=document.getElementsByClassName("mainFactsValue");
 		for(var i=0;i<7;i++){
 			mainFactsDOM[i].innerHTML=displayValsAgg[i];

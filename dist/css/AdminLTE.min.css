@@ -12,6 +12,10 @@
     --pulseColorGreenMktTrns:#04250d00;
     --pulseColorRedMktTrns:#2b030300;
     --pulseColorYellowMktTrns:#29270300;
+    --pulseColorMainPrGreenOpq:#006d1dff;
+    --pulseColorMainPrGreenTrns:#006d1d00;
+    --pulseColorMainPrRedOpq:#750000ff;
+    --pulseColorMainPrRedTrns:#75000000;
 }
 .lightsOn{
     --pulseColorGreenMktOpq:#cbf5e0ff;
@@ -20,6 +24,10 @@
     --pulseColorGreenMktTrns:#cbf5e000;
     --pulseColorRedMktTrns:#f5d9d900;
     --pulseColorRedMktTrns:#f9f59a00;
+    --pulseColorMainPrGreenOpq:#006d1dff;
+    --pulseColorMainPrGreenTrns:#006d1d00;
+    --pulseColorMainPrRedOpq:#750000ff;
+    --pulseColorMainPrRedTrns:#75000000;
 }
 .lightsOff section>h1>small{
     color: #fff
@@ -487,35 +495,35 @@
 
 @keyframes pulseColorGreen {
   0% {
-    background-color: #8bf7c100;
+    background-color: var(--pulseColorMainPrGreenTrns);/*8bf7c100*/
   }
   15% {
-    background-color: #8bf7c1ff;
-    color:#000;
+    background-color: var(--pulseColorMainPrGreenOpq);/*8bf7c1ff*//*bookmark*/
+    /* color:#000; */
   }
   65% {
-    background-color: #8bf7c1ff;
-    color:#000;
+    background-color: var(--pulseColorMainPrGreenOpq);/*8bf7c1ff*/
+    /* color:#000; */
   }
   100% {
-    background-color: #8bf7c100;
+    background-color: var(--pulseColorMainPrGreenTrns);/*8bf7c100*/
   }
 }
 
 @keyframes pulseColorRed {
   0% {
-    background-color: #f5d9d900;
+    background-color: var(--pulseColorMainPrRedTrns);/*#f5d9d900*/
   }
   15% {
-    background-color: #f5d9d9ff;
-    color:#000;
+    background-color: var(--pulseColorMainPrRedOpq);/*f5d9d9ff*/
+    /* color:#000; */
   }
   65% {
-    background-color: #f5d9d9ff;
-    color:#000;
+    background-color: var(--pulseColorMainPrRedOpq);/*f5d9d9ff*/
+    /* color:#000; */
   }
   100% {
-    background-color: #f5d9d900;
+    background-color: var(--pulseColorMainPrRedTrns);/*#f5d9d900*/
   }
 }
 

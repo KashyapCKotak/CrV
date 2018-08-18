@@ -451,6 +451,7 @@ function getData(mark,crypto,fiat,sign){
                             console.log(Math.pow(tempBuy,sign));
                             buy=tempBuy.toFixed(Math.max(-Math.log10(tempBuy) + 2, 2));
                         }
+                        mktSubsTbl.push(mark);//Adding to mktSubsTbl array to display in arbitrage
                         prices[mark+"b"]=buy;
                         displayVals[mark+"bn"]=buy;
                         displayVals[mark+"b"]=currFSymb+""+buy;

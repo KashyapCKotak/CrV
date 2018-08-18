@@ -554,6 +554,7 @@
         twitterLinksColor="#2B7BB9";
         var globalCryptoValue = "BTC";
         var globalFiatValue = "USD";
+        arbDisplayed=false;
         firstSltd=false;
         secondSltd=false;
       </script>
@@ -3007,18 +3008,51 @@
             console.log("CHANGE2");
             document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
           }
-          function chgArbSel(which){
+          /**
+           * Updates displayed custom arb prices
+           * chgArbPrs(which: buy/sell, updt: called from stream for price changes if to be updtd)
+           * which==4 do nothing
+           */
+          function chgArbPrs(which=4,updt=false){
+            if(updt==true){
+              if(firstSltd && secondSltd)
+                chgArbPrs(3);
+              else if(firstSltd)
+                chgArbPrs(1);
+              else if(secondSltd)
+                chgArbPrs(2);
+            }
             if(which==1){
+              if(document.getElementById("othSel1").value=="NoMarket")
+                return;
+              let buyPr=parseFloat(displayVals[document.getElementById("othSel1").value.toLowerCase()+"bn"]);
               firstSltd=true;
-              document.getElementById("othBuyPr").innerHTML=currFSymb + displayVals[document.getElementById("othSel1").value.toLowerCase()+"bn"];
+              document.getElementById("othBuyPr").innerHTML=currFSymb + (buyPr+((parseFloat(document.getElementById("arbBuyFee").value)*buyPr)/100)).toFixed(3);
+              document.getElementById("othProfPr").innerHTML="Select Market to Sell";
             }
             else if(which==2){
+              if(document.getElementById("othSel2").value=="NoMarket")
+                return;
+              let sellPr=parseFloat(displayVals[document.getElementById("othSel2").value.toLowerCase()+"bn"]);
               secondSltd=true;
-              document.getElementById("othSellPr").innerHTML=currFSymb + displayVals[document.getElementById("othSel2").value.toLowerCase()+"bn"];
+              document.getElementById("othSellPr").innerHTML=currFSymb + (sellPr-((parseFloat(document.getElementById("arbSellFee").value)*sellPr)/100)).toFixed(3);
+              document.getElementById("othProfPr").innerHTML="Select Market to Buy";
             }
-            if(firstSltd && secondSltd){
-              document.getElementById("othProfPr").innerHTML=currFSymb + parseFloat(parseFloat(displayVals[document.getElementById("othSel2").value.toLowerCase()+"bn"])-parseFloat(displayVals[document.getElementById("othSel1").value.toLowerCase()+"bn"])).toFixed(3);
+            if((firstSltd && secondSltd) || which==3){
+              let buyPr=parseFloat(displayVals[document.getElementById("othSel1").value.toLowerCase()+"bn"]);
+              let sellPr=parseFloat(displayVals[document.getElementById("othSel2").value.toLowerCase()+"bn"]);
+              document.getElementById("othProfPr").innerHTML=currFSymb + parseFloat(
+                (sellPr-((parseFloat(document.getElementById("arbSellFee").value)*sellPr)/100))-
+                (buyPr+((parseFloat(document.getElementById("arbBuyFee").value)*buyPr)/100))
+                ).toFixed(3);
             }
+          }
+          function onArbFeeInp(e,which){
+            if(isNaN(e.value) || e.value==""){
+              e.value=0;
+              return;
+            }
+            chgArbPrs(which);
           }
         </script>
         <br class="break-enable">
@@ -3256,7 +3290,29 @@
           </div>
         </div>
 
+        <script type="text/javascript">
+          function convertToFiat() {
+            if (isNaN(parseFloat((document.getElementById("CryptoInput").value).replace(/,/g, '')))) {
+              document.getElementById("FiatInput").value = "Enter Correct Number!";
+              if (document.getElementById("CryptoInput").value == "")
+                document.getElementById("FiatInput").value = "";
+              return;
+            }
+            document.getElementById("FiatInput").value = (parseFloat((document.getElementById("CryptoInput").value).replace(
+              /,/g, '')) * currTopPriceAmount).toLocaleString();
+          }
 
+          function convertToCrypto() {
+            if (isNaN(parseFloat((document.getElementById("FiatInput").value).replace(/,/g, '')))) {
+              document.getElementById("CryptoInput").value = "Enter Correct Number!";
+              if (document.getElementById("FiatInput").value == "")
+                document.getElementById("CryptoInput").value = "";
+              return;
+            }
+            document.getElementById("CryptoInput").value = (parseFloat((document.getElementById("FiatInput").value).replace(
+              /,/g, '')) / currTopPriceAmount).toLocaleString();
+          }
+        </script>
 
         <div class="row" style="margin:0">
           <div class="box" style="width:auto">
@@ -3282,30 +3338,6 @@
             </div>
           </div>
         </div>
-
-        <script type="text/javascript">
-          function convertToFiat() {
-            if (isNaN(parseFloat((document.getElementById("CryptoInput").value).replace(/,/g, '')))) {
-              document.getElementById("FiatInput").value = "Enter Correct Number!";
-              if (document.getElementById("CryptoInput").value == "")
-                document.getElementById("FiatInput").value = "";
-              return;
-            }
-            document.getElementById("FiatInput").value = (parseFloat((document.getElementById("CryptoInput").value).replace(
-              /,/g, '')) * currTopPriceAmount).toLocaleString();
-          }
-
-          function convertToCrypto() {
-            if (isNaN(parseFloat((document.getElementById("FiatInput").value).replace(/,/g, '')))) {
-              document.getElementById("CryptoInput").value = "Enter Correct Number!";
-              if (document.getElementById("FiatInput").value == "")
-                document.getElementById("CryptoInput").value = "";
-              return;
-            }
-            document.getElementById("CryptoInput").value = (parseFloat((document.getElementById("FiatInput").value).replace(
-              /,/g, '')) / currTopPriceAmount).toLocaleString();
-          }
-        </script>
 
         <div class="row" style="margin:0">
           <div class="box">
@@ -3407,8 +3439,8 @@
                 <div class="alert alert-warning" style="overflow:auto">
                   <h4> Or Choose your Exchanges:</h4>
                   <div id="other-arbitrage">
-                    <div id="othBuyArbDiv" class="col-md-4">Buy at &nbsp;<select id="othSel1" onChange="chgArbSel(1)" style="color:#000;border-radius: 9px"></select>&nbsp; for <span id="othBuyPr" class="arbText">&nbsp;--&nbsp;</span></div>
-                    <div id="othBuyArbDiv" class="col-md-4">Sell at &nbsp;<select id="othSel2" onChange="chgArbSel(2)" style="color:#000;border-radius: 9px"></select>&nbsp; for <span id="othSellPr" class="arbText">&nbsp;--&nbsp;</span></div><br>
+                    <div id="othBuyArbDiv" class="col-md-6">Buy at &nbsp;<select id="othSel1" onChange="chgArbPrs(1)" style="color:#000;border-radius:9px;border-style:none"></select>&nbsp; with &nbsp;<input type="text" oninput="onArbFeeInp(this,1)" id="arbBuyFee" style="color: #000 !important;width:40px;border-radius:9px;border-style:none;padding:1px 5px 1px 5px;background-color:#fff !important;" value=0></input>% fee, for <span id="othBuyPr" class="arbText">&nbsp;--&nbsp;</span></div>
+                    <div id="othBuyArbDiv" class="col-md-6">Sell at &nbsp;<select id="othSel2" onChange="chgArbPrs(2)" style="color:#000;border-radius:9px;border-style:none"></select>&nbsp; with &nbsp;<input type="text" oninput="onArbFeeInp(this,2)" id="arbSellFee" style="color: #000 !important;width:40px;border-radius:9px;border-style:none;padding:1px 5px 1px 5px;background-color:#fff !important" value=0></input>% fee, for <span id="othSellPr" class="arbText">&nbsp;--&nbsp;</span></div><br>
                     <div id="othBuyArbDiv" class="col-md-6">For a Profit of : &nbsp;<span id="othProfPr" class="arbText">&nbsp;--&nbsp;</span></div>
                   </div>
                 </div>
