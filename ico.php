@@ -357,7 +357,7 @@
             </ul> -->
           </li>
           <li>
-            <a href="about.php">
+            <a href="contact.php">
               <i class="far fa-smile"></i>
               <span>&nbsp;About & Contact</span>
             </a>

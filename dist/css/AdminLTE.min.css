@@ -29,6 +29,21 @@
     --pulseColorMainPrRedOpq:#750000ff;
     --pulseColorMainPrRedTrns:#75000000;
 }
+.skin-red{
+    --topCol:#dd4b39;
+}
+.skin-yellow{
+    --topCol:#f39c12;
+}
+.skin-blue{
+    --topCol:#3c8dbc;
+}
+.skin-purple{
+    --topCol:#605ca8;
+}
+.skin-green{
+    --topCol:#00a65a;
+}
 .lightsOff section>h1>small{
     color: #fff
 }
@@ -37,6 +52,9 @@
 }
 .lightsOff .imageIco{
     background-color: #fff !important;
+}
+.hrLightsOff{
+    border-color: #fff0;
 }
 .lightsOff .content-wrapper, .lightsOff .box, .lightsOff input, .lightsOff .nav-tabs-custom, 
 .lightsOff .tab-content, .lightsOff #portfolioTablePersonal tr, .lightsOff #portfolioTablePractice tr,
@@ -87,12 +105,26 @@
     color:#000;
     background: #ecf0f5 !important; /*TODO: change according to theme*/
 }
-
 /*
 *
 * backlight css above
 *
 */
+.lightsOff .customIcon{
+    color: var(--topCol) !important;
+    opacity: 0.5;
+}
+.sysTitle{
+    color: var(--topCol)
+}
+.customFeaturesLook{
+    box-shadow: 0 1px 20px var(--topCol) !important;
+    border-radius: 10px !important;
+    margin-bottom: 45px !important;
+}
+.featuresBoxContain{
+    margin-top: 15px
+}
 .arbText{
     font-weight: 800;
     font-size: 20px;
@@ -2603,26 +2635,28 @@ a:focus {
     border-radius: 2px;
     position: relative;
     display: block;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
 }
 .small-box>.inner {
     padding: 10px
 }
 .small-box>.small-box-footer {
+    margin-top:15px;
     position: relative;
     text-align: center;
     padding: 3px 0;
-    color: #fff;
-    color: rgba(255, 255, 255, 0.8);
+    /* color: #fff; */
+    color:#d9d9d9;
+    /* color: rgba(255, 255, 255, 0.8); */
     display: block;
     z-index: 10;
-    background: rgba(0, 0, 0, 0.1);
+    /* background: rgba(0, 0, 0, 0.1); */
     text-decoration: none
 }
 .small-box>.small-box-footer:hover {
-    color: #fff;
-    background: rgba(0, 0, 0, 0.15)
+    /* color: #fff; */
+    /* background: rgba(0, 0, 0, 0.15) */
 }
 .small-box h3 {
     font-size: 38px;
