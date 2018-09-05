@@ -379,7 +379,7 @@
                   <div class="box-body">
                      <div class="row">
                      <div class="col-md-6 " style="margin-left:-10px">
-                        <span class="AdpageText">Have a <b>Suggestion, Feedback, Complain or want just want to express Gratitue?</b> We would love to hear from you!</span>
+                        <span class="AdpageText">Have a <b>Suggestion, Feedback, Complaint or want just want to express Gratitue?</b> We would love to hear from you!</span>
                       </div>
                      <div class="col-md-6">
                      <div class="box box-success">
@@ -392,7 +392,14 @@
                         <div class="box-body">
                           <form action="https://formspree.io/kashyap.kotak@ves.ac.in" method="post">
                             <div class="form-group">
-                              <input type="text" class="form-control" name="subject" placeholder="Subject">
+                              Feedback Type: 
+                              <select name="Subject" style="border-radius:10px;padding:0 5px 0 5px;width:200px;text-align:center">
+                                <option value="thanks">Thank you!</option>
+                                <option value="suggesstion">Suggesstion</option>
+                                <option value="conplaint">Complaint</option>
+                                <option value="support">Support</option>
+                              </select>
+                              <!-- <input type="text" class="form-control" name="subject" placeholder="Subject"> -->
                             </div>
                             <div>
                               <textarea class="textarea" placeholder="Message" name="message"
