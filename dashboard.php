@@ -2992,8 +2992,9 @@
             loadCoinLogo();
             loadGTrenGraph();
             loadGTrenGeo();
-            console.log("CHANGE1");
+            console.log("Change Crypto");
             document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
+            disqusReset();
           }
           function selectFiat() {
             document.getElementById("chartLoadOverlay").style.display="block";
@@ -3005,8 +3006,9 @@
             changeAllTop();
             drawMainChart();
             getMarketData();
-            console.log("CHANGE2");
+            console.log("Change Fiat");
             document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
+            disqusReset();
           }
           /**
            * Updates displayed custom arb prices
@@ -3495,7 +3497,7 @@
                 if (wS > (hT-wH)){
                   twitterLoaded=true;
                   loadTwitter();
-                  loadDashNews();
+                  //loadDashNews();
                   //console.log("Loading Twitter");
                 }
                 if(!gTrendLoaded)
@@ -3511,12 +3513,44 @@
           </div>
           <div class="col-md-6" style="margin-left:0;margin-right:0;margin-bottom:10px;height:70vh;padding:10px;">
             <div class="NewsWidgetHolder" style="height: 100%; overflow-y: auto">
-              <div class="NewsWidgetMainHeading">
+              <div id="disqus_thread"></div>
+                <script>
+                /**
+                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                var disqus_config = function () {
+                let dPageUrl="http://localhost";
+                let dIdentifier=globalCryptoValue+"/"+globalFiatValue;
+                this.page.url = dPageUrl;  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = dIdentifier; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://localhost-adminlte-2-4-2.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+                function disqusReset(){
+                  let dPageUrl="http://localhost";
+                  let dIdentifier=globalCryptoValue+"/"+globalFiatValue;
+                  console.log(dIdentifier);
+                  DISQUS.reset({
+                    reload: true,
+                    config: function () {
+                      this.page.url = dPageUrl;  // Replace PAGE_URL with your page's canonical URL variable
+                      this.page.identifier = dIdentifier;
+                    }
+                  });
+                }
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>                         
+              <!-- <div class="NewsWidgetMainHeading">
                 <h1 style="margin:0">Cointelegraph.com News</h1>
                 <div id="loaderHolder">
                   <div class="loader"></div>
                 </div>
-              </div>
+              </div> -->
               
               <!-- <div class="NewsWidgetItemHolder"> -->
               <!-- 
@@ -3529,7 +3563,6 @@
                             </div> 
                             -->
               <!-- </div> -->
-            </div>
           </div>
         </div>
         <script type="text/javascript">

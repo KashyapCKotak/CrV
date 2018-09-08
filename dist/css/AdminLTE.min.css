@@ -24,10 +24,10 @@
     --pulseColorGreenMktTrns:#cbf5e000;
     --pulseColorRedMktTrns:#f5d9d900;
     --pulseColorRedMktTrns:#f9f59a00;
-    --pulseColorMainPrGreenOpq:#006d1dff;
-    --pulseColorMainPrGreenTrns:#006d1d00;
-    --pulseColorMainPrRedOpq:#750000ff;
-    --pulseColorMainPrRedTrns:#75000000;
+    --pulseColorMainPrGreenOpq:#8bf7c1ff;
+    --pulseColorMainPrGreenTrns:#8bf7c100;
+    --pulseColorMainPrRedOpq:#f5d9d9ff;
+    --pulseColorMainPrRedTrns:#f5d9d900;
 }
 .skin-red{
     --topCol:#dd4b39;
