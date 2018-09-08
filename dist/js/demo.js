@@ -143,6 +143,12 @@ $(function () {
       if(twitterLoaded)
         loadTwitter();
     }
+    if(typeof DISQUS === 'undefined'){
+      
+    }
+    else{
+      disqusReset();
+    }
     store('lightSkin', cls)
     return false
   }
