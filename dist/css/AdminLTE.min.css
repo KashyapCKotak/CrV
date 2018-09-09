@@ -110,6 +110,23 @@
 * backlight css above
 *
 */
+.lightsOff .homeHeadSect{
+    box-shadow:inset 0px -13px 8px 0px #000;
+}
+.lightsOn .homeHeadSect{
+    box-shadow:inset 0px -13px 8px 0px #ecf0f5;
+}
+.homeFooter{
+    color:var(--topCol);
+}
+.lightsOn .shadow{
+    box-shadow: 0 0px 20px #000000;
+    border-radius: 10px;
+}
+.lightsOff .shadow{
+    box-shadow: 0 0px 20px 3px #ffffff;
+    border-radius: 10px;
+}
 .lightsOff .customIcon{
     color: var(--topCol) !important;
     opacity: 0.5;

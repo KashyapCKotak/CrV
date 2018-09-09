@@ -153,7 +153,13 @@
           <!-- <li class="header">
             <center>MENU</center>
           </li> -->
-          <li class="active">
+          <li>
+            <a href="index.php">
+              <i class="fas fa-home"></i>
+              <span>&nbsp;Home</span>
+            </a>
+          </li>
+          <li>
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
               <span>&nbsp;Dashboard</span>
@@ -165,7 +171,7 @@
               <span>&nbsp;Manage Portfolio</span>
             </a>
           </li>
-          <li>
+          <li class="active">
             <a href="exchange.php">
               <i class="fas fa-chart-line"></i>
               <span>&nbsp;Exchange</span>
@@ -275,7 +281,7 @@
                   <p class="text-center no-margin">Black</p>
                 </a>
               </li>
-              <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
+              <!-- <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
                 <a href="javascript:void(0)" data-skin="skin-blue-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
                   <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
@@ -323,7 +329,7 @@
                   <br>
                   <p class="text-center no-margin" style="font-size: 12px">Back Light</p>
                 </a>
-              </li>
+              </li> -->
             </ul>
             <!-- <ul class="treeview-menu">
               <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>

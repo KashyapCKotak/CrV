@@ -212,7 +212,13 @@
           <!-- <li class="header">
             <center>MENU</center>
           </li> -->
-          <li class="active">
+          <li>
+            <a href="index.php">
+              <i class="fas fa-home"></i>
+              <span>&nbsp;Home</span>
+            </a>
+          </li>
+          <li>
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
               <span>&nbsp;Dashboard</span>

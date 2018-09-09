@@ -27,7 +27,102 @@
       <![endif]-->
       <!-- Google Font -->
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+      <script>
+            $(function() {
+        $('a[href*=#]').on('click', function(e) {
+          e.preventDefault();
+          $('html, body').animate({ scrollTop: $($(this).attr('href')).offset().top}, 500, 'linear');
+        });
+      });
+      </script>
       <style> .small-box:hover{text-decoration:none;color:inherit} body,h1{font-family:Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif !important} .particles-js-canvas-el{position:absolute;top:0} canvas{ display: block; vertical-align: bottom; } /* ---- particles.js container ---- */ #particles-js{ background-color: #000; background-image: url("https://images.pexels.com/photos/956999/milky-way-starry-sky-night-sky-star-956999.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"); background-repeat: no-repeat; background-size: cover; background-position: 50% 50%; } /* ---- stats.js ---- */ .count-particles{ background: #000022; position: absolute; top: 48px; left: 0; width: 80px; color: #13E8E9; font-size: .8em; text-align: left; text-indent: 4px; line-height: 14px; padding-bottom: 2px; font-family: Helvetica, Arial, sans-serif; font-weight: bold; } .js-count-particles{ font-size: 1.1em; } #stats, .count-particles{ -webkit-user-select: none; margin-top: 5px; margin-left: 5px; } #stats{ border-radius: 3px 3px 0 0; overflow: hidden; } .count-particles{ border-radius: 0 0 3px 3px; }</style>
+      <style>
+        section::after {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          content: '';
+          width: 100%;
+          /* height: 80%; */
+        }
+        .demo a {
+          position: absolute;
+          bottom: 0px;
+          left: 50%;
+          z-index: 2;
+          display: inline-block;
+          /* -webkit-transform: translate(0, -50%);
+          transform: translate(0, -50%); */
+          color: #fff;
+          font : normal 400 20px/1 'Josefin Sans', sans-serif;
+          letter-spacing: .1em;
+          text-decoration: none;
+          transition: opacity .3s;
+        }
+        .demo a:hover {
+          opacity: .5;
+        }
+        #section10 a {
+          padding-top: 60px;
+        }
+        #section10 a span {
+          position: absolute;
+          top: 0;
+          left: 50%;
+          width: 25px;
+          height: 40px;
+          margin-left: -15px;
+          border: 2px solid #ffffff1c;
+          border-radius: 50px;
+          box-sizing: border-box;
+        }
+        #section10 a span::before {
+          position: absolute;
+          top: 10px;
+          left: 50%;
+          content: '';
+          width: 6px;
+          height: 6px;
+          margin-left: -3px;
+          background-color: #ffffff1c;
+          border-radius: 100%;
+          -webkit-animation: sdb10 2s infinite;
+          animation: sdb10 2s infinite;
+          box-sizing: border-box;
+        }
+        @-webkit-keyframes sdb10 {
+          0% {
+            -webkit-transform: translate(0, 0);
+            opacity: 0;
+          }
+          40% {
+            opacity: 1;
+          }
+          80% {
+            -webkit-transform: translate(0, 15px);
+            opacity: 0;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+        @keyframes sdb10 {
+          0% {
+            transform: translate(0, 0);
+            opacity: 0;
+          }
+          40% {
+            opacity: 1;
+          }
+          80% {
+            transform: translate(0, 15px);
+            opacity: 0;
+          }
+          100% {
+            opacity: 0;
+          }
+        }
+      </style>
    </head>
    <script type="text/javascript">
       function loadFunctino() {
@@ -151,6 +246,12 @@
             <center>MENU</center>
           </li> -->
           <li class="active">
+            <a href="index.php">
+              <i class="fas fa-home"></i>
+              <span>&nbsp;Home</span>
+            </a>
+          </li>
+          <li>
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
               <span>&nbsp;Dashboard</span>
@@ -272,7 +373,7 @@
                   <p class="text-center no-margin">Black</p>
                 </a>
               </li>
-              <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
+              <!-- <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
               <li style="float:left; width: 33.33333%; padding: 5px;">
                 <a href="javascript:void(0)" data-skin="skin-blue-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
                   <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
@@ -320,7 +421,7 @@
                   <br>
                   <p class="text-center no-margin" style="font-size: 12px">Back Light</p>
                 </a>
-              </li>
+              </li> -->
             </ul>
             <!-- <ul class="treeview-menu">
               <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
@@ -360,7 +461,7 @@
                var globalFiatValue = "USD";
             </script>
             <!-- <script src="livedatatop.js"></script> -->
-            <section class="content-header" id="particles-js" style="height: 90vh;">
+            <section class="content-header homeHeadSect" id="particles-js" style="height: 90vh;">
 
                <h1 style="text-align:center;top: 25%;position: relative; color:#fff;font-size:60px">
                   <_NAME_><br>
@@ -370,9 +471,12 @@
                <!-- <ol class="breadcrumb" style="text-align:center;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto">
                   let us make the masses notice you...
                   </ol> -->
+              <section id="section10" class="demo">
+                <a href="#sectionBody"><span></span><span></span><span></span></a>
+              </section>
             </section>
             <!-- Main content -->
-            <section class="content">
+            <section class="content" id="sectionBody">
                <!-- Default box -->
                <div class="box" style="border-top-width: 0px;">
                   <!-- <div class="box-header with-border" style="display:none">
@@ -380,7 +484,7 @@
                      </div> -->
                   <div class="box-header">
                      <div class="box-title" style="text-align:center;width:100%;margin: 10px 0 10px 0">
-                        <span class="sysTitle" style="font-size:18px;">
+                        <span class="sysTitle" style="font-size:18px;text-shadow: none;">
                            <strong>
                               <_Name_>
                               brings you all the content you need to know about the Crypto World.
@@ -472,7 +576,7 @@
                         <!-- small box -->
                         <div class="small-box customFeaturesLook">
                           <div class="inner" style="padding-bottom: 0px;">
-                            <h4><b>Analysis</b></h4>
+                            <h4><b>Analysis<br class="hidden-md hidden-lg hidden-sm"><span class="hidden-md hidden-lg hidden-sm">&nbsp;</span></b></h4>
 
                             <p style="margin-bottom: 0px;">from major sources<br>&nbsp;</p>
                           </div>
@@ -502,7 +606,7 @@
                         <!-- small box -->
                         <div class="small-box customFeaturesLook">
                           <div class="inner" style="padding-bottom: 0px;">
-                            <h4><b>ICO List</b></h4>
+                            <h4><b>ICO List<br class="hidden-md hidden-lg hidden-sm"><span class="hidden-md hidden-lg hidden-sm">&nbsp;</span></b></h4>
 
                             <p style="margin-bottom: 0px;">view upcoming<br>opportunities</p>
                           </div>
@@ -524,7 +628,7 @@
                         </div>
                         <!-- <div class="col-md-6" style="background-image:url('dist/img/about-dashboard-ai.jpg');background-size:100% 100%;height: 350px;margin-right:  5px;background-clip:  content-box;"> -->
                         <div class="col-md-6" style="height: 350px;margin-right:5px;">
-                           <img style="width:100%;height:100%" src="dist/img/about-dashboard-ai.jpg"/>
+                           <img class="shadow" style="width:100%;height:100%" src="dist/img/about-dashboard-ai.jpg"/>
                         </div>
                      </div>
                      <hr class="hrLightsOff">
@@ -534,7 +638,7 @@
                         </div>
                         <!-- <div class="col-md-6 customadleft" style="background-image:url('dist/img/icoBig.JPG');background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;"> -->
                         <div class="col-md-6 customadleft" style="height: 300px;margin-right: 5px;">
-                           <img style="width:100%;height:100%" src="dist/img/icoBig.JPG"/>
+                           <img class="shadow" style="width:100%;height:100%" src="dist/img/icoBig.JPG"/>
                         </div>
                      </div>
                      <hr class="hrLightsOff">
@@ -543,7 +647,7 @@
                            <span class="AdpageText">Get all the important crypto news <b>consolidated from all around the world</b> at the <a href="news.php">News Page</a>. Our AI shows you calculated <b>Sentiment Analysis</b> of the news so that you can get quick insights from an ocean of news!</span>
                         </div>
                         <div class="col-md-6 " style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
-                           <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
+                           <img class="shadow" alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
                         </div>
                      </div>
                      <hr class="hrLightsOff">
@@ -552,7 +656,7 @@
                            <span class="AdpageText">Know about all the past, new & upcoming <b>Initial Coin Offerings</b> at the <a href="ico.php">ICO Tracker</a>!</span>
                         </div>
                         <div class="col-md-6 customadleft" style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
-                           <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
+                           <img class="shadow" alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
                         </div>
                      </div>
                      <hr class="hrLightsOff">
@@ -561,7 +665,7 @@
                            <span class="AdpageText"><b>Exchange</b> Cryptocurrencies/Fiat Currencies in as convenient as possible way on the <a href="exchange.php">Exchange Page</a>!</span>
                         </div>
                         <div class="col-md-6 " style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
-                           <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
+                           <img class="shadow" alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
                         </div>
                      </div>
                      <hr class="hrLightsOff">
@@ -570,14 +674,14 @@
                            <span class="AdpageText">Access the analysis of Cryptos and Market at the <a href="analytical-articles.php">Analytical Articles Page</a>!</span>
                         </div>
                         <div class="col-md-6 customadleft" style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
-                           <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
+                           <img class="shadow" alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
                         </div>
                      </div>
                      <hr class="hrLightsOff">
                      <div class="row">
                         <div class="col-md-12" style="text-align:center">
-                           <span style="font-size: 16px;font-weight: 1000;color: #205a77;">
-                              Go ahead... Start from the excellent <a href="dashboard.php">Dashboard</a>...
+                           <span class="homeFooter" style="font-size: 16px;font-weight: 1000;">
+                              Go ahead... Start from the excellent <a href="dashboard.php"><u>Dashboard</u></a>...
                            </span>
                         </div>
                      </div>
