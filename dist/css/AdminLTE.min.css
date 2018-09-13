@@ -110,11 +110,23 @@
 * backlight css above
 *
 */
+@media (min-width:1178px){
+    .adjustLaptopL{
+        position:absolute;
+        bottom: 1px;
+    }
+}
+@media (min-width:752px) and (max-width:767px){
+    .adjustLaptopL{
+        position:absolute;
+        bottom: 1px;
+    }
+}
 .lightsOff .homeHeadSect{
-    box-shadow:inset 0px -13px 8px 0px #000;
+    box-shadow:inset 0px -23px 15px -15px #000000;
 }
 .lightsOn .homeHeadSect{
-    box-shadow:inset 0px -13px 8px 0px #ecf0f5;
+    box-shadow:inset 0px -23px 15px -15px #ecf0f5;
 }
 .homeFooter{
     color:var(--topCol);

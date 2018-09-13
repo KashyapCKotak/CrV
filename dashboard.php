@@ -3334,14 +3334,19 @@
                 <span class="bar_convert"></span>
                 <label class="label_convert">Fiat Currency</label>
               </div>
+              <br class="hidden-sm hidden-md hidden-lg"/>
               <div class="claculatorComponents" style="width:100px">
                 <i class="fas fa-exchange-alt" style="font-size:20px"></i>
               </div>
+              <br class="hidden-sm hidden-md hidden-lg"/>
               <div class="group_convert claculatorComponents">
                 <input id="CryptoInput" class="input_convert" type="text" oninput="convertToFiat()" required>
                 <!-- <span class="highlight"></span> -->
                 <span class="bar_convert"></span>
                 <label class="label_convert">Crypto Currency</label>
+              </div>
+              <div style="float:left;color:#807f7f;padding-left:5px" class="adjustLaptopL">
+                Current & Historical price quotes above, coin details below from <a href="https://www.cryptocompare.com/">Cryptocompare</a>.
               </div>
             </div>
           </div>
@@ -3399,14 +3404,19 @@
 
             <div class="box">
               <div class="box-header">
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-              </div>
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                </div>
                 <h3 class="box-title" id="MarketBox">Markets for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
               </div>
-              <div id="marketsDataTable" class="box-body" style="padding:0;overflow-x:scroll">
-                Loading ⌛
+              <div class="box-body" style="padding:0">
+                <div id="marketsDataTable" style="overflow-x:scroll">
+                  Loading ⌛
+                </div>
+                <div style="float:left;color:#807f7f;padding-left:5px">
+                  Market quotes from <a href="https://www.cryptocompare.com/">Cryptocompare</a> and <_Name_>.
+                </div>
               </div>
               <!-- /.box-body -->
             </div>
@@ -3429,8 +3439,8 @@
           <div class="col-xs-12">
             <div class="box collapsed-box">
               <div class="box-header">
-              <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+              <div class="box-tools pull-right" style="width:100%;padding-left:18px">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" style="width:100%"><i class="fa fa-plus" style="float:right"></i>
                 </button>
               </div>
                 <h3 class="box-title" id="MarketBox">Arbitrage Opportunities for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>

@@ -461,7 +461,7 @@
                var globalFiatValue = "USD";
             </script>
             <!-- <script src="livedatatop.js"></script> -->
-            <section class="content-header homeHeadSect" id="particles-js" style="height: 90vh;">
+            <section class="content-header homeHeadSect" id="particles-js" style="height: 93vh;">
 
                <h1 style="text-align:center;top: 25%;position: relative; color:#fff;font-size:60px">
                   <_NAME_><br>
