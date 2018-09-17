@@ -2972,6 +2972,9 @@
             <option>CZK</option>
             <option>BRL</option>
             <option>VEF</option>
+            <option>USDT</option>
+            <option>BTC</option>
+            <option>ETH</option>
           </select>
         </div>
         <script type="text/javascript">

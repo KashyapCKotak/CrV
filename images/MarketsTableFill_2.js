@@ -364,9 +364,7 @@ var markDet={"zebpay":[1,"https://www.zebapi.com/api/v1/market/ticker-new/(crypt
             "unodax":[1,"https://api.unocoin.com/api/exchange/unodax-ticker","stats:fiat:crypto:last_traded_price/?/vol_24hrs/?/?/last_traded_price/per_change/?",false,true],
             "wazirx":[1,"http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20json%20where%20url%3D%22https%3A%2F%2Fapi.wazirx.com%2Fapi%2Fv2%2Ftickers%22","query:results:json:cryptofiat:buy/?/volume/?/?/last/?/open",true,true],
             "cxihub":[1,"https://api.cxihub.com/market/v1/ticker","data:{(market)=(fiat/crypto)}:buy/?/volume/?/?/?/changePercent/?",true,true],
-            "coindcx":[1,"https://api.coindcx.com/exchange/ticker","{(market)=(cryptofiat)}:bid/?/?/?/?/last_price/change_24_hour/?",false,false]
-            //usd/bch
-            };
+            "coindcx":[1,"https://api.coindcx.com/exchange/ticker","{(market)=(cryptofiat)}:bid/?/?/?/?/last_price/change_24_hour/?",false,false]};
             
 var aliases={"BTC":"bitcoin","ETH":"ether"};
 var pairMark={"BTC/INR":["zebpay","koinex","unocoin","coindelta",/*"buyucoin","bitbns",*/"unodax",/*"wazirx",*/"cxihub"],

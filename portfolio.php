@@ -473,7 +473,7 @@
                 </div>
               </div>
             </div>
-            <script src="livedatatop.js"></script>
+            <script src="images/livedatatop.js"></script>
             <!-- Content Header (Page header) -->
             <script type="text/javascript">
               var buyPrtfRatePrsn=null;

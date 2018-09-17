@@ -85,6 +85,30 @@ if(isset($_POST['userSub'])){
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script>
+    function submitForm(sub,name,picture){
+      var form = document.createElement("form");
+      form.setAttribute("method", "post");
+      form.setAttribute("action", "");
+      var tokenField = document.createElement("input");
+      tokenField.setAttribute("type", "hidden");
+      tokenField.setAttribute("name", "userSub");
+      tokenField.setAttribute("value", sub);
+      form.appendChild(tokenField);
+      tokenField = document.createElement("input");
+      tokenField.setAttribute("type", "hidden");
+      tokenField.setAttribute("name", "userName");
+      tokenField.setAttribute("value", name);
+      form.appendChild(tokenField);
+      tokenField = document.createElement("input");
+      tokenField.setAttribute("type", "hidden");
+      tokenField.setAttribute("name", "userImage");
+      tokenField.setAttribute("value", picture);
+      form.appendChild(tokenField);
+      document.body.appendChild(form);
+      form.submit();
+    }
+  </script>
+  <script>
       var googleUser = {};
       var startApp = function() {
         gapi.load('auth2', function(){
@@ -115,26 +139,7 @@ if(isset($_POST['userSub'])){
                     console.log(googleUser);
                     if(googleUser.aud=='136324385380-2mfaqdpgj2e2a97rtis3jccrrbutcf8s.apps.googleusercontent.com'){
                       console.log("Google Login Successfull");
-                      var form = document.createElement("form");
-                      form.setAttribute("method", "post");
-                      form.setAttribute("action", "");
-                      var tokenField = document.createElement("input");
-                      tokenField.setAttribute("type", "hidden");
-                      tokenField.setAttribute("name", "userSub");
-                      tokenField.setAttribute("value", googleUser.sub);
-                      form.appendChild(tokenField);
-                      tokenField = document.createElement("input");
-                      tokenField.setAttribute("type", "hidden");
-                      tokenField.setAttribute("name", "userName");
-                      tokenField.setAttribute("value", googleUser.given_name+" "+googleUser.family_name);
-                      form.appendChild(tokenField);
-                      tokenField = document.createElement("input");
-                      tokenField.setAttribute("type", "hidden");
-                      tokenField.setAttribute("name", "userImage");
-                      tokenField.setAttribute("value", googleUser.picture);
-                      form.appendChild(tokenField);
-                      document.body.appendChild(form);
-                      form.submit();
+                      submitForm(googleUser.sub,googleUser.given_name+" "+googleUser.family_name,googleUser.picture);
                     }
                   };
                   xhr.send('idtoken=' + id_token);
@@ -153,8 +158,8 @@ if(isset($_POST['userSub'])){
     if (response.status === 'connected') {
       testAPI();
     } else {
-      document.getElementById('status').innerHTML = 'Please log ' +
-        'into this app.';
+      console.log('Please log ' +
+        'into this app.');
     }
   }
   
@@ -185,11 +190,12 @@ if(isset($_POST['userSub'])){
    }(document, 'script', 'facebook-jssdk'));
 
    function testAPI() {
+    let userId=null;
+    let userName=null;
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', function(response) {
-      console.log('Successful login for: ' + response.name);
-      document.getElementById('status').innerHTML =
-        'Thanks for logging in, ' + response.name + '!';
+    FB.api('/me', 'GET', {fields: 'name,id,picture.width(100).height(100)'}, function(response) {
+      console.log("FB Login Successfull!!!");
+      submitForm(response.id,response.name,response.picture.data.url);
     });
   }
 
@@ -247,7 +253,7 @@ if(isset($_POST['userSub'])){
 
       <div class="social-auth-links text-center">
         <p style="display:none">- OR -</p>
-        <a href="#" onclick="FB.login()" class="btn btn-block btn-social btn-facebook btn-flat customSignInButtons"><i class="fa fa-facebook"></i> Log in/Sign up using
+        <a href="#" onclick="fbLogin()" class="btn btn-block btn-social btn-facebook btn-flat customSignInButtons"><i class="fa fa-facebook"></i> Log in/Sign up using
         Facebook</a>
         <div id="GPlusSignInButton" class="btn btn-block btn-social btn-google btn-flat customSignInButtons"><i class="fa fa-google-plus"></i> Log in/Sign up using
         Google</div>
@@ -266,7 +272,7 @@ if(isset($_POST['userSub'])){
   <!-- jQuery 3 -->
   <script src="../bower_components/jquery/dist/jquery.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
-  <!-- <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script> -->
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <!-- iCheck -->
   <script src="../plugins/iCheck/icheck.min.js"></script>
   <script>
@@ -278,6 +284,54 @@ if(isset($_POST['userSub'])){
     });
     });
   </script>
+
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success">
+    Launch Success Modal
+  </button>
+  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+    Launch info Modal
+  </button>
+  <div class="modal modal-info fade" id="modal-info" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">info Modal</h4>
+        </div>
+        <div class="modal-body">
+          <p>One fine body…</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline">Save changes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+  <div class="modal modal-success fade" id="modal-success" style="display: none;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span></button>
+          <h4 class="modal-title">Success Modal</h4>
+        </div>
+        <div class="modal-body">
+          <p>One fine body…</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-outline">Save changes</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
 </body>
 </html>
 
