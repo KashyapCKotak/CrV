@@ -132,7 +132,7 @@ xhttp.onreadystatechange = function () {
                         '<span class="bg-green" id="newsBegin">' +
                         'Latest News' +
                         '</span>' +
-                        '<span class="bg-orange mobileOnly" style="float: right !important">' +
+                        '<span class="bg-orange" style="float: right !important">' +
                         '<a href="javascript:void(0)" onclick="saveSentiment();" style="color:#FFF">Save Sentiment</a>' +
                         '</span>' +
                         '</li>';
@@ -141,7 +141,31 @@ xhttp.onreadystatechange = function () {
             totPosNews=0;
             totNegNews=0;
             finalMarketSent="";
+            let newsCount=0;
             for (var dataNews in allNewsObj.Data) {
+                  let currSentiment="";
+                  let sentClass="";
+                  let sentArray=allNewsObj.Data[dataNews].sentiment.split("&");
+                  newsCount++;
+                  if(newsCount==2){
+                        sentClass='label-info';
+                        currSentiment='Thinking';
+                        currSentiment='<span class="newIds" id="'+allNewsObj.Data[dataNews].id+'">Think! &nbsp;&nbsp; positive<input type="text" name="pos" id="'+ allNewsObj.Data[dataNews].id +'pos" style="color:#000;width:40px" value="-1">%     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   negative<input type="text" name="neg" id="'+ allNewsObj.Data[dataNews].id +'neg" style="color:#000;width:40px" value="-1">% &nbsp;&nbsp;id:'+allNewsObj.Data[dataNews].id+'</span>';
+                        //TODO: remove "2" from below
+                        let newsContent2 = newsContent + '<li>' +
+                        '<div class="timeline-item">' +
+                        '<input type="text" name="imgUrl" alt="news image tumbnail" src="' + allNewsObj.Data[dataNews].imageurl + '">' +
+                        '<div class="title-and-time-holder">' +
+                        '<span class="time"><i class="fa fa-clock-o"></i> ' + newsDate.getDate() + '-' + monthNames[newsDate.getMonth()] + " " + newsDate.getHours() + ":" + newsDate.getMinutes() + '</span>' +
+                        '<h3 class="timeline-header"><a href="' + allNewsObj.Data[dataNews].url + '">' + allNewsObj.Data[dataNews].title + '<small>&nbsp;-' + allNewsObj.Data[dataNews].source + '</small></a></h3></div>' +
+                        '<div class="timeline-body"><div style="height: 100%; white-space: pre-line; overflow: hidden; text-overflow: ellipsis;">' + allNewsObj.Data[dataNews].body +
+                        '</div></div>' +
+                        '</div>' +
+                        '</li>'+
+                        '<li><div class="timeline-item-sentiment '+sentClass+'">'+
+                        currSentiment+
+                        '</div></li>';
+                  }
                   if(allNewsObj.Data[dataNews].body.indexOf("submitted sponsored story")!=-1 || allNewsObj.Data[dataNews].body.indexOf("paid-for submitted")!=-1)
                         continue;
                   if(latestNewsId<parseInt(allNewsObj.Data[dataNews].id)){
@@ -153,9 +177,6 @@ xhttp.onreadystatechange = function () {
                         if (allNewsObj.Data[dataNews].title.toLowerCase().indexOf(analysisString[i]) != -1)
                               analysisNews = true;
                   }
-                  var currSentiment="";
-                  var sentClass="";
-                  var sentArray=allNewsObj.Data[dataNews].sentiment.split("&");
                   if(parseFloat(sentArray[0])>parseFloat(sentArray[1])){
                         sentClass='label-success';
                         currSentiment='Positive';
