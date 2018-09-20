@@ -30,6 +30,31 @@ unset($_SESSION['userid']);
 //       window.location="/dashboard.php";
 //     });
 // }
+  try{
+    window.fbAsyncInit = function() {
+    FB.init({
+        appId      : '287390465399302',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.8'
+      });
+      FB.AppEvents.logPageView();   
+        
+    };
+
+    (function(d, s, id){
+     console.log("FB Initiated");
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+
+    FB.logout(function(response) {
+      // user is now logged out
+    });
+
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
@@ -42,8 +67,11 @@ unset($_SESSION['userid']);
         gapi.auth2.init();
       });
     }
+  } catch(err) {
+    window.location="../dashboard";
+  }
 // startApp();
-window.location="/adminlte-2.4.2/dashboard.php";
+window.location="/adminlte-2.4.2/dashboard";
 onLoad();
 signOut();
 </script>

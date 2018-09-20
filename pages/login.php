@@ -31,6 +31,7 @@ if(isset($_POST['userSub'])){
   $userSub=$_POST["userSub"];
   $userName=$_POST["userName"];
   $userImg=$_POST["userImage"];
+  $userMail=$_POST["emailId"];
   if($userSub!=""){
     $sql = "SELECT `userid`, `prsn_portfolio`, `prtc_portfolio`  FROM `portfolio` WHERE `userid` LIKE '$userSub'";
     // var_dump($sql);
@@ -46,8 +47,17 @@ if(isset($_POST['userSub'])){
       $_SESSION['cryptoview_userImg'] = $userImg;
       header("Location: ../dashboard.php");
     }else{
-      echo "<script> alert('Username or password is incorrect'); </script>";
-      // header("Location: login.php");
+      $sql = "INSERT into `portfolio` (`userid`, `prsn_portfolio`, `prtc_portfolio`, `emailid`) VALUES ('$userSub','{\"USD\":{}}','{\"USD\":{}}','$userMail')";
+      if ($mysqli->query($sql) === TRUE) {
+        //echo '<script type="text/javascript"> launchModal('+$userName+'); </script>';
+        echo '<script type="text/javascript"> window.onload=function(){
+          document.getElementById("modalTitle").innerHTML="Welcome to <_Name_>, '.$userName.'";
+          document.getElementById("launchModal").click();
+        }; </script>';
+        //echo "<script>  </script>";
+      }else {
+        echo "<script> alert('Username or password is incorrect'); </script>";
+      }
     }
   }
 }
@@ -85,7 +95,8 @@ if(isset($_POST['userSub'])){
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <script>
-    function submitForm(sub,name,picture){
+
+    function submitForm(sub,name,picture,emailId){
       var form = document.createElement("form");
       form.setAttribute("method", "post");
       form.setAttribute("action", "");
@@ -104,8 +115,15 @@ if(isset($_POST['userSub'])){
       tokenField.setAttribute("name", "userImage");
       tokenField.setAttribute("value", picture);
       form.appendChild(tokenField);
+      tokenField = document.createElement("input");
+      tokenField.setAttribute("type", "hidden");
+      tokenField.setAttribute("name", "emailId");
+      tokenField.setAttribute("value", emailId);
+      form.appendChild(tokenField);
       document.body.appendChild(form);
-      form.submit();
+      form.submit(function(e){
+        e.preventDefault();
+      });
     }
   </script>
   <script>
@@ -139,7 +157,8 @@ if(isset($_POST['userSub'])){
                     console.log(googleUser);
                     if(googleUser.aud=='136324385380-2mfaqdpgj2e2a97rtis3jccrrbutcf8s.apps.googleusercontent.com'){
                       console.log("Google Login Successfull");
-                      submitForm(googleUser.sub,googleUser.given_name+" "+googleUser.family_name,googleUser.picture);
+                      //console.log(googleUser);
+                      submitForm(googleUser.sub,googleUser.given_name+" "+googleUser.family_name,googleUser.picture,googleUser.email);
                     }
                   };
                   xhr.send('idtoken=' + id_token);
@@ -193,9 +212,10 @@ if(isset($_POST['userSub'])){
     let userId=null;
     let userName=null;
     console.log('Welcome!  Fetching your information.... ');
-    FB.api('/me', 'GET', {fields: 'name,id,picture.width(100).height(100)'}, function(response) {
+    FB.api('/me', 'GET', {fields: 'name,id,picture.width(100).height(100),email'}, function(response) {
       console.log("FB Login Successfull!!!");
-      submitForm(response.id,response.name,response.picture.data.url);
+      console.log(response);
+      submitForm(response.id,response.name,response.picture.data.url,response.email);
     });
   }
 
@@ -209,7 +229,7 @@ if(isset($_POST['userSub'])){
         document.getElementById('status').innerHTML = 'Please log ' +
           'into this app.';
       }
-    });
+    },{scope: 'email'});
   }
 </script>
 
@@ -285,26 +305,31 @@ if(isset($_POST['userSub'])){
     });
   </script>
 
-  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success">
+  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-success" style="display:none">
     Launch Success Modal
   </button>
-  <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info">
+  <button id="launchModal" type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-info" style="display:none">
     Launch info Modal
   </button>
-  <div class="modal modal-info fade" id="modal-info" style="display: none;">
+  <script>
+  function yeah(){
+    window.location = "../dashboard";
+  }
+  </script>
+  <div class="modal modal-success fade" id="modal-info" style="display: none;">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span></button>
-          <h4 class="modal-title">Welcome to <_Name_></h4>
+          <h4 class="modal-title" id="modalTitle">Welcome to <_Name_>, </h4>
         </div>
         <div class="modal-body">
-          <p>Greetings! Your account will be created in few seconds. Go ahead and Experience the best!</p>
+          <p>Greetings! Your account is created! Go ahead and be the Master of all Trades!</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-outline">Yes!!</button>
+          <!-- <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button> -->
+          <button type="button" class="btn btn-outline" onclick="yeah()">Yeah!!</button>
         </div>
       </div>
       <!-- /.modal-content -->
@@ -324,7 +349,7 @@ if(isset($_POST['userSub'])){
           <p>Welcome back!</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+          <!-- <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button> -->
           <button type="button" class="btn btn-outline">Save changes</button>
         </div>
       </div>

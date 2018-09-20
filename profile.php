@@ -8,7 +8,8 @@ session_start();
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | User Profile</title>
+  <title><_Name_> - A Cryptomaster's Profile</title>
+  <meta name="description" content="Manage your preferences for the <_Name_> profile. This is useful to unlock the full power of Portfolio management.">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -87,7 +88,7 @@ session_start();
                 <span class="hidden-xs">
                 <?php 
                   if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
-                    echo 'Sign In';
+                    echo 'Log In/Sign up';
                   }
                   else {
                     echo $_SESSION['cryptoview_user'];
@@ -127,15 +128,18 @@ session_start();
                     <?php
                       if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         echo '<div class="pull-left">
-                      <a href="pages/login.php" name="signin" class="userLogAction user-buttons btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;color:#fff">Sign In</a>
+                      <a href="pages/login.php" name="signin" class="userLogAction user-buttons btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;color:#fff">Log In/Sign up</a>
                       </div>';
                       }
                       else {
                         echo '<div class="pull-left">
-                      <a href="profile.php" name="profile" class="userLogAction user-buttons btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;color:#fff">My Profile</a>
+                      <a href="profile.php" name="profile" class="userLogAction user-buttons btn btn-default btn-block btn-flat" style="width:80px;background-color:#3c8dbc;color:#fff;padding-left:10px">My Profile</a>
+                      </div>
+                      <div style="float:left">
+                      <a href="portfolio.php" name="portfolio" class="user-buttons btn btn-default btn-block btn-flat" style="width:86px;background-color:#246224;color:#fff;padding-left:8px;margin:auto;margin-left:6px">My Portfolio</a>
                       </div>
                       <div class="pull-right">
-                      <a href="pages/logout.php" name="signout" class="user-buttons btn btn-default btn-block btn-flat" style="width:84px;background-color:#a93636;color:#fff">Sign out</a>
+                      <a href="pages/logout.php" name="signout" class="user-buttons btn btn-default btn-block btn-flat" style="width:80px;background-color:#762727;color:#fff">Sign out</a>
                       </div>';
                       }
                       ?>
