@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
     <!-- socket.io -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
-    <script src="https://unpkg.com/technicalindicators@1.1.11/dist/browser.js"></script>
+    <script src="https://unpkg.com/technicalindicators@1.1.13/dist/browser.js"></script>
     <script type="text/javascript">
         //console.log("Start Scripts Start");
       </script>
@@ -3230,18 +3230,20 @@
             <b>Indicator:</b>
               <select id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
                 <option value="none">None</option>
-                <option value="macd">MACD</option>
-                <option value="rsi">RSI</option>
-                <option value="ao">AO</option>
-                <option value="so">STOCH</option>
-                <option value="adx">ADX</option>
-                <option value="mfi">MFI</option>
-                <option value="trix">TRIX</option>
+                <option value="macd">MACD (Moving Average Convergence Divergence)</option>
+                <option value="rsi">RSI (Relative Strength Index)</option>
+                <option value="ao">AO (Awesome Oscillator)</option>
+                <option value="so">STOCH (Stochastic Oscillators)</option>
+                <option value="adx">ADX (Average Directional Index)</option>
+                <option value="mfi">MFI (Money Flow Index)</option>
+                <option value="trix">TRIX (Triple Exponential Average)</option>
                 <option value="bollinger">Bollinger Bands</option>
-                <option value="sma25">SMA 25</option>
-                <option value="sma50">SMA 50</option>
-                <option value="sma100">SMA 100</option>
-                <option value="sma200">SMA 200</option>
+                <option value="sma25">SMA 25 (Simple Moving Average-25)</option>
+                <option value="sma50">SMA 50 (Simple Moving Average-50)</option>
+                <option value="sma100">SMA 100 (Simple Moving Average-100)</option>
+                <option value="sma200">SMA 200 (Simple Moving Average-200)</option>
+                <option value="adl">(ADL) Accumulation Distribution Line</option>
+                <option value="atr">(ATR) Average True Range</option>
               </select>
             </div>
           </div>

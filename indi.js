@@ -11,7 +11,8 @@ function displayNewIndi(newIndiType,pat){
                   "adx":["bottom",["#f9c554","#3a5ef2","#ef490e","#00e673"],["reference line (25%)","adx","mdi","pdi"],["line","line","line","line"],[0.5,0,0,0]],
                   "mfi":["bottom",["#66f0ab","#fff","#00e673"],["top","bottom","mfi"],["line","line","line"],[0.5,1,0]],
                   "trix":["bottom",["#66f0ab","#3a5ef2"],["zero line","trix"],["line","line"],[0,0]],
-                  "bollinger":["top",["#3a5ef2","#3a5ef2","#3a5ef2"],["lower","middle","upper"],["line","line","line"],[0,0,0]]};//third is third
+                  "bollinger":["top",["#3a5ef2","#3a5ef2","#3a5ef2"],["lower","middle","upper"],["line","line","line"],[0,0,0]],
+                  "adl":["top",["#3a5ef2"],["adl"],["line"],[0]]};//third is third
     // console.log(displayedChart);
     currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
     currDispChart.panels[0].stockGraphs[0].type = currChartType;
@@ -163,6 +164,11 @@ function displayNewIndi(newIndiType,pat){
       }
       else if(indiType=="bollinger"){
         indiData = BollingerBands.calculate({period : 14, values : all.closes, stdDev : 2});
+        mergeData(indiType);
+        displayIndiChart(indiType, indiPos);
+      }
+      else if(indiType=="adl"){
+        indiData = ADL.calculate({high : all.highs, low : all.lows, close : all.closes, volume: all.volumes});
         mergeData(indiType);
         displayIndiChart(indiType, indiPos);
       }
