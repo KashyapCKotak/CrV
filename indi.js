@@ -1,18 +1,31 @@
 function displayNewIndi(newIndiType,pat){
+    let bottomRefCol="#ffffff";
+    let topAlpha=0.5;
+    let bottomAlpha=1;
+    if(currTheme=="lightsOff"){
+      bottomRefCol="#66f0ab";
+      topAlpha=0;
+      bottomAlpha=0;
+    }
+    console.log("bottomAlpha:"+bottomAlpha);
+    console.log("bottom Color:"+bottomRefCol);
     currChart=null;
     currPatData=null;
     currIndiDisplayed=newIndiType;
     indiDisplayed=true;
     var indiProps={"macd":["bottom",["#00e673","#3a5ef2","#ef490e"],["histogram","MACD","signal"],["column","line","line"],[1,0,0]],
                   "sma":["top",["#3a5ef2"],["sma"],["line"],[0]],
-                  "rsi":["bottom",["#66f0ab","#fff","#3a5ef2"],["top","bottom","rsi"],["line","line","line"],[0.5,1,0]],
+                  "rsi":["bottom",["#66f0ab",bottomRefCol,"#3a5ef2"],["top","bottom","rsi"],["line","line","line"],[topAlpha,bottomAlpha,0]],
                   "ao":["bottom",["#3a5ef2"],["ao"],["column"],[0.7]],
-                  "so":["bottom",["#66f0ab","#fff","#3a5ef2","#ef490e"],["top","bottom","k","d"],["line","line","line","line"],[0.5,1,0,0]],
+                  "so":["bottom",["#66f0ab",bottomRefCol,"#3a5ef2","#ef490e"],["top","bottom","k","d"],["line","line","line","line"],[topAlpha,bottomAlpha,0,0]],
                   "adx":["bottom",["#f9c554","#3a5ef2","#ef490e","#00e673"],["reference line (25%)","adx","mdi","pdi"],["line","line","line","line"],[0.5,0,0,0]],
-                  "mfi":["bottom",["#66f0ab","#fff","#00e673"],["top","bottom","mfi"],["line","line","line"],[0.5,1,0]],
+                  "mfi":["bottom",["#66f0ab",bottomRefCol,"#00e673"],["top","bottom","mfi"],["line","line","line"],[topAlpha,bottomAlpha,0]],
                   "trix":["bottom",["#66f0ab","#3a5ef2"],["zero line","trix"],["line","line"],[0,0]],
                   "bollinger":["top",["#3a5ef2","#3a5ef2","#3a5ef2"],["lower","middle","upper"],["line","line","line"],[0,0,0]],
-                  "adl":["top",["#3a5ef2"],["adl"],["line"],[0]]};//third is third
+                  "adl":["top",["#3a5ef2"],["adl"],["line"],[0]],
+                  "atr":["bottom",["#f2a93c"],["ATR"],["line"],[0]],
+                  "cci":["bottom",["#66f0ab","#66f0ab","#f2a93c"],["top","bottom","CCI"],["line","line","line"],[topAlpha,topAlpha,0]],
+                  "fi":["bottom",["#66f0ab","#f78c40"],["zero line","FI"],["line","line"],[0,0]]};//third is third
     // console.log(displayedChart);
     currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
     currDispChart.panels[0].stockGraphs[0].type = currChartType;
@@ -126,6 +139,7 @@ function displayNewIndi(newIndiType,pat){
         // };
       }
       currDispChart.listeners=newListener;
+      firstTimeZoom=true; // IMP: To prevent it to zoom on rendering which is default for amCharts. Handling Zoon again will lead to calculation of indi again
       chartWithIndi = AmCharts.makeChart("chartdiv", currDispChart);
     }
   
@@ -192,7 +206,7 @@ function displayNewIndi(newIndiType,pat){
       else if(indiType=="rsi"){
         indiData=[];
         var tempindiData = RSI.calculate({period : 14, values : all.closes});
-        let diff = currData.length - indiData.length;
+        let diff = currData.length - tempindiData.length;
         let tempBlanks=[];
         for(let i=0;i<diff;i++){
           tempBlanks.push(undefined);
@@ -229,7 +243,7 @@ function displayNewIndi(newIndiType,pat){
           period: 14,
           signalPeriod: 3
         });
-        let diff = currData.length - indiData.length;
+        let diff = currData.length - tempindiData.length;
         let tempBlanks=[];
         for(let i=0;i<diff;i++){
           tempBlanks.push({d:undefined,k:undefined});
@@ -254,7 +268,7 @@ function displayNewIndi(newIndiType,pat){
           close: all.closes,
           period: 14
         });
-        let diff = currData.length - indiData.length;
+        let diff = currData.length - tempindiData.length;
         let tempBlanks=[];
         for(let i=0;i<diff;i++){
           tempBlanks.push({adx:undefined,mdi:undefined,pdi:undefined});
@@ -280,7 +294,7 @@ function displayNewIndi(newIndiType,pat){
           volume : all.volumes,
           period : 14
         });
-        let diff = currData.length - indiData.length;
+        let diff = currData.length - tempindiData.length;
         let tempBlanks=[];
         for(let i=0;i<diff;i++){
           tempBlanks.push(undefined);
@@ -299,7 +313,7 @@ function displayNewIndi(newIndiType,pat){
       else if(indiType=="trix"){
         indiData=[];
         var tempindiData = TRIX.calculate({period : 18, values : all.closes});
-        let diff = currData.length - indiData.length;
+        let diff = currData.length - tempindiData.length;
         let tempBlanks=[];
         for(let i=0;i<diff;i++){
           tempBlanks.push(undefined);
@@ -309,6 +323,48 @@ function displayNewIndi(newIndiType,pat){
           indiData.push({
             "zero line":0,
             trix:d,
+          });
+        });
+        mergeData(indiType);
+        displayIndiChart(indiType, indiPos);
+      }
+      else if(indiType=="atr"){
+        indiData=ATR.calculate({high: all.highs, low: all.lows, close: all.closes, period: 14});
+        mergeData(indiType);
+        displayIndiChart(indiType, indiPos);
+      }
+      else if(indiType=="cci"){
+        indiData=[];
+        var tempindiData = CCI.calculate({open: all.opens, high: all.highs, low: all.lows, close: all.closes, period: 20});
+        let diff = currData.length - tempindiData.length;
+        let tempBlanks=[];
+        for(let i=0;i<diff;i++){
+          tempBlanks.push(undefined);
+        }
+        tempindiData=tempBlanks.concat(tempindiData);
+        tempindiData.forEach(function (d){
+          indiData.push({
+            top:100,
+            CCI:d,
+            bottom:-100
+          });
+        });
+        mergeData(indiType);
+        displayIndiChart(indiType, indiPos);
+      }
+      else if(indiType=="fi"){
+        indiData=[];
+        var tempindiData = ForceIndex.calculate({open: all.opens, high: all.highs, low: all.lows, close: all.closes, volume: all.volumes, period : indiNum});
+        let diff = currData.length - tempindiData.length;
+        let tempBlanks=[];
+        for(let i=0;i<diff;i++){
+          tempBlanks.push(undefined);
+        }
+        tempindiData=tempBlanks.concat(tempindiData);
+        tempindiData.forEach(function (d){
+          indiData.push({
+            "zero line":0,
+            FI:d,
           });
         });
         mergeData(indiType);

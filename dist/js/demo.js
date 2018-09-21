@@ -123,6 +123,7 @@ $(function () {
   }
 
   function toggleLights(cls){
+    window.currTheme=cls;
     $.each(lightSkins, function (i) {
       $('#bodyWrapper').removeClass(lightSkins[i])
     })

@@ -3242,8 +3242,11 @@
                 <option value="sma50">SMA 50 (Simple Moving Average-50)</option>
                 <option value="sma100">SMA 100 (Simple Moving Average-100)</option>
                 <option value="sma200">SMA 200 (Simple Moving Average-200)</option>
-                <option value="adl">(ADL) Accumulation Distribution Line</option>
-                <option value="atr">(ATR) Average True Range</option>
+                <option value="adl">ADL (Accumulation Distribution Line)</small></option>
+                <option value="atr">ATR (Average True Range)</option>
+                <option value="cci">CCI (Commodity Change Index)</option>
+                <option value="fi1">FI 1 (Force Index-1 Day)</option>
+                <option value="fi13">FI 13 (Force Index-13 Day)</option>
               </select>
             </div>
           </div>
