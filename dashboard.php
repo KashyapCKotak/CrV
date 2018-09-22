@@ -12,8 +12,14 @@
     <meta name="description" content="Price, Historic Graph, Artificail Intelligence prediction, Indicators, Markets, Arbitrage, Exchange, Trends & Discuss! All in one place!">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- jQuery 3 -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Bootstrap 3.3.7 -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
@@ -45,12 +51,6 @@
     <!-- Daterange picker -->
 
     <!-- bootstrap wysihtml5 - text editor -->
-
-
-    <!-- jQuery 3 -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
@@ -64,8 +64,6 @@
         new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
       }
     </script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -3219,7 +3217,7 @@
           </div> -->
           <div class="chartTypeTabHolder">
             <div class="chartType">
-            <b>Chart Type:</b>
+            <b>Chart Type:</b><div class="hidden-sm hidden-lg hidden-md"></div>
               <select id="chartTypeSelect" onchange="initChartTypeChangeNew()">
                 <option value="smoothedLine">Line</option>
                 <option value="candlestick">CandleStick</option>
@@ -3227,8 +3225,8 @@
               </select>
             </div>
             <div class="chartIndicator">
-            <b>Indicator:</b>
-              <select id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
+            <b>Indicator:</b><div class="hidden-sm hidden-lg hidden-md"></div>
+              <select class="select2" id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
                 <option value="none">None</option>
                 <option value="macd">MACD (Moving Average Convergence Divergence)</option>
                 <option value="rsi">RSI (Relative Strength Index)</option>
@@ -3245,8 +3243,8 @@
                 <option value="adl">ADL (Accumulation Distribution Line)</small></option>
                 <option value="atr">ATR (Average True Range)</option>
                 <option value="cci">CCI (Commodity Change Index)</option>
-                <option value="fi1">FI 1 (Force Index-1 Day)</option>
-                <option value="fi13">FI 13 (Force Index-13 Day)</option>
+                <option value="FI1">FI 1 (Force Index-1 Day)</option>
+                <option value="FI13">FI 13 (Force Index-13 Day)</option>
               </select>
             </div>
           </div>
@@ -3679,7 +3677,6 @@
   <!-- DataTables -->
   <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
   <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
 
   <!-- Select2 -->
   <script src="bower_components/select2/dist/js/select2.full.min.js"></script>

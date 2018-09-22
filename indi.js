@@ -25,7 +25,7 @@ function displayNewIndi(newIndiType,pat){
                   "adl":["top",["#3a5ef2"],["adl"],["line"],[0]],
                   "atr":["bottom",["#f2a93c"],["ATR"],["line"],[0]],
                   "cci":["bottom",["#66f0ab","#66f0ab","#f2a93c"],["top","bottom","CCI"],["line","line","line"],[topAlpha,topAlpha,0]],
-                  "fi":["bottom",["#66f0ab","#f78c40"],["zero line","FI"],["line","line"],[0,0]]};//third is third
+                  "FI":["bottom",["#66f0ab","#f78c40"],["zero line","FI"],["line","line"],[0,0]]};//third is third
     // console.log(displayedChart);
     currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
     currDispChart.panels[0].stockGraphs[0].type = currChartType;
@@ -79,7 +79,7 @@ function displayNewIndi(newIndiType,pat){
   
     function displayIndiChart(indiType, indiPos){
       if(pat)
-        return;
+        return; // IMP : Do not remove
       let variation="";
       (indiType!=newIndiType) ? variation=newIndiType.replace(/\D/g,'') : "";
       var feilds=indiProps[indiType][2];
@@ -96,7 +96,7 @@ function displayNewIndi(newIndiType,pat){
         var indiStockGraphs=[];
         for(var i=0;i<feilds.length;i++){
           indiStockGraphs.push({
-            "title": feilds[i]+variation,
+            "title": feilds[i],
             "useDataSetColors":false,
             "precision": 4,
             "valueField": feilds[i]+variation,
@@ -108,7 +108,7 @@ function displayNewIndi(newIndiType,pat){
         }
         // currDispChart.panels[2]=currDispChart.panels[1];
         currDispChart.panels[1]={
-          "title": indiType,
+          "title": indiType+" "+variation,
           "percentHeight": 30,
           "stockGraphs": indiStockGraphs,
           "stockLegend": {
@@ -119,7 +119,7 @@ function displayNewIndi(newIndiType,pat){
         var indiStockGraphs=[];
         for(var i=0;i<feilds.length;i++){
           currDispChart.panels[0].stockGraphs.push({
-            "title": feilds[i]+variation,
+            "title": feilds[i]+"-"+variation,
             "useDataSetColors":false,
             "precision": 4,
             "valueField": feilds[i]+variation,

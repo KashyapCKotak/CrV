@@ -569,6 +569,7 @@ function getPairsPrice(crypto,fiat){
 // getPairsPrice("BTC","INR");
 
 function updateMarketsDataTblNotINR () {
+    console.log("IN updateMarketsDataTblNotINR");
     mktSubsTbl=[]; 
     var xhttpOtherFiatMkts = new XMLHttpRequest();
     var tableString='<table class="table table-bordered">'+
@@ -696,8 +697,12 @@ var tableString='<table id="example1" class="table table-bordered">'+
 updateMarketsDataTblNotINR();
 }   
 
-if( globalFiatValue != "INR" ){
+else if( globalFiatValue != "INR" ){
     updateMarketsDataTblNotINR();
 }
+else{
+    updateMarketsDataTblNotINR();
+}
+
 
 }
