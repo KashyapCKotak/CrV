@@ -11,30 +11,30 @@
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.7 -->
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <!-- Font Awesome -->
-        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+        
         <!-- Ionicons -->
-        <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+        
         <!-- Select2 -->
-        <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+        
         <!-- Theme style -->
         <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
         <!-- AdminLTE Skins. Choose a skin from the css/skins
       folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
         <!-- Data Tables -->
-        <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        
         <!-- Morris chart -->
         <!-- jvectormap -->
         <!-- Date Picker -->
         <!-- Daterange picker -->
         <!-- bootstrap wysihtml5 - text editor -->
         <!-- jQuery 3 -->
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- jQuery UI 1.11.4 -->
-        <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Moment js for dates -->
         <script src="dist/js/moment.js"></script>
         <script src="icoFill.js"></script>
@@ -50,7 +50,7 @@
             var globalFiatValue = "USD";
         </script>
         <!-- Bootstrap 3.3.7 -->
-        <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -236,8 +236,8 @@
           </li>
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-files-o"></i>
-              <span>UI Colors</span>
+              <i class="fas fa-palette"></i>
+              <span>&nbsp;Customise Theme</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -715,20 +715,20 @@
     <!-- ./wrapper -->
 
     <!-- Slimscroll -->
-    <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
     <!-- <script src="bower_components/fastclick/lib/fastclick.js"></script> -->
     <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.0/js/adminlte.min.js"></script>
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <!-- <script src="dist/js/pages/dashboard.js"></script> -->
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
     <!-- DataTables -->
-    <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-    <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+    
+    
     <!-- Select2 -->
-    <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+    
     <script type="text/javascript">
         $(function () {
             //Initialize Select2 Elements

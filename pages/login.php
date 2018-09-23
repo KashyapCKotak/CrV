@@ -74,11 +74,11 @@ if(isset($_POST['userSub'])){
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" name="viewport">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
+  <!-- <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css"> -->
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!-- iCheck -->
@@ -273,9 +273,9 @@ if(isset($_POST['userSub'])){
 
       <div class="social-auth-links text-center">
         <p style="display:none">- OR -</p>
-        <a href="#" onclick="fbLogin()" class="btn btn-block btn-social btn-facebook btn-flat customSignInButtons"><i class="fa fa-facebook"></i> Log in/Sign up using
+        <a href="#" onclick="fbLogin()" class="btn btn-block btn-social btn-facebook btn-flat customSignInButtons"><i class="fab fa-facebook-f"></i> Log in/Sign up using
         Facebook</a>
-        <div id="GPlusSignInButton" class="btn btn-block btn-social btn-google btn-flat customSignInButtons"><i class="fa fa-google-plus"></i> Log in/Sign up using
+        <div id="GPlusSignInButton" class="btn btn-block btn-social btn-google btn-flat customSignInButtons"><i class="fab fa-google"></i> Log in/Sign up using
         Google</div>
       </div>
       <script>startApp();</script>
@@ -290,9 +290,9 @@ if(isset($_POST['userSub'])){
 
 
   <!-- jQuery 3 -->
-  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
-  <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <!-- iCheck -->
   <script src="../plugins/iCheck/icheck.min.js"></script>
   <script>

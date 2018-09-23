@@ -181,9 +181,16 @@
     margin-top: -1px;
 }
 .chartdivlight{
-    height:80vh;
+    height:525px;/*80vh OR 525px*/
     width:100%;
     overflow:visible;
+}
+@media (max-height:525px) {
+    .chartdivlight{
+        height:500px;
+        width:100%;
+        overflow:visible;
+    }
 }
 
 .amcharts-start-date-input, .amcharts-end-date-input{

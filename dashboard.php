@@ -13,27 +13,26 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- jQuery 3 -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- jQuery UI 1.11.4 -->
-    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <!-- Bootstrap 3.3.7 -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
     <!-- Ionicons -->
     <!-- <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet"> -->
     <!-- Select2 -->
-    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/css/select2.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="dist/css/AdminLTE.min.css"><!-- IMP : too many custom changes. don't use CDN-->
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
     <!-- Data Tables -->
-    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css"> -->
     <!-- socket.io -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
     <script src="https://unpkg.com/technicalindicators@1.1.13/dist/browser.js"></script>
@@ -51,11 +50,13 @@
     <!-- Daterange picker -->
 
     <!-- bootstrap wysihtml5 - text editor -->
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <!-- <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
     <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
     <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
-    <script>
+
+    <!--GOOGLE TRANSLATE-->
+    <!-- <script>
       $.widget.bridge('uibutton', $.ui.button);
       $(document).ajaxStart(function () {
         Pace.restart();
@@ -63,7 +64,7 @@
       function googleTranslateElementInit() {
         new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
       }
-    </script>
+    </script> -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -270,8 +271,8 @@
           </li>
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-files-o"></i>
-              <span>UI Colors</span>
+              <i class="fas fa-palette"></i>
+              <span>&nbsp;Customise Theme</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -3217,7 +3218,7 @@
           </div> -->
           <div class="chartTypeTabHolder">
             <div class="chartType">
-            <b>Chart Type:</b><div class="hidden-sm hidden-lg hidden-md"></div>
+            <b>Chart Type:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
               <select id="chartTypeSelect" onchange="initChartTypeChangeNew()">
                 <option value="smoothedLine">Line</option>
                 <option value="candlestick">CandleStick</option>
@@ -3225,8 +3226,8 @@
               </select>
             </div>
             <div class="chartIndicator">
-            <b>Indicator:</b><div class="hidden-sm hidden-lg hidden-md"></div>
-              <select class="select2" id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
+            <b>Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
+              <select class="" id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
                 <option value="none">None</option>
                 <option value="macd">MACD (Moving Average Convergence Divergence)</option>
                 <option value="rsi">RSI (Relative Strength Index)</option>
@@ -3665,21 +3666,23 @@
     //console.log("Bottom Scripts Start");
   </script>
   <!-- Slimscroll -->
-  <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
   <!-- FastClick -->
   <!-- <script src="bower_components/fastclick/lib/fastclick.js"></script> -->
   <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.min.js"></script>
+  <!-- <script src="dist/js/adminlte.min.js"></script>-->
+  <!--TODO: Decide if below is needed-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.0/js/adminlte.min.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <!-- <script src="dist/js/pages/dashboard.js"></script> -->
   <!-- AdminLTE for demo purposes -->
   <script src="dist/js/demo.js"></script>
   <!-- DataTables -->
-  <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+  <!-- <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script> -->
+  <!-- <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script> -->
 
   <!-- Select2 -->
-  <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/js/select2.min.js"></script>
   <script type="text/javascript">
     $(function () {
       //Initialize Select2 Elements

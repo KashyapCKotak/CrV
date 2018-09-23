@@ -185,7 +185,8 @@ function drawMainChart(){
           "graph": "g1",
           "graphType": "line",
           "usePeriod": "10mm",
-          "position": "bottom"
+          "position": "bottom",
+          "height" : 20
         },
         
         "chartCursorSettings": {
