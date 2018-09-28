@@ -25,7 +25,8 @@
     <!-- Ionicons -->
     <!-- <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet"> -->
     <!-- Select2 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/css/select2.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/css/select2.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css"><!-- IMP : too many custom changes. don't use CDN-->
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -36,6 +37,7 @@
     <!-- socket.io -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
     <script src="https://unpkg.com/technicalindicators@1.1.13/dist/browser.js"></script>
+    <!-- <script src="select2.multi-checkboxes.js"></script> -->
     <script type="text/javascript">
         //console.log("Start Scripts Start");
       </script>
@@ -79,6 +81,23 @@
       function onLoadPage() {
         console.log("PAGE LOAD COMPLETE");
         $('.select2').select2();
+
+        // jQuery(function($)
+        // {
+        //   $('.select2-multiple').select2MultiCheckboxes({
+        //     placeholder: "Choose multiple elements",
+        //   })
+        //   $('.select2-multiple2').select2MultiCheckboxes({
+        //     formatSelection: function(selected, total) {
+        //       return "Selected " + selected.length + " of " + total;
+        //     }
+        //   })
+        //   $('.select2-original').select2({
+        //     placeholder: "Choose elements",
+        //     width: "100%"
+        //   })
+        // });
+
         // document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
         document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img alt=\"Buy/Sell Now\" src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\" style=\"display:none\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
         var changellyModal = document.getElementById('changellyModal');
@@ -3219,15 +3238,23 @@
           <div class="chartTypeTabHolder">
             <div class="chartType">
             <b>Chart Type:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
-              <select id="chartTypeSelect" onchange="initChartTypeChangeNew()">
-                <option value="smoothedLine">Line</option>
-                <option value="candlestick">CandleStick</option>
-                <option value="ohlc">OHLC</option>
+              <select id="chartTypeSelect" onchange="initChartTypeChangeNew()" style="width:94px">
+                <option value="smoothedLine">Line Chart</option>
+                <option value="candlestick">CandleStick Chart</option>
+                <option value="ohlc">OHLC Chart</option>
+              </select>
+            </div>
+            <div class="chartIndicator" style="float:left">
+            <b>Indicator2:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
+              <select id="chartTypeSelect" onchange="initChartTypeChangeNew()" style="width:94px">
+                <option value="smoothedLine">Line Chart</option>
+                <option value="candlestick">CandleStick Chart</option>
+                <option value="ohlc">OHLC Chart</option>
               </select>
             </div>
             <div class="chartIndicator">
             <b>Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
-              <select class="" id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
+              <select class="select2-multiple" id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
                 <option value="none">None</option>
                 <option value="macd">MACD (Moving Average Convergence Divergence)</option>
                 <option value="rsi">RSI (Relative Strength Index)</option>
@@ -3682,7 +3709,8 @@
   <!-- <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script> -->
 
   <!-- Select2 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/js/select2.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/js/select2.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
   <script type="text/javascript">
     $(function () {
       //Initialize Select2 Elements

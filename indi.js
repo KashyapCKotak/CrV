@@ -7,8 +7,8 @@ function displayNewIndi(newIndiType,pat){
       topAlpha=0;
       bottomAlpha=0;
     }
-    console.log("bottomAlpha:"+bottomAlpha);
-    console.log("bottom Color:"+bottomRefCol);
+    // console.log("bottomAlpha:"+bottomAlpha);
+    // console.log("bottom Color:"+bottomRefCol);
     currChart=null;
     currPatData=null;
     currIndiDisplayed=newIndiType;
@@ -31,8 +31,13 @@ function displayNewIndi(newIndiType,pat){
     currDispChart.panels[0].stockGraphs[0].type = currChartType;
     currDispChart.listeners=newListener;
     if(pat){
-      currPatData=JSON.parse(JSON.stringify(consChartDataHour.Data));
-      currData=currPatData;
+      /**
+       * Wrote the below code for some reason...
+       * currPatData=JSON.parse(JSON.stringify(consChartDataHour.Data));
+       * currData=currPatData;
+       */
+      currData=consChartDataHour.Data;
+      currPatData=currData;
     }
     else if(displayedChart==1){
       currData=consChartDataMin.Data;
@@ -76,13 +81,17 @@ function displayNewIndi(newIndiType,pat){
       indiDisplayed=false;
       return;
     }
+
+    let pureIndiType=newIndiType.replace(/[0-9]/g, '');
+    let indiNum = newIndiType.replace( /^\D+/g, '');
+    let feilds=indiProps[pureIndiType][2];
   
     function displayIndiChart(indiType, indiPos){
       if(pat)
         return; // IMP : Do not remove
       let variation="";
       (indiType!=newIndiType) ? variation=newIndiType.replace(/\D/g,'') : "";
-      var feilds=indiProps[indiType][2];
+      // var feilds=indiProps[indiType][2];
       currDispChart.dataSets[0].dataProvider=currData;
       currDispChart.periodSelector.periods[oldZoom].selected=true;
       for(var i=0;i<feilds.length;i++){
@@ -141,15 +150,16 @@ function displayNewIndi(newIndiType,pat){
       currDispChart.listeners=newListener;
       firstTimeZoom=true; // IMP: To prevent it to zoom on rendering which is default for amCharts. Handling Zoon again will lead to calculation of indi again
       chartWithIndi = AmCharts.makeChart("chartdiv", currDispChart);
+      console.log("displayed chart with indi");
     }
   
     function mergeData(indiType){
       var diff = currData.length - indiData.length;
-      //console.log("DIFF:"+diff);
+      console.log("DIFF:"+diff);
       var counter = 0;
       let variation="";
       (indiType!=newIndiType) ? variation=newIndiType.replace(/\D/g,'') : "";
-      var feilds=indiProps[indiType][2];
+      // var feilds=indiProps[indiType][2];
       currData.forEach(function (d) {
         if (counter < diff) {
           for(var i=0;i<feilds.length;i++){
@@ -167,7 +177,6 @@ function displayNewIndi(newIndiType,pat){
         }
         counter++;
       });
-      //console.log(currData);
     }
   
     function calcTopIndi(indiType, indiPos, indiNum){
@@ -377,6 +386,7 @@ function displayNewIndi(newIndiType,pat){
     }
   
     function calcIndi(indiType){
+      console.log("calculating indi");
       all={
         opens:[],
         closes:[],
@@ -403,10 +413,22 @@ function displayNewIndi(newIndiType,pat){
         }
       });
       //console.log(all);
-      var pureIndiType=indiType.replace(/[0-9]/g, '');
-      var indiNum = indiType.replace( /^\D+/g, '');
+      
       var indiPosition=indiProps[pureIndiType][0];
-      if(indiPosition == "top"){
+      let indiAlreadyClcd=false;
+      for(element in feilds) {
+        if(feilds[element] in currData[0])
+          indiAlreadyClcd=true;//TODO: assign true
+        else{
+          indiAlreadyClcd=false;
+          break;
+        }
+      }
+      if(indiAlreadyClcd){
+        console.log("Indi Already present");
+        displayIndiChart(indiType, indiPosition);
+      }
+      else if(indiPosition == "top"){
         calcTopIndi(pureIndiType,"top",indiNum);
       }
       else if(indiPosition == "bottom"){
