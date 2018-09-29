@@ -461,24 +461,24 @@ async function calcPatterns(){
         // return strength+":"+decision;
     }
 
-    displayNewIndi("macd",true);
+    displayNewIndi("macd",1,true);
     let MACDCrsOv=isMACDCrsOv().split(":");
 
-    displayNewIndi("adx",true);
+    displayNewIndi("adx",1,true);
     let adxTrend=whichAdxTrend().split(":");
 
-    displayNewIndi("mfi",true);
+    displayNewIndi("mfi",1,true);
     let MFIOut=whichMfiSig().split(":");
 	
-    displayNewIndi("trix",true);
+    displayNewIndi("trix",1,true);
     let TrixPol=whichTrixSig().split(":");
 
-    displayNewIndi("ao",true);
+    displayNewIndi("ao",1,true);
     let aoPol=whichAoSig().split(":");
 
-    displayNewIndi("bollinger",true);
+    displayNewIndi("bollinger",1,true);
 	
-    displayNewIndi("rsi",true);
+    displayNewIndi("rsi",1,true);
     let rsiOut=whichRsiSig().split(":");
     let engulfing=isEngulfing().split();
 
@@ -549,7 +549,7 @@ async function calcPatterns(){
     
     /////////////////////////////////////// Get Trend //////////////////////////////////////////
     
-//     displayNewIndi("sma20",true);
+//     displayNewIndi("sma20",1,true);
 //     // console.log(currPatData);
 //     currPatData=currPatData.slice(currPatDataLen-168);
 //     // console.log(currPatData);

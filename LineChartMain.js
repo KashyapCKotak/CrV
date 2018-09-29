@@ -58,7 +58,7 @@ function drawMainChart(){
     }
   }
 
-  newListener = [{"event":"rendered","method":handleRender}];
+  renderListener = [{"event":"rendered","method":handleRender}];
   var periodSelectorListener = [{"event":"changed","method":handleZoom}];
   chartObjectOneWeek = {
     "type": "stock",
@@ -266,7 +266,7 @@ function drawMainChart(){
             var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
             newChart.dataSets[0].dataProvider=consChartDataHour.Data;
             newChart.periodSelector.periods[2].selected=true;
-            newChart.listeners=newListener;
+            newChart.listeners=renderListener;
             whichZoomButton="DD";
             whatZoomCount=7;
             firstTimeZoom=true;
@@ -332,7 +332,7 @@ function drawMainChart(){
                     newChart.periodSelector.periods[1].selected=true;
                     newChart.periodSelector.periods[0].selected=false;
                   }
-                  newChart.listeners=newListener;
+                  newChart.listeners=renderListener;
                   console.log("Making new chart");
                   firstTimeZoom=true;
                   //chartMin = AmCharts.makeChart("chartdiv", newChart);
@@ -411,7 +411,7 @@ function drawMainChart(){
                     newChart.periodSelector.periods[3].selected=true;
                     newChart.periodSelector.periods[2].selected=false;
                   }
-                  newChart.listeners=newListener;
+                  newChart.listeners=renderListener;
                   firstTimeZoom=true;
                   //chartHour = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 2;
@@ -498,7 +498,7 @@ function drawMainChart(){
                     newChart.periodSelector.periods[4].selected=false;
                     newChart.periodSelector.periods[5].selected=false;
                   }
-                  newChart.listeners=newListener;
+                  newChart.listeners=renderListener;
                   firstTimeZoom=true;
                   // chartDay = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 3;
@@ -570,17 +570,20 @@ function drawMainChart(){
         currChartType=newChartType;
         if(displayedChart == 1){
           chartMin.panels[0].stockGraphs[0].type = newChartType;
-          document.getElementById("chartIndiSelect").selectedIndex = 0  
+          document.getElementById("chartIndiSelect1").selectedIndex = 0; 
+          document.getElementById("chartIndiSelect2").selectedIndex = 0;
           chartMin.validateNow();
         }
         else if(displayedChart == 2){
           chartHour.panels[0].stockGraphs[0].type = newChartType;
-          document.getElementById("chartIndiSelect").selectedIndex = 0
+          document.getElementById("chartIndiSelect1").selectedIndex = 0;
+          document.getElementById("chartIndiSelect2").selectedIndex = 0;
           chartHour.validateNow();
         }
         else if(displayedChart == 3){
           chartDay.panels[0].stockGraphs[0].type = newChartType;
-          document.getElementById("chartIndiSelect").selectedIndex = 0
+          document.getElementById("chartIndiSelect1").selectedIndex = 0;
+          document.getElementById("chartIndiSelect2").selectedIndex = 0;
           chartDay.validateNow();
         }
         else{

@@ -80,25 +80,8 @@
     <script type="text/javascript">
       function onLoadPage() {
         console.log("PAGE LOAD COMPLETE");
+        
         $('.select2').select2();
-
-        // jQuery(function($)
-        // {
-        //   $('.select2-multiple').select2MultiCheckboxes({
-        //     placeholder: "Choose multiple elements",
-        //   })
-        //   $('.select2-multiple2').select2MultiCheckboxes({
-        //     formatSelection: function(selected, total) {
-        //       return "Selected " + selected.length + " of " + total;
-        //     }
-        //   })
-        //   $('.select2-original').select2({
-        //     placeholder: "Choose elements",
-        //     width: "100%"
-        //   })
-        // });
-
-        // document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
         document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img alt=\"Buy/Sell Now\" src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\" style=\"display:none\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
         var changellyModal = document.getElementById('changellyModal');
         var changellyButton = document.getElementById('changellyButton');
@@ -109,6 +92,27 @@
         changellyButton.onclick = function widgetClick(e) {
           e.preventDefault(); changellyModal.style.display = 'block';
         };
+
+        let indicatorOptions='<option value="none">None</option>'+
+                '<option value="macd">MACD (Moving Average Convergence Divergence)</option>'+
+                '<option value="rsi">RSI (Relative Strength Index)</option>'+
+                '<option value="ao">AO (Awesome Oscillator)</option>'+
+                '<option value="so">STOCH (Stochastic Oscillators)</option>'+
+                '<option value="adx">ADX (Average Directional Index)</option>'+
+                '<option value="mfi">MFI (Money Flow Index)</option>'+
+                '<option value="trix">TRIX (Triple Exponential Average)</option>'+
+                '<option value="bollinger">Bollinger Bands</option>'+
+                '<option value="sma25">SMA 25 (Simple Moving Average-25)</option>'+
+                '<option value="sma50">SMA 50 (Simple Moving Average-50)</option>'+
+                '<option value="sma100">SMA 100 (Simple Moving Average-100)</option>'+
+                '<option value="sma200">SMA 200 (Simple Moving Average-200)</option>'+
+                '<option value="adl">ADL (Accumulation Distribution Line)</option>'+
+                '<option value="atr">ATR (Average True Range)</option>'+
+                '<option value="cci">CCI (Commodity Change Index)</option>'+
+                '<option value="FI1">FI 1 (Force Index-1 Day)</option>'+
+                '<option value="FI13">FI 13 (Force Index-13 Day)</option>';
+        document.getElementById("chartIndiSelect1").innerHTML=indicatorOptions;
+        document.getElementById("chartIndiSelect2").innerHTML=indicatorOptions;
       }
     </script>
 </head>
@@ -3198,9 +3202,9 @@
             document.getElementById("chartLoadOverlay").style.display = "block";
             changeChartType(document.getElementById("chartTypeSelect").value);
           }
-          function initChartIndiChangeNew(){
+          function initChartIndicatorChange(whichIndicator){
             document.getElementById("chartLoadOverlay").style.display = "block";
-            changeIndiType(document.getElementById("chartIndiSelect").value)
+            changeIndiType(document.getElementById("chartIndiSelect"+whichIndicator).value,whichIndicator)
           }
         </script>
         
@@ -3236,43 +3240,24 @@
             </div>
           </div> -->
           <div class="chartTypeTabHolder">
-            <div class="chartType">
-            <b>Chart Type:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
+            <div class="chartType" style="float: left">
+            <b class="hidden-xs">Chart Type:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
               <select id="chartTypeSelect" onchange="initChartTypeChangeNew()" style="width:94px">
                 <option value="smoothedLine">Line Chart</option>
                 <option value="candlestick">CandleStick Chart</option>
                 <option value="ohlc">OHLC Chart</option>
               </select>
             </div>
-            <div class="chartIndicator" style="float:left">
-            <b>Indicator2:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
-              <select id="chartTypeSelect" onchange="initChartTypeChangeNew()" style="width:94px">
-                <option value="smoothedLine">Line Chart</option>
-                <option value="candlestick">CandleStick Chart</option>
-                <option value="ohlc">OHLC Chart</option>
+            <div class="chartIndicator2" style="display: inline;">
+            <b class="hidden-xs">1<sup>st</sup> Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
+              <select id="chartIndiSelect1" onchange="initChartIndicatorChange(1)" style="width:94px">
+                
               </select>
             </div>
             <div class="chartIndicator">
-            <b>Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
-              <select class="select2-multiple" id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
-                <option value="none">None</option>
-                <option value="macd">MACD (Moving Average Convergence Divergence)</option>
-                <option value="rsi">RSI (Relative Strength Index)</option>
-                <option value="ao">AO (Awesome Oscillator)</option>
-                <option value="so">STOCH (Stochastic Oscillators)</option>
-                <option value="adx">ADX (Average Directional Index)</option>
-                <option value="mfi">MFI (Money Flow Index)</option>
-                <option value="trix">TRIX (Triple Exponential Average)</option>
-                <option value="bollinger">Bollinger Bands</option>
-                <option value="sma25">SMA 25 (Simple Moving Average-25)</option>
-                <option value="sma50">SMA 50 (Simple Moving Average-50)</option>
-                <option value="sma100">SMA 100 (Simple Moving Average-100)</option>
-                <option value="sma200">SMA 200 (Simple Moving Average-200)</option>
-                <option value="adl">ADL (Accumulation Distribution Line)</small></option>
-                <option value="atr">ATR (Average True Range)</option>
-                <option value="cci">CCI (Commodity Change Index)</option>
-                <option value="FI1">FI 1 (Force Index-1 Day)</option>
-                <option value="FI13">FI 13 (Force Index-13 Day)</option>
+            <b class="hidden-xs">2<sup>nd</sup> Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
+              <select id="chartIndiSelect2" onchange="initChartIndicatorChange(2)" style="width:94px">
+                
               </select>
             </div>
           </div>
