@@ -296,20 +296,12 @@
     cursor: pointer; /* Add a pointer on hover */
 }
 
-.chartType{
+.chartType,.chartIndicator1,.chartIndicator2{
     display:inline;
 }
 
-.chartType>select{
-    border-radius: 3px;
-}
-
-.chartIndicator{
-    float:right;
-}
-
-.chartIndicator>select{
-    border-radius: 3px;
+.chartType>select,.chartIndicator1>select,.chartIndicator2>select{
+    border-radius: 5px;
 }
 
 #mainPrice > span{

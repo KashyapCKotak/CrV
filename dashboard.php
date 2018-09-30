@@ -93,7 +93,7 @@
           e.preventDefault(); changellyModal.style.display = 'block';
         };
 
-        let indicatorOptions='<option value="none">None</option>'+
+        let indicatorOptions='<option value="none">No Indicator</option>'+
                 '<option value="macd">MACD (Moving Average Convergence Divergence)</option>'+
                 '<option value="rsi">RSI (Relative Strength Index)</option>'+
                 '<option value="ao">AO (Awesome Oscillator)</option>'+
@@ -3248,13 +3248,13 @@
                 <option value="ohlc">OHLC Chart</option>
               </select>
             </div>
-            <div class="chartIndicator2" style="display: inline;">
+            <div class="chartIndicator1">
             <b class="hidden-xs">1<sup>st</sup> Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
               <select id="chartIndiSelect1" onchange="initChartIndicatorChange(1)" style="width:94px">
                 
               </select>
             </div>
-            <div class="chartIndicator">
+            <div class="chartIndicator2" style="float: right">
             <b class="hidden-xs">2<sup>nd</sup> Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
               <select id="chartIndiSelect2" onchange="initChartIndicatorChange(2)" style="width:94px">
                 

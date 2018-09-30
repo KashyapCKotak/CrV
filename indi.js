@@ -3,7 +3,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
   let bottomRefCol="#ffffff";
   let topAlpha=0.5;
   let bottomAlpha=1;
-  if(currTheme=="lightsOff"){
+  if(typeof currTheme !== 'undefined')
+    if(currTheme=="lightsOff"){
     bottomRefCol="#66f0ab";
     topAlpha=0;
     bottomAlpha=0;
@@ -12,8 +13,6 @@ function displayNewIndi(indicatorType,selectNum,pat){
   // console.log("bottom Color:"+bottomRefCol);
   currChart=null;
   currPatData=null;
-  currIndiDisplayed=indicatorType;
-  indiDisplayed=true;
   var indiProps={"macd":["bottom",["#00e673","#3a5ef2","#ef490e"],["histogram","MACD","signal"],["column","line","line"],[1,0,0]],
                 "sma":["top",["#3a5ef2"],["sma"],["line"],[0]],
                 "rsi":["bottom",["#66f0ab",bottomRefCol,"#3a5ef2"],["top","bottom","rsi"],["line","line","line"],[topAlpha,bottomAlpha,0]],
@@ -66,26 +65,28 @@ function displayNewIndi(indicatorType,selectNum,pat){
   else if(whichZoomButton == "MAX")
       var oldZoom=6;
 
-  if(indicatorType=="none"){
-    if(displayedChart==1){
-      chartMin.periodSelector.periods[oldZoom].selected=true;
-      chartMin.validateNow();
-    }
-    else if(displayedChart==2){
-      chartHour.periodSelector.periods[oldZoom].selected=true;
-      chartHour.validateNow();
-    }
-    else if(displayedChart==3){
-      chartDay.periodSelector.periods[oldZoom].selected=true;
-      chartDay.validateNow();
-    }
-    indiDisplayed=false;
-    return;
-  }
+  // if(indicatorType=="none"){
+  //   if(displayedChart==1){
+  //     chartMin.periodSelector.periods[oldZoom].selected=true;
+  //     chartMin.validateNow();
+  //   }
+  //   else if(displayedChart==2){
+  //     chartHour.periodSelector.periods[oldZoom].selected=true;
+  //     chartHour.validateNow();
+  //   }
+  //   else if(displayedChart==3){
+  //     chartDay.periodSelector.periods[oldZoom].selected=true;
+  //     chartDay.validateNow();
+  //   }
+  //   indiDisplayed=false;
+  //   return;
+  // }
 
   let pureIndiType=indicatorType.replace(/[0-9]/g, '');
   let indiNum = indicatorType.replace( /^\D+/g, '');
-  let feilds=indiProps[pureIndiType][2];
+  let feilds=[];
+  if(pureIndiType!="none")
+    feilds=indiProps[pureIndiType][2];
 
   function addIndiToChartDataSet(feilds, indiNum){
     for(let i=0;i<feilds.length;i++){
@@ -130,7 +131,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
     };
   }
 
-  function setBottomIndicatorChart(feilds, indiNum, indiType){
+  function setBottomIndicatorChart(feilds, indiNum, indiType, percentHeight){
     let indiStockGraphs=[];
     for(let i=0;i<feilds.length;i++){
       indiStockGraphs.push({
@@ -146,14 +147,14 @@ function displayNewIndi(indicatorType,selectNum,pat){
     }
     currDispChart.panels[1]={
       "title": indiType+" "+indiNum,
-      "percentHeight": 30,
+      "percentHeight": percentHeight,
       "stockGraphs": indiStockGraphs,
       "stockLegend": {
       }
     };
   }
 
-  function setMiddleIndicatorChart(feilds, indiNum, indiType){
+  function setMiddleIndicatorChart(feilds, indiNum, indiType, percentHeight){
     let indiStockGraphs=[];
       for(let i=0;i<feilds.length;i++){
         indiStockGraphs.push({
@@ -170,7 +171,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
       // currDispChart.panels[2]=currDispChart.panels[1];
       currDispChart.panels[2]={
         "title": indiType+" "+indiNum,
-        "percentHeight": 30,
+        "percentHeight": percentHeight,
         "stockGraphs": indiStockGraphs,
         "stockLegend": {
         }
@@ -192,35 +193,57 @@ function displayNewIndi(indicatorType,selectNum,pat){
     addIndiToChartDataSet(feilds, indiNum);
     let otherSelectNum=selectNum%2+1;
     let alreadyDispIndicator=document.getElementById("chartIndiSelect"+otherSelectNum).value;
+
     if(alreadyDispIndicator=="none"){
+      if(indiType=="none"){
+        if(displayedChart==1){
+          chartMin.periodSelector.periods[oldZoom].selected=true;
+          chartMin.validateNow();
+        }
+        else if(displayedChart==2){
+          chartHour.periodSelector.periods[oldZoom].selected=true;
+          chartHour.validateNow();
+        }
+        else if(displayedChart==3){
+          chartDay.periodSelector.periods[oldZoom].selected=true;
+          chartDay.validateNow();
+        }
+        indiDisplayed=false;
+        return;
+      }
       if(indiPos=="bottom")
-        setBottomIndicatorChart(feilds, indiNum, indiType);
+        setBottomIndicatorChart(feilds, indiNum, indiType, 30);
       else if(indiPos=="top"){
         setVolumeChart(1);
-        setTopIndicatorChart(feilds, indiNum, indiType);
+        setTopIndicatorChart(feilds, indiNum, indiType, 30);
       }
     }
-
     else if(alreadyDispIndicator!="none"){
       let alrdyDispIndicatorTyp=alreadyDispIndicator.replace(/[0-9]/g, '');
       let alrdyDispIndicatorNum=alreadyDispIndicator.replace( /^\D+/g, '');
       let alrdyDispIndicatorPos=indiProps[alrdyDispIndicatorTyp][0];
       let alrdyDispIndiFeilds=indiProps[alrdyDispIndicatorTyp][2];
       addIndiToChartDataSet(alrdyDispIndiFeilds, alrdyDispIndicatorNum);
+      if(indiType=="none"){
+        if(alrdyDispIndicatorPos=="top")
+          setTopIndicatorChart(alrdyDispIndiFeilds, alrdyDispIndicatorNum, alrdyDispIndicatorTyp);
+        else if(alrdyDispIndicatorPos=="bottom")
+          setBottomIndicatorChart(alrdyDispIndiFeilds, alrdyDispIndicatorNum, alrdyDispIndicatorTyp, 30);
+      }
       if(alrdyDispIndicatorPos!=indiPos){
         if(indiPos=="bottom"){
           setBottomIndicatorChart(feilds, indiNum, indiType);
-          setTopIndicatorChart(alrdyDispIndiFeilds, alrdyDispIndicatorNum, alrdyDispIndicatorTyp);
+          setTopIndicatorChart(alrdyDispIndiFeilds, alrdyDispIndicatorNum, alrdyDispIndicatorTyp, 30);
         }
         else if(indiPos=="top"){
           setTopIndicatorChart(feilds, indiNum, indiType);
-          setBottomIndicatorChart(alrdyDispIndiFeilds, alrdyDispIndicatorNum, alrdyDispIndicatorTyp);
+          setBottomIndicatorChart(alrdyDispIndiFeilds, alrdyDispIndicatorNum, alrdyDispIndicatorTyp, 30);
         }
       }
       else if(alrdyDispIndicatorPos==indiPos){
         if(indiPos=="bottom"){
-          setBottomIndicatorChart(feilds, indiNum, indiType);
-          setMiddleIndicatorChart(alrdyDispIndiFeilds, alrdyDispIndicatorNum, alrdyDispIndicatorTyp);
+          setBottomIndicatorChart(feilds, indiNum, indiType, 35);
+          setMiddleIndicatorChart(alrdyDispIndiFeilds, alrdyDispIndicatorNum, alrdyDispIndicatorTyp, 35);
         }
         else if(indiPos=="top"){
           setTopIndicatorChart(feilds, indiNum, indiType);
@@ -228,7 +251,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
         }
       }
     }
-
+    currIndiDisplayed=document.getElementById("chartIndiSelect1").value;
+    indiDisplayed=true;
     currDispChart.listeners=renderListener;
     firstTimeZoom=true; // IMP: To prevent it to zoom on rendering which is default for amCharts. Handling Zoon again will lead to calculation of indi again
     chartWithIndi = AmCharts.makeChart("chartdiv", currDispChart);
@@ -468,6 +492,11 @@ function displayNewIndi(indicatorType,selectNum,pat){
   }
 
   function calcIndi(indiType){
+    if(pureIndiType=="none"){
+      displayIndicatorChart(pureIndiType,"somePosition");
+      return;
+    }
+
     console.log("calculating indi");
     all={
       opens:[],
