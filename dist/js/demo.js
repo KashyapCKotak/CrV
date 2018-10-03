@@ -171,6 +171,9 @@ $(function () {
         toggleLights(lightstmp);
       }
     }
+    else{
+      window.currTheme="lightsOn";
+    }
 
     // Add the change skin listener
     $('[data-skin]').on('click', function (e) {

@@ -21,12 +21,10 @@
     <!-- Bootstrap 3.3.7 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous"> -->
+    <script async src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
     <!-- Ionicons -->
     <!-- <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet"> -->
-    <!-- Select2 -->
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/css/select2.min.css"> -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="dist/css/AdminLTE.min.css"><!-- IMP : too many custom changes. don't use CDN-->
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -41,7 +39,7 @@
     <script type="text/javascript">
         //console.log("Start Scripts Start");
       </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js?onload=onStreamLoad"></script>
     <script src="coinData.js"></script>
     <!-- Morris chart -->
 
@@ -78,10 +76,15 @@
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script type="text/javascript">
+      function onStreamLoad(){
+        getMarketData();
+      }
+      function onSelect2Load(){
+        $('.select2').select2();
+      }
       function onLoadPage() {
         console.log("PAGE LOAD COMPLETE");
-        
-        $('.select2').select2();
+
         document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img alt=\"Buy/Sell Now\" src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\" style=\"display:none\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
         var changellyModal = document.getElementById('changellyModal');
         var changellyButton = document.getElementById('changellyButton');
@@ -3215,11 +3218,11 @@
         <script type="text/javascript">
           //console.log("Chart Load Start");
         </script>
-        <script src="LineChartMain.js"></script>
+        <script async src="LineChartMain.js"></script>
         <script src="indi.js"></script>
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
           <table>
-          <tr><td><img alt="future prediction robot/AI image" src="dist/img/robot.png" style="height:10vh"></td>
+          <tr><td><img alt="future prediction robot/AI image" src="dist/img/robot.png" srcset="" style="height:10vh"></td>
           <td style="padding: 5px"><b><div id="AIPredictionTd"><span id="AIPredictionSpan">Jay Yogeshwar! </span></div></b></td>
           </tr>
           </table>
@@ -3453,7 +3456,7 @@
           <script src="stream.js"></script>
           <script src="MarketsTableFill_2.js"></script>
           <script type="text/javascript">
-            getMarketData();
+            // getMarketData();
             //console.log("Streaming End");
           </script>
         </div>
@@ -3695,7 +3698,10 @@
 
   <!-- Select2 -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/js/select2.min.js"></script> -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js?onload=onSelect2Load"></script>
+  <!-- Select2 -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/css/select2.min.css"> -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
   <script type="text/javascript">
     $(function () {
       //Initialize Select2 Elements

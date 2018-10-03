@@ -48,12 +48,13 @@ function drawMainChart(){
     document.getElementById("chartLoadOverlay").style.display = "none";
     if(!predicted){
 			predicted=true;
-      let patternFile= document.createElement("script")
-      patternFile.src = "patterns.js";
-      document.body.appendChild(patternFile);
-      patternFile.onload = () => {
-      calcPatterns();
-      // setTimeout(calcPatterns(), 3000);
+      let file= document.createElement("script")
+      file.src = "patterns.js";
+      document.body.appendChild(file);
+      file.onload = () => {
+        
+        calcPatterns();
+        // setTimeout(calcPatterns(), 3000);
       };
     }
   }

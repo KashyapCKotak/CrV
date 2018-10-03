@@ -3,8 +3,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
   let bottomRefCol="#ffffff";
   let topAlpha=0.5;
   let bottomAlpha=1;
-  if(typeof currTheme !== 'undefined')
-    if(currTheme=="lightsOff"){
+  if(typeof window.currTheme !== 'undefined')
+    if(window.currTheme=="lightsOff"){
     bottomRefCol="#66f0ab";
     topAlpha=0;
     bottomAlpha=0;
