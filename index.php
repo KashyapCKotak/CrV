@@ -135,7 +135,7 @@
    </script>
    <body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="loadFunctino()">
       <!-- Site wrapper -->
-      <div id="bodyWrapper" class="wrapper lightsOn">
+      <div id="bodyWrapper" class="wrapper lightsOn" style="height:auto">
          <header class="main-header">
             <!-- Logo -->
             <!-- <a href="index2.html" class="logo"> -->

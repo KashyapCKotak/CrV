@@ -400,8 +400,8 @@
          /.box-footer-->
       <!-- </div> -->
       <!-- /.box -->
-      <section style="width: 100vw;background-image: url(dist/img/4042.jpg);height: 100vh;background-repeat: no-repeat;/* background-position: 50% 50%; */backgr;background-size: cover;">
-        <div style="text-align:center;padding:5px 10px 0 10px;color:wheat;font-size:25px"><span>While we find the page you are looking for on other planet...</span>
+      <section style="width: 100%;background-image: url(dist/img/4042.jpg);height: 100vh;background-repeat: no-repeat;/* background-position: 50% 50%; */backgr;background-size: cover;">
+        <div style="text-align:center;padding:5px 10px 0 10px;color:wheat;font-size:25px;font-family:monospace"><span>While we find the page you are looking for on other planet...</span>
         <br><br>
         <span>Why not find it on <a href="dashboard.php" style="color: #f5c17c;"><u>Dashboard</u></a>?</span></div>
       </section>

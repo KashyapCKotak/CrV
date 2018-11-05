@@ -1,5 +1,7 @@
 sigArray={};
 async function calcPatterns(){
+    // console.log("!!!!!!!!!!!!!!!!!!!!!!!");
+    // console.log(marketSentiment);
     var quotes={stars:[" the stars indicates that you must (Sign) immediately if you'll (OppSign) in an hour or two!"," if you believe the stars, you may want to (Sign) now and (OppSign) in a couple of hours!"," what your Horoscope says today? My Parrot says that you may want to (Sign) now and (OppSign) immediately for quick profit!"," you may (Sign) now for quick profit! But don't be greedy and take whatever you get."," your short term future looks bright if you (Sign). Be careful... I said 'short term'"],
                 mainStrong:["Contact your local zoo. It seems some (BullBear)s have escaped and entered into the market!","(Sign) if you want to prosper!","(Sign)ing now may gift you a vacation to the Moon!","(Sign) now and keep a Pop song ready to dance when you (OppSign)","Whoa! There is so much charge flowing from my electrical brain as I see strong signs for (Sign)ing","(Sign) now and book a luxurious holiday in India!","Some (BullBear)s have broke the jails. Spot for them and inform me. Oh, btw, are you one of those (BullBear)s? If yes go ahead and (Sign), I won't catch you..."],
                 mainWeak:["Your pet (BullBear)s seems to be really weak. Feed him well and (Sign) cautiously.","(BullBear)s are waking up from sleep. Watch this space for a chance of sighting! Weak (Sign) signs visible","Hmmm... Can't say much... My electrical brain is confused watching the market! But I can see weak signs which point towards (Sign)ing.","Hmmm... my Artificial Intelligence is pretty confused! Consult a Human instead! But I can tell you that weak signs of (Sign)ing are visible.","I think its time to (Sign), but current market can't be predicted with 0s & 1s. Go find a human expert & please don't ask me for a contact :)"],
@@ -425,7 +427,7 @@ async function calcPatterns(){
             starString="However,"+starString;
         }
 
-        if(document.getElementById("marketSentiment").textContent=="Positive"){
+        if(marketSentiment=="Positive"){
             let noOfQuotes=quotes.marketSent.length;
             sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive";
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
@@ -433,7 +435,7 @@ async function calcPatterns(){
             marketString=marketString.replace(/\(Sign\)/g,sign); marketString=marketString.replace(/\(OppSign\)/g,oppSign); marketString=marketString.replace(/\(BullBear\)/g,bullBear); marketString=marketString.replace(/\(PosNeg\)/g,posNeg);
             marketString=" "+marketString;
         }
-        else if(document.getElementById("marketSentiment").textContent=="Negative"){
+        else if(marketSentiment=="Negative"){
             let noOfQuotes=quotes.marketSent.length;
             sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative";
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
