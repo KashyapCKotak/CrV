@@ -35,10 +35,6 @@
     <!-- jQuery UI 1.11.4 -->
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-      $.widget.bridge('uibutton', $.ui.button);
-      $(document).ajaxStart(function() { Pace.restart(); });
-    </script>
     <script type="text/javascript">
       var globalCryptoValue="BTC";
       var globalFiatValue="USD";
@@ -544,7 +540,7 @@
     <script type="text/javascript">
       $(function () {
         //Initialize Select2 Elements
-        $('.select2').select2()
+        //$('.select2').select2()
         //Datemask dd/mm/yyyy
         // $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
         //Datemask2 mm/dd/yyyy

@@ -2900,42 +2900,165 @@
             <option value="CHI">Chimaera (CHI)</option>
             <option value="HAC">Hackspace Capital (HAC)</option>
             <option value="BIT">BitRewards (BIT)</option>
-            <option value="BBI">BelugaPay (BBI)
+            <option value="BBI">BelugaPay (BBI)</option>
           </select>
         </div>
         <div class="fiat-select">
           <label class="label-enable">Fiat Currency: </label>
           <select id="fiatSelectBox" class="form-control select2" style="width:140px;display:inline" onchange="selectFiat()">
-            <option id="default-fiat" selected="selected">USD</option>
-            <option>RUB</option>
-            <option>GBP</option>
-            <option>EUR</option>
-            <option>INR</option>
-            <option>JPY</option>
-            <option>CNY</option>
-            <option>SGD</option>
-            <option>KRW</option>
-            <option>PLN</option>
-            <option>HUF</option>
-            <option>AUD</option>
-            <option>CAD</option>
-            <option>ZAR</option>
-            <option>SEK</option>
-            <option>AED</option>
-            <option>INR</option>
-            <option>DKK</option>
-            <option>MXN</option>
-            <option>RON</option>
-            <option>CHF</option>
-            <option>NOK</option>
-            <option>PHP</option>
-            <option>HKD</option>
-            <option>CZK</option>
-            <option>BRL</option>
-            <option>VEF</option>
-            <option>USDT</option>
-            <option>BTC</option>
-            <option>ETH</option>
+            <option disabled>— Popular —</option>
+            <option value="USD" id="default-fiat" selected="selected">US Dollar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="BTC">Bitcoin (BTC)</option>
+            <option value="USDT">Tether (USDT)</option>
+            <option value="GBP">GB Pounds (GBP)</option>
+            <option value="JPY">Japanese Yen (JPY)</option>
+            <option value="BCH">Bitcoin Cash (BCH)</option>
+            <option value="ETH">Ethereum (ETH)</option>
+            <option value="LTC">Litecoin (LTC)</option>
+            <option value="XRP">Ripple (XRP)</option>
+            <option disabled>— Fiats —</option>
+            <option value="CNY">Chinese Yuan (CNY)</option>
+            <option value="RUB">Russian Ruble (RUB)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="PLN">Polish Zloty (PLN)</option>
+            <option value="SGD">Singaporean Dollar (SGD)</option>
+            <option value="HKD">Hong Kong Dollar (HKD)</option>
+            <option value="CHF">Swiss Franc (CHF)</option>
+            <option value="INR">Indian Rupees (INR)</option>
+            <option value="BRL">Brazilian Real (BRL)</option>
+            <option value="ZAR">South African Rand (ZAR)</option>
+            <option value="KRW">Korean Won (KRW)</option>
+            <option value="VND">Vietnamese Dong (VND)</option>
+            <option value="NZD">New Zealand Dollar (NZD)</option>
+            <option value="TRY">Turkish New Lira (TRY)</option>
+            <option value="SEK">Swedish Krona (SEK)</option>
+            <option value="THB">Thai Baht (THB)</option>
+            <option value="ILS">Israeli New Shekel (ILS)</option>
+            <option value="PHP">Philippine Peso (PHP)</option>
+            <option value="UAH">Ukrainian Hryvnia (UAH)</option>
+            <option value="IDR">Indonesian Rupiah (IDR)</option>
+            <option value="CZK">Czech Republic Koruna (CZK)</option>
+            <option value="MXN">Mexican Peso (MXN)</option>
+            <option value="DKK">Danish Krone (DKK)</option>
+            <option value="CLP">Chilean Peso (CLP)</option>
+            <option value="RUR">Old Russian Ruble (RUR)</option>
+            <option value="MYR">Malaysian Ringgit (MYR)</option>
+            <option value="NGN">Nigerian Naira (NGN)</option>
+            <option value="HUF">Hungarian Forint (HUF)</option>
+            <option value="MUR">Mauritian Rupee (MUR)</option>
+            <option value="RON">Romanian New Leu (RON)</option>
+            <option value="ARS">Argentine Peso (ARS)</option>
+            <option value="BGN">Bulgarian Lev (BGN)</option>
+            <option value="KHR">Cambodian riel (KHR)</option>
+            <option value="PEN">Peruvian Sol (PEN)</option>
+            <option value="TZS">Tanzanian Shilling (TZS)</option>
+            <option value="NPR">Nepalese Rupees (NPR)</option>
+            <option value="PKR">Pakistani Rupee (PKR)</option>
+            <option value="BHD">Bahraini Dinar (BHD)</option>
+            <option value="NOK">Norwegian Krone (NOK)</option>
+            <option value="UGX">Ugandan Shilling (UGX)</option>
+            <option value="COP">Colombian Peso (COP)</option>
+            <option value="GHS">Ghanaian Cedi (GHS)</option>
+            <option value="AED">Arab Emirates Dirham (AED)</option>
+            <option value="IRR">Iran Rial (IRR)</option>
+            <option value="HRK">Croatian Kuna (HRK)</option>
+            <option value="CNH">Chinese Yuan (CNH)</option>
+            <option value="DOGE">Dogecoin (DOGE)</option>
+            <option value="VEF">Venezuelan Bolívar (VEF)</option>
+            <option value="CRC">Costa Rica Colon (CRC)</option>
+            <option value="KES">Kenyan Shilling (KES)</option>
+            <option value="CUC">Cuban Convertible Peso (CUC)</option>
+            <option value="BYN">Belarusian Ruble (BYN)</option>
+            <option value="GEL">Georgian Lari (GEL)</option>
+            <option value="XAF">CFA Franc BEAC (XAF)	</option>
+            <option value="GTQ">Quetzales (GTQ)</option>
+            <option value="KZT">Kazakhstan Tenge (KZT)</option>
+            <option value="UZS">Uzbekistani Som (UZS)</option>
+            <option value="LKR">Sri Lankan Rupee (LKR)</option>
+            <option value="BWP">Botswana Pula (BWP)</option>
+            <option value="LSL">Lesotho Loti (LSL)</option>
+            <option value="MMK">Myanmar Kyat (MMK)</option>
+            <option value="SAR">Saudi Riyal (SAR)</option>
+            <option value="MZN">Mozambican Metical (MZN)</option>
+            <option value="QAR">Qatari Riyal (QAR)</option>
+            <option value="JMD">Jamaican Dollar (JMD)</option>
+            <option value="RWF">Rwandan Franc (RWF)</option>
+            <option value="XOF">West African CFA Franc (XOF)</option>
+            <option value="SZL">Swazi Lilangeni (SZL)</option>
+            <option value="BOB">Bolivian Boliviano (BOB)</option>
+            <option value="KCS">Czechoslovak Koruna (KCS)</option>
+            <option value="DZD">Algerian Dinar (DZD)</option>
+            <option value="XAG">Ounce Silver (XAG)</option>
+            <option value="BND">Bruneian Dollar (BND)</option>
+            <option value="KGS">Kyrgyzstani Som (KGS)</option>
+            <option value="BIF">Burundi Franc (BIF)</option>
+            <option value="AOA">Angolan Kwanza (AOA)</option>
+            <option value="AZN">Azerbaijani Manat (AZN)</option>
+            <option value="LBP">Lebanese Pound (LBP)</option>
+            <option value="PGK">Papua New Guinea Kina (PGK)</option>
+            <option value="MWK">Malawian Kwacha (MWK)</option>
+            <option value="UYU">Uruguayan Peso (UYU)</option>
+            <option value="KWD">Kuwaiti Dinar (KWD)</option>
+            <option value="XAU">Gold Ounce (XAU)</option>
+            <option value="GIP">Gibraltar Pound (GIP)</option>
+            <option value="MGA">Malagasy Ariary (MGA)</option>
+            <option value="TTD">Trinidad and Tobago Dollar (TTD)</option>
+            <option value="AFN">Afghan Afghani (AFN)</option>
+            <option value="RSD">Serbian Dinar (RSD)</option>
+            <option value="JOD">Jordanian Dinar (JOD)</option>
+            <option value="GGP">Guernsey Pound (GGP)</option>
+            <option value="VUV">Vanuatu Vatu (VUV)</option>
+            <option value="ETB">Ethiopian Birr (ETB)</option>
+            <option value="TWD">Taiwan Dollar (TWD)</option>
+            <option value="MDL">Moldovan Leu (MDL)</option>
+            <option value="IQD">Iraqi Dinar (IQD)</option>
+            <option value="VES">Venezuelan Bolivar (VES)</option>
+            <option value="ISK">Iceland Krona (ISK)</option>
+            <option value="ZMW">Zambian Kwacha (ZMW)</option>
+            <option value="BDT">Bangladesh Taka (BDT)</option>
+            <option value="BYR">Belarusian Ruble (BYR)</option>
+            <option value="MAD">Moroccan Dirham (MAD)</option>
+            <option value="PAB">Panamanian Balboa (PAB)</option>
+            <option value="OMR">Omani Rial (OMR)</option>
+            <option value="BAM">Bosnia and Herzegovina Convertible Mark (BAM)</option>
+            <option value="PYG">Paraguayan Guaraní (PYG)</option>
+            <option value="TND">Tunisian Dinar (TND)</option>
+            <option value="EGP">Egyptian Pound (EGP)</option>
+            <option value="HNL">Honduran Lempira (HNL)</option>
+            <option value="MOP">Macanese pataca (MOP)</option>
+            <option value="DOP">Dominican Peso (DOP)</option>
+            <option disabled>— Cryptos —</option>
+            <option value="TUSD">TrueUSD (TUSD)</option>
+            <option value="ZEC">ZCash (ZEC)</option>
+            <option value="DASH">DASH</option>
+            <option value="BLOCKPAY">BLOCKPAY</option>
+            <option value="BITUSD">BITUSD</option>
+            <option value="BITCNY">BITCNY</option>
+            <option value="BTS">BitShares (BTS)</option>
+            <option value="BNB">Binance Coin (BNB)</option>
+            <option value="GUSD">Gemini Dollar (GUSD)</option>
+            <option value="USDC">USD Coin (USDC)</option>
+            <option value="XAR">Xarucoin (XAR)</option>
+            <option value="XMR">Monero (XMR)</option>
+            <option value="ARDR">Ardor (ARDR)</option>
+            <option value="KNC">KyberNetwork Crystal (KNC)</option>
+            <option value="LKK1Y">LKK Forward (LKK1Y)</option>
+            <option value="DKKT">DKK Token (DKKT)</option>
+            <option value="ATB">ATB Coin (ATB)</option>
+            <option value="WAVES">Waves (WAVES)</option>
+            <option value="CKUSD">CKUSD</option>
+            <option value="NZDT">NZDT</option>
+            <option value="LKK">Lykke (LKK)</option>
+            <option value="EOS">EOS</option>
+            <option value="QC">QCash (QC)</option>
+            <option value="BITGOLD">BITGOLD</option>
+            <option value="BITEUR">BITEUR</option>
+            <option value="B2X">SegWit2X (B2X)</option>
+            <option value="EURS">EURS</option>
+            <option value="XJP">XJP</option>
+            <option value="DAI">DAI</option>
           </select>
         </div>
         <script type="text/javascript">

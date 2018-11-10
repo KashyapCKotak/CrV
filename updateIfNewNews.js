@@ -1,6 +1,6 @@
 function updateIfNewNes(){
     var xhttp = new XMLHttpRequest();
-    console.log("updateidnewnews.js");
+    //console.log("updateidnewnews.js");
     var latestNewsId=parseFloat(document.getElementById("latestNewsId").textContent);
     var oldLatestNewsId=latestNewsId;
     xhttp.onreadystatechange = function () {
