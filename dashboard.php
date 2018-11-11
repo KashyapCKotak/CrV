@@ -3760,7 +3760,7 @@
           e.preventDefault(); changellyModal.style.display = 'block';
         };
 
-        let indicatorOptions='<option value="none">No Indicator</option>'+
+        let indicatorOptions='<option value="none">Select Indicator</option>'+
                 '<option value="macd">MACD (Moving Average Convergence Divergence)</option>'+
                 '<option value="rsi">RSI (Relative Strength Index)</option>'+
                 '<option value="ao">AO (Awesome Oscillator)</option>'+
@@ -3777,7 +3777,13 @@
                 '<option value="atr">ATR (Average True Range)</option>'+
                 '<option value="cci">CCI (Commodity Change Index)</option>'+
                 '<option value="FI1">FI 1 (Force Index-1 Day)</option>'+
-                '<option value="FI13">FI 13 (Force Index-13 Day)</option>';
+                '<option value="FI13">FI 13 (Force Index-13 Day)</option>'+
+                '<option disabled>— Oscillators —</option>'+
+                '<option value="obv">OBV (On Balance Volume)</option>'+
+                '<option value="kst">KST (Know Sure Thing 10,15,20,30,10,10,15,9)</option>'+
+                '<option value="roc">ROC (Rate Of Change)</option>'+
+                '<option disabled>— Parabolic —</option>'+
+                '<option value="psar">PSAR (Parabolic SAR)</option>';
         document.getElementById("chartIndiSelect1").innerHTML=indicatorOptions;
         document.getElementById("chartIndiSelect2").innerHTML=indicatorOptions;
       //Initialize Select2 Elements

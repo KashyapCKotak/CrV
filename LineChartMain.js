@@ -116,7 +116,7 @@ function drawMainChart(){
           "showCategoryAxis": true,
           "categoryBalloonEnabled": false,
           "recalculateToPercents": "never",
-          "title": "Value",
+          "title": "Price",
           "percentHeight": 60,
           
           "stockGraphs": [ {

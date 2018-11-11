@@ -25,7 +25,11 @@ function displayNewIndi(indicatorType,selectNum,pat){
                 "adl":["top",["#3a5ef2"],["adl"],["line"],[0]],
                 "atr":["bottom",["#f2a93c"],["ATR"],["line"],[0]],
                 "cci":["bottom",["#66f0ab","#66f0ab","#f2a93c"],["top","bottom","CCI"],["line","line","line"],[topAlpha,topAlpha,0]],
-                "FI":["bottom",["#66f0ab","#f78c40"],["zero line","FI"],["line","line"],[0,0]]};//third is third
+                "FI":["bottom",["#66f0ab","#f78c40"],["zero line","FI"],["line","line"],[0,0]],
+                "kst":["bottom",["#3a5ef2","#ef490e"],["KST","KST Signal"],["line","line"],[0,0]],
+                "obv":["bottom",["#3a5ef2"],["OBV"],["line"],[0]],
+                "psar":["top",["#3a5ef2"],["PSAR"],["xy"],[0]],
+                "roc":["bottom",["#3a5ef2"],["ROC"],["line"],[0]]};//third is third
   // console.log(displayedChart);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
   currDispChart.panels[0].stockGraphs[0].type = currChartType;
@@ -105,11 +109,14 @@ function displayNewIndi(indicatorType,selectNum,pat){
         "useDataSetColors":false,
         "precision": 4,
         "valueField": feilds[i]+indiNum,
+        "xFeild":"date",
+        "yFeild":feilds[i]+indiNum,
         "type": indiProps[indiType][3][i],
         "cornerRadiusTop": 2,
         "fillAlphas": indiProps[indiType][3][i] == "column" ? 1 : 0,
         "lineColor": indiProps[indiType][1][i]
       });
+
     }
   }
 
@@ -260,6 +267,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
   }
 
   function mergeData(indiType){
+    console.log(indiType);
     var diff = currData.length - indiData.length;
     console.log("DIFF:"+diff);
     var counter = 0;
@@ -301,22 +309,26 @@ function displayNewIndi(indicatorType,selectNum,pat){
       mergeData(indiType);
       displayIndicatorChart(indiType, indiPos);
     }
+    else if(indiType=="psar"){
+      indiData = PSAR.calculate({high: all.highs,low: all.lows,step: 0.02,max: 0.2,});
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
   }
 
   function calcBottomIndi(indiType, indiPos, indiNum){
     if(indiType=="macd"){
-        let macdInput = {
-          values: all.closes,
-          fastPeriod:12,
-          slowPeriod:26,
-          signalPeriod:9,
-          SimpleMAOscillator: false,
-          SimpleMASignal: false
-        }
-        indiData = MACD.calculate(macdInput);
-        mergeData(indiType);
-        displayIndicatorChart(indiType, indiPos);
-      
+      let macdInput = {
+        values: all.closes,
+        fastPeriod:12,
+        slowPeriod:26,
+        signalPeriod:9,
+        SimpleMAOscillator: false,
+        SimpleMASignal: false
+      }
+      indiData = MACD.calculate(macdInput);
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
     }
     else if(indiType=="rsi"){
       indiData=[];
@@ -482,6 +494,66 @@ function displayNewIndi(indicatorType,selectNum,pat){
           FI:d,
         });
       });
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="kst"){
+      indiData=[];
+      var tempindiData = KST.calculate({
+        values      : all.closes,
+        ROCPer1     : 10,
+        ROCPer2     : 15,
+        ROCPer3     : 20,
+        ROCPer4     : 30,
+        SMAROCPer1  : 10,
+        SMAROCPer2  : 10,
+        SMAROCPer3  : 10,
+        SMAROCPer4  : 15,
+        signalPeriod: 9
+      });
+      console.log(tempindiData);
+      let diff = currData.length - tempindiData.length;
+      let tempBlanks=[];
+      for(let i=0;i<diff;i++){
+        tempBlanks.push({"KST":undefined,"KST Signal":undefined});
+      }
+      tempindiData=tempBlanks.concat(tempindiData);
+      tempindiData.forEach(function (d){
+        indiData.push({
+          "KST":d.kst,
+          "KST Signal":d.signal,
+        });
+      });
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="obv"){
+      indiData=[];
+      var tempindiData = OBV.calculate({
+          close : all.closes,
+          volume : all.volumes,
+        });
+      let diff = currData.length - tempindiData.length;
+      let tempBlanks=[];
+      for(let i=0;i<diff;i++){
+        tempBlanks.push(undefined);
+      }
+      indiData=tempBlanks.concat(tempindiData);
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="roc"){
+      indiData=[];
+      var tempindiData = ROC.calculate({
+          values : all.closes,
+          period: 12,
+        });
+      let diff = currData.length - tempindiData.length;
+      let tempBlanks=[];
+      for(let i=0;i<diff;i++){
+        tempBlanks.push(undefined);
+      }
+      indiData=tempBlanks.concat(tempindiData);
       mergeData(indiType);
       displayIndicatorChart(indiType, indiPos);
     }
