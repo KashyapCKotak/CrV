@@ -43,8 +43,8 @@
     <!-- Bootstrap 3.3.7 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous"> -->
-    <script async defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script>
+    <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- <script async defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script> -->
     <!-- Ionicons -->
     <!-- <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet"> -->
     <!-- Select2 -->
@@ -242,7 +242,7 @@
               <i class="fas fa-palette"></i>
               <span>&nbsp;Customise Theme</span>
               <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
+                <i class="fa fa-angle-left"></i>
               </span>
             </a>
             <ul class="clearfix treeview-menu"><!-- style="color:#8aa4af"-->
@@ -372,11 +372,6 @@
             <a href="contact.php">
               <i class="far fa-smile"></i>
               <span>&nbsp;About & Contact</span>
-            </a>
-          </li>
-          <li>
-            <a>
-              <span>&nbsp;<div id="google_translate_element"></div></span>
             </a>
           </li>
           <li style="height:100px">
