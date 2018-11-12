@@ -104,16 +104,20 @@ function displayNewIndi(indicatorType,selectNum,pat){
   function setTopIndicatorChart(feilds, indiNum, indiType){
     let indiStockGraphs=[];
     for(let i=0;i<feilds.length;i++){
+      let chartType=indiProps[indiType][3][i];
       currDispChart.panels[0].stockGraphs.push({
         "title": feilds[i]+"-"+indiNum,
         "useDataSetColors":false,
         "precision": 4,
         "valueField": feilds[i]+indiNum,
-        "xFeild":"date",
+        "xFeild":"time",
         "yFeild":feilds[i]+indiNum,
-        "type": indiProps[indiType][3][i],
+        "bullet": chartType == "xy" ? "round" : "none",
+        "bulletSize": 3,
+        "lineAplha": chartType == "xy" ? 0 : 1,
+        "type": chartType == "xy" ? "line" : chartType,
         "cornerRadiusTop": 2,
-        "fillAlphas": indiProps[indiType][3][i] == "column" ? 1 : 0,
+        "fillAlphas": chartType == "column" ? 1 : 0,
         "lineColor": indiProps[indiType][1][i]
       });
 
