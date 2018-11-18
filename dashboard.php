@@ -43,7 +43,7 @@
     <!-- Bootstrap 3.3.7 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
-    <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <!-- <script async defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script> -->
     <!-- Ionicons -->
     <!-- <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet"> -->
@@ -65,13 +65,13 @@
 
     <script defer src="https://www.amcharts.com/lib/3/amcharts.js"></script>
     <script defer src="https://www.amcharts.com/lib/3/serial.js"></script>
-    <script defer src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-    <link rel="preload" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- <script defer src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="preload" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" as="style" onload="this.onload=null;this.rel='stylesheet'"> -->
     <!-- <script src="https://www.amcharts.com/lib/3/amstock.js"></script> -->
     <script defer src="amCharts/light.js"></script>
     <script defer src="amCharts/amstock.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
-    <script defer src="https://unpkg.com/technicalindicators@1.1.13/dist/browser.js" onload="drawMainChart()"></script>
+    <script defer src="https://unpkg.com/technicalindicators@2.0.6/dist/browser.js" onload="drawMainChart()"></script><!--Used 1.1.13 previously-->
     <!-- <script src="select2.multi-checkboxes.js"></script> -->
     <script src="coinData.js"></script>
     <!-- Google Font -->
@@ -3759,29 +3759,43 @@
         changellyButton.onclick = function widgetClick(e) {
           e.preventDefault(); changellyModal.style.display = 'block';
         };
-
-        let indicatorOptions='<option value="none">Select Indicator</option>'+
+        //http://jsfiddle.net/ArondeParon/2dEFg/5/    SEE for replacing select with ul to use textbox for num
+        //Wilder's smoothing remaining WEMA
+        let indicatorOptions='<option value="none">No Indicator</option>'+
                 '<option value="macd">MACD (Moving Average Convergence Divergence)</option>'+
                 '<option value="rsi">RSI (Relative Strength Index)</option>'+
-                '<option value="ao">AO (Awesome Oscillator)</option>'+
-                '<option value="so">STOCH (Stochastic Oscillators)</option>'+
                 '<option value="adx">ADX (Average Directional Index)</option>'+
                 '<option value="mfi">MFI (Money Flow Index)</option>'+
-                '<option value="trix">TRIX (Triple Exponential Average)</option>'+
+                '<option value="ichi">Ichimoku Cloud</option>'+
                 '<option value="bollinger">Bollinger Bands</option>'+
-                '<option value="sma25">SMA 25 (Simple Moving Average-25)</option>'+
-                '<option value="sma50">SMA 50 (Simple Moving Average-50)</option>'+
-                '<option value="sma100">SMA 100 (Simple Moving Average-100)</option>'+
-                '<option value="sma200">SMA 200 (Simple Moving Average-200)</option>'+
                 '<option value="adl">ADL (Accumulation Distribution Line)</option>'+
                 '<option value="atr">ATR (Average True Range)</option>'+
+                '<option value="wr">Williams %R</option>'+
                 '<option value="cci">CCI (Commodity Change Index)</option>'+
                 '<option value="FI1">FI 1 (Force Index-1 Day)</option>'+
                 '<option value="FI13">FI 13 (Force Index-13 Day)</option>'+
+                '<option disabled>— Moving Acerages —</option>'+
+                '<option value="wma25">WMA 25 (Weighted Moving Average-12)</option>'+
+                '<option value="wma50">WMA 50 (Weighted Moving Average-26)</option>'+
+                '<option value="wma100">WMA 100 (Weighted Moving Average-50)</option>'+
+                '<option value="wma200">WMA 200 (Weighted Moving Average-200)</option>'+
+                '<option value="ema12">EMA 25 (Exponential Moving Average-12)</option>'+
+                '<option value="ema26">EMA 50 (Exponential Moving Average-26)</option>'+
+                '<option value="ema50">EMA 100 (Exponential Moving Average-50)</option>'+
+                '<option value="ema200">EMA 200 (Exponential Moving Average-200)</option>'+
+                '<option value="sma25">SMA 25 (Simple Moving Average-25)<input type="text"></input></option>'+
+                '<option value="sma50">SMA 50 (Simple Moving Average-50)</option>'+
+                '<option value="sma100">SMA 100 (Simple Moving Average-100)</option>'+
+                '<option value="sma200">SMA 200 (Simple Moving Average-200)</option>'+
+                // '<option value="TP">TypicalPrice Indicator</option>'+ // not working
+                '<option value="VWAP">VWAP (Volume Weighted Average Price)</option>'+
                 '<option disabled>— Oscillators —</option>'+
                 '<option value="obv">OBV (On Balance Volume)</option>'+
                 '<option value="kst">KST (Know Sure Thing 10,15,20,30,10,10,15,9)</option>'+
                 '<option value="roc">ROC (Rate Of Change)</option>'+
+                '<option value="trix">TRIX (Triple Exponential Average)</option>'+
+                '<option value="ao">AO (Awesome Oscillator)</option>'+
+                '<option value="so">STOCH (Stochastic Oscillators)</option>'+
                 '<option disabled>— Parabolic —</option>'+
                 '<option value="psar">PSAR (Parabolic SAR)</option>';
         document.getElementById("chartIndiSelect1").innerHTML=indicatorOptions;

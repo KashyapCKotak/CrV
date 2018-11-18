@@ -14,14 +14,18 @@ function displayNewIndi(indicatorType,selectNum,pat){
   currChart=null;
   currPatData=null;
   var indiProps={"macd":["bottom",["#00e673","#3a5ef2","#ef490e"],["histogram","MACD","signal"],["column","line","line"],[1,0,0]],
-                "sma":["top",["#3a5ef2"],["sma"],["line"],[0]],
-                "rsi":["bottom",["#66f0ab",bottomRefCol,"#3a5ef2"],["top","bottom","rsi"],["line","line","line"],[topAlpha,bottomAlpha,0]],
+                "sma":["top",["#3a5ef2"],["SMA"],["line"],[0]],
+                "ema":["top",["#2c9ef4"],["EMA"],["line"],[0]],
+                "wma":["top",["#8f2af4"],["WMA"],["line"],[0]],
+                "rsi":["bottom",["#66f0ab",bottomRefCol,"#3a5ef2"],["rsi top","rsi bottom","rsi"],["line","line","line"],[topAlpha,bottomAlpha,0]],
                 "ao":["bottom",["#3a5ef2"],["ao"],["column"],[0.7]],
-                "so":["bottom",["#66f0ab",bottomRefCol,"#3a5ef2","#ef490e"],["top","bottom","k","d"],["line","line","line","line"],[topAlpha,bottomAlpha,0,0]],
+                "so":["bottom",["#66f0ab",bottomRefCol,"#3a5ef2","#ef490e"],["so top","so bottom","k","d"],["line","line","line","line"],[topAlpha,bottomAlpha,0,0]],
                 "adx":["bottom",["#f9c554","#3a5ef2","#ef490e","#00e673"],["reference line (25%)","adx","mdi","pdi"],["line","line","line","line"],[0.5,0,0,0]],
-                "mfi":["bottom",["#66f0ab",bottomRefCol,"#00e673"],["top","bottom","mfi"],["line","line","line"],[topAlpha,bottomAlpha,0]],
+                "mfi":["bottom",["#66f0ab",bottomRefCol,"#00e673"],["mfi top","mfi bottom","mfi"],["line","line","line"],[topAlpha,bottomAlpha,0]],
+                "wr":["bottom",["#66f0ab",bottomRefCol,"#00e673"],["wr bottom","wr top","w%r"],["line","line","line"],[topAlpha,bottomAlpha,0]],
                 "trix":["bottom",["#66f0ab","#3a5ef2"],["zero line","trix"],["line","line"],[0,0]],
-                "bollinger":["top",["#3a5ef2","#3a5ef2","#3a5ef2"],["lower","middle","upper"],["line","line","line"],[0,0,0]],
+                "bollinger":["top",["#3a5ef2","#3a5ef2","#3a5ef2"],["lower","middle","upper"],["line","line","line"],[0,0,0.5]],
+                "ichi":["top",["#3a5ef2","#ef490e","#00cc66","#ef490e"],["conversion","base","spanA","spanB"],["line","line","line","line"],[0,0,0.5,0.5]],
                 "adl":["top",["#3a5ef2"],["adl"],["line"],[0]],
                 "atr":["bottom",["#f2a93c"],["ATR"],["line"],[0]],
                 "cci":["bottom",["#66f0ab","#66f0ab","#f2a93c"],["top","bottom","CCI"],["line","line","line"],[topAlpha,topAlpha,0]],
@@ -29,6 +33,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
                 "kst":["bottom",["#3a5ef2","#ef490e"],["KST","KST Signal"],["line","line"],[0,0]],
                 "obv":["bottom",["#3a5ef2"],["OBV"],["line"],[0]],
                 "psar":["top",["#3a5ef2"],["PSAR"],["xy"],[0]],
+                "TP":["top",["#3a5ef2"],["TP"],["line"],[0]],
+                "VWAP":["top",["#3a5ef2"],["VWAP"],["line"],[0]],
                 "roc":["bottom",["#3a5ef2"],["ROC"],["line"],[0]]};//third is third
   // console.log(displayedChart);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
@@ -117,7 +123,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
         "lineAplha": chartType == "xy" ? 0 : 1,
         "type": chartType == "xy" ? "line" : chartType,
         "cornerRadiusTop": 2,
-        "fillAlphas": chartType == "column" ? 1 : 0,
+        "fillAlphas": chartType == "column" ? 1 : indiProps[indiType][4][i],
         "lineColor": indiProps[indiType][1][i]
       });
 
@@ -303,6 +309,16 @@ function displayNewIndi(indicatorType,selectNum,pat){
       mergeData(indiType);
       displayIndicatorChart(indiType, indiPos);
     }
+    if(indiType=="ema"){
+      indiData = EMA.calculate({period : indiNum, values : all.closes});
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    if(indiType=="wma"){
+      indiData = WMA.calculate({period : indiNum, values : all.closes});
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
     else if(indiType=="bollinger"){
       indiData = BollingerBands.calculate({period : 14, values : all.closes, stdDev : 2});
       mergeData(indiType);
@@ -315,6 +331,22 @@ function displayNewIndi(indicatorType,selectNum,pat){
     }
     else if(indiType=="psar"){
       indiData = PSAR.calculate({high: all.highs,low: all.lows,step: 0.02,max: 0.2,});
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="TP"){
+      indiData = TypicalPrice.calculate({high: all.highs,low: all.lows,close: all.closes});
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="VWAP"){
+      indiData = VWAP.calculate({high: all.highs,low: all.lows,close: all.closes, volume: all.volumes});
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="ichi"){
+      indiData = IchimokuCloud.calculate({high: all.highs,low: all.lows,conversionPeriod: 9,basePeriod: 26,spanPeriod: 52,displacement: 26});
+      console.log(indiData);
       mergeData(indiType);
       displayIndicatorChart(indiType, indiPos);
     }
@@ -345,9 +377,9 @@ function displayNewIndi(indicatorType,selectNum,pat){
       tempindiData=tempBlanks.concat(tempindiData);
       tempindiData.forEach(function (d){
         indiData.push({
-          top:70,
+          "rsi top":70,
           rsi:d,
-          bottom:30
+          "rsi bottom":30
         });
       });
       mergeData(indiType);
@@ -382,10 +414,10 @@ function displayNewIndi(indicatorType,selectNum,pat){
       tempindiData=tempBlanks.concat(tempindiData);
       tempindiData.forEach(function (d){
         indiData.push({
-          top:80,
+          "so top":80,
           d:d.d,
           k:d.k,
-          bottom:20
+          "so bottom":20
         });
       });
       mergeData(indiType);
@@ -433,9 +465,33 @@ function displayNewIndi(indicatorType,selectNum,pat){
       tempindiData=tempBlanks.concat(tempindiData);
       tempindiData.forEach(function (d){
         indiData.push({
-          top:80,
+          "mfi top":80,
           mfi:d,
-          bottom:20
+          "mfi bottom":20
+        });
+      });
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="wr"){
+      indiData=[];
+      var tempindiData = WilliamsR.calculate({
+        high : all.highs,
+        low : all.lows,
+        close : all.closes,
+        period : 14
+      });
+      let diff = currData.length - tempindiData.length;
+      let tempBlanks=[];
+      for(let i=0;i<diff;i++){
+        tempBlanks.push(undefined);
+      }
+      tempindiData=tempBlanks.concat(tempindiData);
+      tempindiData.forEach(function (d){
+        indiData.push({
+          "wr top":-20,
+          "w%r":d,
+          "wr bottom":-80
         });
       });
       mergeData(indiType);
