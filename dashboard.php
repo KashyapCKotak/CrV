@@ -39,7 +39,7 @@
     <link rel="apple-touch-icon" href="https://www.cryptocompare.com//media/19633/btc.png">
     <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="shortcut icon" sizes="196x196" href="https://www.cryptocompare.com//media/19633/btc.png">
+    <!-- <link rel="shortcut icon" sizes="196x196" href="https://www.cryptocompare.com//media/19633/btc.png"> -->
     <script type="text/javascript">(function(a){a.loadCSS||(a.loadCSS=function(){});var c=loadCSS.relpreload={};c.support=function(){try{var b=a.document.createElement("link").relList.supports("preload")}catch(e){b=!1}return function(){return b}}();c.bindMediaToggle=function(b){function a(){b.media=c}var c=b.media||"all";b.addEventListener?b.addEventListener("load",a):b.attachEvent&&b.attachEvent("onload",a);setTimeout(function(){b.rel="stylesheet";b.media="only x"});setTimeout(a,3E3)};c.poly=function(){if(!c.support())for(var b=a.document.getElementsByTagName("link"),e=0;e<b.length;e++){var d=b[e];"preload"!==d.rel||"style"!==d.getAttribute("as")||d.getAttribute("data-loadcss")||(d.setAttribute("data-loadcss",!0),c.bindMediaToggle(d))}};if(!c.support()){c.poly();var f=a.setInterval(c.poly,500);a.addEventListener?a.addEventListener("load",function(){c.poly();a.clearInterval(f)}):a.attachEvent&&a.attachEvent("onload",function(){c.poly();a.clearInterval(f)})}"undefined"!==typeof exports?exports.loadCSS=loadCSS:a.loadCSS=loadCSS})("undefined"!==typeof global?global:this);</script>
     <!-- jQuery 3 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -3782,7 +3782,18 @@
                 '<option value="cci">CCI (Commodity Change Index)</option>'+
                 '<option value="FI1">FI 1 (Force Index-1 Day)</option>'+
                 '<option value="FI13">FI 13 (Force Index-13 Day)</option>'+
-                '<option disabled>— Moving Acerages —</option>'+
+                '<option value="VWAP">VWAP (Volume Weighted Average Price)</option>'+
+                // '<option value="TP">TypicalPrice Indicator</option>'+ // not working
+                '<option disabled>— Oscillators —</option>'+
+                '<option value="obv">OBV (On Balance Volume)</option>'+
+                '<option value="kst">KST (Know Sure Thing 10,15,20,30,10,10,15,9)</option>'+
+                '<option value="roc">ROC (Rate Of Change)</option>'+
+                '<option value="trix">TRIX (Triple Exponential Average)</option>'+
+                '<option value="ao">AO (Awesome Oscillator)</option>'+
+                '<option value="so">STOCH (Stochastic Oscillators)</option>'+
+                '<option disabled>— Parabolic —</option>'+
+                '<option value="psar">PSAR (Parabolic SAR)</option>'+
+                '<option disabled>— Moving Averages —</option>'+
                 '<option value="wma25">WMA 25 (Weighted Moving Average-12)</option>'+
                 '<option value="wma50">WMA 50 (Weighted Moving Average-26)</option>'+
                 '<option value="wma100">WMA 100 (Weighted Moving Average-50)</option>'+
@@ -3794,18 +3805,7 @@
                 '<option value="sma25">SMA 25 (Simple Moving Average-25)'+
                 '<option value="sma50">SMA 50 (Simple Moving Average-50)</option>'+
                 '<option value="sma100">SMA 100 (Simple Moving Average-100)</option>'+
-                '<option value="sma200">SMA 200 (Simple Moving Average-200)</option>'+
-                // '<option value="TP">TypicalPrice Indicator</option>'+ // not working
-                '<option value="VWAP">VWAP (Volume Weighted Average Price)</option>'+
-                '<option disabled>— Oscillators —</option>'+
-                '<option value="obv">OBV (On Balance Volume)</option>'+
-                '<option value="kst">KST (Know Sure Thing 10,15,20,30,10,10,15,9)</option>'+
-                '<option value="roc">ROC (Rate Of Change)</option>'+
-                '<option value="trix">TRIX (Triple Exponential Average)</option>'+
-                '<option value="ao">AO (Awesome Oscillator)</option>'+
-                '<option value="so">STOCH (Stochastic Oscillators)</option>'+
-                '<option disabled>— Parabolic —</option>'+
-                '<option value="psar">PSAR (Parabolic SAR)</option>';
+                '<option value="sma200">SMA 200 (Simple Moving Average-200)</option>';
         document.getElementById("chartIndiSelect1").innerHTML=indicatorOptions;
         document.getElementById("chartIndiSelect2").innerHTML=indicatorOptions;
       //Initialize Select2 Elements
