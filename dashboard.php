@@ -33,6 +33,13 @@
     <meta name="description" content="Price, Historic Graph, Artificail Intelligence prediction, Indicators, Markets, Arbitrage, Exchange, Trends & Discuss! All in one place!">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- for ios 7 style, multi-resolution icon of 152x152 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://www.cryptocompare.com//media/19633/btc.png">
+    <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="196x196" href="https://www.cryptocompare.com//media/19633/btc.png">
     <script type="text/javascript">(function(a){a.loadCSS||(a.loadCSS=function(){});var c=loadCSS.relpreload={};c.support=function(){try{var b=a.document.createElement("link").relList.supports("preload")}catch(e){b=!1}return function(){return b}}();c.bindMediaToggle=function(b){function a(){b.media=c}var c=b.media||"all";b.addEventListener?b.addEventListener("load",a):b.attachEvent&&b.attachEvent("onload",a);setTimeout(function(){b.rel="stylesheet";b.media="only x"});setTimeout(a,3E3)};c.poly=function(){if(!c.support())for(var b=a.document.getElementsByTagName("link"),e=0;e<b.length;e++){var d=b[e];"preload"!==d.rel||"style"!==d.getAttribute("as")||d.getAttribute("data-loadcss")||(d.setAttribute("data-loadcss",!0),c.bindMediaToggle(d))}};if(!c.support()){c.poly();var f=a.setInterval(c.poly,500);a.addEventListener?a.addEventListener("load",function(){c.poly();a.clearInterval(f)}):a.attachEvent&&a.attachEvent("onload",function(){c.poly();a.clearInterval(f)})}"undefined"!==typeof exports?exports.loadCSS=loadCSS:a.loadCSS=loadCSS})("undefined"!==typeof global?global:this);</script>
     <!-- jQuery 3 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -77,6 +84,7 @@
     <!-- Google Font -->
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <script type="text/javascript">
+      window.addEventListener("load", function() { window. scrollTo(0, 0); console.log("scrolled to top") });
       function onLoadPage() {
         // console.log("PAGE LOAD COMPLETE");
         
@@ -3783,7 +3791,7 @@
                 '<option value="ema26">EMA 50 (Exponential Moving Average-26)</option>'+
                 '<option value="ema50">EMA 100 (Exponential Moving Average-50)</option>'+
                 '<option value="ema200">EMA 200 (Exponential Moving Average-200)</option>'+
-                '<option value="sma25">SMA 25 (Simple Moving Average-25)<input type="text"></input></option>'+
+                '<option value="sma25">SMA 25 (Simple Moving Average-25)'+
                 '<option value="sma50">SMA 50 (Simple Moving Average-50)</option>'+
                 '<option value="sma100">SMA 100 (Simple Moving Average-100)</option>'+
                 '<option value="sma200">SMA 200 (Simple Moving Average-200)</option>'+
