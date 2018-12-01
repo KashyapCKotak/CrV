@@ -3259,9 +3259,10 @@
             }
             evt.currentTarget.className += " active";
           }
-          function initChartTypeChangeNew(){console.log(document.getElementById("chartTypeSelect").value);
+          function initChartTypeChangeNew(selectedOption){
+            console.log(selectedOption);
             document.getElementById("chartLoadOverlay").style.display = "block";
-            changeChartType(document.getElementById("chartTypeSelect").value);
+            changeChartType(selectedOption);
           }
           function initChartIndicatorChange(whichIndicator){
             document.getElementById("chartLoadOverlay").style.display = "block";
@@ -3303,9 +3304,11 @@
           <div class="chartTypeTabHolder">
             <div class="chartType" style="float: left">
             <b class="hidden-xs">Chart Type:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
-              <select id="chartTypeSelect" onchange="initChartTypeChangeNew()" style="width:94px">
+              <select id="chartTypeSelect" onchange="initChartTypeChangeNew(this.value)" style="width:94px">
                 <option value="smoothedLine">Line Chart</option>
                 <option value="candlestick">CandleStick Chart</option>
+                <option value="heikinashi">Heikin-Ashi Chart</option>
+                <option value="renko">Renko Chart</option>
                 <option value="ohlc">OHLC Chart</option>
               </select>
             </div>

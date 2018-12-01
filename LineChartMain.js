@@ -23,6 +23,7 @@ firstTimeZoom=true;
 firstTimeIndi=true;
 indiDisplayed=false;
 currChartType="smoothedLine";
+chartArr=[0,chartMin,chartHour,chartDay];
 
 var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
 
@@ -567,28 +568,46 @@ function drawMainChart(){
         console.log("IN THE END");
       }
       function changeChartType(newChartType){
+        console.log(currChartType);
+        console.log(newChartType);
         document.getElementById("chartLoadOverlay").style.display = "block";
+        if((currChartType=="smoothedLine" || currChartType=="candelstick" || currChartType=="ohlc")&&(currChartType=="renko" || currChartType=="heikinashi")){
+          console.log("setting");
+          if(newChartType=="heikinashi"){
+            displayNewIndi(newChartType,1,true);
+            chartMin.datasets[0].fieldMappings[0].fromField="HA close";
+            chartMin.datasets[0].fieldMappings[0].fromField="HA open";
+            chartMin.datasets[0].fieldMappings[0].fromField="HA high";
+            chartMin.datasets[0].fieldMappings[0].fromField="HA low";
+            newChartType="candlestick";
+          }
+          else if(newChartType=="renko"){
+            displayNewIndi(newChartType,1,true);
+            newChartType="line";
+          }
+        }
+        else if((currChartType=="renko" || currChartType=="heikinashi")&&(currChartType=="smoothedLine" || currChartType=="candelstick" || currChartType=="ohlc")){
+          chartMin.datasets[0].fieldMappings[0].fromField="close";
+          chartMin.datasets[0].fieldMappings[0].fromField="open";
+          chartMin.datasets[0].fieldMappings[0].fromField="high";
+          chartMin.datasets[0].fieldMappings[0].fromField="low";
+        }
         currChartType=newChartType;
+        document.getElementById("chartIndiSelect1").selectedIndex = 0; 
+        document.getElementById("chartIndiSelect2").selectedIndex = 0;
+        // chartArr[displayedChart].panels[0].stockGraphs[0].type = newChartType;
+        // chartArr[displayedChart].validateNow();
         if(displayedChart == 1){
           chartMin.panels[0].stockGraphs[0].type = newChartType;
-          document.getElementById("chartIndiSelect1").selectedIndex = 0; 
-          document.getElementById("chartIndiSelect2").selectedIndex = 0;
           chartMin.validateNow();
         }
         else if(displayedChart == 2){
           chartHour.panels[0].stockGraphs[0].type = newChartType;
-          document.getElementById("chartIndiSelect1").selectedIndex = 0;
-          document.getElementById("chartIndiSelect2").selectedIndex = 0;
           chartHour.validateNow();
         }
         else if(displayedChart == 3){
           chartDay.panels[0].stockGraphs[0].type = newChartType;
-          document.getElementById("chartIndiSelect1").selectedIndex = 0;
-          document.getElementById("chartIndiSelect2").selectedIndex = 0;
           chartDay.validateNow();
-        }
-        else{
-          // console.log("Chart type change error");
         }
       }
 //////////////////////////////INDICATOR CODE START////////////////////////////////////////

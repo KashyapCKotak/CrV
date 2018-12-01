@@ -25,7 +25,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
                 "wr":["bottom",["#66f0ab",bottomRefCol,"#3a5ef2"],["wr top","wr bottom","w%r"],["line","line","line"],["wr bottom",0,0]],//if want to use topAlpha & bottomAlpha , switch the position of top & bottom alpha in last element of array
                 "trix":["bottom",["#66f0ab","#3a5ef2"],["zero line","trix"],["line","line"],[0,0]],
                 "bollinger":["top",["#3a5ef2","#3a5ef2","#3a5ef2"],["upper","middle","lower"],["line","line","line"],["lower",0,0]],
-                "ichi":["top",["#3a5ef2","#ef490e","#00cc66","#ef490e","#00cc00"],["Conversion","Base","SpanA","SpanB","Lagging Span"],["line","line","line","line","line"],[0,0,"spanB","spanA",0]],
+                "ichi":["top",["#3a5ef2","#ef490e","#00cc66","#ef490e","#00cc00"],["Conversion","Base","SpanA","SpanB","Lagging Span"],["line","line","line","line","line"],[0,0,"SpanB","SpanA",0]],
                 "adl":["top",["#3a5ef2"],["adl"],["line"],[0]],
                 "atr":["bottom",["#f2a93c"],["ATR"],["line"],[0]],
                 "cci":["bottom",["#66f0ab","#66f0ab","#f2a93c"],["cci top","cci bottom","CCI"],["line","line","line"],["cci bottom",0,0]],
@@ -35,7 +35,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
                 "psar":["top",["#3a5ef2"],["PSAR"],["xy"],[0]],
                 "TP":["top",["#3a5ef2"],["TP"],["line"],[0]],
                 "VWAP":["top",["#3a5ef2"],["VWAP"],["line"],[0]],
-                "roc":["bottom",["#3a5ef2"],["ROC"],["line"],[0]]};//third is third
+                "roc":["bottom",["#3a5ef2"],["ROC"],["line"],[0]],
+                "heikinashi":["top",["#NA","#NA","#NA","#NA"],["HA open","HA high","HA low","HA close"],["NA","NA","NA"],[0,0,0]]};//third is third
   // console.log(displayedChart);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
   currDispChart.panels[0].stockGraphs[0].type = currChartType;
@@ -116,7 +117,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
       (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas))?(fillToGraph=""):(fillToGraph=fillAlphas,fillAlphas=0.5);
       currDispChart.panels[0].stockGraphs.push({
         "id": (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas)) ? feilds[i] : feilds[i]+"-"+indiNum,
-        "title": (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas)) ? feilds[i] : feilds[i]+"-"+indiNum,
+        "title": "",//(!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas)) ? feilds[i] : feilds[i]+"-"+indiNum,
         "useDataSetColors":false,
         "precision": 4,
         "valueField": feilds[i]+indiNum,
@@ -356,9 +357,6 @@ function displayNewIndi(indicatorType,selectNum,pat){
       displayIndicatorChart(indiType, indiPos);
     }
     else if(indiType=="ichi"){
-      // indiData = IchimokuCloud.calculate({high: all.highs,low: all.lows,conversionPeriod: 9,basePeriod: 26,spanPeriod: 52,displacement: 26});
-      // mergeData(indiType);
-      // displayIndicatorChart(indiType, indiPos);
       indiData=[];
       var tempindiData = IchimokuCloud.calculate({high: all.highs,low: all.lows,conversionPeriod: 9,basePeriod: 26,spanPeriod: 52,displacement: 26});
       let diff = currData.length - tempindiData.length;
@@ -369,18 +367,32 @@ function displayNewIndi(indicatorType,selectNum,pat){
       tempindiData=tempBlanks.concat(tempindiData);
       let i=0;
       tempindiData.forEach(function (d){
-        console.log(d);
         indiData.push({
-          "conversion":d.conversion,
-          "base":d.base,
-          "spanA":d.spanA,
-          "spanB":d.spanB,
-          "Lagging Span":(i>26)?all.closes[i-26]:undefined
+          "Conversion":d.conversion,
+          "Base":d.base,
+          "SpanA":d.spanA,
+          "SpanB":d.spanB,
+          "Lagging Span":(currData[i+26]!=undefined)?currData[i+26].close:undefined
         });
         i++;
       });
       mergeData(indiType);
       displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="heikinashi"){
+      indiData=[];
+      var tempindiData = IchimokuCloud.calculate({high: all.highs,low: all.lows,open: all.opens,close: all.closes});
+      tempindiData.forEach(function (d){
+        indiData.push({
+          "HA open":d.open,
+          "HA high":d.high,
+          "HA low":d.low,
+          "HA close":d.close
+        });
+        i++;
+      });
+      console.log(tempindiData);
+      mergeData(indiType);
     }
   }
 
