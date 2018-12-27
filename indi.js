@@ -36,7 +36,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
                 "TP":["top",["#3a5ef2"],["TP"],["line"],[0]],
                 "VWAP":["top",["#3a5ef2"],["VWAP"],["line"],[0]],
                 "roc":["bottom",["#3a5ef2"],["ROC"],["line"],[0]],
-                "heikinashi":["top",["#NA","#NA","#NA","#NA"],["HA open","HA high","HA low","HA close"],["NA","NA","NA"],[0,0,0]]};//third is third
+                "heikinashi":["top",["#NA","#NA","#NA","#NA"],["HA open","HA high","HA low","HA close"],["NA","NA","NA"],[0,0,0]],
+                "renko":["top",["#NA","#NA","#NA","#NA","#NA","#NA"],["Renko open","Renko high","Renko low","Renko close","Renko volume","Renko time"],["NA","NA","NA"],[0,0,0]]};//third is third
   // console.log(displayedChart);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
   currDispChart.panels[0].stockGraphs[0].type = currChartType;
@@ -313,6 +314,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
       }
       counter++;
     });
+    console.log("done merging");
   }
 
   function calcTopIndi(indiType, indiPos, indiNum){
@@ -381,18 +383,40 @@ function displayNewIndi(indicatorType,selectNum,pat){
     }
     else if(indiType=="heikinashi"){
       indiData=[];
-      var tempindiData = IchimokuCloud.calculate({high: all.highs,low: all.lows,open: all.opens,close: all.closes});
+      var tempindiData = HeikinAshi.calculate({high: all.highs,low: all.lows,open: all.opens,close: all.closes});
       console.log(tempindiData);
-      tempindiData.forEach(function (d){
+      let i=0;
+      for(i=0;i<tempindiData.open.length;i++){
         indiData.push({
-          "HA open":d.open,
-          "HA high":d.high,
-          "HA low":d.low,
-          "HA close":d.close
+          "HA open":tempindiData.open[i],
+          "HA high":tempindiData.high[i],
+          "HA low":tempindiData.low[i],
+          "HA close":tempindiData.close[i]
         });
-      });
-      console.log(tempindiData);
+      }
+      console.log(indiData);
       mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
+    }
+    else if(indiType=="renko"){
+      indiData=[];
+      let data={close:all.closes,high:all.highs,low:all.lows,open:all.opens,timestamp:all.timestamps,volume:all.volumes,ticker:globalFiatValue+":"+globalCryptoValue};
+      var tempindiData = renko(Object.assign({}, data, {brickSize : 0.1, useATR : false }));
+      console.log(tempindiData);
+      let i=0;
+      for(i=0;i<tempindiData.open.length;i++){
+        indiData.push({
+          "Renko open":tempindiData.open[i],
+          "Renko high":tempindiData.high[i],
+          "Renko low":tempindiData.low[i],
+          "Renko close":tempindiData.close[i],
+          "Renko volume":tempindiData.volume[i],
+          "Renko time":new Date(tempindiData.timestamp[i])
+        });
+      }
+      console.log(indiData);
+      mergeData(indiType);
+      displayIndicatorChart(indiType, indiPos);
     }
   }
 
@@ -679,7 +703,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
       closes:[],
       highs:[],
       lows:[],
-      volumes:[]
+      volumes:[],
+      timestamps:[]
     };
     let len=currData.length;
     if(pat)
@@ -697,6 +722,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
         all.highs.push(parseFloat(d.high));
         all.lows.push(parseFloat(d.low));
         all.volumes.push(parseFloat(d.volumeto));
+        all.timestamps.push(parseFloat(d.timest));
       }
     });
     //console.log(all);

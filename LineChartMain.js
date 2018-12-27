@@ -264,8 +264,8 @@ function drawMainChart(){
             console.log("Chart Drawing Start in");
             consChartDataHour = JSON.parse(this.responseText);
             for(var i=0;i<consChartDataHour.Data.length;i++) {
-              consChartDataHour.Data[i].time=consChartDataHour.Data[i].time*1000;
-              consChartDataHour.Data[i].time=new Date(consChartDataHour.Data[i].time);
+              consChartDataHour.Data[i].timest=consChartDataHour.Data[i].time*1000;
+              consChartDataHour.Data[i].time=new Date(consChartDataHour.Data[i].timest);
             }
             var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
             newChart.dataSets[0].dataProvider=consChartDataHour.Data;
@@ -301,8 +301,6 @@ function drawMainChart(){
           }
           document.getElementById("chartLoadOverlay").style.display = "block";
           console.log("1");
-          // check the first date and diff in mins
-          var now = new Date().getTime();
           var minsDiff = (event.endDate.getTime() - event.startDate.getTime()) / 60000;
           minsDiff=Math.floor(minsDiff);
           console.log("minsDiff: "+minsDiff); 
@@ -321,8 +319,8 @@ function drawMainChart(){
                 if (this.readyState == 4 && this.status == 200) {
                   consChartDataMin = JSON.parse(this.responseText);
                   for(var i=0;i<consChartDataMin.Data.length;i++) {
-                    consChartDataMin.Data[i].time=consChartDataMin.Data[i].time*1000;
-                    consChartDataMin.Data[i].time=new Date(consChartDataMin.Data[i].time);
+                    consChartDataMin.Data[i].timest=consChartDataMin.Data[i].time*1000;
+                    consChartDataMin.Data[i].time=new Date(consChartDataMin.Data[i].timest);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
@@ -400,8 +398,8 @@ function drawMainChart(){
                 if (this.readyState == 4 && this.status == 200) {
                   consChartDataHour = JSON.parse(this.responseText);
                   for(var i=0;i<consChartDataHour.Data.length;i++) {
-                    consChartDataHour.Data[i].time=consChartDataHour.Data[i].time*1000;
-                    consChartDataHour.Data[i].time=new Date(consChartDataHour.Data[i].time);
+                    consChartDataHour.Data[i].timest=consChartDataHour.Data[i].time*1000;
+                    consChartDataHour.Data[i].time=new Date(consChartDataHour.Data[i].timest);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
@@ -480,8 +478,8 @@ function drawMainChart(){
                 if (this.readyState == 4 && this.status == 200) {
                   consChartDataDay = JSON.parse(this.responseText);
                   for(var i=0;i<consChartDataDay.Data.length;i++) {
-                    consChartDataDay.Data[i].time=consChartDataDay.Data[i].time*1000;
-                    consChartDataDay.Data[i].time=new Date(consChartDataDay.Data[i].time);
+                    consChartDataDay.Data[i].timest=consChartDataDay.Data[i].time*1000;
+                    consChartDataDay.Data[i].time=new Date(consChartDataDay.Data[i].timest);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
@@ -573,7 +571,7 @@ function drawMainChart(){
         console.log(currChartType);
         console.log(newChartType);
         document.getElementById("chartLoadOverlay").style.display = "block";
-        if((currChartType=="smoothedLine" || currChartType=="candlestick" || currChartType=="ohlc")&&(newChartType=="renko" || newChartType=="heikinashi")){
+        if((currChartType=="smoothedLine" || currChartType=="candlestick" || currChartType=="ohlc" || currChartType=="renko")&&(newChartType=="renko" || newChartType=="heikinashi")){
           console.log("setting");
           if(newChartType=="heikinashi"){
             console.log("calculating"+newChartType);
@@ -582,37 +580,54 @@ function drawMainChart(){
             charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="HA open";
             charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="HA high";
             charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="HA low";
-            newChartType="candlestick";
+            charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
+            charts[chartNames[displayedChart]].validateNow(true,true);
           }
           else if(newChartType=="renko"){
             displayNewIndi(newChartType,1,true);
-            newChartType="line";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="Renko close";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="Renko open";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="Renko high";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="Renko low";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[4].fromField="Renko volume";
+            charts[chartNames[displayedChart]].dataSets[0].categoryField="Renko time"
+            charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
+            // charts[chartNames[displayedChart]].validateNow(true,true);
           }
         }
-        else if((currChartType=="renko" || currChartType=="heikinashi")&&(newChartType=="smoothedLine" || newChartType=="candlestick" || newChartType=="ohlc")){
+        // else if((currChartType=="renko" || currChartType=="heikinashi")&&(newChartType=="smoothedLine" || newChartType=="candlestick" || newChartType=="ohlc")){
+        //   charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
+        //   charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
+        //   charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
+        //   charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
+        //   charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = "line";
+        //   charts[chartNames[displayedChart]].validateNow(true,true);
+        // }
+        else{
           charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
           charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
           charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
           charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
+          charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
+          charts[chartNames[displayedChart]].validateNow(true,true);
         }
+        console.log("chart type changed");
         currChartType=newChartType;
         document.getElementById("chartIndiSelect1").selectedIndex = 0; 
         document.getElementById("chartIndiSelect2").selectedIndex = 0;
         // charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
         // charts[chartNames[displayedChart]].validateNow();
-        console.log("changing chart type");
-        if(displayedChart == 1){
-          charts.chartMin.panels[0].stockGraphs[0].type = newChartType;
-          charts.chartMin.validateNow(true,true);
-        }
-        else if(displayedChart == 2){
-          charts.chartHour.panels[0].stockGraphs[0].type = newChartType;
-          charts.chartHour.validateNow(true,true);
-        }
-        else if(displayedChart == 3){
-          charts.chartDay.panels[0].stockGraphs[0].type = newChartType;
-          charts.chartDay.validateNow(true,true);
-        }
-        console.log("chart type changed");
+        // if(displayedChart == 1){
+        //   charts.chartMin.panels[0].stockGraphs[0].type = newChartType;
+        //   charts.chartMin.validateNow(true,true);
+        // }
+        // else if(displayedChart == 2){
+        //   charts.chartHour.panels[0].stockGraphs[0].type = newChartType;
+        //   charts.chartHour.validateNow(true,true);
+        // }
+        // else if(displayedChart == 3){
+        //   charts.chartDay.panels[0].stockGraphs[0].type = newChartType;
+        //   charts.chartDay.validateNow(true,true);
+        // }
       }
 //////////////////////////////INDICATOR CODE START////////////////////////////////////////
