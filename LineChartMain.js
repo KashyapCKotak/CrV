@@ -16,14 +16,16 @@
 //<!-- Chart code -->
 //<script>
 predicted=false;
-chartHour=null;
-chartMin=null;
-chartDay=null;
+charts={none:null,chartMin:null,chartHour:null,chartDay:null};
+chartNames=["none","chartMin","chartHour","chartDay"];
+// chartHour=null;
+// chartMin=null;
+// chartDay=null;
 firstTimeZoom=true;
 firstTimeIndi=true;
 indiDisplayed=false;
 currChartType="smoothedLine";
-chartArr=[0,chartMin,chartHour,chartDay];
+// chartArr=[undefined,chartMin,chartHour,chartDay];
 
 var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
 
@@ -273,15 +275,15 @@ function drawMainChart(){
             whatZoomCount=7;
             firstTimeZoom=true;
             //newChart.periodSelector.listeners=periodSelectorListener;
-            chartHour = AmCharts.makeChart("chartdiv", newChart);
-            //chartHour.periodSelector.periodContainer.innerHTML="Zoom: <input type='button' value='1H' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1D' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1W' class='amChartsButtonSelected amcharts-period-input-selected' style='background: rgb(0, 230, 115); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 1; outline: none;'><input type='button' value='1M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='3M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1Y' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='MAX' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'>";
-            //chartHour.periodSelector.periodContainer.outerHTML="<div style='float: right; display: inline;'>Zoom: <input type='button' value='1H' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1D' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1W' class='amChartsButtonSelected amcharts-period-input-selected' style='background: rgb(0, 230, 115); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 1; outline: none;'><input type='button' value='1M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='3M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1Y' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='MAX' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'></div>";
-            //chartHour.write("chartdiv");
-            //chartHour.validateNow(false,false);
+            charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
+            //charts.chartHour.periodSelector.periodContainer.innerHTML="Zoom: <input type='button' value='1H' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1D' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1W' class='amChartsButtonSelected amcharts-period-input-selected' style='background: rgb(0, 230, 115); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 1; outline: none;'><input type='button' value='1M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='3M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1Y' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='MAX' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'>";
+            //charts.chartHour.periodSelector.periodContainer.outerHTML="<div style='float: right; display: inline;'>Zoom: <input type='button' value='1H' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1D' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1W' class='amChartsButtonSelected amcharts-period-input-selected' style='background: rgb(0, 230, 115); border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 1; outline: none;'><input type='button' value='1M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='3M' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='1Y' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'><input type='button' value='MAX' class='amChartsButton amcharts-period-input' style='background: transparent; border: 1px solid rgba(0, 0, 0, 0.3); border-radius: 5px; box-sizing: border-box; color: rgb(0, 0, 0); margin: 1px; opacity: 0.7; outline: none;'></div>";
+            //charts.chartHour.write("chartdiv");
+            //charts.chartHour.validateNow(false,false);
             displayedChart = 2;
-            // console.log(chartHour);
-            //setTimeout(function(){chartHour.periodSelector.addListener("changed", handleZoom);console.log("chartHour Listener Added");},2000);
-            // chartHour.periodSelector.addListener("changed", handleZoom);
+            // console.log(charts.chartHour);
+            //setTimeout(function(){charts.chartHour.periodSelector.addListener("changed", handleZoom);console.log("charts.chartHour Listener Added");},2000);
+            // charts.chartHour.periodSelector.addListener("changed", handleZoom);
             
             //var adjustChartdivHeight=24;//(document.getElementsByClassName("amcharts-stock-div")[0].offsetHeight)-(document.getElementById("chartdiv").offsetHeight)
             //document.getElementById("chartdiv").style.marginBottom=adjustChartdivHeight+"px";
@@ -312,7 +314,7 @@ function drawMainChart(){
           ///////////////////////////////////////// MIN ////////////////////////////// 
           if (whichZoomButton == "mm"){ //min 4320 | 180
             console.log("min zoom label:"+whichZoomButton);
-            if(chartMin == null || consChartDataMin == null){
+            if(charts.chartMin == null || consChartDataMin == null){
               console.log("consChartDataMin=null in if - "+consChartDataMin);
               var xhttpNewMin = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewMin.onreadystatechange = function() {
@@ -337,17 +339,17 @@ function drawMainChart(){
                   newChart.listeners=renderListener;
                   console.log("Making new chart");
                   firstTimeZoom=true;
-                  //chartMin = AmCharts.makeChart("chartdiv", newChart);
+                  //charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 1;
-                  //chartMin.periodSelector.addListener("changed", handleZoom);
-                  console.log("listener added chartMin");
+                  //charts.chartMin.periodSelector.addListener("changed", handleZoom);
+                  console.log("listener added charts.chartMin");
                   if(indiDisplayed){
-                    chartMin = AmCharts.makeChart("chartdiv", newChart);
+                    charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
                     displayNewIndi(currIndiDisplayed,false);
                   }
                   else
-                    chartMin = AmCharts.makeChart("chartdiv", newChart);
+                    charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
                   document.getElementById("chartLoadOverlay").style.display = "none";
                 }
               };
@@ -356,26 +358,26 @@ function drawMainChart(){
             }
             else{
               // change the chart object to display
-              console.log("else chartMin");
+              console.log("else charts.chartMin");
               if(displayedChart!=1){
                 displayedChart = 1;
-                console.log("write chartMin");
-                chartMin.periodSelector.removeListener(chartMin.periodSelector,"changed",handleZoom);
+                console.log("write charts.chartMin");
+                charts.chartMin.periodSelector.removeListener(charts.chartMin.periodSelector,"changed",handleZoom);
                 if(whatZoomCount == 60){
-                  chartMin.periodSelector.periods[0].selected=true;
-                  chartMin.periodSelector.periods[1].selected=false;
+                  charts.chartMin.periodSelector.periods[0].selected=true;
+                  charts.chartMin.periodSelector.periods[1].selected=false;
                 }
                 else{
-                  chartMin.periodSelector.periods[1].selected=true;
-                  chartMin.periodSelector.periods[0].selected=false;
+                  charts.chartMin.periodSelector.periods[1].selected=true;
+                  charts.chartMin.periodSelector.periods[0].selected=false;
                 }
                 if(indiDisplayed){
                   firstTimeZoom=true;
                   displayNewIndi(currIndiDisplayed,false);
                 }
                 else{
-                  chartMin.write("chartdiv");
-                  chartMin.periodSelector.addListener("changed",handleZoom);
+                  charts.chartMin.write("chartdiv");
+                  charts.chartMin.periodSelector.addListener("changed",handleZoom);
                   changeChartType(currChartType);
                 }
               }
@@ -391,7 +393,7 @@ function drawMainChart(){
           ///////////////////////////////////////// HOUR ////////////////////////////// 
           else if ( whichZoomButton == "DD" || (whichZoomButton == "MM" && whatZoomCount == 1)){ //hour 46 days (for one month) 14 weeks (for one week)
             console.log("hour zoom label:"+whichZoomButton);
-            if(chartHour == null || consChartDataHour == null){
+            if(charts.chartHour == null || consChartDataHour == null){
               console.log("consChartDataHour=null in if - "+consChartDataHour);
               var xhttpNewHour = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewHour.onreadystatechange = function() {
@@ -415,17 +417,17 @@ function drawMainChart(){
                   }
                   newChart.listeners=renderListener;
                   firstTimeZoom=true;
-                  //chartHour = AmCharts.makeChart("chartdiv", newChart);
+                  //charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 2;
-                  //chartHour.periodSelector.addListener("changed", handleZoom);
-                  console.log("listener added chartHour");
+                  //charts.chartHour.periodSelector.addListener("changed", handleZoom);
+                  console.log("listener added charts.chartHour");
                   if(indiDisplayed){
-                    chartHour = AmCharts.makeChart("chartdiv", newChart);
+                    charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
                     displayNewIndi(currIndiDisplayed,false);
                   }
                   else
-                    chartHour = AmCharts.makeChart("chartdiv", newChart);
+                    charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
                   document.getElementById("chartLoadOverlay").style.display = "none";
                 }
               };
@@ -434,18 +436,18 @@ function drawMainChart(){
             }
             else{ 
               // change the chart object to display
-              console.log("else chartHour");
+              console.log("else charts.chartHour");
               if(displayedChart!=2){
                 displayedChart = 2;
-                console.log("write chartHour");
-                chartHour.periodSelector.removeListener(chartHour.periodSelector,"changed",handleZoom);
+                console.log("write charts.chartHour");
+                charts.chartHour.periodSelector.removeListener(charts.chartHour.periodSelector,"changed",handleZoom);
                 if(whichZoomButton == "DD"){
-                  chartHour.periodSelector.periods[2].selected=true;
-                  chartHour.periodSelector.periods[3].selected=false;
+                  charts.chartHour.periodSelector.periods[2].selected=true;
+                  charts.chartHour.periodSelector.periods[3].selected=false;
                 }
                 else if(whichZoomButton == "MM"){
-                  chartHour.periodSelector.periods[3].selected=true;
-                  chartHour.periodSelector.periods[2].selected=false;
+                  charts.chartHour.periodSelector.periods[3].selected=true;
+                  charts.chartHour.periodSelector.periods[2].selected=false;
                 }
                 if(indiDisplayed){
                   console.log("Indi displaying");
@@ -453,9 +455,9 @@ function drawMainChart(){
                   displayNewIndi(currIndiDisplayed,false);
                 }
                 else{
-                  // chartHour.panels[0].stockGraphs[0].type=currChartType;
-                  chartHour.write("chartdiv");
-                  chartHour.periodSelector.addListener("changed",handleZoom);
+                  // charts.chartHour.panels[0].stockGraphs[0].type=currChartType;
+                  charts.chartHour.write("chartdiv");
+                  charts.chartHour.periodSelector.addListener("changed",handleZoom);
                   changeChartType(currChartType);
                 }
               }
@@ -471,7 +473,7 @@ function drawMainChart(){
           /////////////////////////////////////// DAY ////////////////////////////
           else if ((whichZoomButton == "MM" && (whatZoomCount == 3 || whatZoomCount == 12)) || whichZoomButton == "YYYY" || whichZoomButton == "MAX"){ //hour 46 days (for one month) 14 weeks (for one week)
             console.log("Day zoom label:"+whichZoomButton);
-            if(chartDay == null || consChartDataDay == null){
+            if(charts.chartDay == null || consChartDataDay == null){
               console.log("consChartDataDay=null in if - "+consChartDataDay);
               var xhttpNewDay = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewDay.onreadystatechange = function() {
@@ -502,17 +504,17 @@ function drawMainChart(){
                   }
                   newChart.listeners=renderListener;
                   firstTimeZoom=true;
-                  // chartDay = AmCharts.makeChart("chartdiv", newChart);
+                  // charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
                   displayedChart = 3;
-                  //chartDay.periodSelector.addListener("changed", handleZoom);
-                  console.log("listener added chartDay");
+                  //charts.chartDay.periodSelector.addListener("changed", handleZoom);
+                  console.log("listener added charts.chartDay");
                   if(indiDisplayed){
-                    chartDay = AmCharts.makeChart("chartdiv", newChart);
+                    charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
                     displayNewIndi(currIndiDisplayed,false);
                   }
                   else
-                    chartDay = AmCharts.makeChart("chartdiv", newChart);
+                    charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
                   document.getElementById("chartLoadOverlay").style.display = "none";
                 }
               };
@@ -521,34 +523,34 @@ function drawMainChart(){
             }
             else{ 
               // change the chart object to display
-              console.log("else chartDay");
+              console.log("else charts.chartDay");
               if(displayedChart!=3){
                 displayedChart = 3;
-                console.log("write chartDay");
-                chartDay.periodSelector.removeListener(chartDay.periodSelector,"changed",handleZoom);
+                console.log("write charts.chartDay");
+                charts.chartDay.periodSelector.removeListener(charts.chartDay.periodSelector,"changed",handleZoom);
                 if(whichZoomButton == "MM" && whatZoomCount == 3){
-                  chartDay.periodSelector.periods[4].selected=true;
-                  chartDay.periodSelector.periods[5].selected=false;
-                  chartDay.periodSelector.periods[6].selected=false;
+                  charts.chartDay.periodSelector.periods[4].selected=true;
+                  charts.chartDay.periodSelector.periods[5].selected=false;
+                  charts.chartDay.periodSelector.periods[6].selected=false;
                 }
                 else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY"){
-                  chartDay.periodSelector.periods[5].selected=true;
-                  chartDay.periodSelector.periods[4].selected=false;
-                  chartDay.periodSelector.periods[6].selected=false;
+                  charts.chartDay.periodSelector.periods[5].selected=true;
+                  charts.chartDay.periodSelector.periods[4].selected=false;
+                  charts.chartDay.periodSelector.periods[6].selected=false;
                 }
                 else if(whichZoomButton == "MAX"){
-                  chartDay.periodSelector.periods[6].selected=true;
-                  chartDay.periodSelector.periods[4].selected=false;
-                  chartDay.periodSelector.periods[5].selected=false;
+                  charts.chartDay.periodSelector.periods[6].selected=true;
+                  charts.chartDay.periodSelector.periods[4].selected=false;
+                  charts.chartDay.periodSelector.periods[5].selected=false;
                 }
                 if(indiDisplayed){
                   firstTimeZoom=true;
                   displayNewIndi(currIndiDisplayed,false);
                 }
                 else{
-                  // chartDay.panels[0].stockGraphs[0].type=currChartType;
-                  chartDay.write("chartdiv");
-                  chartDay.periodSelector.addListener("changed",handleZoom);
+                  // charts.chartDay.panels[0].stockGraphs[0].type=currChartType;
+                  charts.chartDay.write("chartdiv");
+                  charts.chartDay.periodSelector.addListener("changed",handleZoom);
                   changeChartType(currChartType);
                 }
               }
@@ -571,14 +573,15 @@ function drawMainChart(){
         console.log(currChartType);
         console.log(newChartType);
         document.getElementById("chartLoadOverlay").style.display = "block";
-        if((currChartType=="smoothedLine" || currChartType=="candelstick" || currChartType=="ohlc")&&(currChartType=="renko" || currChartType=="heikinashi")){
+        if((currChartType=="smoothedLine" || currChartType=="candlestick" || currChartType=="ohlc")&&(newChartType=="renko" || newChartType=="heikinashi")){
           console.log("setting");
           if(newChartType=="heikinashi"){
+            console.log("calculating"+newChartType);
             displayNewIndi(newChartType,1,true);
-            chartMin.datasets[0].fieldMappings[0].fromField="HA close";
-            chartMin.datasets[0].fieldMappings[0].fromField="HA open";
-            chartMin.datasets[0].fieldMappings[0].fromField="HA high";
-            chartMin.datasets[0].fieldMappings[0].fromField="HA low";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="HA close";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="HA open";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="HA high";
+            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="HA low";
             newChartType="candlestick";
           }
           else if(newChartType=="renko"){
@@ -586,28 +589,30 @@ function drawMainChart(){
             newChartType="line";
           }
         }
-        else if((currChartType=="renko" || currChartType=="heikinashi")&&(currChartType=="smoothedLine" || currChartType=="candelstick" || currChartType=="ohlc")){
-          chartMin.datasets[0].fieldMappings[0].fromField="close";
-          chartMin.datasets[0].fieldMappings[0].fromField="open";
-          chartMin.datasets[0].fieldMappings[0].fromField="high";
-          chartMin.datasets[0].fieldMappings[0].fromField="low";
+        else if((currChartType=="renko" || currChartType=="heikinashi")&&(newChartType=="smoothedLine" || newChartType=="candlestick" || newChartType=="ohlc")){
+          charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
+          charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
+          charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
+          charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
         }
         currChartType=newChartType;
         document.getElementById("chartIndiSelect1").selectedIndex = 0; 
         document.getElementById("chartIndiSelect2").selectedIndex = 0;
-        // chartArr[displayedChart].panels[0].stockGraphs[0].type = newChartType;
-        // chartArr[displayedChart].validateNow();
+        // charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
+        // charts[chartNames[displayedChart]].validateNow();
+        console.log("changing chart type");
         if(displayedChart == 1){
-          chartMin.panels[0].stockGraphs[0].type = newChartType;
-          chartMin.validateNow();
+          charts.chartMin.panels[0].stockGraphs[0].type = newChartType;
+          charts.chartMin.validateNow(true,true);
         }
         else if(displayedChart == 2){
-          chartHour.panels[0].stockGraphs[0].type = newChartType;
-          chartHour.validateNow();
+          charts.chartHour.panels[0].stockGraphs[0].type = newChartType;
+          charts.chartHour.validateNow(true,true);
         }
         else if(displayedChart == 3){
-          chartDay.panels[0].stockGraphs[0].type = newChartType;
-          chartDay.validateNow();
+          charts.chartDay.panels[0].stockGraphs[0].type = newChartType;
+          charts.chartDay.validateNow(true,true);
         }
+        console.log("chart type changed");
       }
 //////////////////////////////INDICATOR CODE START////////////////////////////////////////

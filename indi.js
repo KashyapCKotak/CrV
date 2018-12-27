@@ -78,16 +78,16 @@ function displayNewIndi(indicatorType,selectNum,pat){
 
   // if(indicatorType=="none"){
   //   if(displayedChart==1){
-  //     chartMin.periodSelector.periods[oldZoom].selected=true;
-  //     chartMin.validateNow();
+  //     charts.chartMin.periodSelector.periods[oldZoom].selected=true;
+  //     charts.chartMin.validateNow();
   //   }
   //   else if(displayedChart==2){
-  //     chartHour.periodSelector.periods[oldZoom].selected=true;
-  //     chartHour.validateNow();
+  //     charts.chartHour.periodSelector.periods[oldZoom].selected=true;
+  //     charts.chartHour.validateNow();
   //   }
   //   else if(displayedChart==3){
-  //     chartDay.periodSelector.periods[oldZoom].selected=true;
-  //     chartDay.validateNow();
+  //     charts.chartDay.periodSelector.periods[oldZoom].selected=true;
+  //     charts.chartDay.validateNow();
   //   }
   //   indiDisplayed=false;
   //   return;
@@ -117,7 +117,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
       (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas))?(fillToGraph=""):(fillToGraph=fillAlphas,fillAlphas=0.5);
       currDispChart.panels[0].stockGraphs.push({
         "id": (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas)) ? feilds[i] : feilds[i]+"-"+indiNum,
-        "title": "",//(!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas)) ? feilds[i] : feilds[i]+"-"+indiNum,
+        "title": (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas)) ? feilds[i] : feilds[i]+"-"+indiNum,
         "useDataSetColors":false,
         "precision": 4,
         "valueField": feilds[i]+indiNum,
@@ -226,16 +226,16 @@ function displayNewIndi(indicatorType,selectNum,pat){
     if(alreadyDispIndicator=="none"){
       if(indiType=="none"){
         if(displayedChart==1){
-          chartMin.periodSelector.periods[oldZoom].selected=true;
-          chartMin.validateNow();
+          charts.chartMin.periodSelector.periods[oldZoom].selected=true;
+          charts.chartMin.validateNow();
         }
         else if(displayedChart==2){
-          chartHour.periodSelector.periods[oldZoom].selected=true;
-          chartHour.validateNow();
+          charts.chartHour.periodSelector.periods[oldZoom].selected=true;
+          charts.chartHour.validateNow();
         }
         else if(displayedChart==3){
-          chartDay.periodSelector.periods[oldZoom].selected=true;
-          chartDay.validateNow();
+          charts.chartDay.periodSelector.periods[oldZoom].selected=true;
+          charts.chartDay.validateNow();
         }
         indiDisplayed=false;
         return;
@@ -382,6 +382,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
     else if(indiType=="heikinashi"){
       indiData=[];
       var tempindiData = IchimokuCloud.calculate({high: all.highs,low: all.lows,open: all.opens,close: all.closes});
+      console.log(tempindiData);
       tempindiData.forEach(function (d){
         indiData.push({
           "HA open":d.open,
@@ -389,7 +390,6 @@ function displayNewIndi(indicatorType,selectNum,pat){
           "HA low":d.low,
           "HA close":d.close
         });
-        i++;
       });
       console.log(tempindiData);
       mergeData(indiType);

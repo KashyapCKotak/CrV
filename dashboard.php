@@ -3263,10 +3263,12 @@
             console.log(selectedOption);
             document.getElementById("chartLoadOverlay").style.display = "block";
             changeChartType(selectedOption);
+            document.getElementById("chartLoadOverlay").style.display = "none";
           }
           function initChartIndicatorChange(whichIndicator){
             document.getElementById("chartLoadOverlay").style.display = "block";
             changeIndiType(document.getElementById("chartIndiSelect"+whichIndicator).value,whichIndicator)
+            document.getElementById("chartLoadOverlay").style.display = "none";
           }
         </script>
         
