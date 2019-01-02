@@ -17,10 +17,14 @@
 //<script>
 predicted=false;
 charts={none:null,chartMin:null,chartHour:null,chartDay:null};
-chartNames=["none","chartMin","chartHour","chartDay"];
+chrtDat={none:null,consChartDataHour:null,consChartDataMin:null,consChartDataDay:null};
+chartNames=["none","Min","Hour","Day"];
 // chartHour=null;
 // chartMin=null;
 // chartDay=null;
+// chrtDat.consChartDataHour=null;
+// chrtDat.consChartDataMin=null;
+// chrtDat.consChartDataDay=null;
 firstTimeZoom=true;
 firstTimeIndi=true;
 indiDisplayed=false;
@@ -34,10 +38,6 @@ function drawMainChart(){
   var urlHour = "https://min-api.cryptocompare.com/data/histohour?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=744&e=CCCAGG";
   var urlMinute = "https://min-api.cryptocompare.com/data/histominute?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=1440&e=CCCAGG";
   var urlDay = "https://min-api.cryptocompare.com/data/histoday?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&allData=true&e=CCCAGG";
-  
-  consChartDataHour=null;
-  consChartDataMin=null;
-  consChartDataDay=null;
 
   firstTimeZoom=true;
 
@@ -111,7 +111,7 @@ function drawMainChart(){
             "fromField": "histogram",
             "toField": "histogram"
           } */],
-          //"dataProvider": consChartDataHour.Data,
+          //"dataProvider": chrtDat.consChartDataHour.Data,
           "categoryField": "time"
         }],
         "balloon": {},
@@ -138,7 +138,7 @@ function drawMainChart(){
             "type": "smoothedLine",
             "compareable": true,
             "lineThickness": 2,
-            "balloonText": "open: [[open]]\nclose: [[close]]\nhigh: [[high]]\nclose: [[close]]",
+            "balloonText": "open: [[open]]\nclose: [[close]]\nhigh: [[high]]\nlow: [[low]]",
             "fillAlphas": 0.6
           }/*,{
             "id": "g5",
@@ -223,7 +223,7 @@ function drawMainChart(){
           },{
             "period": "DD",//histohour limit 168
             "count": 7,
-            //"selected": true, //TODO: set from code
+            //"selected": true, // !IMP: set from code
             "label": "1W"
           }, {
             "period": "MM",//histohour limit 744 
@@ -262,13 +262,14 @@ function drawMainChart(){
         xhttpHour.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             console.log("Chart Drawing Start in");
-            consChartDataHour = JSON.parse(this.responseText);
-            for(var i=0;i<consChartDataHour.Data.length;i++) {
-              consChartDataHour.Data[i].timest=consChartDataHour.Data[i].time*1000;
-              consChartDataHour.Data[i].time=new Date(consChartDataHour.Data[i].timest);
+            chrtDat.consChartDataHour = JSON.parse(this.responseText);
+            for(var i=0;i<chrtDat.consChartDataHour.Data.length;i++) {
+              chrtDat.consChartDataHour.Data[i].time=chrtDat.consChartDataHour.Data[i].time*1000;
+              // chrtDat.consChartDataHour.Data[i].time=new Date(chrtDat.consChartDataHour.Data[i].timest);
             }
+            console.log(JSON.stringify(chrtDat.consChartDataHour.Data));
             var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-            newChart.dataSets[0].dataProvider=consChartDataHour.Data;
+            newChart.dataSets[0].dataProvider=chrtDat.consChartDataHour.Data;
             newChart.periodSelector.periods[2].selected=true;
             newChart.listeners=renderListener;
             whichZoomButton="DD";
@@ -312,19 +313,19 @@ function drawMainChart(){
           ///////////////////////////////////////// MIN ////////////////////////////// 
           if (whichZoomButton == "mm"){ //min 4320 | 180
             console.log("min zoom label:"+whichZoomButton);
-            if(charts.chartMin == null || consChartDataMin == null){
-              console.log("consChartDataMin=null in if - "+consChartDataMin);
+            if(charts.chartMin == null || chrtDat.consChartDataMin == null){
+              console.log("chrtDat.consChartDataMin=null in if - "+chrtDat.consChartDataMin);
               var xhttpNewMin = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewMin.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  consChartDataMin = JSON.parse(this.responseText);
-                  for(var i=0;i<consChartDataMin.Data.length;i++) {
-                    consChartDataMin.Data[i].timest=consChartDataMin.Data[i].time*1000;
-                    consChartDataMin.Data[i].time=new Date(consChartDataMin.Data[i].timest);
+                  chrtDat.consChartDataMin = JSON.parse(this.responseText);
+                  for(var i=0;i<chrtDat.consChartDataMin.Data.length;i++) {
+                    chrtDat.consChartDataMin.Data[i].time=chrtDat.consChartDataMin.Data[i].time*1000;
+                    // chrtDat.consChartDataMin.Data[i].time=new Date(chrtDat.consChartDataMin.Data[i].timest);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=consChartDataMin.Data;
+                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataMin.Data;
                   newChart.panels[0].stockGraphs[0].type=currChartType;
                   if(whatZoomCount == 60){
                     newChart.periodSelector.periods[0].selected=true;
@@ -344,7 +345,7 @@ function drawMainChart(){
                   if(indiDisplayed){
                     charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed,false);
+                    displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                   }
                   else
                     charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
@@ -371,7 +372,7 @@ function drawMainChart(){
                 }
                 if(indiDisplayed){
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,false);
+                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                 }
                 else{
                   charts.chartMin.write("chartdiv");
@@ -382,7 +383,7 @@ function drawMainChart(){
               else{
                 if(indiDisplayed){
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,false);
+                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                 }
               }
               document.getElementById("chartLoadOverlay").style.display = "none";
@@ -391,19 +392,19 @@ function drawMainChart(){
           ///////////////////////////////////////// HOUR ////////////////////////////// 
           else if ( whichZoomButton == "DD" || (whichZoomButton == "MM" && whatZoomCount == 1)){ //hour 46 days (for one month) 14 weeks (for one week)
             console.log("hour zoom label:"+whichZoomButton);
-            if(charts.chartHour == null || consChartDataHour == null){
-              console.log("consChartDataHour=null in if - "+consChartDataHour);
+            if(charts.chartHour == null || chrtDat.consChartDataHour == null){
+              console.log("chrtDat.consChartDataHour=null in if - "+chrtDat.consChartDataHour);
               var xhttpNewHour = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewHour.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  consChartDataHour = JSON.parse(this.responseText);
-                  for(var i=0;i<consChartDataHour.Data.length;i++) {
-                    consChartDataHour.Data[i].timest=consChartDataHour.Data[i].time*1000;
-                    consChartDataHour.Data[i].time=new Date(consChartDataHour.Data[i].timest);
+                  chrtDat.consChartDataHour = JSON.parse(this.responseText);
+                  for(var i=0;i<chrtDat.consChartDataHour.Data.length;i++) {
+                    chrtDat.consChartDataHour.Data[i].time=chrtDat.consChartDataHour.Data[i].time*1000;
+                    // chrtDat.consChartDataHour.Data[i].time=new Date(chrtDat.consChartDataHour.Data[i].timest);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=consChartDataHour.Data;
+                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataHour.Data;
                   newChart.panels[0].stockGraphs[0].type=currChartType;
                   if(whichZoomButton == "DD"){
                     newChart.periodSelector.periods[2].selected=true;
@@ -422,7 +423,7 @@ function drawMainChart(){
                   if(indiDisplayed){
                     charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed,false);
+                    displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                   }
                   else
                     charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
@@ -450,7 +451,7 @@ function drawMainChart(){
                 if(indiDisplayed){
                   console.log("Indi displaying");
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,false);
+                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                 }
                 else{
                   // charts.chartHour.panels[0].stockGraphs[0].type=currChartType;
@@ -462,7 +463,7 @@ function drawMainChart(){
               else{
                 if(indiDisplayed){
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,false);
+                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                 }
               }
               document.getElementById("chartLoadOverlay").style.display = "none";
@@ -471,19 +472,19 @@ function drawMainChart(){
           /////////////////////////////////////// DAY ////////////////////////////
           else if ((whichZoomButton == "MM" && (whatZoomCount == 3 || whatZoomCount == 12)) || whichZoomButton == "YYYY" || whichZoomButton == "MAX"){ //hour 46 days (for one month) 14 weeks (for one week)
             console.log("Day zoom label:"+whichZoomButton);
-            if(charts.chartDay == null || consChartDataDay == null){
-              console.log("consChartDataDay=null in if - "+consChartDataDay);
+            if(charts.chartDay == null || chrtDat.consChartDataDay == null){
+              console.log("chrtDat.consChartDataDay=null in if - "+chrtDat.consChartDataDay);
               var xhttpNewDay = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewDay.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  consChartDataDay = JSON.parse(this.responseText);
-                  for(var i=0;i<consChartDataDay.Data.length;i++) {
-                    consChartDataDay.Data[i].timest=consChartDataDay.Data[i].time*1000;
-                    consChartDataDay.Data[i].time=new Date(consChartDataDay.Data[i].timest);
+                  chrtDat.consChartDataDay = JSON.parse(this.responseText);
+                  for(var i=0;i<chrtDat.consChartDataDay.Data.length;i++) {
+                    chrtDat.consChartDataDay.Data[i].time=chrtDat.consChartDataDay.Data[i].time*1000;
+                    // chrtDat.consChartDataDay.Data[i].time=new Date(chrtDat.consChartDataDay.Data[i].timest);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=consChartDataDay.Data;
+                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataDay.Data;
                   newChart.panels[0].stockGraphs[0].type=currChartType;
                   if(whichZoomButton == "MM" && whatZoomCount == 3){
                     newChart.periodSelector.periods[4].selected=true;
@@ -509,7 +510,7 @@ function drawMainChart(){
                   if(indiDisplayed){
                     charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
                     firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed,false);
+                    displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                   }
                   else
                     charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
@@ -543,7 +544,7 @@ function drawMainChart(){
                 }
                 if(indiDisplayed){
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,false);
+                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                 }
                 else{
                   // charts.chartDay.panels[0].stockGraphs[0].type=currChartType;
@@ -555,7 +556,7 @@ function drawMainChart(){
               else{
                 if(indiDisplayed){
                   firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,false);
+                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
                 }
               }
               document.getElementById("chartLoadOverlay").style.display = "none";
@@ -576,47 +577,54 @@ function drawMainChart(){
           if(newChartType=="heikinashi"){
             console.log("calculating"+newChartType);
             displayNewIndi(newChartType,1,true);
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="HA close";
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="HA open";
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="HA high";
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="HA low";
-            charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
-            charts[chartNames[displayedChart]].validateNow(true,true);
+            charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="HA close";
+            charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="HA open";
+            charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="HA high";
+            charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="HA low";
+            charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
+            charts["chart"+chartNames[displayedChart]].validateNow(true,true);
           }
           else if(newChartType=="renko"){
             displayNewIndi(newChartType,1,true);
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="Renko close";
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="Renko open";
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="Renko high";
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="Renko low";
-            charts[chartNames[displayedChart]].dataSets[0].fieldMappings[4].fromField="Renko volume";
-            charts[chartNames[displayedChart]].dataSets[0].categoryField="Renko time"
-            charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
-            // charts[chartNames[displayedChart]].validateNow(true,true);
+            var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
+            console.log(JSON.parse(JSON.stringify(chrtDat["consChartData"+chartNames[displayedChart]].Data)));
+            newChart.dataSets[0].dataProvider=chrtDat["consChartData"+chartNames[displayedChart]].Data;
+            newChart.panels[0].stockGraphs[0].type = "candlestick";
+            newChart.periodSelector.periods[oldZoom].selected=true; // set from indi code
+            newChart.listeners=renderListener;
+            newChart.dataSets[0].fieldMappings[0].fromField="Renko close";
+            newChart.dataSets[0].fieldMappings[1].fromField="Renko open";
+            newChart.dataSets[0].fieldMappings[2].fromField="Renko high";
+            newChart.dataSets[0].fieldMappings[3].fromField="Renko low";
+            newChart.dataSets[0].fieldMappings[4].fromField="Renko volume";
+            newChart.dataSets[0].categoryField="rtime";
+            charts["chart"+chartNames[displayedChart]] = AmCharts.makeChart("chartdiv", newChart);
+            // charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
+            // charts["chart"+chartNames[displayedChart]].validateNow(true,true);
           }
         }
         // else if((currChartType=="renko" || currChartType=="heikinashi")&&(newChartType=="smoothedLine" || newChartType=="candlestick" || newChartType=="ohlc")){
-        //   charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
-        //   charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
-        //   charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
-        //   charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
-        //   charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = "line";
-        //   charts[chartNames[displayedChart]].validateNow(true,true);
+        //   charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
+        //   charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
+        //   charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
+        //   charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
+        //   charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = "line";
+        //   charts["chart"+chartNames[displayedChart]].validateNow(true,true);
         // }
         else{
-          charts[chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
-          charts[chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
-          charts[chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
-          charts[chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
-          charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
-          charts[chartNames[displayedChart]].validateNow(true,true);
+          charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
+          charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
+          charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
+          charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
+          charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
+          charts["chart"+chartNames[displayedChart]].validateNow(true,true);
         }
         console.log("chart type changed");
         currChartType=newChartType;
         document.getElementById("chartIndiSelect1").selectedIndex = 0; 
         document.getElementById("chartIndiSelect2").selectedIndex = 0;
-        // charts[chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
-        // charts[chartNames[displayedChart]].validateNow();
+        // charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
+        // charts["chart"+chartNames[displayedChart]].validateNow();
         // if(displayedChart == 1){
         //   charts.chartMin.panels[0].stockGraphs[0].type = newChartType;
         //   charts.chartMin.validateNow(true,true);

@@ -30,7 +30,7 @@ async function calcPatterns(){
     var uptrend=false;
     var downtrend=false;
     const period=204;
-    var patCurrData=consChartDataHour.Data;
+    var patCurrData=chrtDat.consChartDataHour.Data;
     currPatDataLen=744;
     //patCurrData=patCurrData.slice(0,patCurrData.length-1);
     const total=patCurrData.length;

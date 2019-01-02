@@ -1,4 +1,5 @@
 function displayNewIndi(indicatorType,selectNum,pat){
+  lastIndiSelNum=selectNum;
   console.log("selectNum: "+selectNum);
   let bottomRefCol="#ffffff";
   let topAlpha=0.5;
@@ -37,45 +38,46 @@ function displayNewIndi(indicatorType,selectNum,pat){
                 "VWAP":["top",["#3a5ef2"],["VWAP"],["line"],[0]],
                 "roc":["bottom",["#3a5ef2"],["ROC"],["line"],[0]],
                 "heikinashi":["top",["#NA","#NA","#NA","#NA"],["HA open","HA high","HA low","HA close"],["NA","NA","NA"],[0,0,0]],
-                "renko":["top",["#NA","#NA","#NA","#NA","#NA","#NA"],["Renko open","Renko high","Renko low","Renko close","Renko volume","Renko time"],["NA","NA","NA"],[0,0,0]]};//third is third
+                "renko":["top",["#NA","#NA","#NA","#NA","#NA","#NA"],["Renko open","Renko high","Renko low","Renko close","Renko volume","rtime"],["NA","NA","NA"],[0,0,0]]};//third is third
   // console.log(displayedChart);
+  var cndlstck=["heikinashi","renko"];
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
-  currDispChart.panels[0].stockGraphs[0].type = currChartType;
+  currDispChart.panels[0].stockGraphs[0].type = (cndlstck.includes(currChartType))?"candlestick":"smoothedLine";
   currDispChart.listeners=renderListener;
   if(pat){
     /**
      * Wrote the below code for some reason...
-     * currPatData=JSON.parse(JSON.stringify(consChartDataHour.Data));
+     * currPatData=JSON.parse(JSON.stringify(chrtDat.consChartDataHour.Data));
      * currData=currPatData;
      */
-    currData=consChartDataHour.Data;
+    currData=chrtDat.consChartDataHour.Data;
     currPatData=currData;
   }
   else if(displayedChart==1){
-    currData=consChartDataMin.Data;
+    currData=chrtDat.consChartDataMin.Data;
   }
   else if(displayedChart==2){
-    currData=consChartDataHour.Data;
+    currData=chrtDat.consChartDataHour.Data;
   }
   else if(displayedChart==3){
-    currData=consChartDataDay.Data;
+    currData=chrtDat.consChartDataDay.Data;
   }
   // console.log(currData);
-
+  oldZoom=2;
   if(whichZoomButton=="mm" && whatZoomCount == 60)
-      var oldZoom=0;
+      oldZoom=0;
   else if(whichZoomButton=="mm")
-      var oldZoom=1;
+      oldZoom=1;
   else if(whichZoomButton == "DD")
-      var oldZoom=2;
+      oldZoom=2;
   else if((whichZoomButton == "MM" && whatZoomCount == 1))
-      var oldZoom=3;
+      oldZoom=3;
   else if(whichZoomButton == "MM" && whatZoomCount == 3)
-      var oldZoom=4;
+      oldZoom=4;
   else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY")
-      var oldZoom=5;
+      oldZoom=5;
   else if(whichZoomButton == "MAX")
-      var oldZoom=6;
+      oldZoom=6;
 
   // if(indicatorType=="none"){
   //   if(displayedChart==1){
@@ -174,7 +176,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
         "fillToGraph":fillToGraph
       });
     }
-    console.log(JSON.parse(JSON.stringify(indiStockGraphs)));
+    // console.log(JSON.parse(JSON.stringify(indiStockGraphs)));
     currDispChart.panels[1]={
       "title": indiType+" "+indiNum,
       "percentHeight": percentHeight,
@@ -247,8 +249,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
         setVolumeChart(1);
         setTopIndicatorChart(feilds, indiNum, indiType, 30);
       }
-    }
-    else if(alreadyDispIndicator!="none"){
+    } else if (alreadyDispIndicator!="none"){
       let alrdyDispIndicatorTyp=alreadyDispIndicator.replace(/[0-9]/g, '');
       let alrdyDispIndicatorNum=alreadyDispIndicator.replace( /^\D+/g, '');
       let alrdyDispIndicatorPos=indiProps[alrdyDispIndicatorTyp][0];
@@ -281,11 +282,11 @@ function displayNewIndi(indicatorType,selectNum,pat){
         }
       }
     }
-    currIndiDisplayed=document.getElementById("chartIndiSelect1").value;
+    currIndiDisplayed=indicatorType;
     indiDisplayed=true;
     currDispChart.listeners=renderListener;
     firstTimeZoom=true; // IMP: To prevent it to zoom on rendering which is default for amCharts. Handling Zoon again will lead to calculation of indi again
-    chartWithIndi = AmCharts.makeChart("chartdiv", currDispChart);
+    charts["chart"+chartNames[displayedChart]] = AmCharts.makeChart("chartdiv", currDispChart);
     console.log("displayed chart with indi");
   }
 
@@ -297,10 +298,20 @@ function displayNewIndi(indicatorType,selectNum,pat){
     // let variation=""; // IMP : using indiNum instead
     // (indiType!=indicatorType) ? variation=indicatorType.replace(/\D/g,'') : ""; // IMP : using indiNum instead
     // var feilds=indiProps[indiType][2];
+    let timepresent=false;
+    let timefeild=undefined;
+    for(var i=0;i<feilds.length;i++){
+      if(feilds[i].indexOf("time")!=-1){
+        timepresent=true;
+        timefeild=feilds[i];
+      }
+    }
     currData.forEach(function (d) {
       if (counter < diff) {
         for(var i=0;i<feilds.length;i++){
           d[feilds[i]+indiNum]=undefined;
+          if(timepresent)
+            d[timefeild]=d.time;
         }
       }
       else {
@@ -320,6 +331,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
   function calcTopIndi(indiType, indiPos, indiNum){
     if(indiType=="sma"){
       indiData = SMA.calculate({period : indiNum, values : all.closes});
+      console.log("SMA data");
+      console.log(indiData);
       mergeData(indiType);
       displayIndicatorChart(indiType, indiPos);
     }
@@ -410,8 +423,8 @@ function displayNewIndi(indicatorType,selectNum,pat){
           "Renko high":tempindiData.high[i],
           "Renko low":tempindiData.low[i],
           "Renko close":tempindiData.close[i],
-          "Renko volume":tempindiData.volume[i],
-          "Renko time":new Date(tempindiData.timestamp[i])
+          "rtime":tempindiData.timestamp[i],
+          "Renko volume":tempindiData.volume[i]
         });
       }
       console.log(indiData);
@@ -710,7 +723,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
     if(pat)
       var limit = 204;
     else
-      var limit = (oldZoom==0) ? 96 : (oldZoom==1) ? 1440 : (oldZoom==2) ? 204 : (oldZoom==3) ? 744 : (oldZoom==4) ? 129 : (oldZoom==5) ? 402 : (len-1);
+      var limit = cndlstck.includes(indicatorType) ? len : (oldZoom==0) ? 96 : (oldZoom==1) ? 1440 : (oldZoom==2) ? 204 : (oldZoom==3) ? 744 : (oldZoom==4) ? 129 : (oldZoom==5) ? 402 : (len-1);
     //console.log(oldZoom);
     //console.log(limit);
     let counter=0;
@@ -722,7 +735,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
         all.highs.push(parseFloat(d.high));
         all.lows.push(parseFloat(d.low));
         all.volumes.push(parseFloat(d.volumeto));
-        all.timestamps.push(parseFloat(d.timest));
+        all.timestamps.push(parseFloat(d.time));
       }
     });
     //console.log(all);
@@ -731,7 +744,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
     let indiAlreadyClcd=false;
     for(element in feilds) {
       if(feilds[element]+indiNum in currData[0])
-        indiAlreadyClcd=true;//TODO: assign true
+        indiAlreadyClcd=false;//TODO: assign true
       else{
         indiAlreadyClcd=false;
         break;

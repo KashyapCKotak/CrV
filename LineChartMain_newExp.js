@@ -3,9 +3,9 @@
   var urlMinute = "https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=INR&limit=1440&e=CCCAGG";
   var urlDay = "https://min-api.cryptocompare.com/data/histoday?fsym=BTC&tsym=INR&allData=true&e=CCCAGG";
   
-  var consChartDataHour;
-  var consChartDataMin;
-  var consChartDataDay;
+  var chrtDat.consChartDataHour;
+  var chrtDat.consChartDataMin;
+  var chrtDat.consChartDataDay;
   
   var chartHour;
   var chartMin;
@@ -37,7 +37,7 @@
             "fromField": "volumeto",
             "toField": "volume"
           } ],
-          //"dataProvider": consChartDataHour.Data,
+          //"dataProvider": chrtDat.consChartDataHour.Data,
           "categoryField": "time"
         }],
         "balloon": {},
@@ -158,13 +158,13 @@
         xhttpHour.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
             
-            consChartDataHour = JSON.parse(this.responseText);
-            for(var i=0;i<consChartDataHour.Data.length;i++) {
-              consChartDataHour.Data[i].time=consChartDataHour.Data[i].time*1000;
-              consChartDataHour.Data[i].time=new Date(consChartDataHour.Data[i].time);
+            chrtDat.consChartDataHour = JSON.parse(this.responseText);
+            for(var i=0;i<chrtDat.consChartDataHour.Data.length;i++) {
+              chrtDat.consChartDataHour.Data[i].time=chrtDat.consChartDataHour.Data[i].time*1000;
+              chrtDat.consChartDataHour.Data[i].time=new Date(chrtDat.consChartDataHour.Data[i].time);
             }
             var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-            newChart.dataSets[0].dataProvider=consChartDataHour.Data;
+            newChart.dataSets[0].dataProvider=chrtDat.consChartDataHour.Data;
             newChart.periodSelector.periods[2].selected=true;
             //delete newChart.periodSelector;
             console.log(newChart);
@@ -198,19 +198,19 @@
           ///////////////////////////////////////// MIN ////////////////////////////// 
           if (whichZoomButton == "mm"){ //min 4320 | 180
             console.log("min zoom label:"+whichZoomButton);
-            if(chartMin == null || consChartDataMin == null){
-              console.log("consChartDataMin=null in if - "+consChartDataMin);
+            if(chartMin == null || chrtDat.consChartDataMin == null){
+              console.log("chrtDat.consChartDataMin=null in if - "+chrtDat.consChartDataMin);
               var xhttpNewMin = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewMin.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  consChartDataMin = JSON.parse(this.responseText);
-                  for(var i=0;i<consChartDataMin.Data.length;i++) {
-                    consChartDataMin.Data[i].time=consChartDataMin.Data[i].time*1000;
-                    consChartDataMin.Data[i].time=new Date(consChartDataMin.Data[i].time);
+                  chrtDat.consChartDataMin = JSON.parse(this.responseText);
+                  for(var i=0;i<chrtDat.consChartDataMin.Data.length;i++) {
+                    chrtDat.consChartDataMin.Data[i].time=chrtDat.consChartDataMin.Data[i].time*1000;
+                    chrtDat.consChartDataMin.Data[i].time=new Date(chrtDat.consChartDataMin.Data[i].time);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=consChartDataMin.Data;
+                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataMin.Data;
                   if(whatZoomCount == 60){
                     newChart.periodSelector.periods[0].selected=true;
                     newChart.periodSelector.periods[1].selected=false;
@@ -251,19 +251,19 @@
           ///////////////////////////////////////// HOUR ////////////////////////////// 
           else if ( whichZoomButton == "DD" || (whichZoomButton == "MM" && whatZoomCount == 1)){ //hour 46 days (for one month) 14 weeks (for one week)
             console.log("hour zoom label:"+whichZoomButton);
-            if(chartHour == null || consChartDataHour == null){
-              console.log("consChartDataHour=null in if - "+consChartDataHour);
+            if(chartHour == null || chrtDat.consChartDataHour == null){
+              console.log("chrtDat.consChartDataHour=null in if - "+chrtDat.consChartDataHour);
               var xhttpNewHour = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewHour.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  consChartDataHour = JSON.parse(this.responseText);
-                  for(var i=0;i<consChartDataHour.Data.length;i++) {
-                    consChartDataHour.Data[i].time=consChartDataHour.Data[i].time*1000;
-                    consChartDataHour.Data[i].time=new Date(consChartDataHour.Data[i].time);
+                  chrtDat.consChartDataHour = JSON.parse(this.responseText);
+                  for(var i=0;i<chrtDat.consChartDataHour.Data.length;i++) {
+                    chrtDat.consChartDataHour.Data[i].time=chrtDat.consChartDataHour.Data[i].time*1000;
+                    chrtDat.consChartDataHour.Data[i].time=new Date(chrtDat.consChartDataHour.Data[i].time);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=consChartDataHour.Data;
+                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataHour.Data;
                   if(whichZoomButton == "DD"){
                     newChart.periodSelector.periods[2].selected=true;
                     newChart.periodSelector.periods[3].selected=false;
@@ -304,19 +304,19 @@
           /////////////////////////////////////// DAY ////////////////////////////
           else if ((whichZoomButton == "MM" && (whatZoomCount == 3 || whatZoomCount == 12)) || whichZoomButton == "YYYY" || whichZoomButton == "MAX"){ //hour 46 days (for one month) 14 weeks (for one week)
             console.log("Day zoom label:"+whichZoomButton);
-            if(chartDay == null || consChartDataDay == null){
-              console.log("consChartDataDay=null in if - "+consChartDataDay);
+            if(chartDay == null || chrtDat.consChartDataDay == null){
+              console.log("chrtDat.consChartDataDay=null in if - "+chrtDat.consChartDataDay);
               var xhttpNewDay = new XMLHttpRequest(); // TODO: Support for old IE browsers
               xhttpNewDay.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
-                  consChartDataDay = JSON.parse(this.responseText);
-                  for(var i=0;i<consChartDataDay.Data.length;i++) {
-                    consChartDataDay.Data[i].time=consChartDataDay.Data[i].time*1000;
-                    consChartDataDay.Data[i].time=new Date(consChartDataDay.Data[i].time);
+                  chrtDat.consChartDataDay = JSON.parse(this.responseText);
+                  for(var i=0;i<chrtDat.consChartDataDay.Data.length;i++) {
+                    chrtDat.consChartDataDay.Data[i].time=chrtDat.consChartDataDay.Data[i].time*1000;
+                    chrtDat.consChartDataDay.Data[i].time=new Date(chrtDat.consChartDataDay.Data[i].time);
                   }
                   console.log("set new");
                   var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=consChartDataDay.Data;
+                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataDay.Data;
                   if(whichZoomButton == "MM" && whatZoomCount == 3){
                     newChart.periodSelector.periods[4].selected=true;
                     newChart.periodSelector.periods[5].selected=false;
