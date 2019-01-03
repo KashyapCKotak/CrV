@@ -1,4 +1,4 @@
-function displayNewIndi(indicatorType,selectNum,pat){
+function displayNewIndi(indicatorType,selectNum,onlyCalc){
   lastIndiSelNum=selectNum;
   console.log("selectNum: "+selectNum);
   let bottomRefCol="#ffffff";
@@ -41,10 +41,11 @@ function displayNewIndi(indicatorType,selectNum,pat){
                 "renko":["top",["#NA","#NA","#NA","#NA","#NA","#NA"],["Renko open","Renko high","Renko low","Renko close","Renko volume","rtime"],["NA","NA","NA"],[0,0,0]]};//third is third
   // console.log(displayedChart);
   var cndlstck=["heikinashi","renko"];
+  var isChartType=cndlstck.includes(indicatorType);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
   currDispChart.panels[0].stockGraphs[0].type = (cndlstck.includes(currChartType))?"candlestick":"smoothedLine";
   currDispChart.listeners=renderListener;
-  if(pat){
+  if(onlyCalc && !isChartType){
     /**
      * Wrote the below code for some reason...
      * currPatData=JSON.parse(JSON.stringify(chrtDat.consChartDataHour.Data));
@@ -211,7 +212,7 @@ function displayNewIndi(indicatorType,selectNum,pat){
   }
 
   function displayIndicatorChart(indiType, indiPos){
-    if(pat)
+    if(onlyCalc)
       return; // IMP : Do not remove
     // let variation=""; // IMP : Using indiNum instead
     // (indiType!=indicatorType) ? variation=indicatorType.replace(/\D/g,'') : ""; // IMP : Using indiNum instead
@@ -720,10 +721,10 @@ function displayNewIndi(indicatorType,selectNum,pat){
       timestamps:[]
     };
     let len=currData.length;
-    if(pat)
-      var limit = 204;
+    if(onlyCalc)
+      var limit = isChartType ? len : 204;
     else
-      var limit = cndlstck.includes(indicatorType) ? len : (oldZoom==0) ? 96 : (oldZoom==1) ? 1440 : (oldZoom==2) ? 204 : (oldZoom==3) ? 744 : (oldZoom==4) ? 129 : (oldZoom==5) ? 402 : (len-1);
+      var limit = isChartType ? len : (oldZoom==0) ? 96 : (oldZoom==1) ? 1440 : (oldZoom==2) ? 204 : (oldZoom==3) ? 744 : (oldZoom==4) ? 129 : (oldZoom==5) ? 402 : (len-1);
     //console.log(oldZoom);
     //console.log(limit);
     let counter=0;

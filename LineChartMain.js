@@ -267,7 +267,6 @@ function drawMainChart(){
               chrtDat.consChartDataHour.Data[i].time=chrtDat.consChartDataHour.Data[i].time*1000;
               // chrtDat.consChartDataHour.Data[i].time=new Date(chrtDat.consChartDataHour.Data[i].timest);
             }
-            console.log(JSON.stringify(chrtDat.consChartDataHour.Data));
             var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
             newChart.dataSets[0].dataProvider=chrtDat.consChartDataHour.Data;
             newChart.periodSelector.periods[2].selected=true;
@@ -577,28 +576,30 @@ function drawMainChart(){
           if(newChartType=="heikinashi"){
             console.log("calculating"+newChartType);
             displayNewIndi(newChartType,1,true);
-            charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="HA close";
-            charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="HA open";
-            charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="HA high";
-            charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="HA low";
-            charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
-            charts["chart"+chartNames[displayedChart]].validateNow(true,true);
+            let currChart="chart"+chartNames[displayedChart];
+            charts[currChart].dataSets[0].fieldMappings[0].fromField="HA close";
+            charts[currChart].dataSets[0].fieldMappings[1].fromField="HA open";
+            charts[currChart].dataSets[0].fieldMappings[2].fromField="HA high";
+            charts[currChart].dataSets[0].fieldMappings[3].fromField="HA low";
+            charts[currChart].panels[0].stockGraphs[0].type = "candlestick";
+            charts[currChart].validateNow(true,true);
           }
           else if(newChartType=="renko"){
             displayNewIndi(newChartType,1,true);
-            var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-            console.log(JSON.parse(JSON.stringify(chrtDat["consChartData"+chartNames[displayedChart]].Data)));
-            newChart.dataSets[0].dataProvider=chrtDat["consChartData"+chartNames[displayedChart]].Data;
-            newChart.panels[0].stockGraphs[0].type = "candlestick";
-            newChart.periodSelector.periods[oldZoom].selected=true; // set from indi code
-            newChart.listeners=renderListener;
-            newChart.dataSets[0].fieldMappings[0].fromField="Renko close";
-            newChart.dataSets[0].fieldMappings[1].fromField="Renko open";
-            newChart.dataSets[0].fieldMappings[2].fromField="Renko high";
-            newChart.dataSets[0].fieldMappings[3].fromField="Renko low";
-            newChart.dataSets[0].fieldMappings[4].fromField="Renko volume";
-            newChart.dataSets[0].categoryField="rtime";
-            charts["chart"+chartNames[displayedChart]] = AmCharts.makeChart("chartdiv", newChart);
+            // var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
+            let currChart="chart"+chartNames[displayedChart];
+            charts[currChart].dataSets[0].dataProvider=chrtDat["consChartData"+chartNames[displayedChart]].Data;
+            charts[currChart].panels[0].stockGraphs[0].type = "candlestick";
+            charts[currChart].periodSelector.periods[oldZoom].selected=true; // set from indi code
+            charts[currChart].listeners=renderListener;
+            charts[currChart].dataSets[0].fieldMappings[0].fromField="Renko close";
+            charts[currChart].dataSets[0].fieldMappings[1].fromField="Renko open";
+            charts[currChart].dataSets[0].fieldMappings[2].fromField="Renko high";
+            charts[currChart].dataSets[0].fieldMappings[3].fromField="Renko low";
+            charts[currChart].dataSets[0].fieldMappings[4].fromField="Renko volume";
+            charts[currChart].dataSets[0].categoryField="rtime";
+            charts[currChart].validateNow(true,true); 
+            // charts["chart"+chartNames[displayedChart]] = AmCharts.makeChart("chartdiv", newChart);
             // charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
             // charts["chart"+chartNames[displayedChart]].validateNow(true,true);
           }
