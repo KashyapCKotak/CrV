@@ -40,7 +40,6 @@ function displayNewIndi(indicatorType,selectNum,onlyCalc){
                 "heikinashi":["top",["#NA","#NA","#NA","#NA"],["HA open","HA high","HA low","HA close"],["NA","NA","NA"],[0,0,0]],
                 "renko":["top",["#NA","#NA","#NA","#NA","#NA","#NA"],["Renko open","Renko high","Renko low","Renko close","Renko volume","rtime"],["NA","NA","NA"],[0,0,0]]};//third is third
   // console.log(displayedChart);
-  var cndlstck=["heikinashi","renko"];
   var isChartType=cndlstck.includes(indicatorType);
   currDispChart=JSON.parse(JSON.stringify(chartObjectOneWeek));
   currDispChart.panels[0].stockGraphs[0].type = (cndlstck.includes(currChartType))?"candlestick":"smoothedLine";
@@ -119,6 +118,7 @@ function displayNewIndi(indicatorType,selectNum,onlyCalc){
       let fillAlphas=indiProps[indiType][4][i];
       let fillToGraph="";
       (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas))?(fillToGraph=""):(fillToGraph=fillAlphas,fillAlphas=0.5);
+      currDispChart.panels[0].stockGraphs[0].type=currChartType;
       currDispChart.panels[0].stockGraphs.push({
         "id": (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas)) ? feilds[i] : feilds[i]+"-"+indiNum,
         "title": (!isNaN(parseFloat(fillAlphas)) && isFinite(fillAlphas)) ? feilds[i] : feilds[i]+"-"+indiNum,
@@ -226,22 +226,48 @@ function displayNewIndi(indicatorType,selectNum,onlyCalc){
     addIndiToChartDataSet(feilds, indiNum);
     let otherSelectNum=selectNum%2+1;
     let alreadyDispIndicator=document.getElementById("chartIndiSelect"+otherSelectNum).value;
-
+    console.log("alreadyDispIndicator: "+alreadyDispIndicator);
     if(alreadyDispIndicator=="none"){
       if(indiType=="none"){
-        if(displayedChart==1){
-          charts.chartMin.periodSelector.periods[oldZoom].selected=true;
-          charts.chartMin.validateNow();
-        }
-        else if(displayedChart==2){
-          charts.chartHour.periodSelector.periods[oldZoom].selected=true;
-          charts.chartHour.validateNow();
-        }
-        else if(displayedChart==3){
-          charts.chartDay.periodSelector.periods[oldZoom].selected=true;
-          charts.chartDay.validateNow();
-        }
+        console.log("setting original graph");
+        console.log(currDispChart);
+        // setVolumeChart(1);
+        currDispChart.listeners=renderListener;
+        firstTimeZoom=true; // IMP: To prevent it to zoom on rendering which is default for amCharts. Handling Zoon again will lead to calculation of indi again
         indiDisplayed=false;
+        charts["chart"+chartNames[displayedChart]] = AmCharts.makeChart("chartdiv", currDispChart);
+        // charts["chart"+chartNames[displayedChart]].periodSelector.periods[oldZoom].selected=true;
+        // for(let i=1;i<charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs.length;i++)
+        //   charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs.pop();
+        // charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type=currChartType;
+        // charts["chart"+chartNames[displayedChart]].panels[1]={
+        //   "title": "Volume",
+        //   "percentHeight": 30,
+        //   "stockGraphs": [ {
+        //     "precision": 2,
+        //     "valueField": "volume",
+        //     "type": "column",
+        //     "cornerRadiusTop": 2,
+        //     "fillAlphas": 1
+        //   } ],
+        //   "stockLegend": {
+        //     "valueTextRegular": "Volume: [[value]]"
+        //   }
+        // };
+        // charts["chart"+chartNames[displayedChart]].validateNow();
+        //////////////////////////////////////////////////////////////////
+        // if(displayedChart==1){
+        //   charts.chartMin.periodSelector.periods[oldZoom].selected=true;
+        //   charts.chartMin.validateNow();
+        // }
+        // else if(displayedChart==2){
+        //   charts.chartHour.periodSelector.periods[oldZoom].selected=true;
+        //   charts.chartHour.validateNow();
+        // }
+        // else if(displayedChart==3){
+        //   charts.chartDay.periodSelector.periods[oldZoom].selected=true;
+        //   charts.chartDay.validateNow();
+        // }
         return;
       }
       if(indiPos=="bottom")
@@ -706,6 +732,7 @@ function displayNewIndi(indicatorType,selectNum,onlyCalc){
   }
 
   function calcIndi(indiType){
+    console.log("pureinditype:"+pureIndiType);
     if(pureIndiType=="none"){
       displayIndicatorChart(pureIndiType,"somePosition");
       return;
@@ -765,7 +792,7 @@ function displayNewIndi(indicatorType,selectNum,onlyCalc){
       calcThreeChartIndi(pureIndiType,"third",indiNum);
     }
   }
-  console.log("new Indicator Displaying !!!");
+  console.log("new Indicator Displaying !!!"+indicatorType);
   calcIndi(indicatorType);
 }
 

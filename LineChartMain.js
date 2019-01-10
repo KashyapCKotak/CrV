@@ -29,15 +29,18 @@ firstTimeZoom=true;
 firstTimeIndi=true;
 indiDisplayed=false;
 currChartType="smoothedLine";
+cndlstck=["heikinashi","renko"];
 // chartArr=[undefined,chartMin,chartHour,chartDay];
 
 var displayedChart=0; //0=None;1=Min;2=Hour;3=Day
 
 function drawMainChart(){
   // console.log("Chart Drawing Started");
+  
   var urlHour = "https://min-api.cryptocompare.com/data/histohour?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=744&e=CCCAGG";
-  var urlMinute = "https://min-api.cryptocompare.com/data/histominute?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=1440&e=CCCAGG";
+  var urlMin = "https://min-api.cryptocompare.com/data/histominute?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&limit=1440&e=CCCAGG";
   var urlDay = "https://min-api.cryptocompare.com/data/histoday?fsym="+globalCryptoValue+"&tsym="+globalFiatValue+"&allData=true&e=CCCAGG";
+  var urls={"urlHour":urlHour,"urlMin":urlMin,"urlDay":urlDay};
 
   firstTimeZoom=true;
 
@@ -296,6 +299,7 @@ function drawMainChart(){
         
         function handleZoom(event) {
           if(firstTimeZoom){
+            console.log("first time zoom");
             firstTimeZoom=false;
             return;
           }
@@ -308,259 +312,339 @@ function drawMainChart(){
           whatZoomCount = event.count;
           console.log(whichZoomButton + whatZoomCount);
           //1H=mm60 min;1D=mm1440 min;1W=DD7 hour;1M=MM1 hour;3M=MM3 day;1Y=YYYY1 day;MAX=MAXundefined day
-          
-          ///////////////////////////////////////// MIN ////////////////////////////// 
-          if (whichZoomButton == "mm"){ //min 4320 | 180
-            console.log("min zoom label:"+whichZoomButton);
-            if(charts.chartMin == null || chrtDat.consChartDataMin == null){
-              console.log("chrtDat.consChartDataMin=null in if - "+chrtDat.consChartDataMin);
-              var xhttpNewMin = new XMLHttpRequest(); // TODO: Support for old IE browsers
-              xhttpNewMin.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  chrtDat.consChartDataMin = JSON.parse(this.responseText);
-                  for(var i=0;i<chrtDat.consChartDataMin.Data.length;i++) {
-                    chrtDat.consChartDataMin.Data[i].time=chrtDat.consChartDataMin.Data[i].time*1000;
-                    // chrtDat.consChartDataMin.Data[i].time=new Date(chrtDat.consChartDataMin.Data[i].timest);
-                  }
-                  console.log("set new");
-                  var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataMin.Data;
-                  newChart.panels[0].stockGraphs[0].type=currChartType;
-                  if(whatZoomCount == 60){
-                    newChart.periodSelector.periods[0].selected=true;
-                    newChart.periodSelector.periods[1].selected=false;
-                  }
-                  else{
-                    newChart.periodSelector.periods[1].selected=true;
-                    newChart.periodSelector.periods[0].selected=false;
-                  }
-                  newChart.listeners=renderListener;
-                  console.log("Making new chart");
-                  firstTimeZoom=true;
-                  //charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
-                  displayedChart = 1;
-                  //charts.chartMin.periodSelector.addListener("changed", handleZoom);
-                  console.log("listener added charts.chartMin");
-                  if(indiDisplayed){
-                    charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
-                    firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                  }
-                  else
-                    charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
-                  document.getElementById("chartLoadOverlay").style.display = "none";
+          const zoomToChrt={"mm60":"Min","mm1440":"Min","DD7":"Hour","MM1":"Hour","MM3":"Day","MM12":"Day","MAX":"Day"};
+
+          ///////////////////// REDESIGNED DOWNWARDS ////////////////////
+          console.log("zoom label:"+whichZoomButton+" zoom count:"+whatZoomCount);
+          let currChrtNm=zoomToChrt[whichZoomButton+whatZoomCount];
+          if(charts["chart"+currChrtNm] == null || chrtDat["consChartData"+currChrtNm] == null){
+            console.log("consChartData: "+currChrtNm+" or data =null in if");
+            var xhttpNew = new XMLHttpRequest(); // TODO: Support for old IE browsers
+            xhttpNew.onreadystatechange = function() {
+              if (this.readyState == 4 && this.status == 200) {
+                chrtDat["consChartData"+currChrtNm] = JSON.parse(this.responseText);
+                let len=chrtDat["consChartData"+currChrtNm].Data.length;
+                for(let i=0;i<len;i++) {
+                  chrtDat["consChartData"+currChrtNm].Data[i].time=chrtDat["consChartData"+currChrtNm].Data[i].time*1000;
+                  // chrtDat["consChartData"+currChrtNm].Data[i].time=new Date(chrtDat.consChartDataMin.Data[i].timest);
                 }
-              };
-              xhttpNewMin.open("GET", urlMinute, true);
-              xhttpNewMin.send();
+                console.log("set new");
+                var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
+                newChart.dataSets[0].dataProvider=chrtDat["consChartData"+currChrtNm].Data;
+                newChart.panels[0].stockGraphs[0].type=currChartType;
+                for(let i=0;i<7;i++)
+                  newChart.periodSelector.periods[i].selected=false;
+                let zmIn=0;
+                (whatZoomCount==60) ? zmIn=0 : (whatZoomCount==1440) ? zmIn=1 : (whatZoomCount==7) ? zmIn=2 : (whatZoomCount==1 && whichZoomButton=="MM") ? zmIn=3 : (whatZoomCount==3) ? zmIn=4 : (whatZoomCount==12) ? zmIn=5 : (whichZoomButton=="MAX") ? zmIn=6 : null;
+                console.log("zmIn:"+zmIn);
+                newChart.periodSelector.periods[zmIn].selected=true;
+                newChart.listeners=renderListener;
+                console.log("Making new chart");
+                firstTimeZoom=true;
+                displayedChart = chartNames.indexOf(currChrtNm);
+                console.log("listener added charts"+currChrtNm);
+                if(indiDisplayed){
+                  // charts["chart"+currChrtNm] = AmCharts.makeChart("chartdiv", newChart);
+                  firstTimeZoom=true;
+                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+                }
+                else
+                  charts["chart"+currChrtNm] = AmCharts.makeChart("chartdiv", newChart);
+                document.getElementById("chartLoadOverlay").style.display = "none";
+              }
+            };
+            xhttpNew.open("GET", urls["url"+currChrtNm], true);
+            xhttpNew.send();
+          }
+          else { // change the chart object to display
+            console.log("else chart: "+currChrtNm);
+            if(displayedChart!=chartNames.indexOf(currChrtNm)){
+              displayedChart = chartNames.indexOf(currChrtNm);
+              console.log("write chart: "+currChrtNm);
+              charts["chart"+currChrtNm].periodSelector.removeListener(charts["chart"+currChrtNm].periodSelector,"changed",handleZoom);
+              for(let i=0;i<7;i++)
+                charts["chart"+currChrtNm].periodSelector.periods[i].selected=false;
+              let zmIn=0;
+              (whatZoomCount==60) ? zmIn=0 : (whatZoomCount==1440) ? zmIn=1 : (whatZoomCount==7) ? zmIn=2 : (whatZoomCount==1 && whichZoomButton=="MM") ? zmIn=3 : (whatZoomCount==3) ? zmIn=4 : (whatZoomCount==12) ? zmIn=5 : (whichZoomButton=="MAX") ? zmIn=6 : null;
+              console.log("zmIn:"+zmIn);
+              charts["chart"+currChrtNm].periodSelector.periods[zmIn].selected=true;
+              if(indiDisplayed){
+                firstTimeZoom=true;
+                displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+              }
+              else{
+                console.log("writing chart now");
+                firstTimeZoom=true;
+                charts["chart"+currChrtNm].periodSelector.addListener("changed",handleZoom);
+                charts["chart"+currChrtNm].write("chartdiv");
+                charts["chart"+currChrtNm].panels[0].stockGraphs[0].type!=currChartType ? changeChartType(currChartType) : console.log("no change in chart type") ;
+                charts.chartHour.periodSelector.periods[zmIn].button.click();
+              }
             }
             else{
-              // change the chart object to display
-              console.log("else charts.chartMin");
-              if(displayedChart!=1){
-                displayedChart = 1;
-                console.log("write charts.chartMin");
-                charts.chartMin.periodSelector.removeListener(charts.chartMin.periodSelector,"changed",handleZoom);
-                if(whatZoomCount == 60){
-                  charts.chartMin.periodSelector.periods[0].selected=true;
-                  charts.chartMin.periodSelector.periods[1].selected=false;
-                }
-                else{
-                  charts.chartMin.periodSelector.periods[1].selected=true;
-                  charts.chartMin.periodSelector.periods[0].selected=false;
-                }
-                if(indiDisplayed){
-                  firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                }
-                else{
-                  charts.chartMin.write("chartdiv");
-                  charts.chartMin.periodSelector.addListener("changed",handleZoom);
-                  changeChartType(currChartType);
-                }
+              if(indiDisplayed){
+                firstTimeZoom=true;
+                displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
               }
-              else{
-                if(indiDisplayed){
-                  firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                }
-              }
-              document.getElementById("chartLoadOverlay").style.display = "none";
             }
+            document.getElementById("chartLoadOverlay").style.display = "none";
           }
-          ///////////////////////////////////////// HOUR ////////////////////////////// 
-          else if ( whichZoomButton == "DD" || (whichZoomButton == "MM" && whatZoomCount == 1)){ //hour 46 days (for one month) 14 weeks (for one week)
-            console.log("hour zoom label:"+whichZoomButton);
-            if(charts.chartHour == null || chrtDat.consChartDataHour == null){
-              console.log("chrtDat.consChartDataHour=null in if - "+chrtDat.consChartDataHour);
-              var xhttpNewHour = new XMLHttpRequest(); // TODO: Support for old IE browsers
-              xhttpNewHour.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  chrtDat.consChartDataHour = JSON.parse(this.responseText);
-                  for(var i=0;i<chrtDat.consChartDataHour.Data.length;i++) {
-                    chrtDat.consChartDataHour.Data[i].time=chrtDat.consChartDataHour.Data[i].time*1000;
-                    // chrtDat.consChartDataHour.Data[i].time=new Date(chrtDat.consChartDataHour.Data[i].timest);
-                  }
-                  console.log("set new");
-                  var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataHour.Data;
-                  newChart.panels[0].stockGraphs[0].type=currChartType;
-                  if(whichZoomButton == "DD"){
-                    newChart.periodSelector.periods[2].selected=true;
-                    newChart.periodSelector.periods[3].selected=false;
-                  }
-                  else if(whichZoomButton == "MM"){
-                    newChart.periodSelector.periods[3].selected=true;
-                    newChart.periodSelector.periods[2].selected=false;
-                  }
-                  newChart.listeners=renderListener;
-                  firstTimeZoom=true;
-                  //charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
-                  displayedChart = 2;
-                  //charts.chartHour.periodSelector.addListener("changed", handleZoom);
-                  console.log("listener added charts.chartHour");
-                  if(indiDisplayed){
-                    charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
-                    firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                  }
-                  else
-                    charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
-                  document.getElementById("chartLoadOverlay").style.display = "none";
-                }
-              };
-              xhttpNewHour.open("GET", urlHour, true);
-              xhttpNewHour.send();
-            }
-            else{ 
-              // change the chart object to display
-              console.log("else charts.chartHour");
-              if(displayedChart!=2){
-                displayedChart = 2;
-                console.log("write charts.chartHour");
-                charts.chartHour.periodSelector.removeListener(charts.chartHour.periodSelector,"changed",handleZoom);
-                if(whichZoomButton == "DD"){
-                  charts.chartHour.periodSelector.periods[2].selected=true;
-                  charts.chartHour.periodSelector.periods[3].selected=false;
-                }
-                else if(whichZoomButton == "MM"){
-                  charts.chartHour.periodSelector.periods[3].selected=true;
-                  charts.chartHour.periodSelector.periods[2].selected=false;
-                }
-                if(indiDisplayed){
-                  console.log("Indi displaying");
-                  firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                }
-                else{
-                  // charts.chartHour.panels[0].stockGraphs[0].type=currChartType;
-                  charts.chartHour.write("chartdiv");
-                  charts.chartHour.periodSelector.addListener("changed",handleZoom);
-                  changeChartType(currChartType);
-                }
-              }
-              else{
-                if(indiDisplayed){
-                  firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                }
-              }
-              document.getElementById("chartLoadOverlay").style.display = "none";
-            }
-          }
-          /////////////////////////////////////// DAY ////////////////////////////
-          else if ((whichZoomButton == "MM" && (whatZoomCount == 3 || whatZoomCount == 12)) || whichZoomButton == "YYYY" || whichZoomButton == "MAX"){ //hour 46 days (for one month) 14 weeks (for one week)
-            console.log("Day zoom label:"+whichZoomButton);
-            if(charts.chartDay == null || chrtDat.consChartDataDay == null){
-              console.log("chrtDat.consChartDataDay=null in if - "+chrtDat.consChartDataDay);
-              var xhttpNewDay = new XMLHttpRequest(); // TODO: Support for old IE browsers
-              xhttpNewDay.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                  chrtDat.consChartDataDay = JSON.parse(this.responseText);
-                  for(var i=0;i<chrtDat.consChartDataDay.Data.length;i++) {
-                    chrtDat.consChartDataDay.Data[i].time=chrtDat.consChartDataDay.Data[i].time*1000;
-                    // chrtDat.consChartDataDay.Data[i].time=new Date(chrtDat.consChartDataDay.Data[i].timest);
-                  }
-                  console.log("set new");
-                  var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
-                  newChart.dataSets[0].dataProvider=chrtDat.consChartDataDay.Data;
-                  newChart.panels[0].stockGraphs[0].type=currChartType;
-                  if(whichZoomButton == "MM" && whatZoomCount == 3){
-                    newChart.periodSelector.periods[4].selected=true;
-                    newChart.periodSelector.periods[5].selected=false;
-                    newChart.periodSelector.periods[6].selected=false;
-                  }
-                  else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY"){
-                    newChart.periodSelector.periods[5].selected=true;
-                    newChart.periodSelector.periods[4].selected=false;
-                    newChart.periodSelector.periods[6].selected=false;
-                  }
-                  else if(whichZoomButton == "MAX"){
-                    newChart.periodSelector.periods[6].selected=true;
-                    newChart.periodSelector.periods[4].selected=false;
-                    newChart.periodSelector.periods[5].selected=false;
-                  }
-                  newChart.listeners=renderListener;
-                  firstTimeZoom=true;
-                  // charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
-                  displayedChart = 3;
-                  //charts.chartDay.periodSelector.addListener("changed", handleZoom);
-                  console.log("listener added charts.chartDay");
-                  if(indiDisplayed){
-                    charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
-                    firstTimeZoom=true;
-                    displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                  }
-                  else
-                    charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
-                  document.getElementById("chartLoadOverlay").style.display = "none";
-                }
-              };
-              xhttpNewDay.open("GET", urlDay, true);
-              xhttpNewDay.send();
-            }
-            else{ 
-              // change the chart object to display
-              console.log("else charts.chartDay");
-              if(displayedChart!=3){
-                displayedChart = 3;
-                console.log("write charts.chartDay");
-                charts.chartDay.periodSelector.removeListener(charts.chartDay.periodSelector,"changed",handleZoom);
-                if(whichZoomButton == "MM" && whatZoomCount == 3){
-                  charts.chartDay.periodSelector.periods[4].selected=true;
-                  charts.chartDay.periodSelector.periods[5].selected=false;
-                  charts.chartDay.periodSelector.periods[6].selected=false;
-                }
-                else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY"){
-                  charts.chartDay.periodSelector.periods[5].selected=true;
-                  charts.chartDay.periodSelector.periods[4].selected=false;
-                  charts.chartDay.periodSelector.periods[6].selected=false;
-                }
-                else if(whichZoomButton == "MAX"){
-                  charts.chartDay.periodSelector.periods[6].selected=true;
-                  charts.chartDay.periodSelector.periods[4].selected=false;
-                  charts.chartDay.periodSelector.periods[5].selected=false;
-                }
-                if(indiDisplayed){
-                  firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                }
-                else{
-                  // charts.chartDay.panels[0].stockGraphs[0].type=currChartType;
-                  charts.chartDay.write("chartdiv");
-                  charts.chartDay.periodSelector.addListener("changed",handleZoom);
-                  changeChartType(currChartType);
-                }
-              }
-              else{
-                if(indiDisplayed){
-                  firstTimeZoom=true;
-                  displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
-                }
-              }
-              document.getElementById("chartLoadOverlay").style.display = "none";
-            }
-          }
+          ///////////////////// REDESIGNED UPWARDS ////////////////////
+          ///////////////////////////////////////// MIN ////////////////////////////// 
+          // if (whichZoomButton == "mm"){ //min 4320 | 180
+          //   console.log("min zoom label:"+whichZoomButton);
+          //   if(charts.chartMin == null || chrtDat.consChartDataMin == null){
+          //     console.log("chrtDat.consChartDataMin=null in if - "+chrtDat.consChartDataMin);
+          //     var xhttpNewMin = new XMLHttpRequest(); // TODO: Support for old IE browsers
+          //     xhttpNewMin.onreadystatechange = function() {
+          //       if (this.readyState == 4 && this.status == 200) {
+          //         chrtDat.consChartDataMin = JSON.parse(this.responseText);
+          //         for(var i=0;i<chrtDat.consChartDataMin.Data.length;i++) {
+          //           chrtDat.consChartDataMin.Data[i].time=chrtDat.consChartDataMin.Data[i].time*1000;
+          //           // chrtDat.consChartDataMin.Data[i].time=new Date(chrtDat.consChartDataMin.Data[i].timest);
+          //         }
+          //         console.log("set new");
+          //         var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
+          //         newChart.dataSets[0].dataProvider=chrtDat.consChartDataMin.Data;
+          //         newChart.panels[0].stockGraphs[0].type=currChartType;
+          //         if(whatZoomCount == 60){
+          //           newChart.periodSelector.periods[0].selected=true;
+          //           newChart.periodSelector.periods[1].selected=false;
+          //         }
+          //         else{
+          //           newChart.periodSelector.periods[1].selected=true;
+          //           newChart.periodSelector.periods[0].selected=false;
+          //         }
+          //         newChart.listeners=renderListener;
+          //         console.log("Making new chart");
+          //         firstTimeZoom=true;
+          //         //charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
+          //         displayedChart = 1;
+          //         //charts.chartMin.periodSelector.addListener("changed", handleZoom);
+          //         console.log("listener added charts.chartMin");
+          //         if(indiDisplayed){
+          //           charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
+          //           firstTimeZoom=true;
+          //           displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //         }
+          //         else
+          //           charts.chartMin = AmCharts.makeChart("chartdiv", newChart);
+          //         document.getElementById("chartLoadOverlay").style.display = "none";
+          //       }
+          //     };
+          //     xhttpNewMin.open("GET", urlMin, true);
+          //     xhttpNewMin.send();
+          //   }
+          //   else{
+          //     // change the chart object to display
+          //     console.log("else charts.chartMin");
+          //     if(displayedChart!=1){
+          //       displayedChart = 1;
+          //       console.log("write charts.chartMin");
+          //       charts.chartMin.periodSelector.removeListener(charts.chartMin.periodSelector,"changed",handleZoom);
+          //       if(whatZoomCount == 60){
+          //         charts.chartMin.periodSelector.periods[0].selected=true;
+          //         charts.chartMin.periodSelector.periods[1].selected=false;
+          //       }
+          //       else{
+          //         charts.chartMin.periodSelector.periods[1].selected=true;
+          //         charts.chartMin.periodSelector.periods[0].selected=false;
+          //       }
+          //       if(indiDisplayed){
+          //         firstTimeZoom=true;
+          //         displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //       }
+          //       else{
+          //         firstTimeZoom=true;
+          //         charts.chartMin.write("chartdiv");
+          //         charts.chartMin.periodSelector.addListener("changed",handleZoom);
+          //         charts.chartMin.panels[0].stockGraphs[0].type!=currChartType ? changeChartType(currChartType) : null ;
+          //       }
+          //     }
+          //     else{
+          //       if(indiDisplayed){
+          //         firstTimeZoom=true;
+          //         displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //       }
+          //     }
+          //     document.getElementById("chartLoadOverlay").style.display = "none";
+          //   }
+          // }
+          // ///////////////////////////////////////// HOUR ////////////////////////////// 
+          // else if ( whichZoomButton == "DD" || (whichZoomButton == "MM" && whatZoomCount == 1)){ //hour 46 days (for one month) 14 weeks (for one week)
+          //   console.log("hour zoom label:"+whichZoomButton);
+          //   if(charts.chartHour == null || chrtDat.consChartDataHour == null){
+          //     console.log("chrtDat.consChartDataHour=null in if - "+chrtDat.consChartDataHour);
+          //     var xhttpNewHour = new XMLHttpRequest(); // TODO: Support for old IE browsers
+          //     xhttpNewHour.onreadystatechange = function() {
+          //       if (this.readyState == 4 && this.status == 200) {
+          //         chrtDat.consChartDataHour = JSON.parse(this.responseText);
+          //         for(var i=0;i<chrtDat.consChartDataHour.Data.length;i++) {
+          //           chrtDat.consChartDataHour.Data[i].time=chrtDat.consChartDataHour.Data[i].time*1000;
+          //           // chrtDat.consChartDataHour.Data[i].time=new Date(chrtDat.consChartDataHour.Data[i].timest);
+          //         }
+          //         console.log("set new");
+          //         var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
+          //         newChart.dataSets[0].dataProvider=chrtDat.consChartDataHour.Data;
+          //         newChart.panels[0].stockGraphs[0].type=currChartType;
+          //         if(whichZoomButton == "DD"){
+          //           newChart.periodSelector.periods[2].selected=true;
+          //           newChart.periodSelector.periods[3].selected=false;
+          //         }
+          //         else if(whichZoomButton == "MM"){
+          //           newChart.periodSelector.periods[3].selected=true;
+          //           newChart.periodSelector.periods[2].selected=false;
+          //         }
+          //         newChart.listeners=renderListener;
+          //         firstTimeZoom=true;
+          //         //charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
+          //         displayedChart = 2;
+          //         //charts.chartHour.periodSelector.addListener("changed", handleZoom);
+          //         console.log("listener added charts.chartHour");
+          //         if(indiDisplayed){
+          //           charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
+          //           firstTimeZoom=true;
+          //           displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //         }
+          //         else
+          //           charts.chartHour = AmCharts.makeChart("chartdiv", newChart);
+          //         document.getElementById("chartLoadOverlay").style.display = "none";
+          //       }
+          //     };
+          //     xhttpNewHour.open("GET", urlHour, true);
+          //     xhttpNewHour.send();
+          //   }
+          //   else{ 
+          //     // change the chart object to display
+          //     console.log("else charts.chartHour");
+          //     if(displayedChart!=2){
+          //       displayedChart = 2;
+          //       console.log("write charts.chartHour");
+          //       charts.chartHour.periodSelector.removeListener(charts.chartHour.periodSelector,"changed",handleZoom);
+          //       if(whichZoomButton == "DD"){
+          //         charts.chartHour.periodSelector.periods[2].selected=true;
+          //         charts.chartHour.periodSelector.periods[3].selected=false;
+          //       }
+          //       else if(whichZoomButton == "MM"){
+          //         charts.chartHour.periodSelector.periods[3].selected=true;
+          //         charts.chartHour.periodSelector.periods[2].selected=false;
+          //       }
+          //       if(indiDisplayed){
+          //         console.log("Indi displaying");
+          //         firstTimeZoom=true;
+          //         displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //       }
+          //       else{
+          //         // charts.chartHour.panels[0].stockGraphs[0].type=currChartType;
+          //         firstTimeZoom=true;
+          //         charts.chartHour.write("chartdiv");
+          //         charts.chartHour.periodSelector.addListener("changed",handleZoom);
+          //         charts.chartHour.panels[0].stockGraphs[0].type!=currChartType ? changeChartType(currChartType) : null ;
+          //       }
+          //     }
+          //     else{
+          //       if(indiDisplayed){
+          //         firstTimeZoom=true;
+          //         displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //       }
+          //     }
+          //     document.getElementById("chartLoadOverlay").style.display = "none";
+          //   }
+          // }
+          // /////////////////////////////////////// DAY ////////////////////////////
+          // else if ((whichZoomButton == "MM" && (whatZoomCount == 3 || whatZoomCount == 12)) || whichZoomButton == "YYYY" || whichZoomButton == "MAX"){ //hour 46 days (for one month) 14 weeks (for one week)
+          //   console.log("Day zoom label:"+whichZoomButton);
+          //   if(charts.chartDay == null || chrtDat.consChartDataDay == null){
+          //     console.log("chrtDat.consChartDataDay=null in if - "+chrtDat.consChartDataDay);
+          //     var xhttpNewDay = new XMLHttpRequest(); // TODO: Support for old IE browsers
+          //     xhttpNewDay.onreadystatechange = function() {
+          //       if (this.readyState == 4 && this.status == 200) {
+          //         chrtDat.consChartDataDay = JSON.parse(this.responseText);
+          //         for(var i=0;i<chrtDat.consChartDataDay.Data.length;i++) {
+          //           chrtDat.consChartDataDay.Data[i].time=chrtDat.consChartDataDay.Data[i].time*1000;
+          //           // chrtDat.consChartDataDay.Data[i].time=new Date(chrtDat.consChartDataDay.Data[i].timest);
+          //         }
+          //         console.log("set new");
+          //         var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
+          //         newChart.dataSets[0].dataProvider=chrtDat.consChartDataDay.Data;
+          //         newChart.panels[0].stockGraphs[0].type=currChartType;
+          //         if(whichZoomButton == "MM" && whatZoomCount == 3){
+          //           newChart.periodSelector.periods[4].selected=true;
+          //           newChart.periodSelector.periods[5].selected=false;
+          //           newChart.periodSelector.periods[6].selected=false;
+          //         }
+          //         else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY"){
+          //           newChart.periodSelector.periods[5].selected=true;
+          //           newChart.periodSelector.periods[4].selected=false;
+          //           newChart.periodSelector.periods[6].selected=false;
+          //         }
+          //         else if(whichZoomButton == "MAX"){
+          //           newChart.periodSelector.periods[6].selected=true;
+          //           newChart.periodSelector.periods[4].selected=false;
+          //           newChart.periodSelector.periods[5].selected=false;
+          //         }
+          //         newChart.listeners=renderListener;
+          //         firstTimeZoom=true;
+          //         // charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
+          //         displayedChart = 3;
+          //         //charts.chartDay.periodSelector.addListener("changed", handleZoom);
+          //         console.log("listener added charts.chartDay");
+          //         if(indiDisplayed){
+          //           charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
+          //           firstTimeZoom=true;
+          //           displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //         }
+          //         else
+          //           charts.chartDay = AmCharts.makeChart("chartdiv", newChart);
+          //         document.getElementById("chartLoadOverlay").style.display = "none";
+          //       }
+          //     };
+          //     xhttpNewDay.open("GET", urlDay, true);
+          //     xhttpNewDay.send();
+          //   }
+          //   else{ 
+          //     // change the chart object to display
+          //     console.log("else charts.chartDay");
+          //     if(displayedChart!=3){
+          //       displayedChart = 3;
+          //       console.log("write charts.chartDay");
+          //       charts.chartDay.periodSelector.removeListener(charts.chartDay.periodSelector,"changed",handleZoom);
+          //       if(whichZoomButton == "MM" && whatZoomCount == 3){
+          //         charts.chartDay.periodSelector.periods[4].selected=true;
+          //         charts.chartDay.periodSelector.periods[5].selected=false;
+          //         charts.chartDay.periodSelector.periods[6].selected=false;
+          //       }
+          //       else if((whichZoomButton == "MM" && whatZoomCount == 12) || whichZoomButton == "YYYY"){
+          //         charts.chartDay.periodSelector.periods[5].selected=true;
+          //         charts.chartDay.periodSelector.periods[4].selected=false;
+          //         charts.chartDay.periodSelector.periods[6].selected=false;
+          //       }
+          //       else if(whichZoomButton == "MAX"){
+          //         charts.chartDay.periodSelector.periods[6].selected=true;
+          //         charts.chartDay.periodSelector.periods[4].selected=false;
+          //         charts.chartDay.periodSelector.periods[5].selected=false;
+          //       }
+          //       if(indiDisplayed){
+          //         firstTimeZoom=true;
+          //         displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //       }
+          //       else{
+          //         // charts.chartDay.panels[0].stockGraphs[0].type=currChartType;
+          //         firstTimeZoom=true;
+          //         charts.chartDay.write("chartdiv");
+          //         charts.chartDay.periodSelector.addListener("changed",handleZoom);
+          //         charts.chartHour.panels[0].stockGraphs[0].type!=currChartType ? changeChartType(currChartType) : null ;
+          //       }
+          //     }
+          //     else{
+          //       if(indiDisplayed){
+          //         firstTimeZoom=true;
+          //         displayNewIndi(currIndiDisplayed,lastIndiSelNum,false);
+          //       }
+          //     }
+          //     document.getElementById("chartLoadOverlay").style.display = "none";
+          //   }
+          // }
           ////////////////////////////////////End Of All Zoom Levels//////////////////////////////
           //document.getElementById("chartLoadOverlay").style.display = "none";
           console.log("exit handleZoom");
@@ -568,13 +652,12 @@ function drawMainChart(){
         console.log("IN THE END");
       }
       function changeChartType(newChartType){
-        console.log(currChartType);
-        console.log(newChartType);
+        console.log("changing chart type to: "+newChartType);
         document.getElementById("chartLoadOverlay").style.display = "block";
-        if((currChartType=="smoothedLine" || currChartType=="candlestick" || currChartType=="ohlc" || currChartType=="renko")&&(newChartType=="renko" || newChartType=="heikinashi")){
+        if((currChartType=="smoothedLine" || currChartType=="candlestick" || currChartType=="ohlc")&&(newChartType=="renko" || newChartType=="heikinashi")){
           console.log("setting");
           if(newChartType=="heikinashi"){
-            console.log("calculating"+newChartType);
+            console.log("calculating:"+newChartType);
             displayNewIndi(newChartType,1,true);
             let currChart="chart"+chartNames[displayedChart];
             charts[currChart].dataSets[0].fieldMappings[0].fromField="HA close";
@@ -583,8 +666,8 @@ function drawMainChart(){
             charts[currChart].dataSets[0].fieldMappings[3].fromField="HA low";
             charts[currChart].panels[0].stockGraphs[0].type = "candlestick";
             charts[currChart].validateNow(true,true);
-          }
-          else if(newChartType=="renko"){
+          } else if(newChartType=="renko"){
+            console.log("calculating:"+newChartType);
             displayNewIndi(newChartType,1,true);
             // var newChart = JSON.parse(JSON.stringify(chartObjectOneWeek));
             let currChart="chart"+chartNames[displayedChart];
@@ -603,27 +686,21 @@ function drawMainChart(){
             // charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = "candlestick";
             // charts["chart"+chartNames[displayedChart]].validateNow(true,true);
           }
-        }
-        // else if((currChartType=="renko" || currChartType=="heikinashi")&&(newChartType=="smoothedLine" || newChartType=="candlestick" || newChartType=="ohlc")){
-        //   charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
-        //   charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
-        //   charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
-        //   charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
-        //   charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = "line";
-        //   charts["chart"+chartNames[displayedChart]].validateNow(true,true);
-        // }
-        else{
+        } else{
+          console.log("changing chart type else");
           charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[0].fromField="close";
           charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[1].fromField="open";
           charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[2].fromField="high";
           charts["chart"+chartNames[displayedChart]].dataSets[0].fieldMappings[3].fromField="low";
           charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
+          console.log("validating for new chart type");
           charts["chart"+chartNames[displayedChart]].validateNow(true,true);
         }
         console.log("chart type changed");
         currChartType=newChartType;
         document.getElementById("chartIndiSelect1").selectedIndex = 0; 
         document.getElementById("chartIndiSelect2").selectedIndex = 0;
+        indiDisplayed=false;
         // charts["chart"+chartNames[displayedChart]].panels[0].stockGraphs[0].type = newChartType;
         // charts["chart"+chartNames[displayedChart]].validateNow();
         // if(displayedChart == 1){
