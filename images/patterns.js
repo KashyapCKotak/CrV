@@ -445,7 +445,7 @@ async function calcPatterns(){
         var finalString=mainString+starString+marketString;  
         // document.getElementById("AIPredictionSpan").innerHTML=finalString;
         var i = 0;
-        var speed = 40; /* The speed/duration of the effect in milliseconds */
+        var speed = 30; /* The speed/duration of the effect in milliseconds */
         function typeWriter() {
             if (i < finalString.length) {
                 document.getElementById("AIPredictionSpan").innerHTML += finalString.charAt(i);
@@ -453,7 +453,8 @@ async function calcPatterns(){
                 typewriterTimer=setTimeout(typeWriter, speed);
             }
         }
-        document.getElementById("AIPredictionSpan").innerHTML="";
+        document.getElementById("AIPredictionSpan").innerHTML='<span class="tooltip"><span class="tooltiptext">Tooltip text</span></span>';
+        // document.getElementById("AIPredictionSpan").innerHTML="";
         typeWriter();
         return finalString;
         // strength = ((buyCount+sellCount)>noneCount) ? "strong" : "weak";

@@ -123,6 +123,14 @@ function drawMainChart(){
           "categoryBalloonEnabled": false,
           "recalculateToPercents": "never",
           "title": "Price",
+          "allLabels": [ {
+            "x": 0,
+            "y": 10,
+            "text": "Click on the pencil icon to draw",
+            "align": "center",
+            "size": 10,
+            "color":"#0ee87b"
+          } ],
           "percentHeight": 60,
           
           "stockGraphs": [ {
@@ -170,7 +178,9 @@ function drawMainChart(){
             //"valueText":"[[value.close]]",
             //"labelText":"Kashyap"
             //"markerType": "none"
-          }
+          },
+          "drawingIconsEnabled": true,
+          "eraseAll": false
         }, {
           "title": "Volume",
           "percentHeight": 30,
@@ -185,7 +195,9 @@ function drawMainChart(){
           "stockLegend": {
             "valueTextRegular": "Volume: [[value]]"
             //"markerType": "none"
-          }
+          },
+          "drawingIconsEnabled": true,
+          "eraseAll": false
         } ],
         
         "chartScrollbarSettings": {

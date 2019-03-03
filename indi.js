@@ -207,7 +207,9 @@ function displayNewIndi(indicatorType,selectNum,onlyCalc){
         "percentHeight": percentHeight,
         "stockGraphs": indiStockGraphs,
         "stockLegend": {
-        }
+        },
+        "drawingIconsEnabled": true,
+        "eraseAll": false
       };
   }
 
