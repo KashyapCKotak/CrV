@@ -7,17 +7,17 @@
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
   <!-- Ionicons -->
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,7 +39,7 @@
 </script>
 <body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="myFunction()">
 <!-- Site wrapper -->
-<div class="wrapper">
+<div id="bodyWrapper" class="wrapper lightsOn">
 
   <header class="main-header">
     <!-- Logo -->
@@ -52,17 +52,24 @@
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
+      <script>
+        function menuToggle(x) {
+          x.classList.toggle("change");
+        }
+      </script>
+      <div class="custom-sidebar-toggle" data-toggle="push-menu" role="button" onclick="menuToggle(this)">
+        <div class="bar1" style="margin-top:15px"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </div>
 
-      <div class="navbar-custom-menu">
+    <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
             <!-- Messages: style can be found in dropdown.less-->
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <img src=
+              <img alt="user image" src=
                 <?php
                   if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                     echo '"dist/img/notSigned.jpg"';
@@ -75,7 +82,7 @@
               <span class="hidden-xs">
               <?php 
                 if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
-                  echo 'Sign In';
+                  echo 'Log In/Sign up';
                 }
                 else {
                   echo $_SESSION['cryptoview_user'];
@@ -86,7 +93,7 @@
               <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header">
-                  <img src=
+                  <img alt="user image" src=
                     <?php
                       if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                         echo '"dist/img/notSigned.jpg"';
@@ -110,29 +117,30 @@
                   </p>
                 </li>
                 <!-- Menu Footer-->
-                <li class="user-footer">
+                <hr style="margin-top: 0px;margin-bottom: 0px;">
+<li class="user-footer">
                   <?php
                     if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
                       echo '<div class="pull-left">
-                    <a href="pages/login.php" name="signin" class="btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
+                    <a href="pages/login.php" name="signin" class="userLogAction user-buttons btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;color:#fff">Log In/Sign up</a>
                     </div>';
                     }
                     else {
                       echo '<div class="pull-left">
-                    <a href="#" name="profile" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;border-color:#367fa9;color:#fff">My Profile</a>
-                    </div>
-                    <div class="pull-right">
-                    <a href="pages/logout.php" name="signout" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#d67070;border-color:#a93636;color:#fff">Sign out</a>
-                    </div>';
+                      <a href="profile.php" name="profile" class="userLogAction user-buttons btn btn-default btn-block btn-flat" style="width:80px;background-color:#3c8dbc;color:#fff;padding-left:10px">My Profile</a>
+                      </div>
+                      <div style="float:left">
+                      <a href="portfolio.php" name="portfolio" class="user-buttons btn btn-default btn-block btn-flat" style="width:86px;background-color:#246224;color:#fff;padding-left:8px;margin:auto;margin-left:6px">My Portfolio</a>
+                      </div>
+                      <div class="pull-right">
+                      <a href="pages/logout.php" name="signout" class="user-buttons btn btn-default btn-block btn-flat" style="width:80px;background-color:#762727;color:#fff">Sign out</a>
+                      </div>';
                     }
                     ?>
                 </li>
               </ul>
             </li>
             <!-- Control Sidebar Toggle Button -->
-            <li>
-              <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-            </li>
           </ul>
       </div>
     </nav>
@@ -142,55 +150,219 @@
 
   <!-- Left side column. contains the sidebar -->
   <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="active treeview">
-          <a href="dashboard.php">
-            <i class="fas fa-tachometer-alt"></i>
-            <span>&nbsp;Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a href="portfolio.php">
-            <i class="fas fa-line-chart"></i>
-            <span>&nbsp;Portfolio</span>
-          </a>
-        </li>
-        <li>
-          <a href="ico.php">
-            <i class="far fa-calendar-alt"></i>
-            <span>&nbsp;ICO Calender</span>
-          </a>
-        </li>
-        <li>
-          <a href="news.php">
-            <i class="far fa-newspaper"></i>
-            <span>&nbsp;CrV Blog</span>
-          </a>
-        </li>
-        <li>
-          <a href="news.php">
-            <i class="fas fa-newspaper"></i>
-            <span>&nbsp;Latest News</span>
-          </a>
-        </li>
-        <li>
-          <a href="analytical-articles.php">
-            <i class="fas fa-chart-pie"></i>
-            <span>&nbsp;Analytical Articles</span>
-          </a>
-        </li>
-        <li>
-          <a href="help.php">
-            <i class="far fa-question-circle"></i>
-            <span>&nbsp;How to Use CrV</span>
-          </a>
-        </li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+          <!-- <li class="header">
+            <center>MENU</center>
+          </li> -->
+          <li>
+            <a href="index.php">
+              <i class="fas fa-home"></i>
+              <span>&nbsp;Home</span>
+            </a>
+          </li>
+          <li>
+            <a href="dashboard.php">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>&nbsp;Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a href="portfolio.php">
+              <i class="fas fa-donate"></i>
+              <span>&nbsp;Manage Portfolio</span>
+            </a>
+          </li>
+          <li>
+            <a href="exchange.php">
+              <i class="fas fa-chart-line"></i>
+              <span>&nbsp;Exchange</span>
+            </a>
+          </li>
+          <li>
+            <a href="ico.php">
+              <i class="far fa-calendar-alt"></i>
+              <span>&nbsp;ICO Calender</span>
+            </a>
+          </li>
+          <li>
+            <a href="news.php">
+              <i class="fas fa-newspaper"></i>
+              <span>&nbsp;News around the World</span>
+            </a>
+          </li>
+          <li>
+            <a href="analytical-articles.php">
+              <i class="fas fa-chart-pie"></i>
+              <span>&nbsp;Analytical Articles</span>
+            </a>
+          </li>
+          <li class="active">
+            <a href="advertise.php">
+              <i class="fab fa-buysellads"></i>
+              <span>&nbsp;Advertise</span>
+            </a>
+          </li>
+          <li>
+            <a id="loginMenuItemLink" href="pages/login.php">
+              <i id="loginMenuItemIcon" class="fas fa-share"></i>
+              <span id="loginMenuItemText">&nbsp;Login/Sign up</span>
+            </a>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fas fa-palette"></i>
+              <span>&nbsp;Customise Theme</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="clearfix treeview-menu"><!-- style="color:#8aa4af"-->
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="lightsOn" style="display: block; padding-left:5px ;" class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Lights on</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="lightsOff" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #000"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Lights off</p>
+                </a>
+              </li>
+              <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-blue" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Blue</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-yellow" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Orange</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-purple" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Purple</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-green" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Green</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-red" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Red</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px; display:none">
+                <a href="javascript:void(0)" data-skin="skin-black" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Black</p>
+                </a>
+              </li>
+              <!-- <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-blue-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Blue Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-yellow-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Orange Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-purple-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Purple Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-green-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Green Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-red-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Red Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px; display:none">
+                <a href="javascript:void(0)" data-skin="skin-black-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Back Light</p>
+                </a>
+              </li> -->
+            </ul>
+            <!-- <ul class="treeview-menu">
+              <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+              <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+              <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+              <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            </ul> -->
+          </li>
+          <li>
+            <a href="contact.php">
+              <i class="far fa-smile"></i>
+              <span>&nbsp;About & Contact</span>
+            </a>
+          </li>
+          <li style="height:100px">
+          </li>
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+      <script>
+        if((document.getElementsByClassName("user-image")[0].currentSrc).includes("notSigned")){
+          //do Nothing
+        }
+        else{
+          document.getElementById("loginMenuItemLink").setAttribute("href","profile.php");
+          document.getElementById("loginMenuItemText").innerHTML="&nbsp;My Profile";
+          document.getElementById("loginMenuItemIcon").className="fas fa-user";
+        }
+      </script>
+    </aside>
 
   <!-- =============================================== -->
 
@@ -203,7 +375,7 @@
             <span class="top-label" style="font-weight:600"> Impact on your business:<br><small style="font-weight:100">(representational numbers)</small></span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/up.png" alt=⌛ />
+            <img alt="price direction image" class="top-image" src="dist/img/up.png" alt=⌛ />
             <span class="top-label"> Views</span>
             <br />
             <span class="top-price">5M&nbsp;
@@ -211,7 +383,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/up.png" />
+            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
             <span class="top-label"> User Base</span>
             <br />
             <span class="top-price">4.1M&nbsp;
@@ -219,7 +391,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/up.png" />
+            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
             <span class="top-label"> User Reach</span>
             <br />
             <span class="top-price">2.9M&nbsp;
@@ -227,7 +399,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/up.png" />
+            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
             <span class="top-label"> Populatrity</span>
             <br />
             <span class="top-price">9.1/10&nbsp;
@@ -235,7 +407,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/up.png" />
+            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
             <span class="top-label"> Unique Visitors</span>
             <br />
             <span class="top-price">3.7M&nbsp;
@@ -243,7 +415,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/up.png" />
+            <img alt="price direction image" class="top-image" src="dist/img/up.png" />
             <span class="top-label"> Revenue</span>
             <br />
             <span class="top-price">$30M&nbsp;
@@ -261,7 +433,7 @@
     <section class="content-header">
       <h1 style="text-align:center">
           Advertise With Us<br>
-          <small style="width: 100%;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto;color: black;height: 26px;padding: 5px;font-weight:400">let us take you to the masses...</small>
+          <small style="width: 100%;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto;margin-bottom:15px;color: black;height: 26px;padding: 5px;font-weight:400">let us take you to the masses...</small>
       </h1>
       <!-- <ol class="breadcrumb" style="text-align:center;background: #ffa635;border-radius: 50px;width: 80%;margin: 0 auto">
         let us make the masses notice you...
@@ -273,10 +445,9 @@
 
       <!-- Default box -->
       <div class="box">
-        <div class="box-header with-border" style="display:none">
+        <!-- <div class="box-header with-border" style="display:none">
           <h3 class="box-title">Sample Ad Spaces</h3>
-
-        </div>
+        </div> -->
         <div class="box-body">
           <div class="row">
             <div class="col-md-6" style="margin-left:-10px">
@@ -301,7 +472,7 @@
               <span class="AdpageText">Show your business to our users when they go through important content...<span>
             </div>
             <div class="col-md-6 " style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
-              <img class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
+              <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/aboveMarketsMobile.JPG"/>
             </div>
           </div>
           <hr>
@@ -310,7 +481,7 @@
               <span class="AdpageText">Flaunt about the change you bring when users look for what's happening in the world in the News Page with sentiment analysis!<span>
             </div>
             <div class="col-md-6 customadleft" style="/*background-image:url('dist/img/aboveMarketsMobile.JPG');*/background-size:100% 100%;height: 300px;margin-right:  5px;background-clip:  content-box;">
-              <img class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
+              <img alt="ad loction screenshot" class="customadimage" style="display:block;height:100%;margin:auto" src="dist/img/newsMobile.JPG"/>
             </div>
           </div>
           <hr>
@@ -323,9 +494,6 @@
           </div>
         </div>
         <!-- /.box-body -->
-        <div class="box-footer">
-          Footer
-        </div>
         <!-- /.box-footer-->
       </div>
       <!-- /.box -->
@@ -342,198 +510,6 @@
     <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
   </footer>
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                <p>Will be 23 on April 24th</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-user bg-yellow"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                <p>New phone +1(800)555-1234</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                <p>nora@example.com</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                <p>Execution time 5 seconds</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Custom Template Design
-                <span class="label label-danger pull-right">70%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Update Resume
-                <span class="label label-success pull-right">95%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Laravel Integration
-                <span class="label label-warning pull-right">50%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Back End Framework
-                <span class="label label-primary pull-right">68%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-      </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Allow mail redirect
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Other sets of options are available
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Expose author name in posts
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Allow the user to show his name in blog posts
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Show me as online
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Turn off notifications
-              <input type="checkbox" class="pull-right">
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Delete chat history
-              <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-            </label>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
@@ -541,15 +517,15 @@
 <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
-<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
-<script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
-<script src="bower_components/fastclick/lib/fastclick.js"></script>
+<!-- <script src="bower_components/fastclick/lib/fastclick.js"></script> -->
 <!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.0/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="dist/js/demo.js"></script>
 <script>

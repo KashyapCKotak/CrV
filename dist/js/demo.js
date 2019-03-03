@@ -17,13 +17,16 @@ $(function () {
   var $pushMenu       = $('[data-toggle="push-menu"]').data('lte.pushmenu')
   var $controlSidebar = $('[data-toggle="control-sidebar"]').data('lte.controlsidebar')
   var $layout         = $('body').data('lte.layout')
-
+  var currThemeSkin="skin-blue";
+  var skinColors={"skin-blue":"#205a77","skin-yellow":"#7c4f08","skin-purple":"#817dc9","skin-red":"#431610","skin-green":"#175237","skin-black":"#2B7BB9",
+                  "skin-blue-light":"#205a77","skin-yellow-light":"#7c4f08","skin-purple-light":"#817dc9","skin-red-light":"#431610","skin-green-light":"#175237","skin-black-light":"#2B7BB9"};
   /**
    * List of all the available skins
    *
    * @type Array
    */
   var mySkins = [
+    'not-to-be-considered-to-prevent-0',
     'skin-blue',
     'skin-black',
     'skin-red',
@@ -38,6 +41,8 @@ $(function () {
     'skin-green-light'
   ]
 
+  var lightSkins = ['not-to-be-considered-to-prevent-0','lightsOn','lightsOff']
+
   /**
    * Get a prestored setting
    *
@@ -48,7 +53,7 @@ $(function () {
     if (typeof (Storage) !== 'undefined') {
       return localStorage.getItem(name)
     } else {
-      window.alert('Please use a modern browser to properly view this template!')
+      window.alert('Please use a modern browser to properly view this website!')
     }
   }
 
@@ -63,7 +68,7 @@ $(function () {
     if (typeof (Storage) !== 'undefined') {
       localStorage.setItem(name, val)
     } else {
-      window.alert('Please use a modern browser to properly view this template!')
+      window.alert('Please use a more modern browser to save your preferences!')
     }
   }
 
@@ -95,6 +100,57 @@ $(function () {
 
     $('body').addClass(cls)
     store('skin', cls)
+    currThemeSkin=cls;
+    return false
+  }
+
+  function turnLightsOn(cls){
+    $.each(mySkins, function (i) {
+      $('body').removeClass(lightSkins[i])
+    })
+    $('body').addClass(cls)
+    store('lightSkin', cls)
+    return false
+  }
+
+  function turnLightsOff(cls){
+    $.each(mySkins, function (i) {
+      $('body').removeClass(lightSkins[i])
+    })
+    $('body').addClass(cls)
+    store('lightSkin', cls)
+    return false
+  }
+
+  function toggleLights(cls){
+    window.currTheme=cls;
+    $.each(lightSkins, function (i) {
+      $('#bodyWrapper').removeClass(lightSkins[i])
+    })
+
+    $('#bodyWrapper').addClass(cls);
+    if (typeof twitterWidgetTheme === 'undefined'){
+      try{
+        twitterLinksColor=skinColors[currThemeSkin];
+      } catch (e){
+        //Do Nothing
+      }
+    }
+    else{
+      if(cls=="lightsOn") twitterWidgetTheme="light";
+      else if(cls=="lightsOff") twitterWidgetTheme="dark"; 
+      else twitterWidgetTheme="light";
+      twitterLinksColor=skinColors[currThemeSkin];
+      if(twitterLoaded)
+        loadTwitter();
+    }
+    if(typeof DISQUS === 'undefined'){
+      
+    }
+    else{
+      disqusReset();
+    }
+    store('lightSkin', cls)
     return false
   }
 
@@ -108,8 +164,26 @@ $(function () {
     if (tmp && $.inArray(tmp, mySkins))
       changeSkin(tmp)
 
+    var lightstmp = get('lightSkin')
+    // lightstmp="lightsOn";
+    if (lightstmp && $.inArray(lightstmp, lightSkins)){
+      if(lightstmp.indexOf("lights")!=-1){
+        toggleLights(lightstmp);
+      }
+    }
+    else{
+      window.currTheme="lightsOn";
+    }
+
     // Add the change skin listener
     $('[data-skin]').on('click', function (e) {
+      if($(this).data('skin').indexOf("lights")!=-1){
+        console.log($(this).data('skin'));
+        toggleLights($(this).data('skin'));
+        return;
+      }
+      console.log(e);
+      console.log($(this));
       if ($(this).hasClass('knob'))
         return
       e.preventDefault()

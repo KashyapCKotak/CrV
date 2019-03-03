@@ -1,4 +1,7 @@
+sigArray={};
 async function calcPatterns(){
+    // console.log("!!!!!!!!!!!!!!!!!!!!!!!");
+    // console.log(marketSentiment);
     var quotes={stars:[" the stars indicates that you must (Sign) immediately if you'll (OppSign) in an hour or two!"," if you believe the stars, you may want to (Sign) now and (OppSign) in a couple of hours!"," what your Horoscope says today? My Parrot says that you may want to (Sign) now and (OppSign) immediately for quick profit!"," you may (Sign) now for quick profit! But don't be greedy and take whatever you get."," your short term future looks bright if you (Sign). Be careful... I said 'short term'"],
                 mainStrong:["Contact your local zoo. It seems some (BullBear)s have escaped and entered into the market!","(Sign) if you want to prosper!","(Sign)ing now may gift you a vacation to the Moon!","(Sign) now and keep a Pop song ready to dance when you (OppSign)","Whoa! There is so much charge flowing from my electrical brain as I see strong signs for (Sign)ing","(Sign) now and book a luxurious holiday in India!","Some (BullBear)s have broke the jails. Spot for them and inform me. Oh, btw, are you one of those (BullBear)s? If yes go ahead and (Sign), I won't catch you..."],
                 mainWeak:["Your pet (BullBear)s seems to be really weak. Feed him well and (Sign) cautiously.","(BullBear)s are waking up from sleep. Watch this space for a chance of sighting! Weak (Sign) signs visible","Hmmm... Can't say much... My electrical brain is confused watching the market! But I can see weak signs which point towards (Sign)ing.","Hmmm... my Artificial Intelligence is pretty confused! Consult a Human instead! But I can tell you that weak signs of (Sign)ing are visible.","I think its time to (Sign), but current market can't be predicted with 0s & 1s. Go find a human expert & please don't ask me for a contact :)"],
@@ -6,7 +9,7 @@ async function calcPatterns(){
                 strongHold:["Spectacular fight going on between Bulls & Bears. Hold and enjoy the show! You can buy lows & sell highs","RagingBulls & FierceBears - support your team and hold for now! You can buy lows & sell highs.","JUST HODL!!","My Artificial Intelligence sees a ranging market. Go long at lows and short at highs.","I can see a lot of ups and downs in the market... You must have developed pain in your neck. Don't worry, just Hold!","I would just say: Sit back, relax and hold! But I you are too active trader for this, Buy the lows and sell the highs","Just go Long when you see a low, go Short when you see high. Remember- Don't be too greedy!"],
                 marketSent:["My robotic brain sees a pretty (PosNeg) market sentiment.","The news predict a (BullBear)ish market ahead.","My robotic wind sensors are confirming the smell of a lots of (BullBear)s around. Be careful... They may be around you."],
                 outage:["There were some short circuits in my brain while predicting future! I am in a self healing mode right now..."]};
-    var sigArray={
+    sigArray={
       	MacdMfi:"none",
         MacdTrix:"none",
         MacdAo:"none",
@@ -27,7 +30,7 @@ async function calcPatterns(){
     var uptrend=false;
     var downtrend=false;
     const period=204;
-    var patCurrData=consChartDataHour.Data;
+    var patCurrData=chrtDat.consChartDataHour.Data;
     currPatDataLen=744;
     //patCurrData=patCurrData.slice(0,patCurrData.length-1);
     const total=patCurrData.length;
@@ -424,7 +427,7 @@ async function calcPatterns(){
             starString="However,"+starString;
         }
 
-        if(document.getElementById("marketSentiment").textContent=="Positive"){
+        if(marketSentiment=="Positive"){
             let noOfQuotes=quotes.marketSent.length;
             sign="Buy", oppSign="Sell", bullBear="Bull", posNeg="Positive";
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
@@ -432,7 +435,7 @@ async function calcPatterns(){
             marketString=marketString.replace(/\(Sign\)/g,sign); marketString=marketString.replace(/\(OppSign\)/g,oppSign); marketString=marketString.replace(/\(BullBear\)/g,bullBear); marketString=marketString.replace(/\(PosNeg\)/g,posNeg);
             marketString=" "+marketString;
         }
-        else if(document.getElementById("marketSentiment").textContent=="Negative"){
+        else if(marketSentiment=="Negative"){
             let noOfQuotes=quotes.marketSent.length;
             sign="Sell", oppSign="Buy", bullBear="Bear", posNeg="Negative";
             let randomQuote = Math.floor(Math.random() * (noOfQuotes-1 - 0 + 1)) + 0;
@@ -460,24 +463,24 @@ async function calcPatterns(){
         // return strength+":"+decision;
     }
 
-    displayNewIndi("macd",true);
+    displayNewIndi("macd",1,true);
     let MACDCrsOv=isMACDCrsOv().split(":");
 
-    displayNewIndi("adx",true);
+    displayNewIndi("adx",1,true);
     let adxTrend=whichAdxTrend().split(":");
 
-    displayNewIndi("mfi",true);
+    displayNewIndi("mfi",1,true);
     let MFIOut=whichMfiSig().split(":");
 	
-    displayNewIndi("trix",true);
+    displayNewIndi("trix",1,true);
     let TrixPol=whichTrixSig().split(":");
 
-    displayNewIndi("ao",true);
+    displayNewIndi("ao",1,true);
     let aoPol=whichAoSig().split(":");
 
-    displayNewIndi("bollinger",true);
+    displayNewIndi("bollinger",1,true);
 	
-    displayNewIndi("rsi",true);
+    displayNewIndi("rsi",1,true);
     let rsiOut=whichRsiSig().split(":");
     let engulfing=isEngulfing().split();
 
@@ -542,88 +545,7 @@ async function calcPatterns(){
     (parseInt(rsiOut[2])==-1) ? sigArray.OnlyRsi="buy" : (parseInt(rsiOut[2])==1) ? sigArray.OnlyRsi="sell" : sigArray.OnlyRsi="none" ;
     
     
-				
+	indiDisplayed=false;		
     console.log(sigArray);
     console.log(finalDec());
-    
-    /////////////////////////////////////// Get Trend //////////////////////////////////////////
-    
-//     displayNewIndi("sma20",true);
-//     // console.log(currPatData);
-//     currPatData=currPatData.slice(currPatDataLen-168);
-//     // console.log(currPatData);
-//     var sma168High=0,smaDayHigh=0,smaFHHigh=0,smaSHHigh=0;
-//     var sma168Low=Number.MAX_VALUE,smaDayLow=Number.MAX_VALUE,smaFHLow=Number.MAX_VALUE,smaSHLow=Number.MAX_VALUE;
-//     var dayCntr=0;
-//     var firstHalfCntr=0;
-//     var SecondHalfCntr=0
-//     currPatData.forEach(function (d){
-//         dayCntr++;
-//         if (dayCntr>(168-24)){
-//             if(d.sma>smaDayHigh)
-//                 smaDayHigh=d.sma;
-//             if(d.sma<smaDayLow)
-//                 smaDayLow=d.sma;
-//             firstHalfCntr++;
-//             SecondHalfCntr++;
-//             if(firstHalfCntr<13){
-//                 if(d.sma>smaFHHigh)
-//                     smaFHHigh=d.sma;
-//                 if(d.sma<smaFHLow)
-//                     smaFHLow=d.sma;
-//             }
-//             if(SecondHalfCntr>12){
-//                 if(d.sma>smaSHHigh)
-//                     smaSHHigh=d.sma;
-//                 if(d.sma<smaSHLow)
-//                     smaSHLow=d.sma;
-//             }
-//         }
-//         if(parseFloat(d.sma)>sma168High)
-//             sma168High=parseFloat(d.sma);
-//         if(parseFloat(d.sma)<sma168Low)
-//             sma168Low=parseFloat(d.sma);
-//     });
-//     var dayPat=currPatData.slice(168-24);
-//     var twelveHPat1=dayPat.slice(0,24);
-//     var twelveHPat2=dayPat.slice(24);
-//     /////// Identify Trend ////////
-    
-//     /////// End Identify Trend ////////
-
-
-//     console.log(sma168High,smaDayHigh,smaFHHigh,smaSHHigh);
-//     console.log(sma168Low,smaDayLow,smaFHLow,smaSHLow);
-
-//     /////////////////////////////////////////////////////////////////////////////////
-//     // console.log(patCandles);
-//     // console.log(patCandles.open[period-1],patCandles.close[period-1]);
-//     // console.log(patCandles.open[period],patCandles.close[period]);
-//     console.log(patCloses);
-//     var tu = await isTrendingUp({ values : patCloses });
-//     var td = await isTrendingDown({ values : patCloses });
-//     console.log("Uptrend"+tu);
-//     console.log("Downtrend"+td);
-// //     var doji=isDoji(patCandles.open[period-1],patCandles.close[period-1]);
-// //     console.log("DOJI: "+doji);
-// //     if(doji){
-// //         if((patCandles.open[period-1]-patCandles.close[period-1])<0)
-// //             finalPredict=-5;
-// //         else if((patCandles.open[period-1]-patCandles.close[period-1])>0)
-// //             finalPredict=5;
-// //         else
-// //             finalPredict=0;
-// //     }
-//     //console.log(threeblackcrows(patCandles));
-//     var soldiersCrows=undefined
-//     var blckCrws=isBlckCrws(patCandles);
-//     var whteSlds=isBlckCrws(patCandles);
-//     if(blckCrws != "none"){
-//         soldiersCrows=blckCrws;
-//     }
-//     else if(whteSlds != "none"){
-//         soldiersCrows=whteSlds;
-//     }
-//     console.log("bearish "+bearish(patCandles));
-//     console.log("bullish "+bullish(patCandles));
 }

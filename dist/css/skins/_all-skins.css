@@ -1,3 +1,172 @@
+/*/////////////// Custom Below //////////////*/
+/*Blue Dark*/
+.skin-blue .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-blue .lightsOff #MarketsTable>tr,
+.skin-blue .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-blue .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
+.skin-blue .BuySellTab button.active, .skin-blue .seeAll, .skin-blue.updateButton,
+.skin-blue .chartTypeTab button.active{
+  /* border-top-color: #0e364b; */
+  border-top-color: #c1c1c1;
+  background-color: #205a77;
+  color: #fff;
+}
+.skin-blue .lightsOff .BuySellTab, .skin-blue .lightsOff .chartTypeTab, .skin-blue .detailsIco>a,
+.skin-blue .progress-bar-primary, .skin-blue .user-footer{
+  background-color: #3c8dbc !important;
+  border: 0;
+}
+.skin-blue .user-menu>ul{
+  background-color: #3c8dbc;
+  border-color: #205a77
+}
+.skin-blue .BuySellTab button:hover, .skin-blue .chartTypeTab button:hover{
+  background-color: #8bc3e4;
+}
+.skin-blue .top-price-bar, .skin-blue .userLogAction{
+  background: #205a77 !important;
+}
+/*Blue Light*/
+.skin-blue-light .top-price-bar,  .skin-blue-light .userLogAction{
+  background: #205a77 !important;
+}
+/*Yellow Dark*/
+.skin-yellow .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-yellow .lightsOff #MarketsTable>tr,
+.skin-yellow .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-yellow .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
+.skin-yellow .BuySellTab button.active, .skin-yellow .seeAll, .skin-yellow .updateButton,
+.skin-yellow .chartTypeTab button.active{
+  /* border-top-color: #442f0c; */
+  border-top-color: #c1c1c1;
+  background-color: #7c4f08;
+  color: #fff
+}
+.skin-yellow .lightsOff .BuySellTab, .skin-yellow .lightsOff .chartTypeTab, .skin-yellow .detailsIco>a,
+.skin-yellow .progress-bar-primary, .skin-yellow .user-footer{
+  background-color: #f39c12 !important;
+  border: 0;
+}
+.skin-yellow .user-menu>ul{
+  background-color: #f39c12;
+  border-color: #7c4f08
+}
+.skin-yellow .BuySellTab button:hover, .skin-yellow .chartTypeTab button:hover{
+  background-color: #e2c088;
+}
+.skin-yellow .top-price-bar,  .skin-yellow .userLogAction{
+  background: #7c4f08 !important;
+}
+/*Yellow Light*/
+.skin-yellow-light .top-price-bar,  .skin-yellow-light .userLogAction {
+  background: #7c4f08 !important;
+}
+/*Purple Dark*/
+.skin-purple .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-purple .lightsOff #MarketsTable>tr,
+.skin-purple .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-purple .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
+.skin-purple .BuySellTab button.active, .skin-purple .seeAll, .skin-purple .updateButton,
+.skin-purple .chartTypeTab button.active{
+  /* border-top-color: #100d47; */
+  border-top-color: #c1c1c1;
+  background-color: #211e5a;
+  color: #fff
+}
+.skin-purple .lightsOff .BuySellTab, .skin-purple .lightsOff .chartTypeTab, .skin-purple .detailsIco>a,
+.skin-purple .progress-bar-primary, .skin-purple .user-footer{
+  background-color: #605ca8 !important;
+  border: 0;
+}
+.skin-purple .user-menu>ul{
+  background-color: #605ca8;
+  border-color: #211e5a
+}
+.skin-purple .BuySellTab button:hover, .skin-purple .chartTypeTab button:hover{
+  background-color: #8c88e2;
+}
+.skin-purple .top-price-bar,  .skin-purple .userLogAction {
+  background: #211e5a !important;
+}
+/*Purple Light*/
+.skin-purple-light .top-price-bar,  .skin-purple-light .userLogAction {
+  background: #211e5a !important;
+}
+/*Green Dark*/
+.skin-green .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-green .lightsOff #MarketsTable>tr,
+.skin-green .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-green .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
+.skin-green .BuySellTab button.active, .skin-green .seeAll, .skin-green .updateButton,
+.skin-green .chartTypeTab button.active{
+  /* border-top-color: #0c492e; */
+  border-top-color: #c1c1c1;
+  background-color: #175237;
+  color: #fff
+}
+.skin-green .lightsOff .BuySellTab, .skin-green .lightsOff .chartTypeTab, .skin-green .detailsIco>a,
+.skin-green .progress-bar-primary, .skin-green .user-footer{
+  background-color: #00a65a !important;
+  border: 0;
+}
+.skin-green .user-menu>ul{
+  background-color: #00a65a;
+  border-color: #175237
+}
+.skin-green .BuySellTab button:hover, .skin-green .chartTypeTab button:hover{
+  background-color: #87e0b8;
+}
+.skin-green .top-price-bar,  .skin-green .userLogAction {
+  background: #175237 !important;
+}
+/*Green Light*/
+.skin-green-light .top-price-bar,  .skin-green-light .userLogAction {
+  background: #175237 !important;
+}
+/*Red Dark*/
+.skin-red .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-red .lightsOff #MarketsTable>tr,
+.skin-red .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-red .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
+.skin-red .BuySellTab button.active, .skin-red .seeAll, .skin-red .updateButton,
+.skin-red .chartTypeTab button.active{
+  /* border-top-color: #46130c; */
+  border-top-color: #c1c1c1;
+  background-color: #431610;
+  color: #fff
+}
+.skin-red .lightsOff .BuySellTab, .skin-red .lightsOff .chartTypeTab, .skin-red .detailsIco>a,
+.skin-red .progress-bar-primary, .skin-red .user-footer{
+  background-color: #dd4b39 !important;
+  border: 0;
+}
+.skin-red .user-menu>ul{
+  background-color: #dd4b39;
+  border-color: #431610
+}
+.skin-red .BuySellTab button:hover, .skin-red .chartTypeTab button:hover{
+  background-color: #e4998f;
+}
+.skin-red .top-price-bar,  .skin-red .userLogAction {
+  background: #431610 !important;
+}
+/*Red Light*/
+.skin-red-light .top-price-bar,  .skin-red-light .userLogAction {
+  background: #431610 !important;
+}
+/*Black Dark*/
+.skin-black .lightsOff #OtherDetailsTable>tbody>tr:nth-of-type(odd), .skin-black .lightsOff #MarketsTable>tr,
+.skin-black .lightsOff .nav-tabs-custom>.nav-tabs>li.active>a, .skin-black .lightsOff .nav-tabs-custom>.nav-tabs>li.active,
+.skin-black .lightsOff .BuySellTab button.active, .skin-black .lightsOff .seeAll, .skin-black .lightsOff .updateButton,
+.skin-black .lightsOff .chartTypeTab button.active{
+	border-top-color: #dbe0dc98;
+  background-color: #dbe0dc;
+  color: #fff
+}
+.skin-black .lightsOff .BuySellTab button:hover, .skin-black .lightsOff .chartTypeTab button:hover,
+.skin-black .lightsOff .progress-bar-primary{
+  background-color: #8bc3e4;
+}
+.skin-black .top-price-bar,  .skin-black .userLogAction {
+  background: #dbe0dc !important;
+  color: #000000;
+}
+/*Black Light*/
+.skin-black-light .top-price-bar,  .skin-black .userLogAction {
+  background: #dbe0dc !important;
+  color: #000000;
+}
+/*/////////////// Custom Above //////////////*/
 /*
  * Skin: Blue
  * ----------

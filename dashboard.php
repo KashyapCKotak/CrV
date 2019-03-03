@@ -2,88 +2,130 @@
 <html>
 
 <head>
-  <?php
-    session_start();
-    $marketSent=file_get_contents("finalMarketSentiment.txt");
-  ?>
+<?php
+      session_start();
+      $marketSent=file_get_contents("finalMarketSentiment.txt");
+      $echoString='<script type=text/javascript>';
+      if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
+        $echoString=$echoString.'var userImg="dist/img/notSigned.jpg";';
+        $echoString=$echoString.'var userName="Log In/Sign up";';
+        $echoString=$echoString.'var userActions=\'<div class="pull-left">'.
+        '<a href="pages/login.php" name="signin" class="userLogAction user-buttons btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;color:#fff">Log In/Sign up</a>'.
+        '</div>\';';
+      }
+      else {
+        $echoString=$echoString.'var userImg="'.$_SESSION['cryptoview_userImg'].'";';
+        $echoString=$echoString.'var userName="'.$_SESSION['cryptoview_user'].'";';
+        $echoString=$echoString.'var userActions=\'<div class="pull-left">'.
+        '<a href="profile.php" name="profile" class="userLogAction user-buttons btn btn-default btn-block btn-flat" style="width:80px;background-color:#3c8dbc;color:#fff;padding-left:10px">My Profile</a>'.
+        '</div><div style="float:left">'.
+        '<a href="portfolio.php" name="portfolio" class="user-buttons btn btn-default btn-block btn-flat" style="width:86px;background-color:#246224;color:#fff;padding-left:8px;margin:auto;margin-left:6px">My Portfolio</a>'.
+        '</div><div class="pull-right">'.
+        '<a href="pages/logout.php" name="signout" class="user-buttons btn btn-default btn-block btn-flat" style="width:80px;background-color:#762727;color:#fff">Sign out</a>'.
+        '</div>\';';
+      }
+      $echoString=$echoString.'marketSentiment="'.$marketSent.'";';
+      echo $echoString."</script>";
+    ?>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title><__> - Bitcoin/Altcoins Prices, Prediction, News and more!!</title>
+    <meta name="description" content="Price, Historic Graph, Artificail Intelligence prediction, Indicators, Markets, Arbitrage, Exchange, Trends & Discuss! All in one place!">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- for ios 7 style, multi-resolution icon of 152x152 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://www.cryptocompare.com//media/19633/btc.png">
+    <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- <link rel="shortcut icon" sizes="196x196" href="https://www.cryptocompare.com//media/19633/btc.png"> -->
+    <script type="text/javascript">(function(a){a.loadCSS||(a.loadCSS=function(){});var c=loadCSS.relpreload={};c.support=function(){try{var b=a.document.createElement("link").relList.supports("preload")}catch(e){b=!1}return function(){return b}}();c.bindMediaToggle=function(b){function a(){b.media=c}var c=b.media||"all";b.addEventListener?b.addEventListener("load",a):b.attachEvent&&b.attachEvent("onload",a);setTimeout(function(){b.rel="stylesheet";b.media="only x"});setTimeout(a,3E3)};c.poly=function(){if(!c.support())for(var b=a.document.getElementsByTagName("link"),e=0;e<b.length;e++){var d=b[e];"preload"!==d.rel||"style"!==d.getAttribute("as")||d.getAttribute("data-loadcss")||(d.setAttribute("data-loadcss",!0),c.bindMediaToggle(d))}};if(!c.support()){c.poly();var f=a.setInterval(c.poly,500);a.addEventListener?a.addEventListener("load",function(){c.poly();a.clearInterval(f)}):a.attachEvent&&a.attachEvent("onload",function(){c.poly();a.clearInterval(f)})}"undefined"!==typeof exports?exports.loadCSS=loadCSS:a.loadCSS=loadCSS})("undefined"!==typeof global?global:this);</script>
+    <!-- jQuery 3 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+   <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="preload" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Bootstrap 3.3.7 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <link rel="preload" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" crossorigin="anonymous" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- <script async defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js" integrity="sha384-kW+oWsYx3YpxvjtZjFXqazFpA7UP/MbiY4jvs+RWZo2+N94PFZ36T6TFkc9O3qoB" crossorigin="anonymous"></script> -->
     <!-- Ionicons -->
-    <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+    <!-- <link href="https://unpkg.com/ionicons@4.2.4/dist/css/ionicons.min.css" rel="stylesheet"> -->
     <!-- Select2 -->
-    <link rel="stylesheet" href="bower_components/select2/dist/css/select2.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/css/select2.min.css"> -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+    <link rel="preload" href="dist/css/AdminLTE.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><!-- IMP : too many custom changes. don't use CDN-->
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="dist/css/skins/_all-skins.css">
     <!-- Data Tables -->
-    <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css"> -->
     <!-- socket.io -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
-    <script src="https://unpkg.com/technicalindicators@1.1.11/dist/browser.js"></script>
-    <script type="text/javascript">
-        //console.log("Start Scripts Start");
-      </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.js"></script>
+    <script defer src="ccc-streamer-utilities.js"></script>
+    <script defer src="stream.js"></script>
+    <script defer src="MarketsTableFill_2.js" onload="getMarketData()"></script>
+
+    <script defer src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+    <script defer src="https://www.amcharts.com/lib/3/serial.js"></script>
+    <!-- <script defer src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+    <link rel="preload" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" as="style" onload="this.onload=null;this.rel='stylesheet'"> -->
+    <!-- <script src="https://www.amcharts.com/lib/3/amstock.js"></script> -->
+    <script defer src="amCharts/light.js"></script>
+    <script defer src="amCharts/amstock.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/6.23.0/polyfill.min.js"></script>
+    <script defer src="https://unpkg.com/technicalindicators@2.0.6/dist/browser.js" onload="drawMainChart()"></script><!--Used 1.1.13 previously-->
+    <!-- <script src="select2.multi-checkboxes.js"></script> -->
     <script src="coinData.js"></script>
-    <!-- Morris chart -->
-
-    <!-- jvectormap -->
-
-    <!-- Date Picker -->
-
-    <!-- Daterange picker -->
-
-    <!-- bootstrap wysihtml5 - text editor -->
-
-
-    <!-- jQuery 3 -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <!-- jQuery UI 1.11.4 -->
-    <script src="bower_components/jquery-ui/jquery-ui.min.js"></script>
-    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <!-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
-    <script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script> -->
-    <script>
-      $.widget.bridge('uibutton', $.ui.button);
-      $(document).ajaxStart(function () {
-        Pace.restart();
-      });
-    </script>
-    <!-- Bootstrap 3.3.7 -->
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-      <![endif]-->
-
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-</head>
-<script type="text/javascript">
-  function myFunction() {
-    // console.log(document.getElementById("cryptsyb"));
-    // console.log(($('#marketsDataTable').is(':visible')));
-    // console.log(($('#cryptsyb').is(':visible')));
-    console.log("PAGE LOAD COMPLETE");
-    // startStream(currSubList);
-  }
-</script>
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <script type="text/javascript">
+      window.addEventListener("load", function() { window. scrollTo(0, 0); console.log("scrolled to top") });
+      function onLoadPage() {
+        // console.log("PAGE LOAD COMPLETE");
+        
+        // $('.select2').select2();
+        // document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img alt=\"Buy/Sell Now\" src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\" style=\"display:none\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
+        // var changellyModal = document.getElementById('changellyModal');
+        // var changellyButton = document.getElementById('changellyButton');
+        // var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0];
+        // changellyCloseButton.onclick = function() { 
+        //   changellyModal.style.display = 'none';
+        // };
+        // changellyButton.onclick = function widgetClick(e) {
+        //   e.preventDefault(); changellyModal.style.display = 'block';
+        // };
 
-<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="myFunction()">
-  <div class="wrapper">
+        // let indicatorOptions='<option value="none">No Indicator</option>'+
+        //         '<option value="macd">MACD (Moving Average Convergence Divergence)</option>'+
+        //         '<option value="rsi">RSI (Relative Strength Index)</option>'+
+        //         '<option value="ao">AO (Awesome Oscillator)</option>'+
+        //         '<option value="so">STOCH (Stochastic Oscillators)</option>'+
+        //         '<option value="adx">ADX (Average Directional Index)</option>'+
+        //         '<option value="mfi">MFI (Money Flow Index)</option>'+
+        //         '<option value="trix">TRIX (Triple Exponential Average)</option>'+
+        //         '<option value="bollinger">Bollinger Bands</option>'+
+        //         '<option value="sma25">SMA 25 (Simple Moving Average-25)</option>'+
+        //         '<option value="sma50">SMA 50 (Simple Moving Average-50)</option>'+
+        //         '<option value="sma100">SMA 100 (Simple Moving Average-100)</option>'+
+        //         '<option value="sma200">SMA 200 (Simple Moving Average-200)</option>'+
+        //         '<option value="adl">ADL (Accumulation Distribution Line)</option>'+
+        //         '<option value="atr">ATR (Average True Range)</option>'+
+        //         '<option value="cci">CCI (Commodity Change Index)</option>'+
+        //         '<option value="FI1">FI 1 (Force Index-1 Day)</option>'+
+        //         '<option value="FI13">FI 13 (Force Index-13 Day)</option>';
+        // document.getElementById("chartIndiSelect1").innerHTML=indicatorOptions;
+        // document.getElementById("chartIndiSelect2").innerHTML=indicatorOptions;
+      }
+    </script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini fixed sidebar-collapse" onload="onLoadPage()">
+  <div id="bodyWrapper" class="wrapper lightsOn" style="height:auto">
   <div id="techIndiScripts"></div>
     <header class="main-header">
       <!-- Logo -->
@@ -116,77 +158,27 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <img src=
-                  <?php
-                    if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
-                      echo '"dist/img/notSigned.jpg"';
-                    }
-                    else {
-                      echo '"'.$_SESSION['cryptoview_userImg'].'"';
-                    }
-                    ?>
-                  class="user-image" alt="User Image">
-                <span class="hidden-xs">
-                <?php 
-                  if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
-                    echo 'Sign In';
-                  }
-                  else {
-                    echo $_SESSION['cryptoview_user'];
-                  }
-                  ?>
-                </span>
+                <img id="user-image" src=""   class="user-image" alt="User Image">
+                <span id="user-login-text" class="hidden-xs"></span>
                 </a>
                 <ul class="dropdown-menu">
                   <!-- User image -->
                   <li class="user-header">
-                    <img src=
-                      <?php
-                        if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
-                          echo '"dist/img/notSigned.jpg"';
-                        }
-                        else {
-                          echo '"'.$_SESSION['cryptoview_userImg'].'"';
-                        }
-                        ?>
-                      class="img-circle" alt="User Image">
+                    <img id="user-image-big" src="" class="img-circle" alt="User Image">
                     <p style="font-size: 25px">
-                      <strong>
-                      <?php
-                        if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
-                          echo 'Anonymous User';
-                        }
-                        else {
-                          echo $_SESSION['cryptoview_user'];
-                        }
-                        ?>
-                      </strong>
+                      <strong id="user-name"></strong>
                     </p>
                   </li>
                   <!-- Menu Footer-->
-                  <li class="user-footer">
-                    <?php
-                      if (!isset($_SESSION['userid']) || $_SESSION['userid'] == ''){
-                        echo '<div class="pull-left">
-                      <a href="pages/login.php" name="signin" class="btn btn-primary btn-block btn-flat" style="width:100%;background-color:#3c8dbc;border-color:#367fa9;color:#fff">Sign In</a>
-                      </div>';
-                      }
-                      else {
-                        echo '<div class="pull-left">
-                      <a href="#" name="profile" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#3c8dbc;border-color:#367fa9;color:#fff">My Profile</a>
-                      </div>
-                      <div class="pull-right">
-                      <a href="pages/logout.php" name="signout" class="btn btn-default btn-block btn-flat" style="width:84px;background-color:#d67070;border-color:#a93636;color:#fff">Sign out</a>
-                      </div>';
-                      }
-                      ?>
+                  <hr style="
+                      margin-top: 0px;
+                      margin-bottom: 0px;
+                  ">
+                  <li id="user-actions" class="user-footer">
                   </li>
                 </ul>
               </li>
               <!-- Control Sidebar Toggle Button -->
-              <li>
-                <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-              </li>
             </ul>
         </div>
       </nav>
@@ -195,33 +187,17 @@
     <aside class="main-sidebar">
       <!-- sidebar: style can be found in sidebar.less -->
       <section class="sidebar">
-        <!-- Sidebar user panel -->
-        <!-- <div class="user-panel">
-                <div class="pull-left image">
-                  <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-                </div>
-                <div class="pull-left info">
-                  <p>Login</p>
-                  <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                </div>
-              </div> -->
-        <!-- search form -->
-        <!-- <form action="#" method="get" class="sidebar-form">
-                <div class="input-group">
-                  <input type="text" name="q" class="form-control" placeholder="Search...">
-                  <span class="input-group-btn">
-                    <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                    </button>
-                  </span>
-                </div>
-              </form> -->
-        <!-- /.search form -->
-        <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <!-- <li class="header">
             <center>MENU</center>
           </li> -->
-          <li class="active treeview">
+          <li>
+            <a href="index.php">
+              <i class="fas fa-home"></i>
+              <span>&nbsp;Home</span>
+            </a>
+          </li>
+          <li class="active">
             <a href="dashboard.php">
               <i class="fas fa-tachometer-alt"></i>
               <span>&nbsp;Dashboard</span>
@@ -229,8 +205,14 @@
           </li>
           <li>
             <a href="portfolio.php">
-              <i class="fas fa-line-chart"></i>
-              <span>&nbsp;Portfolio</span>
+              <i class="fas fa-donate"></i>
+              <span>&nbsp;Manage Portfolio</span>
+            </a>
+          </li>
+          <li>
+            <a href="exchange.php">
+              <i class="fas fa-chart-line"></i>
+              <span>&nbsp;Exchange</span>
             </a>
           </li>
           <li>
@@ -241,14 +223,8 @@
           </li>
           <li>
             <a href="news.php">
-              <i class="far fa-newspaper"></i>
-              <span>&nbsp;CrV Blog</span>
-            </a>
-          </li>
-          <li>
-            <a href="news.php">
               <i class="fas fa-newspaper"></i>
-              <span>&nbsp;Latest News</span>
+              <span>&nbsp;News around the World</span>
             </a>
           </li>
           <li>
@@ -258,10 +234,155 @@
             </a>
           </li>
           <li>
-            <a href="help.php">
-              <i class="far fa-question-circle"></i>
-              <span>&nbsp;How to Use CrV</span>
+            <a href="advertise.php">
+              <i class="fab fa-buysellads"></i>
+              <span>&nbsp;Advertise</span>
             </a>
+          </li>
+          <li>
+            <a id="loginMenuItemLink" href="pages/login.php">
+              <i id="loginMenuItemIcon" class="fas fa-share"></i>
+              <span id="loginMenuItemText">&nbsp;Login/Sign up</span>
+            </a>
+          </li>
+          <li class="treeview">
+            <a href="#">
+              <i class="fas fa-palette"></i>
+              <span>&nbsp;Customise Theme</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left"></i>
+              </span>
+            </a>
+            <ul class="clearfix treeview-menu"><!-- style="color:#8aa4af"-->
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="lightsOn" style="display: block; padding-left:5px ;" class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Lights on</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="lightsOff" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #000"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Lights off</p>
+                </a>
+              </li>
+              <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-blue" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Blue</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-yellow" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Orange</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-purple" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Purple</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-green" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Green</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-red" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222d32"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Red</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px; display:none">
+                <a href="javascript:void(0)" data-skin="skin-black" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #222"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin">Black</p>
+                </a>
+              </li>
+              <!-- <li style="float: left;color: #8aa4af;width: 90%;margin: 0 5% 0 5%;"><hr></li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-blue-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #367fa9"></span><span class="bg-light-blue" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Blue Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-yellow-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-yellow-active"></span><span class="bg-yellow" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Orange Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-purple-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-purple-active"></span><span class="bg-purple" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Purple Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-green-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-green-active"></span><span class="bg-green" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Green Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px;">
+                <a href="javascript:void(0)" data-skin="skin-red-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px;" class="bg-red-active"></span><span class="bg-red" style="display:block; width: 80%; float: left; height: 7px;"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Red Light</p>
+                </a>
+              </li>
+              <li style="float:left; width: 33.33333%; padding: 5px; display:none">
+                <a href="javascript:void(0)" data-skin="skin-black-light" style="display: block; padding-left:5px ; " class="clearfix full-opacity-hover">
+                  <div style="box-shadow: 0 0 2px rgba(0,0,0,0.1)" class="clearfix"><span style="display:block; width: 20%; float: left; height: 7px; background: #fefefe"></span><span style="display:block; width: 80%; float: left; height: 7px; background: #fefefe"></span></div>
+                  <div><span style="display:block; width: 20%; float: left; height: 20px; background: #f9fafc"></span><span style="display:block; width: 80%; float: left; height: 20px; background: #f4f5f7"></span></div>
+                  <br>
+                  <p class="text-center no-margin" style="font-size: 12px">Back Light</p>
+                </a>
+              </li> -->
+            </ul>
+            <!-- <ul class="treeview-menu">
+              <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
+              <li><a href="pages/layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
+              <li><a href="pages/layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
+              <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
+            </ul> -->
+          </li>
+          <li>
+            <a href="contact.php">
+              <i class="far fa-smile"></i>
+              <span>&nbsp;About & Contact</span>
+            </a>
+          </li>
+          <li style="height:100px">
           </li>
         </ul>
       </section>
@@ -273,7 +394,7 @@
       <div class="row">
         <div class="top-price-bar">
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" alt=⌛ />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" alt=⌛ />
             <span class="top-label"> Bitcoin</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -281,7 +402,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Ethereum</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -289,7 +410,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Ripple</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -297,7 +418,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> B Cash</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -305,7 +426,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Litecoin</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -313,7 +434,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> TRON</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -321,7 +442,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Dash</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -329,15 +450,15 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> B Gold</span>
             <br />
             <span class="top-price">updating&nbsp;
               <span class="top-pct" style="color: #aaaaaa">--</span>
             </span>
           </div>
-          <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+          <div alt="price direction" class="top-price-bar-cryptos">
+            <img alt="price direction image" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> ZCash</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -345,7 +466,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> Monero</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -353,7 +474,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> ETH Classic</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -361,7 +482,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> IOTA</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -369,7 +490,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> NXT</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -377,7 +498,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> EOS</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -385,7 +506,7 @@
             </span>
           </div>
           <div class="top-price-bar-cryptos">
-            <img class="top-image" src="dist/img/unavailable.png" />
+            <img alt="price direction" class="top-image" src="dist/img/unavailable.png" />
             <span class="top-label"> NEO</span>
             <br />
             <span class="top-price">updating&nbsp;
@@ -398,8 +519,14 @@
       <!-- <script src="livedatatop.js"></script> -->
       <!-- Content Header (Page header) -->
       <script type="text/javascript">
+        twitterLoaded=false;
+        twitterWidgetTheme="light";
+        twitterLinksColor="#2B7BB9";
         var globalCryptoValue = "BTC";
         var globalFiatValue = "USD";
+        arbDisplayed=false;
+        firstSltd=false;
+        secondSltd=false;
       </script>
       
       <script type="text/javascript">
@@ -408,7 +535,7 @@
       <section class="content-header custom-content-header">
         <div class="crypto-select">
           <label class="label-enable">Crypto Currency: </label>
-          <select id="cryptoSelectBox" class="form-control select2" style="width:157px" onchange="selectCrypto()">
+          <select id="cryptoSelectBox" class="form-control select2" style="width:140px;display:inline" onchange="selectCrypto()">
             <option id="default-fiat" selected="selected" value="BTC">Bitcoin (BTC)</option>
             <option value="ETH">Ethereum (ETH)</option>
             <option value="XRP">Ripple (XRP)</option>
@@ -2776,39 +2903,165 @@
             <option value="CHI">Chimaera (CHI)</option>
             <option value="HAC">Hackspace Capital (HAC)</option>
             <option value="BIT">BitRewards (BIT)</option>
-            <option value="BBI">BelugaPay (BBI)
+            <option value="BBI">BelugaPay (BBI)</option>
           </select>
         </div>
         <div class="fiat-select">
           <label class="label-enable">Fiat Currency: </label>
-          <select id="fiatSelectBox" class="form-control select2" style="width:auto" onchange="selectFiat()">
-            <option id="default-fiat" selected="selected">USD</option>
-            <option>RUB</option>
-            <option>GBP</option>
-            <option>EUR</option>
-            <option>INR</option>
-            <option>JPY</option>
-            <option>CNY</option>
-            <option>SGD</option>
-            <option>KRW</option>
-            <option>PLN</option>
-            <option>HUF</option>
-            <option>AUD</option>
-            <option>CAD</option>
-            <option>ZAR</option>
-            <option>SEK</option>
-            <option>AED</option>
-            <option>INR</option>
-            <option>DKK</option>
-            <option>MXN</option>
-            <option>RON</option>
-            <option>CHF</option>
-            <option>NOK</option>
-            <option>PHP</option>
-            <option>HKD</option>
-            <option>CZK</option>
-            <option>BRL</option>
-            <option>VEF</option>
+          <select id="fiatSelectBox" class="form-control select2" style="width:140px;display:inline" onchange="selectFiat()">
+            <option disabled>— Popular —</option>
+            <option value="USD" id="default-fiat" selected="selected">US Dollar (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="BTC">Bitcoin (BTC)</option>
+            <option value="USDT">Tether (USDT)</option>
+            <option value="GBP">GB Pounds (GBP)</option>
+            <option value="JPY">Japanese Yen (JPY)</option>
+            <option value="BCH">Bitcoin Cash (BCH)</option>
+            <option value="ETH">Ethereum (ETH)</option>
+            <option value="LTC">Litecoin (LTC)</option>
+            <option value="XRP">Ripple (XRP)</option>
+            <option disabled>— Fiats —</option>
+            <option value="CNY">Chinese Yuan (CNY)</option>
+            <option value="RUB">Russian Ruble (RUB)</option>
+            <option value="AUD">Australian Dollar (AUD)</option>
+            <option value="CAD">Canadian Dollar (CAD)</option>
+            <option value="PLN">Polish Zloty (PLN)</option>
+            <option value="SGD">Singaporean Dollar (SGD)</option>
+            <option value="HKD">Hong Kong Dollar (HKD)</option>
+            <option value="CHF">Swiss Franc (CHF)</option>
+            <option value="INR">Indian Rupees (INR)</option>
+            <option value="BRL">Brazilian Real (BRL)</option>
+            <option value="ZAR">South African Rand (ZAR)</option>
+            <option value="KRW">Korean Won (KRW)</option>
+            <option value="VND">Vietnamese Dong (VND)</option>
+            <option value="NZD">New Zealand Dollar (NZD)</option>
+            <option value="TRY">Turkish New Lira (TRY)</option>
+            <option value="SEK">Swedish Krona (SEK)</option>
+            <option value="THB">Thai Baht (THB)</option>
+            <option value="ILS">Israeli New Shekel (ILS)</option>
+            <option value="PHP">Philippine Peso (PHP)</option>
+            <option value="UAH">Ukrainian Hryvnia (UAH)</option>
+            <option value="IDR">Indonesian Rupiah (IDR)</option>
+            <option value="CZK">Czech Republic Koruna (CZK)</option>
+            <option value="MXN">Mexican Peso (MXN)</option>
+            <option value="DKK">Danish Krone (DKK)</option>
+            <option value="CLP">Chilean Peso (CLP)</option>
+            <option value="RUR">Old Russian Ruble (RUR)</option>
+            <option value="MYR">Malaysian Ringgit (MYR)</option>
+            <option value="NGN">Nigerian Naira (NGN)</option>
+            <option value="HUF">Hungarian Forint (HUF)</option>
+            <option value="MUR">Mauritian Rupee (MUR)</option>
+            <option value="RON">Romanian New Leu (RON)</option>
+            <option value="ARS">Argentine Peso (ARS)</option>
+            <option value="BGN">Bulgarian Lev (BGN)</option>
+            <option value="KHR">Cambodian riel (KHR)</option>
+            <option value="PEN">Peruvian Sol (PEN)</option>
+            <option value="TZS">Tanzanian Shilling (TZS)</option>
+            <option value="NPR">Nepalese Rupees (NPR)</option>
+            <option value="PKR">Pakistani Rupee (PKR)</option>
+            <option value="BHD">Bahraini Dinar (BHD)</option>
+            <option value="NOK">Norwegian Krone (NOK)</option>
+            <option value="UGX">Ugandan Shilling (UGX)</option>
+            <option value="COP">Colombian Peso (COP)</option>
+            <option value="GHS">Ghanaian Cedi (GHS)</option>
+            <option value="AED">Arab Emirates Dirham (AED)</option>
+            <option value="IRR">Iran Rial (IRR)</option>
+            <option value="HRK">Croatian Kuna (HRK)</option>
+            <option value="CNH">Chinese Yuan (CNH)</option>
+            <option value="DOGE">Dogecoin (DOGE)</option>
+            <option value="VEF">Venezuelan Bolívar (VEF)</option>
+            <option value="CRC">Costa Rica Colon (CRC)</option>
+            <option value="KES">Kenyan Shilling (KES)</option>
+            <option value="CUC">Cuban Convertible Peso (CUC)</option>
+            <option value="BYN">Belarusian Ruble (BYN)</option>
+            <option value="GEL">Georgian Lari (GEL)</option>
+            <option value="XAF">CFA Franc BEAC (XAF)	</option>
+            <option value="GTQ">Quetzales (GTQ)</option>
+            <option value="KZT">Kazakhstan Tenge (KZT)</option>
+            <option value="UZS">Uzbekistani Som (UZS)</option>
+            <option value="LKR">Sri Lankan Rupee (LKR)</option>
+            <option value="BWP">Botswana Pula (BWP)</option>
+            <option value="LSL">Lesotho Loti (LSL)</option>
+            <option value="MMK">Myanmar Kyat (MMK)</option>
+            <option value="SAR">Saudi Riyal (SAR)</option>
+            <option value="MZN">Mozambican Metical (MZN)</option>
+            <option value="QAR">Qatari Riyal (QAR)</option>
+            <option value="JMD">Jamaican Dollar (JMD)</option>
+            <option value="RWF">Rwandan Franc (RWF)</option>
+            <option value="XOF">West African CFA Franc (XOF)</option>
+            <option value="SZL">Swazi Lilangeni (SZL)</option>
+            <option value="BOB">Bolivian Boliviano (BOB)</option>
+            <option value="KCS">Czechoslovak Koruna (KCS)</option>
+            <option value="DZD">Algerian Dinar (DZD)</option>
+            <option value="XAG">Ounce Silver (XAG)</option>
+            <option value="BND">Bruneian Dollar (BND)</option>
+            <option value="KGS">Kyrgyzstani Som (KGS)</option>
+            <option value="BIF">Burundi Franc (BIF)</option>
+            <option value="AOA">Angolan Kwanza (AOA)</option>
+            <option value="AZN">Azerbaijani Manat (AZN)</option>
+            <option value="LBP">Lebanese Pound (LBP)</option>
+            <option value="PGK">Papua New Guinea Kina (PGK)</option>
+            <option value="MWK">Malawian Kwacha (MWK)</option>
+            <option value="UYU">Uruguayan Peso (UYU)</option>
+            <option value="KWD">Kuwaiti Dinar (KWD)</option>
+            <option value="XAU">Gold Ounce (XAU)</option>
+            <option value="GIP">Gibraltar Pound (GIP)</option>
+            <option value="MGA">Malagasy Ariary (MGA)</option>
+            <option value="TTD">Trinidad and Tobago Dollar (TTD)</option>
+            <option value="AFN">Afghan Afghani (AFN)</option>
+            <option value="RSD">Serbian Dinar (RSD)</option>
+            <option value="JOD">Jordanian Dinar (JOD)</option>
+            <option value="GGP">Guernsey Pound (GGP)</option>
+            <option value="VUV">Vanuatu Vatu (VUV)</option>
+            <option value="ETB">Ethiopian Birr (ETB)</option>
+            <option value="TWD">Taiwan Dollar (TWD)</option>
+            <option value="MDL">Moldovan Leu (MDL)</option>
+            <option value="IQD">Iraqi Dinar (IQD)</option>
+            <option value="VES">Venezuelan Bolivar (VES)</option>
+            <option value="ISK">Iceland Krona (ISK)</option>
+            <option value="ZMW">Zambian Kwacha (ZMW)</option>
+            <option value="BDT">Bangladesh Taka (BDT)</option>
+            <option value="BYR">Belarusian Ruble (BYR)</option>
+            <option value="MAD">Moroccan Dirham (MAD)</option>
+            <option value="PAB">Panamanian Balboa (PAB)</option>
+            <option value="OMR">Omani Rial (OMR)</option>
+            <option value="BAM">Bosnia and Herzegovina Convertible Mark (BAM)</option>
+            <option value="PYG">Paraguayan Guaraní (PYG)</option>
+            <option value="TND">Tunisian Dinar (TND)</option>
+            <option value="EGP">Egyptian Pound (EGP)</option>
+            <option value="HNL">Honduran Lempira (HNL)</option>
+            <option value="MOP">Macanese pataca (MOP)</option>
+            <option value="DOP">Dominican Peso (DOP)</option>
+            <option disabled>— Cryptos —</option>
+            <option value="TUSD">TrueUSD (TUSD)</option>
+            <option value="ZEC">ZCash (ZEC)</option>
+            <option value="DASH">DASH</option>
+            <option value="BLOCKPAY">BLOCKPAY</option>
+            <option value="BITUSD">BITUSD</option>
+            <option value="BITCNY">BITCNY</option>
+            <option value="BTS">BitShares (BTS)</option>
+            <option value="BNB">Binance Coin (BNB)</option>
+            <option value="GUSD">Gemini Dollar (GUSD)</option>
+            <option value="USDC">USD Coin (USDC)</option>
+            <option value="XAR">Xarucoin (XAR)</option>
+            <option value="XMR">Monero (XMR)</option>
+            <option value="ARDR">Ardor (ARDR)</option>
+            <option value="KNC">KyberNetwork Crystal (KNC)</option>
+            <option value="LKK1Y">LKK Forward (LKK1Y)</option>
+            <option value="DKKT">DKK Token (DKKT)</option>
+            <option value="ATB">ATB Coin (ATB)</option>
+            <option value="WAVES">Waves (WAVES)</option>
+            <option value="CKUSD">CKUSD</option>
+            <option value="NZDT">NZDT</option>
+            <option value="LKK">Lykke (LKK)</option>
+            <option value="EOS">EOS</option>
+            <option value="QC">QCash (QC)</option>
+            <option value="BITGOLD">BITGOLD</option>
+            <option value="BITEUR">BITEUR</option>
+            <option value="B2X">SegWit2X (B2X)</option>
+            <option value="EURS">EURS</option>
+            <option value="XJP">XJP</option>
+            <option value="DAI">DAI</option>
           </select>
         </div>
         <script type="text/javascript">
@@ -2823,6 +3076,7 @@
             trends.embed.renderExploreWidgetTo(document.getElementById("gTrenGeo"),"GEO_MAP", {"comparisonItem":[{"keyword":currSelection1.options[currSelection1.selectedIndex].text,"geo":"","time":"today 12-m"}],"category":0,"property":""}, {"exploreQuery":"q="+currSelection1.options[currSelection1.selectedIndex].text+"&date=today 12-m","guestPath":"https://trends.google.com:443/trends/embed/"}); 
           }
           function selectCrypto() {
+            document.getElementById("chartLoadOverlay").style.display="block";
             clearInterval(otherMarketsTimer);
             clearInterval(typewriterTimer);
             predicted=false;
@@ -2834,11 +3088,12 @@
             loadCoinLogo();
             loadGTrenGraph();
             loadGTrenGeo();
-            console.log("CHANGE1");
+            console.log("Change Crypto");
             document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
+            disqusReset();
           }
-
           function selectFiat() {
+            document.getElementById("chartLoadOverlay").style.display="block";
             clearInterval(otherMarketsTimer);
             clearTimeout(typewriterTimer);
             predicted=false;
@@ -2847,8 +3102,55 @@
             changeAllTop();
             drawMainChart();
             getMarketData();
-            console.log("CHANGE2");
+            console.log("Change Fiat");
             document.getElementById("MarketBox").innerHTML='Markets for '+globalCryptoValue+"/"+globalFiatValue;
+            disqusReset();
+          }
+          /**
+           * Updates displayed custom arb prices
+           * chgArbPrs(which: buy/sell, updt: called from stream for price changes if to be updtd)
+           * which==4 do nothing
+           */
+          function chgArbPrs(which=4,updt=false){
+            if(updt==true){
+              if(firstSltd && secondSltd)
+                chgArbPrs(3);
+              else if(firstSltd)
+                chgArbPrs(1);
+              else if(secondSltd)
+                chgArbPrs(2);
+            }
+            if(which==1){
+              if(document.getElementById("othSel1").value=="NoMarket")
+                return;
+              let buyPr=parseFloat(displayVals[document.getElementById("othSel1").value.toLowerCase()+"bn"]);
+              firstSltd=true;
+              document.getElementById("othBuyPr").innerHTML=currFSymb + (buyPr+((parseFloat(document.getElementById("arbBuyFee").value)*buyPr)/100)).toFixed(3);
+              document.getElementById("othProfPr").innerHTML="Select Market to Sell";
+            }
+            else if(which==2){
+              if(document.getElementById("othSel2").value=="NoMarket")
+                return;
+              let sellPr=parseFloat(displayVals[document.getElementById("othSel2").value.toLowerCase()+"bn"]);
+              secondSltd=true;
+              document.getElementById("othSellPr").innerHTML=currFSymb + (sellPr-((parseFloat(document.getElementById("arbSellFee").value)*sellPr)/100)).toFixed(3);
+              document.getElementById("othProfPr").innerHTML="Select Market to Buy";
+            }
+            if((firstSltd && secondSltd) || which==3){
+              let buyPr=parseFloat(displayVals[document.getElementById("othSel1").value.toLowerCase()+"bn"]);
+              let sellPr=parseFloat(displayVals[document.getElementById("othSel2").value.toLowerCase()+"bn"]);
+              document.getElementById("othProfPr").innerHTML=currFSymb + parseFloat(
+                (sellPr-((parseFloat(document.getElementById("arbSellFee").value)*sellPr)/100))-
+                (buyPr+((parseFloat(document.getElementById("arbBuyFee").value)*buyPr)/100))
+                ).toFixed(3);
+            }
+          }
+          function onArbFeeInp(e,which){
+            if(isNaN(e.value) || e.value==""){
+              e.value=0;
+              return;
+            }
+            chgArbPrs(which);
           }
         </script>
         <br class="break-enable">
@@ -2881,7 +3183,7 @@
           <div id="cryptoCurr-name-logo">
             <!-- <img src="https://www.cryptocompare.com/media/19633/btc.png" class="logo-img">   Bitcoin (BTC) -->
             <!-- <img id="titleLogo" src="" class="logo-img"> -->
-            <img id="titleLogo" src="https://www.cryptocompare.com//media/19633/btc.png" class="logo-img">
+            <img alt="coin logo" id="titleLogo" src="https://www.cryptocompare.com//media/19633/btc.png" class="logo-img">
             <span id="titleCurr"> Bitcoin (BTC)</span>
           </div>
         </h1>
@@ -2937,7 +3239,8 @@
               </div>
             </div>
             <!-- <link rel="stylesheet" href="https://changelly.com/widget.css"/> <a id="changellyButton" href="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=045fe0" target="_blank"> <img src="dist/img/pay_button.png" style="height:40px;margin-top:14px"/> </a> <div id="changellyModal"> <div class="changellyModal-content"> <span class="changellyModal-close">x</span> <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=ETH&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=045fe0" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Can't load widget </iframe> </div> <script type="text/javascript"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div> -->
-            <link rel="stylesheet" href="https://changelly.com/widget.css"/> <a id="changellyButton" href="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=10&ref_id=8d450131fbb6&color=00cf70" target="_blank"> <img src="dist/img/pay_button.png" style="height:40px;margin-top:14px"/> </a> <div id="changellyModal"> <div class="changellyModal-content"> <span class="changellyModal-close">x</span> <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=1&ref_id=8d450131fbb6&color=00cf70" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Can't load widget </iframe> </div> <script type="text/javascript"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div>
+            
+            <span id="buysellButton"><!--<link rel="stylesheet" href="https://changelly.com/widget.css"/> <a id="changellyButton" href="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70" target="_blank"> <img src="dist/img/pay_button.png" style="height:40px;margin-top:14px"/> </a> <div id="changellyModal"> <div class="changellyModal-content"> <span class="changellyModal-close">x</span> <iframe src="https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70" width="600" height="500" class="changelly" scrolling="no" style="overflow-y: hidden; border: none" > Can't load widget </iframe> </div> <script type="text/javascript"> var changellyModal = document.getElementById('changellyModal'); var changellyButton = document.getElementById('changellyButton'); var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0]; changellyCloseButton.onclick = function() { changellyModal.style.display = 'none'; }; changellyButton.onclick = function widgetClick(e) { e.preventDefault(); changellyModal.style.display = 'block'; }; </script> </div>--></span>
           </div>
         </div>
         
@@ -2956,13 +3259,16 @@
             }
             evt.currentTarget.className += " active";
           }
-          function initChartTypeChangeNew(){console.log(document.getElementById("chartTypeSelect").value);
+          function initChartTypeChangeNew(selectedOption){
+            console.log(selectedOption);
             document.getElementById("chartLoadOverlay").style.display = "block";
-            changeChartType(document.getElementById("chartTypeSelect").value);
+            changeChartType(selectedOption);
+            document.getElementById("chartLoadOverlay").style.display = "none";
           }
-          function initChartIndiChangeNew(){
+          function initChartIndicatorChange(whichIndicator){
             document.getElementById("chartLoadOverlay").style.display = "block";
-            changeIndiType(document.getElementById("chartIndiSelect").value)
+            changeIndiType(document.getElementById("chartIndiSelect"+whichIndicator).value,whichIndicator)
+            document.getElementById("chartLoadOverlay").style.display = "none";
           }
         </script>
         
@@ -2977,7 +3283,7 @@
         <script src="indi.js"></script>
         <div class="row box" style="width:100%;margin-left:0px;margin-right:0px;height:auto;padding-left:5px;padding-right:5px;padding-top:5px">
           <table>
-          <tr><td><img src="dist/img/robot.png" style="height:10vh"></td>
+          <tr><td><img alt="future prediction robot/AI image" src="dist/img/robot.png" style="height:10vh"></td>
           <td style="padding: 5px"><b><div id="AIPredictionTd"><span id="AIPredictionSpan">Jay Yogeshwar! </span></div></b></td>
           </tr>
           </table>
@@ -2998,47 +3304,33 @@
             </div>
           </div> -->
           <div class="chartTypeTabHolder">
-            <div class="chartType">
-            <b>Chart Type:</b>
-              <select id="chartTypeSelect" onchange="initChartTypeChangeNew()">
-                <option value="smoothedLine">Line</option>
-                <option value="candlestick">CandleStick</option>
-                <option value="ohlc">OHLC</option>
+            <div class="chartType" style="float: left">
+            <b class="hidden-xs">Chart Type:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
+              <select id="chartTypeSelect" onchange="initChartTypeChangeNew(this.value)" style="width:94px">
+                <option value="smoothedLine">Line Chart</option>
+                <option value="candlestick">CandleStick Chart</option>
+                <option value="heikinashi">Heikin-Ashi Chart</option>
+                <option value="renko">Renko Chart</option>
+                <option value="ohlc">OHLC Chart</option>
               </select>
             </div>
-            <div class="chartIndicator">
-            <b>Indicator:</b>
-              <select id="chartIndiSelect" onchange="initChartIndiChangeNew()" style="width:94px">
-                <option value="none">None</option>
-                <option value="macd">MACD</option>
-                <option value="rsi">RSI</option>
-                <option value="ao">AO</option>
-                <option value="so">STOCH</option>
-                <option value="adx">ADX</option>
-                <option value="mfi">MFI</option>
-                <option value="trix">TRIX</option>
-                <option value="bollinger">Bollinger Bands</option>
-                <option value="sma25">SMA 25</option>
-                <option value="sma50">SMA 50</option>
-                <option value="sma100">SMA 100</option>
-                <option value="sma200">SMA 200</option>
+            <div class="chartIndicator1">
+            <b class="hidden-xs">1<sup>st</sup> Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
+              <select id="chartIndiSelect1" onchange="initChartIndicatorChange(1)" style="width:94px">
+                
+              </select>
+            </div>
+            <div class="chartIndicator2" style="float: right">
+            <b class="hidden-xs">2<sup>nd</sup> Indicator:</b><!--<div class="hidden-sm hidden-lg hidden-md"></div>-->
+              <select id="chartIndiSelect2" onchange="initChartIndicatorChange(2)" style="width:94px">
+                
               </select>
             </div>
           </div>
-          <div id="chartdiv" style="height:80vh;width:100%;overflow:visible">
-            <script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-            <script src="https://www.amcharts.com/lib/3/serial.js"></script>
-            <!-- <script src="/amCharts/amstock.js"></script> -->
-
-            <!-- <script src="https://www.amcharts.com/lib/3/amstock.js"></script> -->
-            <script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
-            <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
-            <script src="amCharts/light.js"></script>
-            <script src="amCharts/amstock.js"></script>
-
+          <div id="chartdiv" class="chartdivlight">
             <!--<div style='clear:both;'>clear</div>-->
             <script type="text/javascript">
-              drawMainChart();
+              // drawMainChart();
               // var web_worker;
               // function startWorker() {
               //     console.log("Worker Starts!!!!");
@@ -3071,9 +3363,6 @@
               //xhttpConsChart.open("GET", "LineChartMain.html", true);
               //xhttpConsChart.send();
             </script>
-            <script type="text/javascript">
-              //console.log("Chart Load End");
-            </script>
           </div>
           </div>
           </div>
@@ -3082,33 +3371,6 @@
           <br><br><br><br><br><br><br><br><br><br><br>
           <span style="color:#fff;font-size:40px;font-weight:800;">Your Ad Here</span>
           </div>
-          </div>
-        </div>
-
-
-
-        <div class="row" style="margin:0">
-          <div class="box" style="width:auto">
-            <!-- <div class="box-header"> -->
-            <!-- <h3 class="box-title">Convert</h3> -->
-            <!-- </div> -->
-            <div class="box-body no-padding calculatorHolder">
-              <div class="group_convert claculatorComponents">
-                <input id="FiatInput" class="input_convert" type="text" oninput="convertToCrypto()" required>
-                <!-- <span class="highlight"></span> -->
-                <span class="bar_convert"></span>
-                <label class="label_convert">Fiat Currency</label>
-              </div>
-              <div class="claculatorComponents" style="width:100px">
-                <i class="fas fa-exchange-alt" style="font-size:20px"></i>
-              </div>
-              <div class="group_convert claculatorComponents">
-                <input id="CryptoInput" class="input_convert" type="text" oninput="convertToFiat()" required>
-                <!-- <span class="highlight"></span> -->
-                <span class="bar_convert"></span>
-                <label class="label_convert">Crypto Currency</label>
-              </div>
-            </div>
           </div>
         </div>
 
@@ -3135,6 +3397,36 @@
               /,/g, '')) / currTopPriceAmount).toLocaleString();
           }
         </script>
+
+        <div class="row" style="margin:0">
+          <div class="box" style="width:auto">
+            <!-- <div class="box-header"> -->
+            <!-- <h3 class="box-title">Convert</h3> -->
+            <!-- </div> -->
+            <div class="box-body no-padding calculatorHolder">
+              <div class="group_convert claculatorComponents">
+                <input id="FiatInput" class="input_convert" type="text" oninput="convertToCrypto()" required>
+                <!-- <span class="highlight"></span> -->
+                <span class="bar_convert"></span>
+                <label class="label_convert">Fiat Currency</label>
+              </div>
+              <br class="hidden-sm hidden-md hidden-lg"/>
+              <div class="claculatorComponents" style="width:100px">
+                <i class="fas fa-exchange-alt" style="font-size:20px"></i>
+              </div>
+              <br class="hidden-sm hidden-md hidden-lg"/>
+              <div class="group_convert claculatorComponents">
+                <input id="CryptoInput" class="input_convert" type="text" oninput="convertToFiat()" required>
+                <!-- <span class="highlight"></span> -->
+                <span class="bar_convert"></span>
+                <label class="label_convert">Crypto Currency</label>
+              </div>
+              <div style="float:left;color:#807f7f;padding-left:5px" class="adjustLaptopL">
+                Current & Historical price quotes above, coin details below from <a href="https://www.cryptocompare.com/">Cryptocompare</a>.
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="row" style="margin:0">
           <div class="box">
@@ -3188,10 +3480,19 @@
 
             <div class="box">
               <div class="box-header">
+                <div class="box-tools pull-right">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                  </button>
+                </div>
                 <h3 class="box-title" id="MarketBox">Markets for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
               </div>
-              <div id="marketsDataTable" class="box-body" style="padding:0;overflow-x:scroll">
-                Loading ⌛
+              <div class="box-body" style="padding:0">
+                <div id="marketsDataTable" style="overflow-x:auto">
+                  Loading ⌛
+                </div>
+                <div style="float:left;color:#807f7f;padding-left:5px">
+                  Market quotes from <a href="https://www.cryptocompare.com/">Cryptocompare</a> and <_Name_>.
+                </div>
               </div>
               <!-- /.box-body -->
             </div>
@@ -3201,13 +3502,41 @@
           <script type="text/javascript">
             //console.log("Streaming Start");
           </script>
-          <script src="ccc-streamer-utilities.js"></script>
-          <script src="stream.js"></script>
-          <script src="MarketsTableFill_2.js"></script>
-          <script type="text/javascript">
-            getMarketData();
-            //console.log("Streaming End");
-          </script>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="box collapsed-box">
+              <div class="box-header">
+              <div class="box-tools pull-right" style="width:100%;padding-left:18px">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" style="width:100%"><i class="fa fa-plus" style="float:right"></i>
+                </button>
+              </div>
+                <h3 class="box-title" id="MarketBox">Arbitrage Opportunities for <script>document.write(globalCryptoValue+"/"+globalFiatValue)</script></h3>
+              </div>
+              <div id="arbitrage-div" class="box-body" style="padding=0">
+                <div class="alert alert-success" style="overflow:auto">
+                  <h4> Best Opportunity:</h4>
+                  <div id="best-arbitrage">
+                    <div id="bestBuyArbDiv" class="col-md-4">Buy at <span id="bestBuyMark" class="arbText">Loading ⌛</span> for <span id="bestBuyPr" class="arbText">Loading ⌛</span></div>
+                    <div id="bestBuyArbDiv" class="col-md-4">Sell at <span id="bestSellMark" class="arbText">Loading ⌛</span> for <span id="bestSellPr" class="arbText">Loading ⌛</span></div><br>
+                    <div id="bestBuyArbDiv" class="col-md-6">For a Profit of : <span id="bestProfPr" class="arbText">Loading ⌛</span></div>
+                  </div>
+                </div>
+                <div class="alert alert-warning" style="overflow:auto">
+                  <h4> Or Choose your Exchanges:</h4>
+                  <div id="other-arbitrage">
+                    <div id="othBuyArbDiv" class="col-md-6">Buy at &nbsp;<select id="othSel1" onChange="chgArbPrs(1)" style="color:#000;border-radius:9px;border-style:none"></select>&nbsp; with &nbsp;<input type="text" oninput="onArbFeeInp(this,1)" id="arbBuyFee" style="color: #000 !important;width:40px;border-radius:9px;border-style:none;padding:1px 5px 1px 5px;background-color:#fff !important;" value=0></input>% fee, for <span id="othBuyPr" class="arbText">&nbsp;--&nbsp;</span></div>
+                    <div id="othBuyArbDiv" class="col-md-6">Sell at &nbsp;<select id="othSel2" onChange="chgArbPrs(2)" style="color:#000;border-radius:9px;border-style:none"></select>&nbsp; with &nbsp;<input type="text" oninput="onArbFeeInp(this,2)" id="arbSellFee" style="color: #000 !important;width:40px;border-radius:9px;border-style:none;padding:1px 5px 1px 5px;background-color:#fff !important" value=0></input>% fee, for <span id="othSellPr" class="arbText">&nbsp;--&nbsp;</span></div><br>
+                    <div id="othBuyArbDiv" class="col-md-6">For a Profit of : &nbsp;<span id="othProfPr" class="arbText">&nbsp;--&nbsp;</span></div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+          </div>
+          <!-- /.col -->
         </div>
           
         <div class="row box" style="margin:0;width:auto;margin-bottom:20px">
@@ -3233,8 +3562,9 @@
                   if(twitterUrl==undefined){
                     twitterUrl="https://twitter.com/blockchain";
                   }
-                  document.getElementById("twitter").innerHTML='<a class="twitter-timeline" href="'+twitterUrl+'">Tweets by '+currSelection.options[currSelection.selectedIndex].text+'</a>'+
+                  document.getElementById("twitter").innerHTML='<a class="twitter-timeline" data-theme="'+ twitterWidgetTheme +'" data-link-color="'+ twitterLinksColor +'" href="'+twitterUrl+'">Tweets by '+currSelection.options[currSelection.selectedIndex].text+'</a>'+
                   '<script async src="https://platform.twitter.com/widgets.js" charset="utf-8">\<\/script>';
+                  
                   var twitterScript = document.createElement('script');
                   twitterScript.setAttribute('src','https://platform.twitter.com/widgets.js');
                   twitterScript.setAttribute('charset',"utf-8");
@@ -3252,7 +3582,7 @@
                 if (wS > (hT-wH)){
                   twitterLoaded=true;
                   loadTwitter();
-                  loadDashNews();
+                  //loadDashNews();
                   //console.log("Loading Twitter");
                 }
                 if(!gTrendLoaded)
@@ -3268,12 +3598,44 @@
           </div>
           <div class="col-md-6" style="margin-left:0;margin-right:0;margin-bottom:10px;height:70vh;padding:10px;">
             <div class="NewsWidgetHolder" style="height: 100%; overflow-y: auto">
-              <div class="NewsWidgetMainHeading">
+              <div id="disqus_thread"></div>
+                <script>
+                /**
+                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+                var disqus_config = function () {
+                let dPageUrl="http://localhost";
+                let dIdentifier=globalCryptoValue+"/"+globalFiatValue;
+                this.page.url = dPageUrl;  // Replace PAGE_URL with your page's canonical URL variable
+                this.page.identifier = dIdentifier; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                };
+                (function() { // DON'T EDIT BELOW THIS LINE
+                var d = document, s = d.createElement('script');
+                s.src = 'https://localhost-adminlte-2-4-2.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+                })();
+                function disqusReset(){
+                  let dPageUrl="http://localhost";
+                  let dIdentifier=globalCryptoValue+"/"+globalFiatValue;
+                  console.log(dIdentifier);
+                  DISQUS.reset({
+                    reload: true,
+                    config: function () {
+                      this.page.url = dPageUrl;  // Replace PAGE_URL with your page's canonical URL variable
+                      this.page.identifier = dIdentifier;
+                    }
+                  });
+                }
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>                         
+              <!-- <div class="NewsWidgetMainHeading">
                 <h1 style="margin:0">Cointelegraph.com News</h1>
                 <div id="loaderHolder">
                   <div class="loader"></div>
                 </div>
-              </div>
+              </div> -->
               
               <!-- <div class="NewsWidgetItemHolder"> -->
               <!-- 
@@ -3286,7 +3648,6 @@
                             </div> 
                             -->
               <!-- </div> -->
-            </div>
           </div>
         </div>
         <script type="text/javascript">
@@ -3327,205 +3688,7 @@
     </footer>
 
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
-      <!-- Create the tabs -->
-      <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-        <li>
-          <a href="#control-sidebar-home-tab" data-toggle="tab">
-            <i class="fa fa-home"></i>
-          </a>
-        </li>
-        <li>
-          <a href="#control-sidebar-settings-tab" data-toggle="tab">
-            <i class="fa fa-gears"></i>
-          </a>
-        </li>
-      </ul>
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <!-- Home tab content -->
-        <div class="tab-pane" id="control-sidebar-home-tab">
-          <h3 class="control-sidebar-heading">Recent Activity</h3>
-          <ul class="control-sidebar-menu">
-            <li>
-              <a href="javascript:void(0)">
-                <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                  <p>Will be 23 on April 24th</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                  <p>New phone +1(800)555-1234</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                  <p>nora@example.com</p>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-                <div class="menu-info">
-                  <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                  <p>Execution time 5 seconds</p>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <!-- /.control-sidebar-menu -->
-
-          <h3 class="control-sidebar-heading">Tasks Progress</h3>
-          <ul class="control-sidebar-menu">
-            <li>
-              <a href="javascript:void(0)">
-                <h4 class="control-sidebar-subheading">
-                  Custom Template Design
-                  <span class="label label-danger pull-right">70%</span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <h4 class="control-sidebar-subheading">
-                  Update Resume
-                  <span class="label label-success pull-right">95%</span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <h4 class="control-sidebar-subheading">
-                  Laravel Integration
-                  <span class="label label-warning pull-right">50%</span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">
-                <h4 class="control-sidebar-subheading">
-                  Back End Framework
-                  <span class="label label-primary pull-right">68%</span>
-                </h4>
-
-                <div class="progress progress-xxs">
-                  <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-          <!-- /.control-sidebar-menu -->
-
-        </div>
-        <!-- /.tab-pane -->
-        <!-- Stats tab content -->
-        <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-        <!-- /.tab-pane -->
-        <!-- Settings tab content -->
-        <div class="tab-pane" id="control-sidebar-settings-tab">
-          <form method="post">
-            <h3 class="control-sidebar-heading">General Settings</h3>
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Report panel usage
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-
-              <p>
-                Some information about this general settings option
-              </p>
-            </div>
-            <!-- /.form-group -->
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Allow mail redirect
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-
-              <p>
-                Other sets of options are available
-              </p>
-            </div>
-            <!-- /.form-group -->
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Expose author name in posts
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-
-              <p>
-                Allow the user to show his name in blog posts
-              </p>
-            </div>
-            <!-- /.form-group -->
-
-            <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Show me as online
-                <input type="checkbox" class="pull-right" checked>
-              </label>
-            </div>
-            <!-- /.form-group -->
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Turn off notifications
-                <input type="checkbox" class="pull-right">
-              </label>
-            </div>
-            <!-- /.form-group -->
-
-            <div class="form-group">
-              <label class="control-sidebar-subheading">
-                Delete chat history
-                <a href="javascript:void(0)" class="text-red pull-right">
-                  <i class="fa fa-trash-o"></i>
-                </a>
-              </label>
-            </div>
-            <!-- /.form-group -->
-          </form>
-        </div>
-        <!-- /.tab-pane -->
-      </div>
-    </aside>
-    <!-- /.control-sidebar -->
+    
     <!-- Add the sidebar's background. This div must be placed
                       immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
@@ -3561,26 +3724,96 @@
     //console.log("Bottom Scripts Start");
   </script>
   <!-- Slimscroll -->
-  <!-- <script src="bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
   <!-- FastClick -->
   <!-- <script src="bower_components/fastclick/lib/fastclick.js"></script> -->
   <!-- AdminLTE App -->
-  <script src="dist/js/adminlte.min.js"></script>
+  <!-- <script src="dist/js/adminlte.min.js"></script>-->
+  <!--TODO: Decide if below is needed-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.0/js/adminlte.min.js"></script>
   <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
   <!-- <script src="dist/js/pages/dashboard.js"></script> -->
   <!-- AdminLTE for demo purposes -->
-  <!-- <script src="dist/js/demo.js"></script> -->
+  <script src="dist/js/demo.js"></script>
   <!-- DataTables -->
-  <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
+  <!-- <script src="bower_components/datatables.net/js/jquery.dataTables.min.js"></script> -->
+  <!-- <script src="bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script> -->
 
   <!-- Select2 -->
-  <script src="bower_components/select2/dist/js/select2.full.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.1/js/select2.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
   <script type="text/javascript">
     $(function () {
+      console.log("PAGE LOAD COMPLETE");
+        
+      document.getElementById("user-image").src=userImg;
+      document.getElementById("user-login-text").innerHTML=userName;
+      document.getElementById("user-image-big").src=userImg;
+      document.getElementById("user-name").innerHTML=userName;
+      document.getElementById("user-actions").innerHTML=userActions;
+
+      if(userImg.includes("notSigned")){
+          //do Nothing
+        }
+        else{
+          document.getElementById("loginMenuItemLink").setAttribute("href","profile.php");
+          document.getElementById("loginMenuItemText").innerHTML="&nbsp;My Profile";
+          document.getElementById("loginMenuItemIcon").className="fas fa-user";
+        }
+
+        $('.select2').select2();
+        document.getElementById("buysellButton").innerHTML="<link rel=\"stylesheet\" href=\"https://changelly.com/widget.css\"/> <a id=\"changellyButton\" href=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" target=\"_blank\"> <img alt=\"Buy/Sell Now\" src=\"dist/img/pay_button.png\" style=\"height:40px;margin-top:14px\"/> </a> <div id=\"changellyModal\" style=\"display:none\"> <div class=\"changellyModal-content\"> <span class=\"changellyModal-close\">x</span> <iframe src=\"https://changelly.com/widget/v1?auth=email&from=USD&to=BTC&merchant_id=8d450131fbb6&address=&amount=999&ref_id=8d450131fbb6&color=00cf70\" width=\"600\" height=\"500\" class=\"changelly\" scrolling=\"no\" style=\"overflow-y: hidden; border: none\" > Can't load widget </iframe> </div></div>";
+        var changellyModal = document.getElementById('changellyModal');
+        var changellyButton = document.getElementById('changellyButton');
+        var changellyCloseButton = document.getElementsByClassName('changellyModal-close')[0];
+        changellyCloseButton.onclick = function() { 
+          changellyModal.style.display = 'none';
+        };
+        changellyButton.onclick = function widgetClick(e) {
+          e.preventDefault(); changellyModal.style.display = 'block';
+        };
+        //http://jsfiddle.net/ArondeParon/2dEFg/5/    SEE for replacing select with ul to use textbox for num
+        //Wilder's smoothing remaining WEMA
+        let indicatorOptions='<option value="none">No Indicator</option>'+
+                '<option value="macd">MACD (Moving Average Convergence Divergence)</option>'+
+                '<option value="rsi">RSI (Relative Strength Index)</option>'+
+                '<option value="adx">ADX (Average Directional Index)</option>'+
+                '<option value="mfi">MFI (Money Flow Index)</option>'+
+                '<option value="ichi">Ichimoku Cloud</option>'+
+                '<option value="bollinger">Bollinger Bands</option>'+
+                '<option value="adl">ADL (Accumulation Distribution Line)</option>'+
+                '<option value="atr">ATR (Average True Range)</option>'+
+                '<option value="wr">Williams %R</option>'+
+                '<option value="cci">CCI (Commodity Change Index)</option>'+
+                '<option value="FI1">FI 1 (Force Index-1 Day)</option>'+
+                '<option value="FI13">FI 13 (Force Index-13 Day)</option>'+
+                '<option value="VWAP">VWAP (Volume Weighted Average Price)</option>'+
+                // '<option value="TP">TypicalPrice Indicator</option>'+ // not working
+                '<option disabled>— Oscillators —</option>'+
+                '<option value="obv">OBV (On Balance Volume)</option>'+
+                '<option value="kst">KST (Know Sure Thing 10,15,20,30,10,10,15,9)</option>'+
+                '<option value="roc">ROC (Rate Of Change)</option>'+
+                '<option value="trix">TRIX (Triple Exponential Average)</option>'+
+                '<option value="ao">AO (Awesome Oscillator)</option>'+
+                '<option value="so">STOCH (Stochastic Oscillators)</option>'+
+                '<option disabled>— Parabolic —</option>'+
+                '<option value="psar">PSAR (Parabolic SAR)</option>'+
+                '<option disabled>— Moving Averages —</option>'+
+                '<option value="wma25">WMA 25 (Weighted Moving Average-12)</option>'+
+                '<option value="wma50">WMA 50 (Weighted Moving Average-26)</option>'+
+                '<option value="wma100">WMA 100 (Weighted Moving Average-50)</option>'+
+                '<option value="wma200">WMA 200 (Weighted Moving Average-200)</option>'+
+                '<option value="ema12">EMA 25 (Exponential Moving Average-12)</option>'+
+                '<option value="ema26">EMA 50 (Exponential Moving Average-26)</option>'+
+                '<option value="ema50">EMA 100 (Exponential Moving Average-50)</option>'+
+                '<option value="ema200">EMA 200 (Exponential Moving Average-200)</option>'+
+                '<option value="sma25">SMA 25 (Simple Moving Average-25)'+
+                '<option value="sma50">SMA 50 (Simple Moving Average-50)</option>'+
+                '<option value="sma100">SMA 100 (Simple Moving Average-100)</option>'+
+                '<option value="sma200">SMA 200 (Simple Moving Average-200)</option>';
+        document.getElementById("chartIndiSelect1").innerHTML=indicatorOptions;
+        document.getElementById("chartIndiSelect2").innerHTML=indicatorOptions;
       //Initialize Select2 Elements
-      $('.select2').select2()
       //Datemask dd/mm/yyyy
       // $('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
       //Datemask2 mm/dd/yyyy
